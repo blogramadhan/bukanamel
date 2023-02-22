@@ -109,9 +109,9 @@ with tabif1:
     cif11, cif12 = st.columns((5,5))
     with cif12:
         col1, col2, col3 = st.columns(3)
-        col1.metric("86", "SATKER", "")
-        col2.metric("62", "PPK", "")
-        col3.metric("1000", "BELANJA PENGADAAN", "")
+        col1.metric("SATKER", "86")
+        col2.metric("PPK", "62")
+        col3.metric("BELANJA PENGADAAN", "1000")
 
 with tabif2:
     st.subheader(f"Dashboard Perangkat Daerah Tahun Anggaran {tahun}")
