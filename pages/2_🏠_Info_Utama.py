@@ -113,6 +113,18 @@ with tabif1:
         col2.metric("PPK", "62")
         col3.metric("BELANJA PENGADAAN", "1000")
 
+    cif21, cif22 = st.columns(2)
+    with cif21:
+        col1, col2, col3 = st.columns(3)
+        col1.metric("PERENCANAAN", "86")
+        col2.metric("PERSIAPAN", "62")
+        col3.metric("PEMILIHAN", "1000")
+    with cif22:
+        col1, col2, col3 = st.columns(3)
+        col1.metric("KONTRAK", "86")
+        col2.metric("SERAH TERIMA", "62")
+        col3.metric("PEMBAYARAN", "1000")
+
 with tabif2:
     st.subheader(f"Dashboard Perangkat Daerah Tahun Anggaran {tahun}")
     opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='tabif2')
