@@ -119,11 +119,11 @@ with tabif1:
         with col1:
             st.error("PERENCANAAN")
             with st.expander("Lihat Data Perencanaan"):
-                st.metric("PERENCANAAN", "86")
-                st.metric("PDN", "62")
-                st.metric("UMK", "1000")
-                st.metric("Penyedia", "1500")
-                st.metric("Swakelola", "2000")
+                st.metric("PERENCANAAN", "", "86")
+                st.metric("PDN", "", "62")
+                st.metric("UMK", "", "1000")
+                st.metric("Penyedia", "", "1500")
+                st.metric("Swakelola", "", "2000")
         with col2:
             st.warning("PERSIAPAN")
             with st.expander("Lihat Data Persiapan"):
