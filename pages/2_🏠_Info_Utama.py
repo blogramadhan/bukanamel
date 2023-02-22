@@ -91,10 +91,25 @@ try:
 
     ## Query Data RUP Paket Penyedia
 
+    ## Query Nama Satker Unik
+    namaopd = df_SIRUPDP['namasatker'].unique()
+
 except Exception:
     st.error("Gagal baca Dataset SIRUP Data Penyedia.")
 
-st.subheader(f"Dashboard Instansi Tahun Anggaran {tahun}")
+####
+
+# Buat Tab Info Utama UKPBJ dan Perangkat Daerah
+tabif1, tabif2 = st.tabs(["DAERAH", "PERANGKAT DAERAH"])
+
+# Tab Daerah
+with tabif1:
+    st.subheader(f"Dashboard Instansi Tahun Anggaran {tahun}")
+
+with tabif2:
+    st.subheader(f"Dashboard Instansi Tahun Anggaran {tahun}")
+    opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='tabif2')
+
 
 c1, c2 = st.columns((5,5))
 with c1:
