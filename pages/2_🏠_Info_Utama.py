@@ -45,5 +45,5 @@ tahuns = [2023, 2022]
 pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
 
-st.title("Halaman Perencanaan")
+st.title("Halaman INFO UTAMA")
 
