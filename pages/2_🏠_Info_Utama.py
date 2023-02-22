@@ -106,7 +106,7 @@ tabif1, tabif2 = st.tabs(["DAERAH", "PERANGKAT DAERAH"])
 with tabif1:
     st.subheader(f"Dashboard Daerah Tahun Anggaran {tahun}")
 
-    cif11, cif12 = st.columns((5,5))
+    cif11, cif12 = st.columns(2)
     with cif12:
         col1, col2, col3 = st.columns(3)
         col1.metric("SATKER", "86")
@@ -118,7 +118,7 @@ with tabif2:
     opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='tabif2')
 
 
-c1, c2 = st.columns((5,5))
+c1, c2 = st.columns(2)
 with c1:
     c1t1, c1t2 = st.tabs(["Pagu", "Paket"])
     with c1t1:
