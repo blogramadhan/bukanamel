@@ -117,6 +117,7 @@ with tabif1:
     with cif21:
         col1, col2, col3 = st.columns(3)
         with col1:
+            st.error("PERENCANAAN")
             st.metric("PERENCANAAN", "86")
             st.metric("PDN", "62")
             st.metric("UMK", "1000")
