@@ -118,7 +118,7 @@ with tabif1:
         col1, col2, col3 = st.columns(3)
         with col1:
             st.error("PERENCANAAN")
-            with st.expander("Lihat data"):
+            with st.expander("Lihat Data Perencanaan"):
                 st.metric("PERENCANAAN", "86")
                 st.metric("PDN", "62")
                 st.metric("UMK", "1000")
@@ -126,18 +126,20 @@ with tabif1:
                 st.metric("Swakelola", "2000")
         with col2:
             st.warning("PERSIAPAN")
-            st.metric("PERSIAPAN", "86")
-            st.metric("PDN", "62")
-            st.metric("UMK", "1000")
-            st.metric("Penyedia", "1500")
-            st.metric("Swakelola", "2000")
+            with st.expander("Lihat Data Persiapan"):
+                st.metric("PERSIAPAN", "86")
+                st.metric("PDN", "62")
+                st.metric("UMK", "1000")
+                st.metric("Penyedia", "1500")
+                st.metric("Swakelola", "2000")
         with col3:
             st.success("PEMILIHAN")
-            st.metric("PEMILIHAN", "86")
-            st.metric("PDN", "62")
-            st.metric("UMK", "1000")
-            st.metric("Penyedia", "1500")
-            st.metric("Swakelola", "2000")
+            with st.expander("Lihat Data Pemilihan"):
+                st.metric("PEMILIHAN", "86")
+                st.metric("PDN", "62")
+                st.metric("UMK", "1000")
+                st.metric("Penyedia", "1500")
+                st.metric("Swakelola", "2000")
     with cif22:
         col1, col2, col3 = st.columns(3)
         col1.metric("KONTRAK", "86")
