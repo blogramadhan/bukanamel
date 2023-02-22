@@ -108,7 +108,10 @@ with tabif1:
 
     cif11, cif12 = st.columns((5,5))
     with cif12:
-        st.markdown("Data Satker, PPK dan Belanja Pengadaan")
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Temperature", "70 °F", "1.2 °F")
+        col2.metric("Wind", "9 mph", "-8%")
+        col3.metric("Humidity", "86%", "4%")
 
 with tabif2:
     st.subheader(f"Dashboard Perangkat Daerah Tahun Anggaran {tahun}")
