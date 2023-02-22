@@ -104,10 +104,14 @@ tabif1, tabif2 = st.tabs(["DAERAH", "PERANGKAT DAERAH"])
 
 # Tab Daerah
 with tabif1:
-    st.subheader(f"Dashboard Instansi Tahun Anggaran {tahun}")
+    st.subheader(f"Dashboard Daerah Tahun Anggaran {tahun}")
+
+    cif11, cif12 = st.columns((5,5))
+    with cif12:
+        st.markdown("Data Satker, PPK dan Belanja Pengadaan")
 
 with tabif2:
-    st.subheader(f"Dashboard Instansi Tahun Anggaran {tahun}")
+    st.subheader(f"Dashboard Perangkat Daerah Tahun Anggaran {tahun}")
     opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='tabif2')
 
 
