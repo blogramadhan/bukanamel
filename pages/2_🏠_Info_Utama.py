@@ -116,9 +116,12 @@ with tabif1:
     cif21, cif22 = st.columns(2)
     with cif21:
         col1, col2, col3 = st.columns(3)
-        col1.metric("PERENCANAAN", "86")
-        col2.metric("PERSIAPAN", "62")
-        col3.metric("PEMILIHAN", "1000")
+        with col1:
+            st.metric("PERENCANAAN", "86")
+            st.metric("PDN", "62")
+            st.metric("UMK", "1000")
+            st.metric("Penyedia", "1500")
+            st.metric("Swakelola", "2000")
     with cif22:
         col1, col2, col3 = st.columns(3)
         col1.metric("KONTRAK", "86")
