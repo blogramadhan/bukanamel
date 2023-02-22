@@ -142,25 +142,13 @@ with tabif1:
                 st.metric("Swakelola", "2000")
     with cif22:
         col1, col2, col3 = st.columns(3)
-        col1.metric("KONTRAK", "86")
-        col2.metric("SERAH TERIMA", "62")
-        col3.metric("PEMBAYARAN", "1000")
+        with col1:
+            st.error("KONTRAK")
+        with col2:
+            st.warning("SERAH TERIMA")
+        with col3:
+            st.success("PEMBAYARAN")
 
 with tabif2:
     st.subheader(f"Dashboard Perangkat Daerah Tahun Anggaran {tahun}")
     opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='tabif2')
-
-
-c1, c2 = st.columns(2)
-with c1:
-    c1t1, c1t2 = st.tabs(["Pagu", "Paket"])
-    with c1t1:
-        st.markdown("Pagu")
-    with c1t2:
-        st.markdown("Paket")
-with c2:
-    c2t1, c2t2 = st.tabs(["Pagu", "Paket"])
-    with c2t1:
-        st.markdown("Pagu")
-    with c2t2:
-        st.markdown("Paket")
