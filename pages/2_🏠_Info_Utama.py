@@ -49,7 +49,7 @@ st.title("Halaman INFO UTAMA")
 
 c1, c2 = st.columns((5,5))
 with c1:
-    c1t1, c1t2 = st.tabs(["Pagu", "Paket"])
+    c1t1, c1t2 = st.tabs(["Pagu", "Paket"], align="right")
     with c1t1:
         st.markdown("Pagu")
     with c1t2:
