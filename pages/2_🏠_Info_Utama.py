@@ -45,6 +45,55 @@ tahuns = [2023, 2022]
 pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
 
+if pilih == "KAB. BENGKAYANG":
+    kodeFolder = "bky"
+elif pilih == "KAB. KAPUAS HULU":
+    kodeFolder = "kph"
+elif pilih == "KAB. KAYONG UTARA":
+    kodeFolder = "kku"
+elif pilih == "KAB. KETAPANG":
+    kodeFolder = "ktp"
+elif pilih == "KAB. KUBU RAYA":
+    kodeFolder = "kkr"
+elif pilih == "KAB. LANDAK":
+    kodeFolder = "ldk"
+elif pilih == "KAB. MELAWI":
+    kodeFolder = "mlw"
+elif pilih == "KAB. MEMPAWAH":
+    kodeFolder = "mpw"
+elif pilih == "KAB. SAMBAS":
+    kodeFolder = "sbs"
+elif pilih == "KAB. SANGGAU":
+    kodeFolder = "sgu"
+elif pilih == "KAB. SEKADAU":
+    kodeFolder = "skd"
+elif pilih == "KAB. SINTANG":
+    kodeFolder = "stg"
+elif pilih == "KOTA PONTIANAK":
+    kodeFolder = "ptk"
+elif pilih == "KOTA SINGKAWANG":
+    kodeFolder = "skw"
+elif pilih == "PROV. KALBAR":
+    kodeFolder = "prov"
+
+## Dataset SIRUP
+con = duckdb.connect(database=':memory:')
+
+### File path dan unduh file parquet dan simpan di memory
+DatasetSIRUPDP = f"https://storage.googleapis.com/dashukpbj_pub/itkp/{kodeFolder}/sirupdp{str(tahun)}.parquet"
+DatasetSIRUPDSW = f"https://storage.googleapis.com/dashukpbj_pub/itkp/{kodeFolder}/sirupdsw{str(tahun)}.parquet"
+DatasetSIRUPDSARSAP = f"https://storage.googleapis.com/dashukpbj_pub/itkp/{kodeFolder}/sirupdsa_rsap{str(tahun)}.parquet"
+
+# Unduh data parquet SIRUP
+try:
+    ## Buat Dataframe SIRUP Data Penyedia
+    df_SIRUPDP = pd.read_parquet(DatasetSIRUPDP)
+
+    ## Query Data RUP Paket Penyedia
+
+except Exception:
+    st.error("Gagal baca Dataset SIRUP Data Penyedia.")
+
 st.subheader(f"Dashboard Instansi Tahun Anggaran {tahun}")
 
 c1, c2 = st.columns((5,5))
