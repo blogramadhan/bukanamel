@@ -109,9 +109,9 @@ with tabif1:
     cif11, cif12 = st.columns(2)
     with cif12:
         col1, col2, col3 = st.columns(3)
-        col1.metric("SATKER", "86")
-        col2.metric("PPK", "62")
-        col3.metric("BELANJA PENGADAAN", "1000")
+        col1.metric("SATKER", "", "86")
+        col2.metric("PPK", "", "62")
+        col3.metric("BELANJA PENGADAAN", "", "1000")
 
     cif21, cif22 = st.columns(2)
     with cif21:
