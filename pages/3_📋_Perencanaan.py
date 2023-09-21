@@ -30,10 +30,10 @@ from babel.numbers import format_currency
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 # Import library Google Cloud Storage
-from google.oauth2 import service_account
-from google.cloud import storage
+##from google.oauth2 import service_account
+##from google.cloud import storage
 # Import fungsi pribadi
-#from fungsi import *
+from fungsi import *
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR"]
@@ -124,4 +124,30 @@ with menurup1:
 ## Tab menu PROFIL RUP DAERAH
 with menurup2:
 
-    st.markdown(f"### **PROFIL RUP {pilih} TAHUN {tahun}**")
+    ### Hitung-hitung dataset
+    df_RUPPP_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
+    df_RUPPP_mp_nilai = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
+    df_RUPPP_jp_hitung = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
+    df_RUPPP_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
+
+    ### Buat tombol unduh dataset
+    unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
+    unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
+
+    prd1, prd2, prd3 = st.columns((6,2,2))
+    with prd1:
+        st.markdown(f"### **PROFIL RUP {pilih} TAHUN {tahun}**")
+    with prd2:
+        st.download_button(
+            label = "📥 Download RUP Paket Penyedia",
+            data = unduh_RUPPP,
+            file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
+            mime = "text/csv"
+        )
+    with prd3:
+        st.download_button(
+            label = "📥 Download RUP Paket Swakelola",
+            data = unduh_RUPSW,
+            file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
+            mime = "text/csv"
+        )
