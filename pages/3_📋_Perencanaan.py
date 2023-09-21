@@ -162,3 +162,5 @@ with menurup2:
     col3.metric(label="Belanja Modal", value=3000000)
     col4.metric(label="Belanja Total", value=6000000)  
     style_metric_cards()  
+    
+    st.markdown("#### **POSISI INPUT RUP**")
