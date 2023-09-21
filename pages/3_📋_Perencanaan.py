@@ -34,6 +34,7 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 ##from google.cloud import storage
 # Import fungsi pribadi
 from fungsi import *
+from streamlit_extras.metric_cards import style_metric_cards
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR"]
@@ -152,4 +153,10 @@ with menurup2:
             mime = "text/csv"
         )
 
-    
+    st.divider()
+
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric(label="Belanja Pengadaan", value=1000000)
+    col2.metric(label="Belanja Operasional", value=2000000)
+    col3.metric(label="Belanja Modal", value=3000000)
+    col4.metric(label="Belanja Total", value=6000000)    
