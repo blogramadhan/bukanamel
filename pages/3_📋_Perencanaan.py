@@ -193,5 +193,5 @@ with menurup2:
     colir41, colir42, colir43 = st.columns(3)
     colir41.subheader("")
     colir42.subheader("")
-    colir43.metric(label="Persentase Capaian RUP", value=":.2%".format(persen_capaian_rup))
+    colir43.metric(label="Persentase Capaian RUP", value="{:.2%}".format(persen_capaian_rup))
     style_metric_cards()
