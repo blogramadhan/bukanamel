@@ -141,15 +141,15 @@ with menurup2:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
             data = unduh_RUPPP,
-            file_name = f"RUPPaketPenyedia-{kodeFolder}.xlsx",
-            mime = "application/octet-stream"
+            file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
+            mime = "text/csv"
         )
     with prd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
             data = unduh_RUPSW,
-            file_name = f"RUPPaketSwakelola-{kodeFolder}.xlsx",
-            mime = "application/octet-stream"
+            file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
+            mime = "text/csv"
         )
 
     
