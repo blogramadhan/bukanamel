@@ -181,6 +181,6 @@ with menurup2:
     style_metric_cards()
     colir41, colir42, colir43 = st.columns(3)
     colir41.subheader("")
-    colir42.subheader("Persentase Capaian Input RUP")
+    colir42.subheader("")
     colir43.metric(label="Persentase Capaian RUP", value="100%")
     style_metric_cards()
