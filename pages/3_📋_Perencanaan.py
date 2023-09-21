@@ -169,3 +169,8 @@ with menurup2:
     colir12.metric(label="Jumlah Total Paket RUP", value=1000000)
     colir13.metric(label="Nilai Total Paket RUP", value=2000000)
     style_metric_cards()
+    colir21, colir22, colir23 = st.columns(3)
+    colir21.subheader("Paket Penyedia")
+    colir22.metric(label="Jumlah Total Paket Penyedia", value=1000000)
+    colir23.metric(label="Nilai Total Paket Penyedia", value=2000000)
+    style_metric_cards()
