@@ -124,4 +124,4 @@ with menurup1:
 ## Tab menu PROFIL RUP DAERAH
 with menurup2:
 
-    st.markdown(f"### **PROFIL RUP DAERAH - {pilih} - {tahun}**")
+    st.markdown(f"### **PROFIL RUP {pilih} TAHUN {tahun}**")
