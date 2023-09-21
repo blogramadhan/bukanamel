@@ -56,11 +56,40 @@ DatasetRUPSA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUP
 
 ## Buat dataframe RUP
 try:
-    ### Baca file parquet dataset
+    ### Baca file parquet dataset RUP Paket Penyedia
     df_RUPPP = pd.read_parquet(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = con.execute("").df()
+    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
+    df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
+    df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
+
+    namaopd = df_RUPPP_umumkan['nama_satker'].unique()
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Penyedia.")
+
+try:
+    ### Baca file parquet dataset RUP Paket Swakelola
+    df_RUPPS = pd.read_parquet(DatasetRUPPS)
+
+    ### Query RUP Paket Swakelola
+    df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+
+except Exception:
+    st.error("Gagal baca dataset RUP Paket Swakelola.")
+
+try:
+    ### Baca file parquet dataset RUP Struktur Anggaran
+    df_RUPSA = pd.read_parquet(DatasetRUPSA)
+
+except Exception:
+    st.error("Gagal baca dataset RUP Struktur Anggaran.")
+
+#####
+# Mulai membuat presentasi data RUP
+#####
+
+# Buat menu yang mau disajikan
+menu1, menu2 = st.tabs(["| STRUKTUR ANGGARAN |", "| PROFIL RUP DAERAH |"])
