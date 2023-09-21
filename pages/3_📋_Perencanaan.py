@@ -156,7 +156,6 @@ with menurup2:
     st.divider()
 
     st.markdown("#### **STRUKTUR ANGGARAN**")
-    st.divider()
     col1, col2, col3, col4 = st.columns(4)
     col1.metric(label="Belanja Pengadaan", value=1000000)
     col2.metric(label="Belanja Operasional", value=2000000)
