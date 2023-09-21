@@ -98,7 +98,7 @@ menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| STRUKTU
 ## Tab menu STRUKTUR ANGGARAN
 with menurup1:
 
-    st.subheader(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
+    st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
 
     sql_query_sa = """
         SELECT nama_satker AS NAMA_SATKER, SUM(belanja_operasi) AS BELANJA_OPERASI, SUM(belanja_modal) AS BELANJA_MODAL, SUM(belanja_pengadaan) AS BELANJA_PENGADAAN, SUM(total_belanja) AS TOTAL_BELANJA
@@ -173,4 +173,9 @@ with menurup2:
     colir21.subheader("Paket Penyedia")
     colir22.metric(label="Jumlah Total Paket Penyedia", value=1000000)
     colir23.metric(label="Nilai Total Paket Penyedia", value=2000000)
+    style_metric_cards()
+    colir31, colir32, colir33 = st.columns(3)
+    colir31.subheader("Paket Swakelola")
+    colir32.metric(label="Jumlah Total Paket Swakelola", value=1000000)
+    colir33.metric(label="Nilai Total Paket Swakelola", value=2000000)
     style_metric_cards()
