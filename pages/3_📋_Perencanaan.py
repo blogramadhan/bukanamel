@@ -97,4 +97,4 @@ menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| STRUKTU
 ## Tab menu STRUKTUR ANGGARAN
 with menurup1:
 
-    st.markdown(f"## **STRUKTUR ANGGARAN - {pilih} - PERANGKAT DAERAH - {tahun}**")
+    st.markdown(f"### **STRUKTUR ANGGARAN - {pilih} - PERANGKAT DAERAH - {tahun}**")
