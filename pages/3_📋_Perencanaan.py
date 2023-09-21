@@ -97,7 +97,7 @@ menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| STRUKTU
 ## Tab menu STRUKTUR ANGGARAN
 with menurup1:
 
-    st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
+    st.subheader(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
 
     sql_query_sa = """
         SELECT nama_satker AS NAMA_SATKER, SUM(belanja_operasi) AS BELANJA_OPERASI, SUM(belanja_modal) AS BELANJA_MODAL, SUM(belanja_pengadaan) AS BELANJA_PENGADAAN, SUM(total_belanja) AS TOTAL_BELANJA
