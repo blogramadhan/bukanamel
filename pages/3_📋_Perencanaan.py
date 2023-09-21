@@ -36,9 +36,7 @@ from google.cloud import storage
 #from fungsi import *
 
 # Konfigurasi variabel lokasi UKPBJ
-daerah =    ["PROV. KALBAR", "KOTA PONTIANAK", "KAB. KUBU RAYA", "KAB. MEMPAWAH", "KOTA SINGKAWANG", "KAB. SAMBAS", 
-            "KAB. BENGKAYANG", "KAB. LANDAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. SINTANG", "KAB. MELAWI", "KAB. KAPUAS HULU", 
-            "KAB. KAYONG UTARA", "KAB. KETAPANG"]
+daerah =    ["PROV. KALBAR"]
 
 tahuns = [2023, 2022]
 
