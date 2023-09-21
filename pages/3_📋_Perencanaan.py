@@ -163,7 +163,7 @@ with menurup2:
     belanja_total = belanja_pengadaan + belanja_operasional + belanja_modal
 
     colsa11, colsa12, colsa13 = st.columns(3)
-    colsa12.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
+    colsa11.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
     colsa12.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
     colsa13.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
     style_metric_cards() 
