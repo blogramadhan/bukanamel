@@ -47,3 +47,20 @@ if pilih == "PROV. KALBAR":
     kodeFolder = "prov"
 
 # Persiapan Dataset
+con = duckdb.connect(database=':memory:')
+
+## Akses file dataset format parquet dari Google Cloud Storage via URL public
+DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
+DatasetRUPPS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketSwakelolaTerumumkan{tahun}.parquet"
+DatasetRUPSA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPStrukturAnggaranPD{tahun}.parquet"
+
+## Buat dataframe RUP
+try:
+    ### Baca file parquet dataset
+    df_RUPPP = pd.read_parquet(DatasetRUPPP)
+
+    ### Query RUP Paket Penyedia
+    df_RUPPP_umumkan = con.execute("").df()
+
+except Exception:
+    st.error("Gagal baca dataset RUP Paket Penyedia.")
