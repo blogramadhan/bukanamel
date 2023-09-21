@@ -120,3 +120,8 @@ with menurup1:
 
     gridOptions = gd.build()
     AgGrid(df_RUPSA_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+## Tab menu PROFIL RUP DAERAH
+with menurup1:
+
+    st.markdown(f"### **PROFIL RUP DAERAH - {pilih} - {tahun}**")
