@@ -137,7 +137,7 @@ with menurup2:
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:
-        st.markdown(f"### **PROFIL RUP {pilih} TAHUN {tahun}**")
+        st.subheader(f"PROFIL RUP {pilih} TAHUN {tahun}")
     with prd2:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
@@ -155,6 +155,8 @@ with menurup2:
 
     st.divider()
 
+    st.markdown("#### **STRUKTUR ANGGARAN**")
+    st.divider()
     col1, col2, col3, col4 = st.columns(4)
     col1.metric(label="Belanja Pengadaan", value=1000000)
     col2.metric(label="Belanja Operasional", value=2000000)
