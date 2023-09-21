@@ -162,18 +162,19 @@ with menurup2:
     belanja_modal = df_RUPSA['belanja_modal'].sum()
     belanja_total = belanja_pengadaan + belanja_operasional + belanja_modal
 
-    colsa1, colsa2, colsa3, colsa4 = st.columns(4)
-    colsa1.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
-    colsa2.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
-    colsa3.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
-    colsa4.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
+    colsa11, colsa12, colsa13 = st.columns(3)
+    colsa12.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
+    colsa12.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
+    colsa13.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
     style_metric_cards()  
-    
-    tesvalue = "{:,.2f}".format(1000000)
+    colsa21 = st.columns(1)
+    colsa21.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
+    style_metric_cards()
+
     st.subheader("POSISI INPUT RUP")
     colir11, colir12, colir13 = st.columns(3)
     colir11.subheader("Jumlah Total")
-    colir12.metric(label="Jumlah Total Paket RUP", value=tesvalue)
+    colir12.metric(label="Jumlah Total Paket RUP", value=1000000)
     colir13.metric(label="Nilai Total Paket RUP", value=2000000)
     style_metric_cards()
     colir21, colir22, colir23 = st.columns(3)
