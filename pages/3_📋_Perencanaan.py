@@ -92,4 +92,4 @@ except Exception:
 #####
 
 # Buat menu yang mau disajikan
-menurup1, menurup2, menurup3, menurup4 = st.tabs(["| STRUKTUR ANGGARAN |", "| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| % INPUT RUP |"])
+menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| STRUKTUR ANGGARAN |", "| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| % INPUT RUP |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |"])
