@@ -167,9 +167,10 @@ with menurup2:
     colsa12.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
     colsa13.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
     style_metric_cards() 
-
-    st.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
-    style_metric_cards()
+     
+    #colsa21 = st.columns(1)
+    #colsa21.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
+    #style_metric_cards()
 
     st.subheader("POSISI INPUT RUP")
     colir11, colir12, colir13 = st.columns(3)
