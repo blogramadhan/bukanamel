@@ -30,10 +30,10 @@ from babel.numbers import format_currency
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 # Import library Google Cloud Storage
-from google.oauth2 import service_account
-from google.cloud import storage
+##from google.oauth2 import service_account
+##from google.cloud import storage
 # Import fungsi pribadi
-#from fungsi import *
+from fungsi import *
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR", "KOTA PONTIANAK", "KAB. KUBU RAYA", "KAB. MEMPAWAH", "KOTA SINGKAWANG", "KAB. SAMBAS", 
