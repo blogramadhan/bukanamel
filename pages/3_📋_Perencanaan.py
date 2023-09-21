@@ -159,4 +159,5 @@ with menurup2:
     col1.metric(label="Belanja Pengadaan", value=1000000)
     col2.metric(label="Belanja Operasional", value=2000000)
     col3.metric(label="Belanja Modal", value=3000000)
-    col4.metric(label="Belanja Total", value=6000000)    
+    col4.metric(label="Belanja Total", value=6000000)  
+    style_metric_cards()  
