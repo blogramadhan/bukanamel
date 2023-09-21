@@ -163,7 +163,7 @@ with menurup2:
     colsa4.metric(label="Belanja Total", value=6000000)  
     style_metric_cards()  
     
-    tesvalue = "{:,.2f}".format(1000000)
+    tesvalue = "{:.,2f}".format(1000000)
     st.subheader("POSISI INPUT RUP")
     colir11, colir12, colir13 = st.columns(3)
     colir11.subheader("Jumlah Total")
