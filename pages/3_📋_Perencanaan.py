@@ -162,16 +162,13 @@ with menurup2:
     belanja_modal = df_RUPSA['belanja_modal'].sum()
     belanja_total = belanja_pengadaan + belanja_operasional + belanja_modal
 
-    colsa11, colsa12, colsa13 = st.columns(3)
+    colsa11, colsa12, colsa13, colsa14 = st.columns(4)
     colsa11.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
     colsa12.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
     colsa13.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
-    style_metric_cards() 
-     
-    colsa21 = st.columns(1)
-    colsa21.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
-    style_metric_cards()
-
+    colsa14.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
+    style_metric_cards()  
+    
     st.subheader("POSISI INPUT RUP")
     colir11, colir12, colir13 = st.columns(3)
     colir11.subheader("Jumlah Total")
