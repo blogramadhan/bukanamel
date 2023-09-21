@@ -179,3 +179,8 @@ with menurup2:
     colir32.metric(label="Jumlah Total Paket Swakelola", value=1000000)
     colir33.metric(label="Nilai Total Paket Swakelola", value=2000000)
     style_metric_cards()
+    colir41, colir42, colir43 = st.columns(3)
+    colir41.subheader("")
+    colir42.subheader("Persentase Capaian Input RUP")
+    colir43.metric(label="Persentase Capaian RUP", value="100%")
+    style_metric_cards()
