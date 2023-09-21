@@ -169,6 +169,8 @@ with menurup2:
     colsa14.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
     style_metric_cards()  
     
+    st.divider()
+
     st.subheader("POSISI INPUT RUP")
 
     jumlah_total_rup = df_RUPPP_umumkan.shape[0] + df_RUPPS_umumkan.shape[0]
