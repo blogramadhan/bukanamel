@@ -156,11 +156,17 @@ with menurup2:
     st.divider()
 
     st.subheader("STRUKTUR ANGGARAN")
+
+    belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
+    belanja_operasional = df_RUPSA['belanja_operasional'].sum()
+    belanja_modal = df_RUPSA['belanja_modal'].sum()
+    belanja_total = belanja_pengadaan + belanja_operasional + belanja_modal
+
     colsa1, colsa2, colsa3, colsa4 = st.columns(4)
-    colsa1.metric(label="Belanja Pengadaan", value=1000000)
-    colsa2.metric(label="Belanja Operasional", value=2000000)
-    colsa3.metric(label="Belanja Modal", value=3000000)
-    colsa4.metric(label="Belanja Total", value=6000000)  
+    colsa1.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
+    colsa2.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
+    colsa3.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
+    colsa4.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
     style_metric_cards()  
     
     tesvalue = "{:,.2f}".format(1000000)
