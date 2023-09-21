@@ -173,6 +173,7 @@ with menurup2:
 
     jumlah_total_rup = df_RUPPP_umumkan.shape[0] + df_RUPPS_umumkan.shape[0]
     nilai_total_rup = df_RUPPP_umumkan['pagu'].sum() + df_RUPPS_umumkan['pagu'].sum()
+    persen_capaian_rup = nilai_total_rup / belanja_pengadaan
 
     colir11, colir12, colir13 = st.columns(3)
     colir11.subheader("Jumlah Total")
@@ -192,5 +193,5 @@ with menurup2:
     colir41, colir42, colir43 = st.columns(3)
     colir41.subheader("")
     colir42.subheader("")
-    colir43.metric(label="Persentase Capaian RUP", value="100%")
+    colir43.metric(label="Persentase Capaian RUP", value=":.2%".format(persen_capaian_rup))
     style_metric_cards()
