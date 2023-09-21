@@ -158,7 +158,7 @@ with menurup2:
     st.subheader("STRUKTUR ANGGARAN")
 
     belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
-    belanja_operasional = df_RUPSA['belanja_operasional'].sum()
+    belanja_operasional = df_RUPSA['belanja_operasi'].sum()
     belanja_modal = df_RUPSA['belanja_modal'].sum()
     belanja_total = belanja_pengadaan + belanja_operasional + belanja_modal
 
