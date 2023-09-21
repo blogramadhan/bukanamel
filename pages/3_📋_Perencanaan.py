@@ -137,7 +137,7 @@ with menurup2:
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:
-        st.subheader(f"PROFIL RUP {pilih} TAHUN {tahun}")
+        st.header(f"PROFIL RUP {pilih} TAHUN {tahun}")
     with prd2:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
@@ -155,7 +155,7 @@ with menurup2:
 
     st.divider()
 
-    st.markdown("#### **STRUKTUR ANGGARAN**")
+    st.subheader("STRUKTUR ANGGARAN")
     colsa1, colsa2, colsa3, colsa4 = st.columns(4)
     colsa1.metric(label="Belanja Pengadaan", value=1000000)
     colsa2.metric(label="Belanja Operasional", value=2000000)
@@ -163,7 +163,7 @@ with menurup2:
     colsa4.metric(label="Belanja Total", value=6000000)  
     style_metric_cards()  
     
-    st.markdown("#### **POSISI INPUT RUP**")
+    st.subheader("POSISI INPUT RUP")
     colir11, colir12, colir13 = st.columns(3)
     colir11.subheader("Jumlah Total")
     colir12.metric(label="Jumlah Total Paket RUP", value=1000000)
