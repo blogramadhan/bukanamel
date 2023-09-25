@@ -209,7 +209,7 @@ with menurup2:
 
         st.divider()
 
-        fig_mph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=3) 
+        fig_mph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3, width=800, height=800) 
         st.plotly_chart(fig_mph, theme="streamlit", use_container_width=True)
 
     with mp2:
