@@ -225,5 +225,7 @@ with menurup2:
 
         st.divider()
 
+        figmpn = px.pie(df_RUPPP_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
+        st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
 
 
