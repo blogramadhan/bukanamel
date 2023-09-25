@@ -202,14 +202,17 @@ with menurup2:
 
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
-    mph1, mph2 = st.columns((5,5))
-    with mph1:
+    mp1, mp2 = st.columns((5,5))
+    with mp1:
         st.markdown("#### Berdasarkan Jumlah Paket")
         AgGrid(df_RUPPP_mp_hitung)
 
         st.divider()
 
-    with mph2:
+        fig_mph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=3) 
+        st.plotly_chart(fig_mph, theme="streamlit", use_container_width=True)
+
+    with mp2:
         st.markdown("#### Berdasarkan Nilai Paket")
         gd = GridOptionsBuilder.from_dataframe(df_RUPPP_mp_nilai)
         gd.configure_pagination()
