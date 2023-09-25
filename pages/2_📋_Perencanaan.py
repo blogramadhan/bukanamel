@@ -253,3 +253,14 @@ with menurup2:
     with jpng2:
         figjpn = px.pie(df_RUPPP_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
         st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
+
+## Tab menu PROFIL RUP PERANGKAT DAERAH
+with menurup3:
+    st.header("PROFIL RUP PERANGKAT DAERAH")
+
+## Tab menu % INPUT RUP
+with menurup4:
+
+    st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
+
+    
