@@ -227,3 +227,29 @@ with menurup2:
         st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
 
     st.divider()
+
+    st.subheader("BERDASARKAN JENIS PENGADAAN")
+
+    jph1, jpn2 = st.columns((5,5))
+    with jph1:
+        st.markdown("#### Berdasarkan Jumlah Paket")
+        AgGrid(df_RUPPP_jp_hitung)
+
+    with jpn2:
+        st.markdown("#### Berdasarkan Nilai Paket")
+        gd = GridOptionsBuilder.from_dataframe(df_RUPPP_jp_nilai)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+        gridOptions = gd.build()
+        AgGrid(df_RUPPP_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+    jphg1, jpng2 = st.columns((5,5))
+    with jphg1:
+        figjph = px.pie(df_RUPPP_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
+        st.plotly_chart(figjph, theme="streamlit", use_conatiner_width=True)
+    with jpng2:
+        figjpn = px.pie(df_RUPPP_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
+        st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
