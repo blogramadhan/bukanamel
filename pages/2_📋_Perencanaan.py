@@ -204,6 +204,13 @@ with menurup2:
 
     mph1, mph2 = st.columns((5,5))
     with mph1:
-        st.markdown("#### Berdasarkan Nilai Paket")
+        st.markdown("#### Berdasarkan Jumlah Paket")
         AgGrid(df_RUPPP_mp_hitung)
+
+        st.divider()
+
+    with mph2:
+        st.markdown("#### Berdasarkan Nilai Paket")
+
+        st.divider()
 
