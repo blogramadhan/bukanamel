@@ -202,17 +202,12 @@ with menurup2:
 
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
-    mp1, mp2 = st.columns((5,5))
-    with mp1:
+    mph1, mpn2 = st.columns((5,5))
+    with mph1:
         st.markdown("#### Berdasarkan Jumlah Paket")
         AgGrid(df_RUPPP_mp_hitung)
 
-        st.divider()
-
-        figmph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
-        st.plotly_chart(figmph, theme="streamlit", use_container_width=True)
-
-    with mp2:
+    with mpn2:
         st.markdown("#### Berdasarkan Nilai Paket")
         gd = GridOptionsBuilder.from_dataframe(df_RUPPP_mp_nilai)
         gd.configure_pagination()
@@ -223,9 +218,12 @@ with menurup2:
         gridOptions = gd.build()
         AgGrid(df_RUPPP_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        st.divider()
-
-        figmpn = px.pie(df_RUPPP_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
+    mphg1, mpng2 = st.columns((5,5))
+    with mphg1:
+        figmph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3, width=800, height=800)
+        st.plotly_chart(figmph, theme="streamlit", use_conatiner_width=True)
+    with mpng2:
+        figmpn = px.pie(df_RUPPP_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3, width=800, height=800)
         st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
 
-
+    st.divider()
