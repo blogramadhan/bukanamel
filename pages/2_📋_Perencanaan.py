@@ -101,7 +101,7 @@ with menurup1:
     st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
 
     sql_query_sa = """
-        SELECT nama_satker AS NAMA_SATKER, belanja_operasi AS BELANJA_OPERASI, belanja_modal AS BELANJA_MODAL, belanja_pengadaan AS BELANJA_PENGADAAN, total_belanja AS TOTAL_BELANJA
+        SELECT nama_satker AS NAMA_SATKER, SUM(belanja_operasi) AS BELANJA_OPERASI, SUM(belanja_modal) AS BELANJA_MODAL, SUM(belanja_pengadaan) AS BELANJA_PENGADAAN, SUM(total_belanja) AS TOTAL_BELANJA
         FROM df_RUPSA
         GROUP BY nama_satker
         ORDER BY total_belanja DESC;
