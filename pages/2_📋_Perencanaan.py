@@ -121,7 +121,7 @@ with menurup1:
     gd.configure_column("TOTAL_BELANJA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_BELANJA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
     gridOptions = gd.build()
-    AgGrid(df_RUPSA_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
+    AgGrid(df_RUPSA_tampil, gridOptions=gridOptions, enable_enterprise_modules=True, allow_unsafe_jscode=True, fit_columns_on_grid_load=True)
 
 ## Tab menu PROFIL RUP DAERAH
 with menurup2:
