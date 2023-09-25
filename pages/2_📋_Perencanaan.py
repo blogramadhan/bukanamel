@@ -103,6 +103,7 @@ with menurup1:
     sql_query_sa = """
         SELECT nama_satker AS NAMA_SATKER, SUM(belanja_operasi) AS BELANJA_OPERASI, SUM(belanja_modal) AS BELANJA_MODAL, SUM(belanja_pengadaan) AS BELANJA_PENGADAAN, SUM(total_belanja) AS TOTAL_BELANJA
         FROM df_RUPSA
+        WHERE BELANJA_PENGADAAN > 0
         GROUP BY nama_satker
         ORDER BY total_belanja DESC;
     """
