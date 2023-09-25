@@ -197,3 +197,13 @@ with menurup2:
     colir42.subheader("")
     colir43.metric(label="Persentase Capaian RUP", value="{:.2%}".format(persen_capaian_rup))
     style_metric_cards()
+
+    st.divider()
+
+    st.subheader("BERDASARKAN METODE PENGADAAN")
+
+    mph1, mph2 = st.columns((5,5))
+    with mph1:
+        st.markdown("#### Berdasarkan Nilai Paket")
+        AgGrid(df_RUPPP_mp_hitung)
+
