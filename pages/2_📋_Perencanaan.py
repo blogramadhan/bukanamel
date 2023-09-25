@@ -272,7 +272,14 @@ with menurup4:
     ir_gabung_selisih = ir_gabung_totalrup.assign(SELISIH = lambda x: x.STRUKTUR_ANGGARAN - x.RUP_PENYEDIA - x.RUP_SWAKELOLA) 
     ir_gabung_final = ir_gabung_selisih.assign(PERSEN = lambda x: round(((x.RUP_PENYEDIA + x.RUP_SWAKELOLA) / x.STRUKTUR_ANGGARAN * 100), 2))
 
-    
+    ### Download data % INPUT RUP
+    unduh_perseninputrup = unduh_data(ir_gabung_final)
+    st.download_button(
+        label = "📥 Download Data % Input RUP",
+        data = unduh_perseninputrup,
+        file_name = f"TabelPersenInputRUP-{pilih}.csv",
+        mime = "text/csv"
+    )
 
     gd = GridOptionsBuilder.from_dataframe(ir_gabung_final)
     gd.configure_pagination()
