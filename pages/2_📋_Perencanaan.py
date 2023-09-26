@@ -131,6 +131,8 @@ with menurup2:
     df_RUPPP_mp_nilai = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
     df_RUPPP_jp_hitung = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
     df_RUPPP_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
+    df_RUPPP_ukm_hitung = con.execute("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_UKM FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    df_RUPPP_ukm_nilai = con.execute("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
 
     ### Buat tombol unduh dataset
     unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
@@ -202,6 +204,14 @@ with menurup2:
     st.divider()
 
     st.subheader("STATUS UKM DAN PDN")
+
+    ukm1, pdn2 = st.columns((5,5))
+    with ukm1:
+        st.markdown("#### Berdasarkan Jumlah Paket - UKM")
+        AgGrid(df_RUPPP_ukm_hitung)
+
+    with pdn2:
+        st.markdown("#### Berdasarkan Nilai Paket - UKM")
 
     st.divider()
 
