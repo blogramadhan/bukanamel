@@ -212,6 +212,14 @@ with menurup2:
 
     with pdn2:
         st.markdown("#### Berdasarkan Nilai Paket - UKM")
+        gd = GridOptionsBuilder.from_dataframe(df_RUPPP_ukm_nilai)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+        gridOptions = gd.build()
+        AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
     st.divider()
 
