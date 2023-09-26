@@ -61,7 +61,7 @@ try:
     df_RUPPP = pd.read_parquet(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
     df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
     df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
     df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
@@ -198,6 +198,10 @@ with menurup2:
     colir42.subheader("")
     colir43.metric(label="Persentase Capaian RUP", value="{:.2%}".format(persen_capaian_rup))
     style_metric_cards()
+
+    st.divider()
+
+    st.subheader("STATUS UKM DAN PDN")
 
     st.divider()
 
