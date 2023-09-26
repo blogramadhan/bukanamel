@@ -133,6 +133,8 @@ with menurup2:
     df_RUPPP_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
     df_RUPPP_ukm_hitung = con.execute("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
     df_RUPPP_ukm_nilai = con.execute("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    df_RUPPP_pdn_hitung = con.execute("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
+    df_RUPPP_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df() 
 
     ### Buat tombol unduh dataset
     unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
@@ -228,6 +230,30 @@ with menurup2:
     with ukmng2:
         figukmn = px.pie(df_RUPPP_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
         st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
+
+    pdnh1, pdnn2 = st.columns((5,5))
+    with pdnh1:
+        st.markdown("#### Berdasarkan Jumlah Paket - PDN")
+        AgGrid(df_RUPPP_pdn_hitung)
+
+    with pdnn2:
+        st.markdown("#### Berdasarkan Nilai Paket - PDN")
+        gd = GridOptionsBuilder.from_dataframe(df_RUPPP_pdn_nilai)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+        gridOptions = gd.build()
+        AgGrid(df_RUPPP_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+    pdnhg1, pdnng2 = st.columns((5,5))
+    with pdnhg1:
+        figpdnh = px.pie(df_RUPPP_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
+        st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+    with pdnng2:
+        figpdnn = px.pie(df_RUPPP_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
+        st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
 
     st.divider()
 
