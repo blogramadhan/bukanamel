@@ -22,12 +22,12 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Dashboard Bukan Amel",
+    page_title="Dashboard Pengadaan Barang dan Jasa",
     page_icon="👋",
     layout="wide"
 )
 
-st.title("Dashboard Bukan Amel")
+st.title("Dashboard Pengadaan Barang dan Jasa")
 
 st.markdown("""
 *Dashboard* ini dibuat sebagai alat bantu untuk mempermudah para pelaku pengadaan di seluruh wilayah Provinsi Kalimantan Barat. Data yang disajikan, antara lain:
@@ -44,12 +44,12 @@ st.markdown("""
 * **Serah Terima**
 * **Monitoring**
 
-*Made with love* dengan menggunakan bahasa programming [Python](https://www.python.org/) dengan beberapa *library* utama seperti:
+Dibuat dengan menggunakan bahasa [Python](https://www.python.org/) dengan tambahan beberapa *library* utama seperti:
 * [Pandas](https://pandas.pydata.org/)
 * [Streamlit](https://streamlit.io)
 * [DuckDB](https://duckdb.org)
 
-Sumber data dari *Dashboard* ini berasal dari **API JSON** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). Data tersebut kemudian disimpan di [Google Cloud Storage](https://google.com) untuk kemudian diolah lebih lanjut dengan [Python](https://python.org).
+Sumber data dari *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
 @2023 - **UlarKadut** 
 """)
