@@ -37,7 +37,7 @@ from fungsi import *
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR"]
 
-tahuns = [2023]
+tahuns = ["2023", "2022"]
 
 pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
