@@ -30,7 +30,7 @@ from babel.numbers import format_currency
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 # Import Streamlit Extras
-#from streamlit_extras.metric_cards import style_metric_cards
+from streamlit_extras.metric_cards import style_metric_cards
 # Import fungsi pribadi
 from fungsi import *
 
@@ -142,7 +142,7 @@ with menu_rup_1:
     colsa12.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
     colsa13.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
     colsa14.metric(label="Belanja Total", value="{:,.2f}".format(belanja_total))  
-    #style_metric_cards()  
+    style_metric_cards()  
     
     st.divider()
 
@@ -156,22 +156,25 @@ with menu_rup_1:
     colir11.subheader("Jumlah Total")
     colir12.metric(label="Jumlah Total Paket RUP", value="{:,}".format(jumlah_total_rup))
     colir13.metric(label="Nilai Total Paket RUP", value="{:,.2f}".format(nilai_total_rup))
-    #style_metric_cards()
+    style_metric_cards()
+    
     colir21, colir22, colir23 = st.columns(3)
     colir21.subheader("Paket Penyedia")
     colir22.metric(label="Jumlah Total Paket Penyedia", value="{:,}".format(df_RUPPP_umumkan.shape[0]))
     colir23.metric(label="Nilai Total Paket Penyedia", value="{:,.2f}".format(df_RUPPP_umumkan['pagu'].sum()))
-    #style_metric_cards()
+    style_metric_cards()
+    
     colir31, colir32, colir33 = st.columns(3)
     colir31.subheader("Paket Swakelola")
     colir32.metric(label="Jumlah Total Paket Swakelola", value="{:,}".format(df_RUPPS_umumkan.shape[0]))
     colir33.metric(label="Nilai Total Paket Swakelola", value="{:,.2f}".format(df_RUPPS_umumkan['pagu'].sum()))
-    #style_metric_cards()
+    style_metric_cards()
+    
     colir41, colir42, colir43 = st.columns(3)
     colir41.subheader("")
     colir42.subheader("")
     colir43.metric(label="Persentase Capaian RUP", value="{:.2%}".format(persen_capaian_rup))
-    #style_metric_cards()
+    style_metric_cards()
 
     st.divider()
 
