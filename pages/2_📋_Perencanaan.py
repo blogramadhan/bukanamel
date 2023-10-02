@@ -39,7 +39,7 @@ from streamlit_extras.metric_cards import style_metric_cards
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR"]
 
-tahuns = [2023, 2022]
+tahuns = [2023]
 
 pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
