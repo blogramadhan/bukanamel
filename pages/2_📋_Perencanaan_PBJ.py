@@ -91,10 +91,10 @@ except Exception:
 #####
 
 # Buat menu yang mau disajikan
-menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| STRUKTUR ANGGARAN |", "| % INPUT RUP |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |"])
+menu_rup_1, menu_rup_2, menu_rup_3, menu_rup_4, menu_rup_5, menu_rup_6 = st.tabs(["| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| STRUKTUR ANGGARAN |", "| % INPUT RUP |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |"])
 
 ## Tab menu PROFIL RUP DAERAH
-with menurup1:
+with menu_rup_1:
 
     ### Hitung-hitung dataset
     df_RUPPP_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
@@ -282,12 +282,12 @@ with menurup1:
         st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
 
 ## Tab menu PROFIL RUP PERANGKAT DAERAH
-with menurup2:
+with menu_rup_2:
 
-    st.header(f"PROFIL RUP {pilih} - PERANGKAT DAERAH - TAHUN {tahun}")
+    st.header(f"PROFIL RUP {pilih} - PERANGKAT DAERAH - TAHUN {tahun}", divider='rainbow')
 
 ## Tab menu STRUKTUR ANGGARAN
-with menurup3:
+with menu_rup_3:
 
     st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
 
@@ -315,7 +315,7 @@ with menurup3:
     AgGrid(df_RUPSA_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 ## Tab menu % INPUT RUP
-with menurup4:
+with menu_rup_4:
 
     st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
 
@@ -352,9 +352,9 @@ with menurup4:
     AgGrid(ir_gabung_final, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 ## Tab menu Tabel RUP Paket Penyedia
-with menurup5:
+with menu_rup_5:
     st.header(f"TABEL RUP PAKET PENYEDIA TAHUN {tahun}")
 
-with menurup6:
+with menu_rup_6:
 ## Tab menu Tabel RUP Paket Swakelola
     st.header(f"TABEL RUP PAKET SWAKELOLA TAHUN {tahun}")
