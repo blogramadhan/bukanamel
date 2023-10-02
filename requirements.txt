@@ -3,6 +3,5 @@ pandas
 streamlit
 babel
 plotly.express
-google-cloud-storage
 streamlit-aggrid
 streamlit-extras
