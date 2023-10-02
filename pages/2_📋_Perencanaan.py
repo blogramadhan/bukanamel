@@ -357,5 +357,6 @@ with menurup4:
 with menurup5:
     st.header(f"TABEL RUP PAKET PENYEDIA TAHUN {tahun}")
 
+with menurup6:
 ## Tab menu Tabel RUP Paket Swakelola
     st.header(f"TABEL RUP PAKET SWAKELOLA TAHUN {tahun}")
