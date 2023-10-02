@@ -93,38 +93,10 @@ except Exception:
 #####
 
 # Buat menu yang mau disajikan
-menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| STRUKTUR ANGGARAN |", "| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| % INPUT RUP |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |"])
-
-## Tab menu STRUKTUR ANGGARAN
-with menurup1:
-
-    st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
-
-    sql_query_sa = """
-        SELECT nama_satker AS NAMA_SATKER, SUM(belanja_operasi) AS BELANJA_OPERASI, SUM(belanja_modal) AS BELANJA_MODAL, SUM(belanja_pengadaan) AS BELANJA_PENGADAAN, SUM(total_belanja) AS TOTAL_BELANJA
-        FROM df_RUPSA
-        WHERE BELANJA_PENGADAAN > 0
-        GROUP BY nama_satker
-        ORDER BY total_belanja DESC;
-    """
-
-    df_RUPSA_tampil = con.execute(sql_query_sa).df()
-
-    ### Tampilkan data menggunakan AgGrid
-    gd = GridOptionsBuilder.from_dataframe(df_RUPSA_tampil)
-    gd.configure_pagination()
-    gd.configure_side_bar()
-    gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    gd.configure_column("BELANJA_OPERASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_OPERASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("BELANJA_MODAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_MODAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("BELANJA_PENGADAAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_PENGADAAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("TOTAL_BELANJA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_BELANJA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-
-    gridOptions = gd.build()
-    AgGrid(df_RUPSA_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
+menurup1, menurup2, menurup3, menurup4, menurup5, menurup6 = st.tabs(["| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| STRUKTUR ANGGARAN |", "| % INPUT RUP |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |"])
 
 ## Tab menu PROFIL RUP DAERAH
-with menurup2:
+with menurup1:
 
     ### Hitung-hitung dataset
     df_RUPPP_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
@@ -312,8 +284,37 @@ with menurup2:
         st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
 
 ## Tab menu PROFIL RUP PERANGKAT DAERAH
+with menurup2:
+
+    st.header(f"PROFIL RUP {pilih} - PERANGKAT DAERAH - TAHUN {tahun}")
+
+## Tab menu STRUKTUR ANGGARAN
 with menurup3:
-    st.header("PROFIL RUP PERANGKAT DAERAH")
+
+    st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
+
+    sql_query_sa = """
+        SELECT nama_satker AS NAMA_SATKER, SUM(belanja_operasi) AS BELANJA_OPERASI, SUM(belanja_modal) AS BELANJA_MODAL, SUM(belanja_pengadaan) AS BELANJA_PENGADAAN, SUM(total_belanja) AS TOTAL_BELANJA
+        FROM df_RUPSA
+        WHERE BELANJA_PENGADAAN > 0
+        GROUP BY nama_satker
+        ORDER BY total_belanja DESC;
+    """
+
+    df_RUPSA_tampil = con.execute(sql_query_sa).df()
+
+    ### Tampilkan data menggunakan AgGrid
+    gd = GridOptionsBuilder.from_dataframe(df_RUPSA_tampil)
+    gd.configure_pagination()
+    gd.configure_side_bar()
+    gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gd.configure_column("BELANJA_OPERASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_OPERASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("BELANJA_MODAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_MODAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("BELANJA_PENGADAAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_PENGADAAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("TOTAL_BELANJA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_BELANJA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+    gridOptions = gd.build()
+    AgGrid(df_RUPSA_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 ## Tab menu % INPUT RUP
 with menurup4:
