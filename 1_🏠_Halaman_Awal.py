@@ -32,9 +32,9 @@ st.title("Dashboard Pengadaan Barang dan Jasa")
 st.markdown("""
 *Dashboard* ini dibuat sebagai alat bantu untuk mempermudah para pelaku pengadaan di seluruh wilayah Provinsi Kalimantan Barat. Data yang disajikan, antara lain:
 * **Perencanaan**
-  * Struktur Anggaran
   * Profil RUP Daerah
   * Profil RUP Perangkat Daerah
+  * Struktur Anggaran
   * % Input RUP
   * RUP Paket Penyedia Perangkat Daerah
   * RUP Paket Swakelola Perangkat Daerah
