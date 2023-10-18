@@ -234,7 +234,7 @@ with menu_purchasing_1:
 
         with grafik_ecat_21_1:
             
-            AgGrid(tabel_jumlah_transaksi_lokal_pd, key="trxlokal")
+            AgGrid(tabel_jumlah_transaksi_lokal_pd)
             
         with grafik_ecat_21_2:
 
@@ -265,7 +265,7 @@ with menu_purchasing_1:
             gd.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(tabel_nilai_transaksi_lokal_pd, key="nilailokal", gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(tabel_nilai_transaksi_lokal_pd, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_ecat_22_2:
             
@@ -330,7 +330,7 @@ with menu_purchasing_2:
 
         with grafik_bela_11_1:
 
-            AgGrid(tabel_jumlah_transaksi_bela_pd, key="trxbela")
+            AgGrid(tabel_jumlah_transaksi_bela_pd)
 
         with grafik_bela_11_2:
 
@@ -363,7 +363,7 @@ with menu_purchasing_2:
             gd.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(tabel_nilai_transaksi_bela_pd, key="nilaibela", gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(tabel_nilai_transaksi_bela_pd, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_bela_12_2:
 
