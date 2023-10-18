@@ -35,11 +35,11 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 from fungsi import *
 
 # Konfigurasi variabel lokasi UKPBJ
-daerah =    ["PROV. KALBAR"]
+daerah = ["PROV. KALBAR"]
 
 tahuns = ["2023"]
 
 #pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 #tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
 
-st.title("Halaman Kontrak")
+st.title("Halaman SIKAP")

@@ -31,25 +31,25 @@ st.title("Dashboard Pengadaan Barang dan Jasa")
 
 st.markdown("""
 *Dashboard* ini dibuat sebagai alat bantu untuk mempermudah para pelaku pengadaan di seluruh wilayah Provinsi Kalimantan Barat. Data yang disajikan, antara lain:
-* **Perencanaan**
+* **SIRUP**
   * Profil RUP Daerah
   * Profil RUP Perangkat Daerah
   * Struktur Anggaran
   * % Input RUP
   * RUP Paket Penyedia Perangkat Daerah
   * RUP Paket Swakelola Perangkat Daerah
-* **Persiapan**
-* **Pemilihan**
-* **Kontrak**
-* **Serah Terima**
-* **Monitoring**
+* **SPSE**
+* **PURCHASING**
+  * Tramsaksi Katalog
+  * Transaksi Toko Daring
+* **SIKAP**
 
 Dibuat dengan menggunakan bahasa [Python](https://www.python.org/) dengan tambahan beberapa *library* utama seperti:
 * [Pandas](https://pandas.pydata.org/)
 * [Streamlit](https://streamlit.io)
 * [DuckDB](https://duckdb.org)
 
-Sumber data dari *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
+Sumber data *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
 @2023 - **UlarKadut** 
 """)
