@@ -175,7 +175,7 @@ with menu_spse_1:
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
         ##### Hitung-hitungan dataset
-        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps FROM df_SPSETenderPerngumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
+        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps FROM df_SPSETenderPerngumuman").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
         nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
