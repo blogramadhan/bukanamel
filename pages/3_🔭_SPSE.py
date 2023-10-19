@@ -156,7 +156,7 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
         
-        st.subheader("SPSE-Tender-Pengumuman")
+        st.subheader("SPSE-Tender-Selesai")
 
     #### Tab menu SPSE - Tender - SPPBJ
     with menu_spse_1_3:
