@@ -69,8 +69,8 @@ DatasetPURCHASINGBELA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/
 ## Buat dataframe PURCHASING
 try:
     ### Baca file parquet dataset PURCHASING
-    df_ECAT = pd.read_parquet(DatasetPURCHASINGECAT)
-    df_BELA = pd.read_parquet(DatasetPURCHASINGBELA)
+    df_ECAT = tarik_data(DatasetPURCHASINGECAT)
+    df_BELA = tarik_data(DatasetPURCHASINGBELA)
 
 except Exception:
     st.error("Gagal baca dataset PURCHASING")
