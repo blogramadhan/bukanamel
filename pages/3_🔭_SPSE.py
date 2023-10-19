@@ -138,7 +138,7 @@ except Exception:
 #####
 
 # Buat menu yang mau disajikan
-menu_spse_1, menu_spse_2, menu_spse_3, menu_spse_4 = st.tabs(["| Tender |", "| Non Tender |", "| Pencatatan Non Tender |", "| Peserta Tender |"])
+menu_spse_1, menu_spse_2, menu_spse_3, menu_spse_4 = st.tabs(["| TENDER |", "| NON TENDER |", "| PENCATATAN |", "| PESERTA TENDER |"])
 
 ## Tab menu SPSE - Tender
 with menu_spse_1:
