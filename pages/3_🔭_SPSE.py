@@ -154,7 +154,7 @@ with menu_spse_1:
         ##### Buat tombol unduh dataset
         unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman)
         
-        SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((8,2))
+        SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((7,3))
         with SPSE_Umumkan_1:
             st.subheader("Pengumuman Tender")
         with SPSE_Umumkan_2:
@@ -167,7 +167,7 @@ with menu_spse_1:
 
         st.divider()
 
-        sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], index="APBD")
+        sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"])
         st.write(f"Anda memilih : **{sumber_dana}**")
 
 
