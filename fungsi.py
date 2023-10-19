@@ -6,6 +6,6 @@ import pandas as pd
 def unduh_data(unduhdata):
     return unduhdata.to_csv(index=False).encode('utf')
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def tarik_data(url):
     return pd.read_parquet(url)
