@@ -30,7 +30,7 @@ from babel.numbers import format_currency
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 # Import Streamlit Extras
-#from streamlit_extras.metric_cards import style_metric_cards
+from streamlit_extras.metric_cards import style_metric_cards
 # Import fungsi pribadi
 from fungsi import *
 
@@ -174,9 +174,17 @@ with menu_spse_1:
             status_tender = st.radio("**Status Tender**", ["Selesai", "Gagal/Batal", "Berlangsung"])
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
+        ##### Hitung-hitungan dataset
+        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND staus_tender = '{status_tender}'").df()
+        jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
+        nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
+        nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
 
-
-
+        menu_trx_1, menu_trx_2, menu_trx_3 = st.columns(3)
+        menu_trx_1.metric(label="Jumlah Tender Diumumkan", value="{:,}".format(jumlah_trx_spse_pengumuman))
+        menu_trx_2.metric(label="Nilai Pagu Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_pagu))
+        menu_trx_3.metric(label="Nilai HPS Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_hps))
+        style_metric_cards()
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
