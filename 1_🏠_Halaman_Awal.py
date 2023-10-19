@@ -39,6 +39,27 @@ st.markdown("""
   * RUP Paket Penyedia Perangkat Daerah
   * RUP Paket Swakelola Perangkat Daerah
 * **SPSE**
+  * Tender
+    * Pengumuman
+    * Selesai
+    * SPPBJ
+    * Kontrak
+    * SPMK
+    * BAPBAST
+  * Non Tender
+    * Pengumuman
+    * Selesai
+    * SPPBJ
+    * Kontrak
+    * SPMK
+    * BAPBAST
+  * Pencatatan Non Tender
+    * Pencatatan Swakelola
+    * Pencatatan Realisasi Swakelola
+    * Pencatatan Non Tender
+    * Pencatatan Realisasi Non Tender
+  * Peserta
+    * Tender
 * **PURCHASING**
   * Tramsaksi Katalog
   * Transaksi Toko Daring
