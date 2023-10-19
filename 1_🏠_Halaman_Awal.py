@@ -58,8 +58,7 @@ st.markdown("""
     * Pencatatan Realisasi Swakelola
     * Pencatatan Non Tender
     * Pencatatan Realisasi Non Tender
-  * Peserta
-    * Tender
+  * Peserta Tender
 * **PURCHASING**
   * Tramsaksi Katalog
   * Transaksi Toko Daring
