@@ -145,6 +145,39 @@ with menu_spse_1:
 
     st.header("SPSE - Tender")
 
+    ### Buat sub menu SPSE - Tender
+    menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5, menu_spse_1_6 = st.tabs(["| PENGUMUMAN |", "| SELESAI |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
+
+    #### Tab menu SPSE - Tender - Pengumuman
+    with menu_spse_1_1:
+
+        st.subheader("SPSE-Tender-Pengumuman")
+
+    #### Tab menu SPSE - Tender - Selesai
+    with menu_spse_1_2:
+        
+        st.subheader("SPSE-Tender-Pengumuman")
+
+    #### Tab menu SPSE - Tender - SPPBJ
+    with menu_spse_1_3:
+
+        st.subheader("SPSE-Tender-SPPBJ")
+
+    #### Tab menu SPSE - Tender - Kontrak
+    with menu_spse_1_4:
+
+        st.subheader("SPSE-Tender-Kontrak")
+
+    #### Tab menu SPSE - Tender - SPMK
+    with menu_spse_1_5:
+
+        st.subheader("SPSE-Tender-SPMK")
+
+    #### Tab menu SPSE - Tender - BAPBAST
+    with menu_spse_1_6:
+
+        st.subheader("SPSE-Tender-BAPBAST")
+
 ## Tab menu SPSE - Non Tender
 with menu_spse_2:
 
