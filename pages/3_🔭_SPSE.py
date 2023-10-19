@@ -93,42 +93,42 @@ DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/s
 ## Buat dataframe SPSE
 ### Baca file parquet dataset SPSE Tender
 try:
-    df_SPSETenderPengumuman = pd.read_parquet(DatasetSPSETenderPengumuman)
-    df_SPSETenderSelesai = pd.read_parquet(DatasetSPSETenderSelesai)
-    df_SPSETenderSelesaiNilai = pd.read_parquet(DatasetSPSETenderSelesaiNilai)
-    df_SPSETenderSPPBJ = pd.read_parquet(DatasetSPSETenderSPPBJ)
-    df_SPSETenderKontrak = pd.read_parquet(DatasetSPSETenderKontrak)
-    df_SPSETenderSPMK = pd.read_parquet(DatasetSPSETenderSPMK)
-    df_SPSETenderBAST = pd.read_parquet(DatasetSPSETenderBAST)
+    df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
+    df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
+    df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
+    df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
+    df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
+    df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
+    df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
 
 except Exception:
     st.error("Gagal baca dataset SPSE Tender")
 
 ### Baca file parquet dataset SPSE Non Tender
 try:
-    df_SPSENonTenderPengumuman = pd.read_parquet(DatasetSPSENonTenderPengumuman)
-    df_SPSENonTenderSelesai = pd.read_parquet(DatasetSPSENonTenderSelesai)
-    df_SPSENonTenderSPPBJ = pd.read_parquet(DatasetSPSENonTenderSPPBJ)
-    df_SPSENonTenderKontrak = pd.read_parquet(DatasetSPSENonTenderKontrak)
-    df_SPSENonTenderSPMK = pd.read_parquet(DatasetSPSENonTenderSPMK)
-    df_SPSENonTenderBAST = pd.read_parquet(DatasetSPSENonTenderBAST)
+    df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
+    df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
+    df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
+    df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
+    df_SPSENonTenderSPMK = tarik_data(DatasetSPSENonTenderSPMK)
+    df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
 
 except Exception:
     st.error("Gagal baca dataset SPSE Non Tender")
 
 ### Baca file parquet dataset Pencatatan
 try:
-    df_CatatNonTender = pd.read_parquet(DatasetCatatNonTender)
-    df_CatatNonTenderRealisasi = pd.read_parquet(DatasetCatatNonTenderRealisasi)
-    df_CatatSwakelola = pd.read_parquet(DatasetCatatSwakelola)
-    df_CatatSwakelolaRealisasi = pd.read_parquet(DatasetCatatSwakelolaRealisasi)
+    df_CatatNonTender = tarik_data(DatasetCatatNonTender)
+    df_CatatNonTenderRealisasi = tarik_data(DatasetCatatNonTenderRealisasi)
+    df_CatatSwakelola = tarik_data(DatasetCatatSwakelola)
+    df_CatatSwakelolaRealisasi = tarik_data(DatasetCatatSwakelolaRealisasi)
 
 except Exception:
     st.error("Gagal baca dataset Pencatatan")
 
 ### Baca file parquet dataset Peserta Tender
 try:
-    df_PesertaTender = pd.read_parquet(DatasetPesertaTender)
+    df_PesertaTender = tarik_data(DatasetPesertaTender)
 
 except Exception:
     st.error("Gagal baca dataset Peserta Tender")
