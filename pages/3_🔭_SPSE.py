@@ -151,7 +151,28 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - Pengumuman
     with menu_spse_1_1:
 
-        st.subheader("SPSE-Tender-Pengumuman")
+        ##### Buat tombol unduh dataset
+        unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman)
+        
+        SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((8,2))
+        with SPSE_Umumkan_1:
+            st.subheader("Pengumuman Tender")
+        with SPSE_Umumkan_2:
+            st.download(
+                label = "📥 Download Data Pengumuman Tender",
+                data = unduh_SPSE_Pengumuman,
+                file_name = f"SPSETenderPengumuman-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
+
+        sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], index="APBD")
+        st.write(f"Anda memilih : **{sumber_dana}**")
+
+
+
+
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
