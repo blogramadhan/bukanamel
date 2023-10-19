@@ -167,8 +167,12 @@ with menu_spse_1:
 
         st.divider()
 
-        sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"])
-        st.write(f"Anda memilih : **{sumber_dana}**")
+        SPSE_radio_1, SPSE_radio_2, SPSE_radio_3 = st.columns((1,1,8))
+        with SPSE_radio_1:
+            sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"])
+        with SPSE_radio_2:
+            status_tender = st.radio("**Status Tender**", ["Selesai", "Gagal/Batal", "Berlangsung"])
+        st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
 
 
