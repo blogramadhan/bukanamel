@@ -175,7 +175,7 @@ with menu_spse_1:
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
         ##### Hitung-hitungan dataset
-        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
+        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
         nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
@@ -185,6 +185,39 @@ with menu_spse_1:
         menu_trx_2.metric(label="Nilai Pagu Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_pagu))
         menu_trx_3.metric(label="Nilai HPS Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_hps))
         style_metric_cards()
+
+        st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi berdasarkan kualifikasi paket
+        grafik_kp_1, grafik_kp_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
+
+        with grafik_kp_1:
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan kualifikasi paket
+
+            sql_kp_jumlah = """
+                SELECT kualifikasi_paket AS KUALIFIKASI_PAKET, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_kp_jumlah_trx = con.execute(sql_kp_jumlah).df()
+
+            grafik_kp_1_1, grafik_kp_1_2 = st.columns((4,6))
+
+            with grafik_kp_1_1:
+
+                AgGrid(tabel_kp_jumlah_trx)
+
+            with grafik_kp_1_2:
+
+                grafik_kp_jumlah_trx = px.bar(tabel_kp_jumlah_trx, x='KUALIFIKASI_PAKET', y='JUMLAH_PAKET', text_auto='.2s', title='Grafik Jumlah Tender di Umumkan Berdasarkan Kualifikasi Paket')
+                grafik_kp_jumlah_trx.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+                st.plotly_chart(grafik_kp_jumlah_trx, theme='streamlit', use_container_width=True) 
+
+        with grafik_kp_2:
+
+            st.subheader("Berdasarkan Nilai Kualifikasi Paket")
+
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
