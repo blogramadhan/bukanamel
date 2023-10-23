@@ -244,7 +244,9 @@ with menu_spse_1:
 
                 st.bar_chart(tabel_kp_nilai_trx, x="KUALIFIKASI_PAKET", y="NILAI_PAKET", color="KUALIFIKASI_PAKET")
 
+        st.divider()
 
+        
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
