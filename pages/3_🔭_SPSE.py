@@ -174,7 +174,7 @@ with menu_spse_1:
             status_tender = st.radio("**Status Tender**", ["Selesai", "Gagal/Batal", "Berlangsung"])
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
-        ##### Hitung-hitungan dataset
+        ##### Hitung-hitungan dataset Tender Pengumuman
         df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
@@ -559,6 +559,14 @@ with menu_spse_1:
             )
 
         st.divider()
+
+        SPSE_SPPBJ_radio_1, SPSE_SPPBJ_radio_2 = st.columns((1,9))
+        with SPSE_SPPBJ_radio_1:
+            status_kontrak = st.radio("**Status Kontrak**", ["Kontrak Selesai", "Kontrak Sedang Berjalan"])
+        with SPSE_SPPBJ_radio_2:
+            opd = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPPBJ.unique(), key='opd_sppbj')
+
+        
 
 
     #### Tab menu SPSE - Tender - Kontrak
