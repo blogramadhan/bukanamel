@@ -94,42 +94,80 @@ DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/s
 ### Baca file parquet dataset SPSE Tender
 try:
     df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-    df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
-    df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
-    df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
-    df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
-    df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
-    df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
-
 except Exception:
-    st.error("Gagal baca dataset SPSE Tender")
+    st.error("Gagal baca dataset SPSE Tender Pengumuman")
+try:
+    df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
+except Exception:
+    st.error("Gagal baca dataset SPSE Tender Selesai")
+try:
+    df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
+except Exception:
+    st.error("Gagal baca dataset SPSE Tender Selesai Nilai")
+try:
+    df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
+except Exception:
+    st.error("Gagal baca dataset SPSE Tender SPPBJ")    
+try:    
+    df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
+except Exception:
+    st.error("Gagal baca dataset SPSE Tender Kontrak")
+try:
+    df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
+except Exception:
+    st.error("Gagal baca dataset SPSE Tender SPMK")
+try:
+    df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
+except Exception:
+    st.error("Gagal baca dataset SPSE Tender BAST")
 
 ### Baca file parquet dataset SPSE Non Tender
 try:
     df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
-    df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
-    df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
-    df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
-    df_SPSENonTenderSPMK = tarik_data(DatasetSPSENonTenderSPMK)
-    df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
-
 except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender")
+    st.error("Gagal baca dataset SPSE Non Tender Pengumuman")
+try:
+    df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
+except Exception:
+    st.error("Gagal baca dataset SPSE Non Tender Selesai")
+try:
+    df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
+except Exception:
+    st.error("Gagal baca dataset SPSE Non Tender SPPBJ")
+try:
+    df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
+except Exception:
+    st.error("Gagal baca dataset SPSE Non Tender Kontrak")
+try:
+    df_SPSENonTenderSPMK = tarik_data(DatasetSPSENonTenderSPMK)
+except Exception:
+    st.error("Gagal baca dataset SPSE Non Tender SPMK")
+try:
+    df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
+except Exception:
+    st.error("Gagal baca dataset SPSE Non Tender BAST")
 
 ### Baca file parquet dataset Pencatatan
 try:
     df_CatatNonTender = tarik_data(DatasetCatatNonTender)
-    df_CatatNonTenderRealisasi = tarik_data(DatasetCatatNonTenderRealisasi)
-    df_CatatSwakelola = tarik_data(DatasetCatatSwakelola)
-    df_CatatSwakelolaRealisasi = tarik_data(DatasetCatatSwakelolaRealisasi)
-
 except Exception:
-    st.error("Gagal baca dataset Pencatatan")
+    st.error("Gagal baca dataset Catat Non Tender")
+try:
+    df_CatatNonTenderRealisasi = tarik_data(DatasetCatatNonTenderRealisasi)
+except Exception:
+    st.error("Gagal baca dataset Catat Non Tender Realisasi")
+try:
+    df_CatatSwakelola = tarik_data(DatasetCatatSwakelola)
+except Exception:
+    st.error("Gagal baca dataset Catat Swakelola")
+try:
+    df_CatatSwakelolaRealisasi = tarik_data(DatasetCatatSwakelolaRealisasi)
+except Exception:
+    st.error("Gagal baca dataset Catat Swakelola Realisasi")
 
 ### Baca file parquet dataset Peserta Tender
 try:
     df_PesertaTender = tarik_data(DatasetPesertaTender)
-
 except Exception:
     st.error("Gagal baca dataset Peserta Tender")
 
@@ -143,7 +181,7 @@ menu_spse_1, menu_spse_2, menu_spse_3, menu_spse_4 = st.tabs(["| TENDER |", "| N
 ## Tab menu SPSE - Tender
 with menu_spse_1:
 
-    st.header("SPSE - Tender")
+    st.header(f"SPSE - Tender - {pilih}")
 
     ### Buat sub menu SPSE - Tender
     menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5, menu_spse_1_6 = st.tabs(["| PENGUMUMAN |", "| SELESAI |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
