@@ -362,7 +362,179 @@ with menu_spse_1:
 
         st.divider()
 
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Metode Evaluasi
+        grafik_me_1, grafik_me_2 = st.tabs(["| Berdasarkan Jumlah Metode Evaluasi |", "| Berdasarkan Nilai Metode Evaluasi |"])
 
+        with grafik_me_1:
+
+            st.subheader("Berdasarkan Jumlah Metode Evaluasi")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Metode Evaluasi
+
+            sql_me_jumlah = """
+                SELECT mtd_evaluasi AS METODE_EVALUASI, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY METODE_EVALUASI ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_me_jumlah_trx = con.execute(sql_me_jumlah).df()
+
+            grafik_me_1_1, grafik_me_1_2 = st.columns((3,7))
+
+            with grafik_me_1_1:
+
+                AgGrid(tabel_me_jumlah_trx)
+
+            with grafik_me_1_2:
+
+                st.bar_chart(tabel_me_jumlah_trx, x="METODE_EVALUASI", y="JUMLAH_PAKET", color="METODE_EVALUASI")
+    
+        with grafik_me_2:
+
+            st.subheader("Berdasarkan Nilai Metode Evaluasi")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Metode Evaluasi
+
+            sql_me_nilai = """
+                SELECT mtd_evaluasi AS METODE_EVALUASI, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY METODE_EVALUASI ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_me_nilai_trx = con.execute(sql_me_nilai).df()
+
+            grafik_me_2_1, grafik_me_2_2 = st.columns((3,7))
+
+            with grafik_me_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_me_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_me_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_me_2_2:
+
+                st.bar_chart(tabel_me_nilai_trx, x="METODE_EVALUASI", y="NILAI_PAKET", color="METODE_EVALUASI")
+
+        st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Metode Kualifikasi
+        grafik_mk_1, grafik_mk_2 = st.tabs(["| Berdasarkan Jumlah Metode Kualifikasi |", "| Berdasarkan Nilai Metode Kualifikasi |"])
+
+        with grafik_mk_1:
+
+            st.subheader("Berdasarkan Jumlah Metode Kualifikasi")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Metode Kualifikasi
+
+            sql_mk_jumlah = """
+                SELECT mtd_kualifikasi AS METODE_KUALIFIKASI, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY METODE_KUALIFIKASI ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_mk_jumlah_trx = con.execute(sql_mk_jumlah).df()
+
+            grafik_mk_1_1, grafik_mk_1_2 = st.columns((3,7))
+
+            with grafik_mk_1_1:
+
+                AgGrid(tabel_mk_jumlah_trx)
+
+            with grafik_mk_1_2:
+
+                st.bar_chart(tabel_mk_jumlah_trx, x="METODE_KUALIFIKASI", y="JUMLAH_PAKET", color="METODE_KUALIFIKASI")
+    
+        with grafik_mk_2:
+
+            st.subheader("Berdasarkan Nilai Metode Kualifikasi")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Metode Kualifikasi
+
+            sql_mk_nilai = """
+                SELECT mtd_kualifikasi AS METODE_KUALIFIKASI, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY METODE_KUALIFIKASI ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_mk_nilai_trx = con.execute(sql_mk_nilai).df()
+
+            grafik_mk_2_1, grafik_mk_2_2 = st.columns((3,7))
+
+            with grafik_mk_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_mk_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_mk_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_mk_2_2:
+
+                st.bar_chart(tabel_mk_nilai_trx, x="METODE_KUALIFIKASI", y="NILAI_PAKET", color="METODE_KUALIFIKASI")
+
+        st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Kontrak Pembayaran
+        grafik_kontrak_1, grafik_kontrak_2 = st.tabs(["| Berdasarkan Jumlah Kontrak Pembayaran |", "| Berdasarkan Nilai Kontrak Pembayaran |"])
+
+        with grafik_kontrak_1:
+
+            st.subheader("Berdasarkan Jumlah Kontrak Pembayaran")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Kontrak Pembayaran
+
+            sql_kontrak_jumlah = """
+                SELECT kontrak_pembayaran AS KONTRAK_PEMBAYARAN, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_kontrak_jumlah_trx = con.execute(sql_kontrak_jumlah).df()
+
+            grafik_kontrak_1_1, grafik_kontrak_1_2 = st.columns((3,7))
+
+            with grafik_kontrak_1_1:
+
+                AgGrid(tabel_kontrak_jumlah_trx)
+
+            with grafik_kontrak_1_2:
+
+                st.bar_chart(tabel_kontrak_jumlah_trx, x="KONTRAK_PEMBAYARAN", y="JUMLAH_PAKET", color="KONTRAK_PEMBAYARAN")
+    
+        with grafik_kontrak_2:
+
+            st.subheader("Berdasarkan Nilai Kontrak Pembayaran")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Kontrak Pembayaran
+
+            sql_kontrak_nilai = """
+                SELECT kontrak_pembayaran AS KONTRAK_PEMBAYARAN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_kontrak_nilai_trx = con.execute(sql_kontrak_nilai).df()
+
+            grafik_kontrak_2_1, grafik_kontrak_2_2 = st.columns((3,7))
+
+            with grafik_kontrak_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_kontrak_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_kontrak_2_2:
+
+                st.bar_chart(tabel_kontrak_nilai_trx, x="KONTRAK_PEMBAYARAN", y="NILAI_PAKET", color="KONTRAK_PEMBAYARAN")
+
+        st.divider()
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
