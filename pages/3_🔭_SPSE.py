@@ -180,10 +180,10 @@ with menu_spse_1:
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
         nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
 
-        menu_trx_1, menu_trx_2, menu_trx_3 = st.columns(3)
-        menu_trx_1.metric(label="Jumlah Tender Diumumkan", value="{:,}".format(jumlah_trx_spse_pengumuman))
-        menu_trx_2.metric(label="Nilai Pagu Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_pagu))
-        menu_trx_3.metric(label="Nilai HPS Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_hps))
+        data_umum_1, data_umum_2, data_umum_3 = st.columns(3)
+        data_umum_1.metric(label="Jumlah Tender Diumumkan", value="{:,}".format(jumlah_trx_spse_pengumuman))
+        data_umum_2.metric(label="Nilai Pagu Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_pagu))
+        data_umum_3.metric(label="Nilai HPS Tender Diumumkan", value="{:,.2f}".format(nilai_trx_spse_pengumuman_hps))
         style_metric_cards()
 
         st.divider()
@@ -564,11 +564,20 @@ with menu_spse_1:
         with SPSE_SPPBJ_radio_1:
             status_kontrak = st.radio("**Status Kontrak**", ["Kontrak Selesai", "Kontrak Sedang Berjalan"])
         with SPSE_SPPBJ_radio_2:
-
             opd = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ['nama_satker'].unique(), key='opd_sppbj')
+        st.write(f"Anda memilih : **{status_kontrak}** dari **{opd}**")
 
-        
+        ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
+        df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak}' AND nama_satker = '{opd}'")
+        jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['no_sppbj'].unique().shape[0]
+        nilai_trx_spse_sppbj_final = df_SPSETenderSPPBJ_filter['harga_final'].sum()
 
+        data_sppbj_1, data_sppbj_2 = st.columns(2)
+        data_sppbj_1.metric(label="Jumlah Tender SPPBJ", value="{:,}".format(jumlah_trx_spse_sppbj))
+        data_sppbj_2.metric(label="Nilai Tender SPPBJ", value="{:,.2f}".format(nilai_trx_spse_sppbj_final))
+        style_metric_cards()
+
+        st.divider()
 
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_4:
