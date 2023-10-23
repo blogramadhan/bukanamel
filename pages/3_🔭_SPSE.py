@@ -193,6 +193,8 @@ with menu_spse_1:
 
         with grafik_kp_1:
 
+            st.subheader("Berdasarkan Jumlah Kualifikasi Paket")
+
             #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan kualifikasi paket
 
             sql_kp_jumlah = """
@@ -215,6 +217,26 @@ with menu_spse_1:
         with grafik_kp_2:
 
             st.subheader("Berdasarkan Nilai Kualifikasi Paket")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan kualifikasi paket
+
+            sql_kp_nilai = """
+                SELECT kualifikasi_paket AS KUALIFIKASI_PAKET, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_kp_nilai_trx = con.execute(sql_kp_nilai).df()
+
+            grafik_kp_2_1, grafik_kp_2_2 = st.columns((3,7))
+
+            with grafik_kp_2_1:
+
+                AgGrid(tabel_kp_nilai_trx)
+
+            with grafik_kp_2_2:
+
+                st.bar_chart(tabel_kp_nilai_trx, x="KUALIFIKASI_PAKET", y="NILAI_PAKET", color="KUALIFIKASI_PAKET")
+
 
 
     #### Tab menu SPSE - Tender - Selesai
