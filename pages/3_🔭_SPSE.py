@@ -231,7 +231,14 @@ with menu_spse_1:
 
             with grafik_kp_2_1:
 
-                AgGrid(tabel_kp_nilai_trx)
+                gd = GridOptionsBuilder.from_dataframe(tabel_kp_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_kp_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
 
             with grafik_kp_2_2:
 
