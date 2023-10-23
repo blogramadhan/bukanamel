@@ -560,11 +560,11 @@ with menu_spse_1:
 
         st.divider()
 
-        SPSE_SPPBJ_radio_1, SPSE_SPPBJ_radio_2 = st.columns((1,9))
+        SPSE_SPPBJ_radio_1, SPSE_SPPBJ_radio_2 = st.columns((2,8))
         with SPSE_SPPBJ_radio_1:
             status_kontrak = st.radio("**Status Kontrak**", ["Kontrak Selesai", "Kontrak Sedang Berjalan"])
         with SPSE_SPPBJ_radio_2:
-            opd = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPPBJ.unique(), key='opd_sppbj')
+            opd = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ.unique(), key='opd_sppbj')
 
         
 
