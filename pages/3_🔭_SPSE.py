@@ -572,7 +572,6 @@ with menu_spse_1:
         jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['no_sppbj'].unique().shape[0]
         nilai_trx_spse_sppbj_final = df_SPSETenderSPPBJ_filter['harga_final'].sum()
 
-
         data_sppbj_1, data_sppbj_2 = st.columns(2)
         data_sppbj_1.metric(label="Jumlah Tender SPPBJ", value="{:,}".format(jumlah_trx_spse_sppbj))
         data_sppbj_2.metric(label="Nilai Tender SPPBJ", value="{:,.2f}".format(nilai_trx_spse_sppbj_final))
