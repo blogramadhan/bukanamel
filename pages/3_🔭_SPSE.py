@@ -578,6 +578,7 @@ with menu_spse_1:
         style_metric_cards()
 
         st.divider()
+        
 
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_4:
