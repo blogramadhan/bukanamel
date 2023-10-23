@@ -616,6 +616,23 @@ with menu_spse_1:
         style_metric_cards()
 
         st.divider()
+        
+        sql_query_sppbj_tbl = """
+            SELECT nama_paket AS NAMA_PAKET, no_sppbj AS NO_SPPBJ, tgl_sppbj AS TGL_SPPBJ, 
+            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
+            harga_final AS HARGA_FINAL FROM df_SPSETenderSPPBJ_filter
+        """
+        df_SPSETenderSPPBJ_tbl_tampil = con.execute(sql_query_sppbj_tbl).df()
+
+        ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
+        gd = GridOptionsBuilder.from_dataframe(df_SPSETenderSPPBJ_tbl_tampil)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("HARGA_FINAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HARGA_FINAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+        gridOptions = gd.build()
+        AgGrid(df_SPSETenderSPPBJ_tbl_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
 
     #### Tab menu SPSE - Tender - Kontrak
