@@ -304,6 +304,66 @@ with menu_spse_1:
 
         st.divider()
 
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Metode Pemilihan
+        grafik_mp_1, grafik_mp_2 = st.tabs(["| Berdasarkan Jumlah Metode Pemilihan |", "| Berdasarkan Nilai Metode Pemilihan |"])
+
+        with grafik_mp_1:
+
+            st.subheader("Berdasarkan Jumlah Metode Pemilihan")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Metode Pemilihan
+
+            sql_mp_jumlah = """
+                SELECT mtd_pemilihan AS METODE_PEMILIHAN, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_mp_jumlah_trx = con.execute(sql_mp_jumlah).df()
+
+            grafik_mp_1_1, grafik_mp_1_2 = st.columns((3,7))
+
+            with grafik_mp_1_1:
+
+                AgGrid(tabel_mp_jumlah_trx)
+
+            with grafik_mp_1_2:
+
+                st.bar_chart(tabel_mp_jumlah_trx, x="METODE_PEMILIHAN", y="JUMLAH_PAKET", color="METODE_PEMILIHAN")
+    
+        with grafik_mp_2:
+
+            st.subheader("Berdasarkan Nilai Metode Pemilihan")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Metode Pemilihan
+
+            sql_mp_nilai = """
+                SELECT mtd_pemilihan AS METODE_PEMILIHAN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_mp_nilai_trx = con.execute(sql_mp_nilai).df()
+
+            grafik_mp_2_1, grafik_mp_2_2 = st.columns((3,7))
+
+            with grafik_mp_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_mp_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("METODE_PEMILIHAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_mp_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_mp_2_2:
+
+                st.bar_chart(tabel_mp_nilai_trx, x="METODE_PEMILIHAN", y="NILAI_PAKET", color="METODE_PEMILIHAN")
+
+        st.divider()
+
+        
+
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
         
