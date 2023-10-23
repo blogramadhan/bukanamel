@@ -175,7 +175,7 @@ with menu_spse_1:
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
         ##### Hitung-hitungan dataset
-        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
+        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
         nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
@@ -246,7 +246,63 @@ with menu_spse_1:
 
         st.divider()
 
-        
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Jenis Pengadaan
+        grafik_jp_1, grafik_jp_2 = st.tabs(["| Berdasarkan Jumlah Jenis Pengadaan |", "| Berdasarkan Nilai Jenis Pengadaan |"])
+
+        with grafik_jp_1:
+
+            st.subheader("Berdasarkan Jumlah Jenis Pengadaan")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Jenis Pengadaan
+
+            sql_jp_jumlah = """
+                SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_jp_jumlah_trx = con.execute(sql_jp_jumlah).df()
+
+            grafik_jp_1_1, grafik_jp_1_2 = st.columns((3,7))
+
+            with grafik_jp_1_1:
+
+                AgGrid(tabel_jp_jumlah_trx)
+
+            with grafik_jp_1_2:
+
+                st.bar_chart(tabel_jp_jumlah_trx, x="JENIS_PENGADAAN", y="JUMLAH_PAKET", color="JENIS_PENGADAAN")
+    
+        with grafik_jp_2:
+
+            st.subheader("Berdasarkan Nilai Jenis Pengadaan")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Jenis Pengadaan
+
+            sql_jp_nilai = """
+                SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_jp_nilai_trx = con.execute(sql_jp_nilai).df()
+
+            grafik_jp_2_1, grafik_jp_2_2 = st.columns((3,7))
+
+            with grafik_jp_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_jp_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_jp_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_jp_2_2:
+
+                st.bar_chart(tabel_jp_nilai_trx, x="JENIS_PENGADAAN", y="NILAI_PAKET", color="JENIS_PENGADAAN")
+
+        st.divider()
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
