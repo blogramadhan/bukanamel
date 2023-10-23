@@ -210,10 +210,8 @@ with menu_spse_1:
 
             with grafik_kp_1_2:
 
-                grafik_kp_jumlah_trx = px.bar(tabel_kp_jumlah_trx, x='KUALIFIKASI_PAKET', y='JUMLAH_PAKET', text_auto='.2s', title='Grafik Jumlah Tender di Umumkan Berdasarkan Kualifikasi Paket')
-                grafik_kp_jumlah_trx.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-                st.plotly_chart(grafik_kp_jumlah_trx, theme='streamlit', use_container_width=True) 
-
+                st.bar_chart(tabel_kp_jumlah_trx, x="KUALIFIKASI_PAKET", y="JUMLAH_PAKET", color="KUALIFIKASI_PAKET")
+    
         with grafik_kp_2:
 
             st.subheader("Berdasarkan Nilai Kualifikasi Paket")
