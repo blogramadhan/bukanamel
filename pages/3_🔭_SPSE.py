@@ -568,8 +568,8 @@ with menu_spse_1:
         st.write(f"Anda memilih : **{status_kontrak}** dari **{opd}**")
 
         ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
-        df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak}' AND nama_satker = '{opd}'")
-        jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['no_sppbj'].unique().shape[0]
+        df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak}' AND nama_satker = '{opd}'").df()
+        jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_sppbj_final = df_SPSETenderSPPBJ_filter['harga_final'].sum()
 
         data_sppbj_1, data_sppbj_2 = st.columns(2)
@@ -578,7 +578,7 @@ with menu_spse_1:
         style_metric_cards()
 
         st.divider()
-        
+
 
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_4:
