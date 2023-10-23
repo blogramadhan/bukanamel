@@ -151,7 +151,7 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - Pengumuman
     with menu_spse_1_1:
 
-        ##### Buat tombol unduh dataset
+        ##### Buat tombol unduh dataset SPSE-Tender-Pengumuman
         unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman)
         
         SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((7,3))
@@ -544,7 +544,22 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - SPPBJ
     with menu_spse_1_3:
 
-        st.subheader("SPSE-Tender-SPPBJ")
+        ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
+        unduh_SPSE_Tender_SPPBJ = unduh_data(df_SPSETenderSPPBJ)
+
+        SPSE_SPPBJ_1, SPSE_SPPBJ_2 = st.columns((7,3))
+        with SPSE_SPPBJ_1:
+            st.subheader("SPSE-Tender-SPPBJ")
+        with SPSE_SPPBJ_2:
+            st.download_button(
+                label = "📥 Download Data Tender SPPBJ",
+                data = unduh_SPSE_Tender_SPPBJ,
+                file_name = f"SPSETenderSPPBJ-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
+
 
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_4:
