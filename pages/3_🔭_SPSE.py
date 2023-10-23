@@ -351,7 +351,7 @@ with menu_spse_1:
                 gd.configure_pagination()
                 gd.configure_side_bar()
                 gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-                gd.configure_column("METODE_PEMILIHAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
                 gridOptions = gd.build()
                 AgGrid(tabel_mp_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
@@ -362,7 +362,7 @@ with menu_spse_1:
 
         st.divider()
 
-        
+
 
     #### Tab menu SPSE - Tender - Selesai
     with menu_spse_1_2:
