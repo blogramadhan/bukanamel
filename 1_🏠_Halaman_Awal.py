@@ -27,7 +27,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Dashboard Pengadaan Barang dan Jasa OK")
+st.title("Dashboard Pengadaan Barang dan Jasa")
 
 st.markdown("""
 *Dashboard* ini dibuat sebagai alat bantu untuk mempermudah para pelaku pengadaan di seluruh wilayah Provinsi Kalimantan Barat. Data yang disajikan, antara lain:
