@@ -105,7 +105,7 @@ with menu_purchasing_1:
 
     st.divider()
 
-    KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((1,1,1,7))
+    KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((2,1,1,6))
     with KATALOG_radio_1:
         status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses"], index=None)
     with KATALOG_radio_2:
