@@ -188,7 +188,7 @@ with menu_purchasing_1:
 
     st.divider()
 
-    st.subheader("Berdasarkan Perangkat Daerah")
+    st.subheader("Berdasarkan Perangkat Daerah (10 Besar)")
 
     grafik_ecat_21, grafik_ecat_22 = st.tabs(["| Jumlah Transaksi Perangkat Daerah |", "| Nilai Transaksi Perangkat Daerah |"])
 
@@ -199,7 +199,7 @@ with menu_purchasing_1:
         sql_jumlah_transaksi_lokal_pd = """
             SELECT nama_satker AS NAMA_SATKER, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
             FROM df_ECAT_filter WHERE NAMA_SATKER IS NOT NULL 
-            GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC
+            GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
         """
 
         tabel_jumlah_transaksi_lokal_pd = con.execute(sql_jumlah_transaksi_lokal_pd).df()
@@ -223,7 +223,7 @@ with menu_purchasing_1:
         sql_nilai_transaksi_lokal_pd = """
             SELECT nama_satker AS NAMA_SATKER, SUM(total_harga) AS NILAI_TRANSAKSI
             FROM df_ECAT_filter WHERE NAMA_SATKER IS NOT NULL
-            GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC
+            GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
         """
 
         tabel_nilai_transaksi_lokal_pd = con.execute(sql_nilai_transaksi_lokal_pd).df()
