@@ -167,7 +167,7 @@ with menu_purchasing_1:
 
         tabel_nilai_ukm = con.execute(sql_nilai_ukm).df()
         
-        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((3,7))
+        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((3.5,6.5))
         
         with grafik_ukm_tab_2_1:
 
