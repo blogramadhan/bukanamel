@@ -131,68 +131,60 @@ with menu_purchasing_1:
 
     st.divider()
 
-    ### Buat grafik e-Purchasing 
-    grafik_ecat_11, grafik_ecat_12, grafik_ecat_13, grafik_ecat_14 = st.tabs(["| Grafik Jumlah Produk Katalog |", "| Grafik Jumlah Penyedia Katalog |", "| Grafik Jumlah Transaksi Katalog |", "| Grafik Nilai Transaksi Katalog |"])
-    
-    with grafik_ecat_11:
+    st.subheader("Penyedia UKM")
 
-        st.subheader("Grafik Jumlah Produk Katalog")
+    ### Buat grafik Katalog Penyedia UKM
+    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia UKM |", "Nilai Transaksi Penyedia UKM"])
 
-        #### Query data grafik Jumlah Produk Katalog
+    with grafik_ukm_tab_1:
 
-        sql_jumlah_produk = f"""
-            SELECT jenis_katalog AS JENIS_KATALOG,  COUNT(DISTINCT(kd_produk)) AS JUMLAH_PRODUK
-            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
-        """
+        #### Query data grafik jumlah transaksi penyedia ukm
+        sql_jumlah_ukm = f"""
+            SELECT penyedia_ukm AS PENYEDIA_UKM, COUNT(DISTINCT(kd_penyedia)) AS JUMLAH_UKM
+            FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
+        """ 
 
-        tabel_jumlah_produk = con.execute(sql_jumlah_produk).df()
+        tabel_jumlah_ukm = con.execute(sql_jumlah_ukm).df()
+        
+        grafik_ukm_tab_1_1, grafik_ukm_tab_1_2 = st.columns((4,6))
+        
+        with grafik_ukm_tab_1_1:
 
-        st.bar_chart(tabel_jumlah_produk, x="JENIS_KATALOG", y="JUMLAH_PRODUK", color="JENIS_KATALOG")
+            AgGrid(tabel_jumlah_ukm)
 
-    with grafik_ecat_12:
+        with grafik_ukm_tab_1_2:
 
-        st.subheader("Grafik Jumlah Penyedia Katalog")
+            fig_katalog_jumlah_ukm = px.pie(tabel_jumlah_ukm, values='JUMLAH_UKM', names="PENYEDIA_UKM", title='Grafik Jumlah Transaksi Katalog PENYEDIA UKM', hole=.3)
+            st.plotly_chart(fig_katalog_jumlah_ukm, theme='streamlit', use_container_width=True)           
 
-        #### Query data grafik Jumlah Penyedia Katalog
+    with grafik_ukm_tab_2:
 
-        sql_jumlah_penyedia = f"""
-            SELECT jenis_katalog AS JENIS_KATALOG,  COUNT(DISTINCT(kd_penyedia)) AS JUMLAH_PENYEDIA
-            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
-        """
+        #### Query data grafik nilai transaksi penyedia ukm
+        sql_nilai_ukm = f"""
+            SELECT penyedia_ukm AS PENYEDIA_UKM, SUM(total_harga) AS NILAI_UKM
+            FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
+        """ 
 
-        tabel_jumlah_penyedia = con.execute(sql_jumlah_penyedia).df()
+        tabel_nilai_ukm = con.execute(sql_nilai_ukm).df()
+        
+        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((4,6))
+        
+        with grafik_ukm_tab_2_1:
 
-        st.bar_chart(tabel_jumlah_penyedia, x="JENIS_KATALOG", y="JUMLAH_PENYEDIA", color="JENIS_KATALOG")
+            gd = GridOptionsBuilder.from_dataframe(tabel_nilai_ukm)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_UKM", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UKM.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
-    with grafik_ecat_13:
+            gridOptions = gd.build()
+            AgGrid(tabel_nilai_ukm, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        st.subheader("Grafik Jumlah Transaksi Katalog")
 
-        #### Query data grafik Jumlah Transaksi Katalog
+        with grafik_ukm_tab_2_2:
 
-        sql_jumlah_transaksi = f"""
-            SELECT jenis_katalog AS JENIS_KATALOG,  COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
-        """
-
-        tabel_jumlah_transaksi = con.execute(sql_jumlah_transaksi).df()
-
-        st.bar_chart(tabel_jumlah_transaksi, x="JENIS_KATALOG", y="JUMLAH_TRANSAKSI", color="JENIS_KATALOG")
-
-    with grafik_ecat_14:
-
-        st.subheader("Grafik Nilai Transaksi Katalog")
-
-        #### Query data grafik Nilai Transaksi Katalog
-
-        sql_nilai_transaksi = f"""
-            SELECT jenis_katalog AS JENIS_KATALOG,  SUM(total_harga) AS NILAI_TRANSAKSI
-            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
-        """
-
-        tabel_nilai_transaksi = con.execute(sql_nilai_transaksi).df()
-
-        st.bar_chart(tabel_nilai_transaksi, x="JENIS_KATALOG", y="NILAI_TRANSAKSI", color="JENIS_KATALOG")
+            fig_katalog_nilai_ukm = px.pie(tabel_nilai_ukm, values='NILAI_UKM', names="PENYEDIA_UKM", title='Grafik Nilai Transaksi Katalog PENYEDIA UKM', hole=.3)
+            st.plotly_chart(fig_katalog_nilai_ukm, theme='streamlit', use_container_width=True)           
 
     st.divider()
 
