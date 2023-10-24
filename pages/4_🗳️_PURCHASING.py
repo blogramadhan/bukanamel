@@ -63,17 +63,20 @@ if pilih == "KAB. KUBU RAYA":
 con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
-DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.parquet" 
+DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.xlsx" 
 DatasetPURCHASINGBELA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.parquet"
 
 ## Buat dataframe PURCHASING
 try:
-    ### Baca file parquet dataset PURCHASING
-    df_ECAT = tarik_data(DatasetPURCHASINGECAT)
-    df_BELA = tarik_data(DatasetPURCHASINGBELA)
-
+    ### Baca dataset PURCHASING - Katalog
+    df_ECAT = tarik_data_excel(DatasetPURCHASINGECAT)
 except Exception:
-    st.error("Gagal baca dataset PURCHASING")
+    st.error("Gagal baca dataset Katalog")
+try:
+    ### Baca dataset PURCHASING - TokoDaring
+    df_BELA = tarik_data(DatasetPURCHASINGBELA)
+except Exception:
+    st.error("Gagal baca dataset Toko Daring")
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -101,48 +104,28 @@ with menu_purchasing_1:
 
     st.divider()
 
-    status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses"], index=None)
-    st.write(f"Anda memilih : **{status_paket}**")
+    KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3 = st.columns((1,1,1,7))
+    with KATALOG_radio_1:
+        status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses"], index=None)
+    with KATALOG_radio_2:
+        jenis_katalog = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral"])
+    with KATALOG_radio_3:
+        nama_sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "BLU", "BLUD", "BUMN"])
+    st.write(f"Anda memilih : **{status_paket}** dan **{jenis_katalog}** dan **{nama_sumber_dana}**")
 
-    ### Hitung-hitung dataset
-    df_ECAT_lokal = con.execute(f"SELECT * FROM df_ECAT WHERE jenis_katalog = 'Lokal' AND nama_sumber_dana = 'APBD' AND paket_status_str = '{status_paket}'").df()
-    df_ECAT_sektoral = con.execute(f"SELECT * FROM df_ECAT WHERE jenis_katalog = 'Sektoral' AND paket_status_str = '{status_paket}'").df()
-    df_ECAT_nasional = con.execute(f"SELECT * FROM df_ECAT WHERE jenis_katalog = 'Nasional' AND paket_status_str = '{status_paket}'").df()
-
-    jumlah_produk_lokal = df_ECAT_lokal['kd_produk'].unique().shape[0]
-    jumlah_penyedia_lokal = df_ECAT_lokal['kd_penyedia'].unique().shape[0]
-    jumlah_trx_lokal = df_ECAT_lokal['no_paket'].unique().shape[0]
-    nilai_trx_lokal = df_ECAT_lokal['total_harga'].sum()
+    ### Hitung-hitung dataset Katalog
+    df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE paket_status_str = '{status_paket}' AND jenis_katalog = '{jenis_katalog}' AND nama_sumber_dana = '{nama_sumber_dana}'").df()
+  
+    jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
+    jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
+    jumlah_trx = df_ECAT_filter['no_paket'].unique().shape[0]
+    nilai_trx = df_ECAT_filter['total_harga'].sum()
 
     colokal1, colokal2, colokal3, colokal4 = st.columns(4)
-    colokal1.metric(label="Jumlah Produk Katalog Lokal", value="{:,}".format(jumlah_produk_lokal))
-    colokal2.metric(label="Jumlah Penyedia Katalog Lokal", value="{:,}".format(jumlah_penyedia_lokal))
-    colokal3.metric(label="Jumlah Transaksi Katalog Lokal", value="{:,}".format(jumlah_trx_lokal))
-    colokal4.metric(label="Nilai Transaksi Katalog Lokal", value="{:,.2f}".format(nilai_trx_lokal))
-    style_metric_cards()
-
-    jumlah_produk_sektoral = df_ECAT_sektoral['kd_produk'].unique().shape[0]
-    jumlah_penyedia_sektoral = df_ECAT_sektoral['kd_penyedia'].unique().shape[0]
-    jumlah_trx_sektoral = df_ECAT_sektoral['no_paket'].unique().shape[0]
-    nilai_trx_sektoral = df_ECAT_sektoral['total_harga'].sum()
-
-    cosektoral1, cosektoral2, cosektoral3, cosektoral4 = st.columns(4)
-    cosektoral1.metric(label="Jumlah Produk Katalog Sektoral", value="{:,}".format(jumlah_produk_sektoral))
-    cosektoral2.metric(label="Jumlah Penyedia Katalog Sektoral", value="{:,}".format(jumlah_penyedia_sektoral))
-    cosektoral3.metric(label="Jumlah Transaksi Katalog Sektoral", value="{:,}".format(jumlah_trx_sektoral))
-    cosektoral4.metric(label="Nilai Transaksi Katalog Sektoral", value="{:,.2f}".format(nilai_trx_sektoral))
-    style_metric_cards()
-
-    jumlah_produk_nasional = df_ECAT_nasional['kd_produk'].unique().shape[0]
-    jumlah_penyedia_nasional = df_ECAT_nasional['kd_penyedia'].unique().shape[0]
-    jumlah_trx_nasional = df_ECAT_nasional['no_paket'].unique().shape[0]
-    nilai_trx_nasional = df_ECAT_nasional['total_harga'].sum()
-
-    conasional1, conasional2, conasional3, conasional4 = st.columns(4)
-    conasional1.metric(label="Jumlah Produk Katalog Nasional", value="{:,}".format(jumlah_produk_nasional))
-    conasional2.metric(label="Jumlah Penyedia Katalog Nasional", value="{:,}".format(jumlah_penyedia_nasional))
-    conasional3.metric(label="Jumlah Transaksi Katalog Nasional", value="{:,}".format(jumlah_trx_nasional))
-    conasional4.metric(label="Nilai Transaksi Katalog Nasional", value="{:,.2f}".format(nilai_trx_nasional))
+    colokal1.metric(label="Jumlah Produk Katalog", value="{:,}".format(jumlah_produk))
+    colokal2.metric(label="Jumlah Penyedia Katalog", value="{:,}".format(jumlah_penyedia))
+    colokal3.metric(label="Jumlah Transaksi Katalog", value="{:,}".format(jumlah_trx))
+    colokal4.metric(label="Nilai Transaksi Katalog", value="{:,.2f}".format(nilai_trx))
     style_metric_cards()
 
     st.divider()
@@ -158,8 +141,7 @@ with menu_purchasing_1:
 
         sql_jumlah_produk = f"""
             SELECT jenis_katalog AS JENIS_KATALOG,  COUNT(DISTINCT(kd_produk)) AS JUMLAH_PRODUK
-            FROM df_ECAT WHERE nama_sumber_dana = 'APBD' AND paket_status_str = '{status_paket}'
-            GROUP BY JENIS_KATALOG
+            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
         """
 
         tabel_jumlah_produk = con.execute(sql_jumlah_produk).df()
@@ -174,8 +156,7 @@ with menu_purchasing_1:
 
         sql_jumlah_penyedia = f"""
             SELECT jenis_katalog AS JENIS_KATALOG,  COUNT(DISTINCT(kd_penyedia)) AS JUMLAH_PENYEDIA
-            FROM df_ECAT WHERE nama_sumber_dana = 'APBD' AND paket_status_str = '{status_paket}'
-            GROUP BY JENIS_KATALOG
+            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
         """
 
         tabel_jumlah_penyedia = con.execute(sql_jumlah_penyedia).df()
@@ -190,8 +171,7 @@ with menu_purchasing_1:
 
         sql_jumlah_transaksi = f"""
             SELECT jenis_katalog AS JENIS_KATALOG,  COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-            FROM df_ECAT WHERE nama_sumber_dana = 'APBD' AND paket_status_str = '{status_paket}'
-            GROUP BY JENIS_KATALOG
+            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
         """
 
         tabel_jumlah_transaksi = con.execute(sql_jumlah_transaksi).df()
@@ -206,8 +186,7 @@ with menu_purchasing_1:
 
         sql_nilai_transaksi = f"""
             SELECT jenis_katalog AS JENIS_KATALOG,  SUM(total_harga) AS NILAI_TRANSAKSI
-            FROM df_ECAT WHERE nama_sumber_dana = 'APBD' AND paket_status_str = '{status_paket}'
-            GROUP BY JENIS_KATALOG
+            FROM df_ECAT_filter GROUP BY JENIS_KATALOG
         """
 
         tabel_nilai_transaksi = con.execute(sql_nilai_transaksi).df()
@@ -216,7 +195,7 @@ with menu_purchasing_1:
 
     st.divider()
 
-    grafik_ecat_21, grafik_ecat_22 = st.tabs(["| Grafik Jumlah Transaksi e-Katalog Lokal Perangkat Daerah |", "| Grafik Nilai Transaksi e-Katalog Lokal Perangkat Daerah |"])
+    grafik_ecat_21, grafik_ecat_22 = st.tabs(["| Grafik Jumlah Transaksi e-Katalog Perangkat Daerah |", "| Grafik Nilai Transaksi e-Katalog Perangkat Daerah |"])
 
     with grafik_ecat_21:
 
@@ -224,7 +203,7 @@ with menu_purchasing_1:
 
         sql_jumlah_transaksi_lokal_pd = """
             SELECT nama_satker AS NAMA_SATKER, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-            FROM df_ECAT_lokal WHERE NAMA_SATKER IS NOT NULL 
+            FROM df_ECAT_filter WHERE NAMA_SATKER IS NOT NULL 
             GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC
         """
 
@@ -248,7 +227,7 @@ with menu_purchasing_1:
 
         sql_nilai_transaksi_lokal_pd = """
             SELECT nama_satker AS NAMA_SATKER, SUM(total_harga) AS NILAI_TRANSAKSI
-            FROM df_ECAT_lokal WHERE NAMA_SATKER IS NOT NULL
+            FROM df_ECAT_filter WHERE NAMA_SATKER IS NOT NULL
             GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC
         """
 
