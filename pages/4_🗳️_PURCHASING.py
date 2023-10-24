@@ -131,10 +131,10 @@ with menu_purchasing_1:
 
     st.divider()
 
-    st.subheader("Penyedia UKM")
+    st.subheader("Berdasarkan Kualifikasi Usaha")
 
     ### Buat grafik Katalog Penyedia UKM
-    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia UKM |", "| Nilai Transaksi Penyedia UKM |"])
+    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia |", "| Nilai Transaksi Penyedia |"])
 
     with grafik_ukm_tab_1:
 
@@ -188,7 +188,9 @@ with menu_purchasing_1:
 
     st.divider()
 
-    grafik_ecat_21, grafik_ecat_22 = st.tabs(["| Grafik Jumlah Transaksi e-Katalog Perangkat Daerah |", "| Grafik Nilai Transaksi e-Katalog Perangkat Daerah |"])
+    st.subheader("Berdasarkan Perangkat Daerah")
+
+    grafik_ecat_21, grafik_ecat_22 = st.tabs(["| Jumlah Transaksi Perangkat Daerah |", "| Nilai Transaksi Perangkat Daerah |"])
 
     with grafik_ecat_21:
 
