@@ -105,13 +105,13 @@ with menu_purchasing_1:
 
     st.divider()
 
-    KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((2,1,1,6))
+    KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((1,1,2,6))
     with KATALOG_radio_1:
-        status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses"], index=None)
-    with KATALOG_radio_2:
         jenis_katalog = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral"])
+    with KATALOG_radio_2:
+        nama_sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "BLU", "BLUD", "BUMN"])    
     with KATALOG_radio_3:
-        nama_sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "BLU", "BLUD", "BUMN"])
+        status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses"])
     st.write(f"Anda memilih : **{status_paket}** dan **{jenis_katalog}** dan **{nama_sumber_dana}**")
 
     ### Hitung-hitung dataset Katalog
