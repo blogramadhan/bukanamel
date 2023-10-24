@@ -1,4 +1,5 @@
 duckdb
+openpyxl
 pandas
 streamlit
 babel
