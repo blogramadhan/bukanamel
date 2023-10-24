@@ -134,7 +134,7 @@ with menu_purchasing_1:
     st.subheader("Penyedia UKM")
 
     ### Buat grafik Katalog Penyedia UKM
-    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia UKM |", "Nilai Transaksi Penyedia UKM"])
+    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia UKM |", "| Nilai Transaksi Penyedia UKM |"])
 
     with grafik_ukm_tab_1:
 
@@ -146,7 +146,7 @@ with menu_purchasing_1:
 
         tabel_jumlah_ukm = con.execute(sql_jumlah_ukm).df()
         
-        grafik_ukm_tab_1_1, grafik_ukm_tab_1_2 = st.columns((4,6))
+        grafik_ukm_tab_1_1, grafik_ukm_tab_1_2 = st.columns((3,7))
         
         with grafik_ukm_tab_1_1:
 
@@ -167,7 +167,7 @@ with menu_purchasing_1:
 
         tabel_nilai_ukm = con.execute(sql_nilai_ukm).df()
         
-        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((4,6))
+        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((3,7))
         
         with grafik_ukm_tab_2_1:
 
