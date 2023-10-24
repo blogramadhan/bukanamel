@@ -249,7 +249,7 @@ with menu_purchasing_1:
 
     st.divider()
 
-    st.subheader("Berdasarkan Pelaku Usaha")
+    st.subheader("Berdasarkan Pelaku Usaha (10 Besar)")
 
     grafik_ecat_pu_1, grafik_ecat_pu_2 = st.tabs(["| Jumlah Transaksi Pelaku Usaha |", "| Nilai Transaksi Pelaku Usaha |"])
 
@@ -260,7 +260,7 @@ with menu_purchasing_1:
         sql_jumlah_transaksi_ecat_pu = """
             SELECT nama_penyedia AS NAMA_PENYEDIA, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
             FROM df_ECAT_filter WHERE NAMA_PENYEDIA IS NOT NULL 
-            GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC
+            GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
         """
 
         tabel_jumlah_transaksi_ecat_pu = con.execute(sql_jumlah_transaksi_ecat_pu).df()
@@ -284,7 +284,7 @@ with menu_purchasing_1:
         sql_nilai_transaksi_ecat_pu = """
             SELECT nama_penyedia AS NAMA_PENYEDIA, SUM(total_harga) AS NILAI_TRANSAKSI
             FROM df_ECAT_filter WHERE NAMA_PENYEDIA IS NOT NULL
-            GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC
+            GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
         """
 
         tabel_nilai_transaksi_ecat_pu = con.execute(sql_nilai_transaksi_ecat_pu).df()
@@ -302,7 +302,7 @@ with menu_purchasing_1:
             gridOptions = gd.build()
             AgGrid(tabel_nilai_transaksi_ecat_pu, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        with grafik_ecat_22_2:
+        with grafik_ecat_pu_2_2:
             
             grafik_nilai_transaksi_ecat_pu = px.bar(tabel_nilai_transaksi_ecat_pu, x='NAMA_PENYEDIA', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi Katalog Pelaku Usaha')
             grafik_nilai_transaksi_ecat_pu.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
