@@ -677,14 +677,22 @@ with menu_spse_4:
 
     #### Query penggabungan dataset Peserta Tender vs Master Satker
 
-    sql_query_PesertaTenderDetail = """
+    sql_query_PesertaTenderDetail_1 = """
         SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi
         FROM df_PesertaTender, df_RUPMasterSatker 
         WHERE df_PesertaTender.kd_satker_str = df_RUPMasterSatker.kd_satker_str 
     """
 
-    df_PesertaTenderDetail = con.execute(sql_query_PesertaTenderDetail).df()
+    sql_query_PesertaTenderDetail_2 = """
+        SELECT nama_satker, nama_paket, pagu, hps, sumber_dana, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi
+        FROM df_PesertaTender_1, df_SPSETenderPengumuman 
+        WHERE df_PesertaTender_1.kd_tender = df_SPSETenderPengumuman.kd_tender
+    """
+
+    df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
+    df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
 
     st.header("SPSE - Peserta Tender")
 
-    st.dataframe(df_PesertaTenderDetail)
+    st.dataframe(df_PesertaTenderDetail_1)
+    st.dataframe(df_PesertaTenderDetail_2)
