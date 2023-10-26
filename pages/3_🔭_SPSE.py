@@ -729,11 +729,11 @@ with menu_spse_4:
 
     st.divider()
 
-    if status_pemenang == "PEMENANG":
-        jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
-    elif status_pemenang == "MENDAFTAR":
-        jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
-    else:
-        jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+    #if status_pemenang == "PEMENANG":
+    #    jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
+    #elif status_pemenang == "MENDAFTAR":
+    #    jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+    #else:
+    #    jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
 
-    AgGrid(jumlah_PeserteTender)
+    #AgGrid(jumlah_PeserteTender)
