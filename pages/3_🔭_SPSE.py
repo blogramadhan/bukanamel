@@ -91,6 +91,9 @@ DatasetCatatSwakelolaRealisasi = f"https://storage.googleapis.com/bukanamel/{kod
 ### Dataset Peserta Tender
 DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPesertaTender{tahun}.parquet"
 
+### Dataset RUP Master Satker
+DatasetRUPMasterSatker = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPMasterSatker{tahun}.parquet"
+
 ## Buat dataframe SPSE
 ### Baca file parquet dataset SPSE Tender
 try:
@@ -171,6 +174,12 @@ try:
     df_PesertaTender = tarik_data(DatasetPesertaTender)
 except Exception:
     st.error("Gagal baca dataset Peserta Tender")
+
+### Baca file parquet dataset RUP Master Satker
+try:
+    df_RUPMasterSatker = tarik_data(DatasetRUPMasterSatker)
+except Exception:
+    st.error("Gagal baca dataset RUP Master Satker")
 
 #####
 # Mulai membuat presentasi data SPSE
@@ -664,4 +673,18 @@ with menu_spse_3:
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
 
+    ### Persiapan dataset Peserta Tender vs Master Satker
+
+    #### Query penggabungan dataset Peserta Tender vs Master Satker
+
+    sql_query_PesertaTenderDetail = """
+        SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi
+        FROM df_PesertaTender, df_RUPMasterSatker 
+        WHERE df_PesertaTender.kd_satker = df_RUPMasterSatker.kd_satker 
+    """
+
+    df_PesertaTenderDetail = con.execute(sql_query_PesertaTenderDetail).df()
+
     st.header("SPSE - Peserta Tender")
+
+    AgGrid(df_PesertaTenderDetail)
