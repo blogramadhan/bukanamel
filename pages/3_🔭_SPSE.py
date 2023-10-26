@@ -684,15 +684,15 @@ with menu_spse_4:
     """
 
     sql_query_PesertaTenderDetail_2 = """
-        SELECT nama_satker, nama_paket, pagu, hps, sumber_dana, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi
+        SELECT df_PesertaTenderDetail_1.nama_satker, df_SPSETenderPengumuman.nama_paket, df_SPSETenderPengumuman.pagu, df_SPSETenderPengumuman.hps, df_SPSETenderPengumuman.sumber_dana, df_PesertaTenderDetail_1.nama_penyedia, df_PesertaTenderDetail_1.npwp_penyedia, df_PesertaTenderDetail_1.nilai_penawaran, df_PesertaTenderDetail_1.nilai_terkoreksi, df_PesertaTenderDetail_1.pemenang, df_PesertaTenderDetail_1.pemenang_terverifikasi
         FROM df_PesertaTenderDetail_1, df_SPSETenderPengumuman 
         WHERE df_PesertaTenderDetail_1.kd_tender = df_SPSETenderPengumuman.kd_tender
     """
 
     df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
-    #df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
+    df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
 
     st.header("SPSE - Peserta Tender")
 
     st.dataframe(df_PesertaTenderDetail_1)
-    st.dataframe(df_SPSETenderPengumuman)
+    st.dataframe(df_PesertaTenderDetail_2)
