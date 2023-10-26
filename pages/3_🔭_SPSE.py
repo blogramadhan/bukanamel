@@ -715,7 +715,7 @@ with menu_spse_4:
     df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}' AND nama_penyedia IS NOT NULL").df()
     jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
-    jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang = 1").df()
+    jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0 AND pemenang != 0").df()
 
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].unique().shape[0]))
