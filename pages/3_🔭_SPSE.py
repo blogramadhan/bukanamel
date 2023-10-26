@@ -708,7 +708,7 @@ with menu_spse_4:
 
     st.divider()
 
-    SPSE_PT_radio_1, SPSE_PT_radio_2 = st.columns((1,2,7))
+    SPSE_PT_radio_1, SPSE_PT_radio_2, SPSE_PT_radio_3 = st.columns((1,2,7))
     with SPSE_PT_radio_1:
         sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
     with SPSE_PT_radio_2:
