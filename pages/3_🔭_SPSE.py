@@ -692,7 +692,20 @@ with menu_spse_4:
     df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
     df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
 
-    st.header("SPSE - Peserta Tender")
+    #### Buat tombol unduh dataset Peserta Tender
+    unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
 
-    st.dataframe(df_PesertaTenderDetail_1)
-    st.dataframe(df_PesertaTenderDetail_2)
+    SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,2))
+    with SPSE_PT_D_1:
+        st.header(f"SPSE - Peserta Tender - {pilih}")
+    with SPSE_PT_D_2:
+        st.download_button(
+            label = "📥 Download Data Peserta Tender",
+            data = unduh_Peserta_Tender,
+            file_name = f"SPSEPesertaTenderDetail-{kodeFolder}-{tahun}.csv",
+            mime = "text/csc"
+        )
+
+    st.divider()
+
+    
