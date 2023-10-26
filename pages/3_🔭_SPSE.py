@@ -695,4 +695,4 @@ with menu_spse_4:
     st.header("SPSE - Peserta Tender")
 
     st.dataframe(df_PesertaTenderDetail_1)
-    #st.dataframe(df_PesertaTenderDetail_2)
+    st.dataframe(df_SPSETenderPengumuman)
