@@ -690,9 +690,9 @@ with menu_spse_4:
     """
 
     df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
-    df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
+    #df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
 
     st.header("SPSE - Peserta Tender")
 
     st.dataframe(df_PesertaTenderDetail_1)
-    st.dataframe(df_PesertaTenderDetail_2)
+    #st.dataframe(df_PesertaTenderDetail_2)
