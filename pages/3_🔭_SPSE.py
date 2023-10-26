@@ -685,8 +685,8 @@ with menu_spse_4:
 
     sql_query_PesertaTenderDetail_2 = """
         SELECT nama_satker, nama_paket, pagu, hps, sumber_dana, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi
-        FROM df_PesertaTender_1, df_SPSETenderPengumuman 
-        WHERE df_PesertaTender_1.kd_tender = df_SPSETenderPengumuman.kd_tender
+        FROM df_PesertaTenderDetail_1, df_SPSETenderPengumuman 
+        WHERE df_PesertaTenderDetail_1.kd_tender = df_SPSETenderPengumuman.kd_tender
     """
 
     df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
