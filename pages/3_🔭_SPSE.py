@@ -708,7 +708,7 @@ with menu_spse_4:
 
     st.divider()
 
-    sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"])
+    sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
     #st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     #### Hitung-hitungan dataset Peserta Tender
