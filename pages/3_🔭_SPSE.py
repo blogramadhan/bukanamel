@@ -708,7 +708,11 @@ with menu_spse_4:
 
     st.divider()
 
-    sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
+    SPSE_PT_radio_1, SPSE_PT_radio_2 = st.columns((1,2,7))
+    with SPSE_PT_radio_1:
+        sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
+    with SPSE_PT_radio_2:
+        status_pemenang = st.radio("**Status Peserta**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     #### Hitung-hitungan dataset Peserta Tender
@@ -724,3 +728,12 @@ with menu_spse_4:
     style_metric_cards()
 
     st.divider()
+
+    if status_pemenang == "PEMENANG":
+        jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
+    elif status_pemenang == "MENDAFTAR":
+        jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+    else:
+        jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+
+    AgGrid(jumlah_PeserteTender)
