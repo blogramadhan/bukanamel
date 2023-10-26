@@ -687,4 +687,4 @@ with menu_spse_4:
 
     st.header("SPSE - Peserta Tender")
 
-    AgGrid(df_PesertaTenderDetail)
+    st.dataframe(df_PesertaTenderDetail)
