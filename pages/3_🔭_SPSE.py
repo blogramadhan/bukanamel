@@ -708,7 +708,7 @@ with menu_spse_4:
 
     st.divider()
 
-    sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
+    sumber_dana_pt = st.radio("**Sumber Dana :**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     #### Hitung-hitungan dataset Peserta Tender
@@ -726,8 +726,8 @@ with menu_spse_4:
     st.divider()
 
     opd_pt = df_PesertaTenderDetail_filter['nama_satker'].unique()
-    status_pemenang_pt = st.radio("**Tabel Data Peserta**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
-    status_opd_pt = st.selectbox("Pilih Satker :", opd_pt)
+    status_pemenang_pt = st.radio("**Tabel Data Peserta :**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
+    status_opd_pt = st.selectbox("**Pilih Satker :**", opd_pt)
 
     if status_pemenang_pt == "PEMENANG":
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND pemenang != 0").df()
