@@ -717,7 +717,7 @@ with menu_spse_4:
     jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
 
     data_pt_1, data_pt_2 = st.columns(2)
-    data_pt_1.metric(label="Jumlah Peserta Tender Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar.shape[0]))
+    data_pt_1.metric(label="Jumlah Peserta Tender Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].unique().shape[0]))
     data_pt_2.metric(label="Jumlah Peserta Tender Menawar", value="{:,}".format(jumlah_PesertaTender_nawar.shape[0]))
     style_metric_cards()
 
