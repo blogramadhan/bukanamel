@@ -728,11 +728,11 @@ with menu_spse_4:
     status_pemenang = st.radio("**Tabel Data Peserta**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
 
     if status_pemenang == "PEMENANG":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_satker, nama_paket, nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
     elif status_pemenang == "MENDAFTAR":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_satker, nama_paket, nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     else:
-        jumlah_PeserteTender = con.execute(f"SELECT nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_satker, nama_paket, nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
 
     gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
     gd.configure_pagination()
