@@ -708,11 +708,7 @@ with menu_spse_4:
 
     st.divider()
 
-    SPSE_PT_radio_1, SPSE_PT_radio_2, SPSE_PT_radio_3 = st.columns((1,2,7))
-    with SPSE_PT_radio_1:
-        sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
-    with SPSE_PT_radio_2:
-        status_pemenang = st.radio("**Status Peserta**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
+    sumber_dana_pt = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     #### Hitung-hitungan dataset Peserta Tender
@@ -729,11 +725,19 @@ with menu_spse_4:
 
     st.divider()
 
-    #if status_pemenang == "PEMENANG":
-    #    jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
-    #elif status_pemenang == "MENDAFTAR":
-    #    jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
-    #else:
-    #    jumlah_PeserteTender = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+    status_pemenang = st.radio("**Tabel Data Peserta**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
 
-    #AgGrid(jumlah_PeserteTender)
+    if status_pemenang == "PEMENANG":
+        jumlah_PeserteTender = con.execute(f"SELECT nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
+    elif status_pemenang == "MENDAFTAR":
+        jumlah_PeserteTender = con.execute(f"SELECT nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+    else:
+        jumlah_PeserteTender = con.execute(f"SELECT nama_penyedia, npwp_penyedia FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+
+    gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
+    gd.configure_pagination()
+    gd.configure_side_bar()
+    gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+
+    gridOptions = gd.build()
+    AgGrid(jumlah_PeserteTender, gridOptions=gridOptions, enable_enterprise_modules=True)
