@@ -678,7 +678,7 @@ with menu_spse_4:
     #### Query penggabungan dataset Peserta Tender vs Master Satker
 
     sql_query_PesertaTenderDetail_1 = """
-        SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi
+        SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi, kd_tender
         FROM df_PesertaTender, df_RUPMasterSatker 
         WHERE df_PesertaTender.kd_satker_str = df_RUPMasterSatker.kd_satker_str 
     """
