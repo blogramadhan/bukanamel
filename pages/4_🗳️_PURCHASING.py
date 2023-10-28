@@ -349,14 +349,14 @@ with menu_purchasing_2:
 
     with grafik_bela_11:
 
-        st.subheader("Grafik Jumlah Transaksi Toko Daring Perangkat Daerah")
+        st.subheader("Grafik Jumlah Transaksi Toko Daring Perangkat Daerah (10 Besar)")
 
         #### Query data grafik jumlah Transaksi Toko Daring Perangkat Daerah
 
         sql_jumlah_transaksi_bela_pd = """
             SELECT nama_satker AS NAMA_SATKER, COUNT(DISTINCT(order_id)) AS JUMLAH_TRANSAKSI
             FROM df_BELA_filter WHERE NAMA_SATKER IS NOT NULL
-            GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC
+            GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
         """
 
         tabel_jumlah_transaksi_bela_pd = con.execute(sql_jumlah_transaksi_bela_pd).df()
@@ -375,14 +375,14 @@ with menu_purchasing_2:
 
     with grafik_bela_12:
 
-        st.subheader("Grafik Nilai Transaksi Toko Daring Perangkat Daerah")
+        st.subheader("Grafik Nilai Transaksi Toko Daring Perangkat Daerah (10 Besar)")
 
         #### Query data grafik nilai Transaksi Toko Daring Perangkat Daerah
 
         sql_nilai_transaksi_bela_pd = """
             SELECT nama_satker AS NAMA_SATKER, SUM(valuasi) AS NILAI_TRANSAKSI
             FROM df_BELA_filter WHERE NAMA_SATKER IS NOT NULL
-            GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC
+            GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
         """
 
         tabel_nilai_transaksi_bela_pd = con.execute(sql_nilai_transaksi_bela_pd).df()
