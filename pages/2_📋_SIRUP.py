@@ -299,7 +299,7 @@ with menu_rup_1:
             gridOptions = gd.build()
             AgGrid(df_RUPPP_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        with grafik_rup_pdn_tab_2_2:
+        with grafik_rup_mp_tab_2_2:
 
             figmpn = px.pie(df_RUPPP_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
             st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
