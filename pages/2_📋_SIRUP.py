@@ -197,7 +197,7 @@ with menu_rup_1:
 
     with grafik_rup_ukm_tab_1:
 
-        grafik_rup_ukm_tab_1_1, grafik_rup_ukm_tab_1_2 = st.columns((3,7))
+        grafik_rup_ukm_tab_1_1, grafik_rup_ukm_tab_1_2 = st.columns((2,7))
 
         with grafik_rup_ukm_tab_1_1:
 
@@ -210,7 +210,7 @@ with menu_rup_1:
 
     with grafik_rup_ukm_tab_2:
 
-        grafik_rup_ukm_tab_2_1, grafik_rup_ukm_tab_2_2 = st.columns((3,7))
+        grafik_rup_ukm_tab_2_1, grafik_rup_ukm_tab_2_2 = st.columns((8,7))
 
         with grafik_rup_ukm_tab_2_1:
 
@@ -233,7 +233,7 @@ with menu_rup_1:
 
     with grafik_rup_pdn_tab_1:
 
-        grafik_rup_pdn_tab_1_1, grafik_rup_pdn_tab_1_2 = st.columns((3,7))
+        grafik_rup_pdn_tab_1_1, grafik_rup_pdn_tab_1_2 = st.columns((2,8))
 
         with grafik_rup_pdn_tab_1_1:
 
@@ -246,7 +246,7 @@ with menu_rup_1:
 
     with grafik_rup_pdn_tab_2:
 
-        grafik_rup_pdn_tab_2_1, grafik_rup_pdn_tab_2_2 = st.columns((3,7))
+        grafik_rup_pdn_tab_2_1, grafik_rup_pdn_tab_2_2 = st.columns((2,8))
 
         with grafik_rup_pdn_tab_2_1:
 
