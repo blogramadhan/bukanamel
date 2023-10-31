@@ -192,30 +192,42 @@ with menu_rup_1:
 
     st.subheader("STATUS UKM DAN PDN")
 
-    ukmh1, ukmn2 = st.columns((5,5))
-    with ukmh1:
-        st.markdown("#### Berdasarkan Jumlah Paket - UKM")
-        AgGrid(df_RUPPP_ukm_hitung)
+    ### Buat grafik RUP Status UKM dan PDN
+    grafik_rup_ukm_tab_1, grafik_rup_ukm_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"])
 
-    with ukmn2:
-        st.markdown("#### Berdasarkan Nilai Paket - UKM")
-        
-        gd = GridOptionsBuilder.from_dataframe(df_RUPPP_ukm_nilai)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+    with grafik_rup_ukm_tab_1:
 
-        gridOptions = gd.build()
-        AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+        grafik_rup_ukm_tab_1_1, grafik_rup_ukm_tab_1_2 = st.columns((3,7))
 
-    ukmhg1, ukmng2 = st.columns((5,5))
-    with ukmhg1:
-        figukmh = px.pie(df_RUPPP_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
-        st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
-    with ukmng2:
-        figukmn = px.pie(df_RUPPP_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
-        st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
+        with grafik_rup_ukm_tab_1_1:
+
+            AgGrid(df_RUPPP_ukm_hitung)
+
+        with grafik_rup_ukm_tab_1_2:
+
+            figukmh = px.pie(df_RUPPP_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
+            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
+
+    with grafik_rup_ukm_tab_2:
+
+        grafik_rup_ukm_tab_2_1, grafik_rup_ukm_tab_2_2 = st.columns((3,7))
+
+        with grafik_rup_ukm_tab_2_1:
+
+            gd = GridOptionsBuilder.from_dataframe(df_RUPPP_ukm_nilai)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+            gridOptions = gd.build()
+            AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        with grafik_rup_ukm_tab_2_2:
+
+            figukmn = px.pie(df_RUPPP_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
+            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
+
 
     pdnh1, pdnn2 = st.columns((5,5))
     with pdnh1:
