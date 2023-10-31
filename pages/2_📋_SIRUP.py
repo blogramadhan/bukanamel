@@ -239,7 +239,7 @@ with menu_rup_1:
 
             AgGrid(df_RUPPP_pdn_hitung)
 
-        with grafik_rup_ukm_tab_1_2:
+        with grafik_rup_pdn_tab_1_2:
 
             figpdnh = px.pie(df_RUPPP_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
             st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
@@ -259,7 +259,7 @@ with menu_rup_1:
             gridOptions = gd.build()
             AgGrid(df_RUPPP_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        with grafik_rup_ukm_tab_2_2:
+        with grafik_rup_pdn_tab_2_2:
 
             figpdnn = px.pie(df_RUPPP_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
             st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
