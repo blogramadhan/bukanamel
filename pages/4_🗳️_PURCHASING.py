@@ -150,7 +150,6 @@ with menu_purchasing_1:
         
         with grafik_ukm_tab_1_1:
 
-            #AgGrid(tabel_jumlah_ukm)
             st.dataframe(tabel_jumlah_ukm, hide_index=True, use_container_width=True)
 
         with grafik_ukm_tab_1_2:
@@ -209,7 +208,8 @@ with menu_purchasing_1:
 
         with grafik_ecat_21_1:
             
-            AgGrid(tabel_jumlah_transaksi_lokal_pd)
+            #AgGrid(tabel_jumlah_transaksi_lokal_pd)
+            st.dataframe(tabel_jumlah_transaksi_lokal_pd, hide_index=True, use_container_width=True)
             
         with grafik_ecat_21_2:
 
