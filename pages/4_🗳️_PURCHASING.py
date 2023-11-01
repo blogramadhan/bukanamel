@@ -150,7 +150,8 @@ with menu_purchasing_1:
         
         with grafik_ukm_tab_1_1:
 
-            AgGrid(tabel_jumlah_ukm)
+            #AgGrid(tabel_jumlah_ukm)
+            st.dataframe(tabel_jumlah_ukm)
 
         with grafik_ukm_tab_1_2:
 
