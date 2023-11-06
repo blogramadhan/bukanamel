@@ -53,11 +53,9 @@ st.markdown("""
     * Kontrak
     * SPMK
     * BAPBAST
-  * Pencatatan Non Tender
-    * Pencatatan Swakelola
-    * Pencatatan Realisasi Swakelola
+  * Pencatatan
     * Pencatatan Non Tender
-    * Pencatatan Realisasi Non Tender
+    * Pencatatan SwakelolaNon Tender
   * Peserta Tender
 * **PURCHASING**
   * Tramsaksi Katalog
