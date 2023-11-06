@@ -448,7 +448,7 @@ with menu_rup_2:
 
             AgGrid(df_RUPPP_PD_ukm_hitung)
 
-        with grafik_rup_ukm_tab_1_2:
+        with grafik_rup_ukm_pd_tab_1_2:
 
             figukmh = px.pie(df_RUPPP_PD_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
             st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
@@ -513,58 +513,82 @@ with menu_rup_2:
 
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
-    mphpd1, mpnpd2 = st.columns((5,5))
-    with mphpd1:
-        st.markdown("#### Berdasarkan Jumlah Paket")
-        AgGrid(df_RUPPP_PD_mp_hitung)
+    ### Buat grafik RUP Berdasarkan Metode Pengadaan Perangkat Daerah
+    grafik_rup_mp_pd_tab_1, grafik_rup_mp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"])
 
-    with mpnpd2:
-        st.markdown("#### Berdasarkan Nilai Paket")
-        gd = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_mp_nilai)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+    with grafik_rup_mp_pd_tab_1:
 
-        gridOptions = gd.build()
-        AgGrid(df_RUPPP_PD_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+        grafik_rup_mp_pd_tab_1_1, grafik_rup_mp_pd_tab_1_2 = st.columns((3,7))
 
-    mphgpd1, mpngpd2 = st.columns((5,5))
-    with mphgpd1:
-        figmphpd = px.pie(df_RUPPP_PD_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
-        st.plotly_chart(figmphpd, theme="streamlit", use_container_width=True)
-    with mpngpd2:
-        figmpnpd = px.pie(df_RUPPP_PD_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
-        st.plotly_chart(figmpnpd, theme='streamlit', use_container_width=True)
+        with grafik_rup_mp_pd_tab_1_1:
+
+            AgGrid(df_RUPPP_PD_mp_hitung)
+
+        with grafik_rup_mp_pd_tab_1_2:
+
+            figmph = px.pie(df_RUPPP_PD_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
+            st.plotly_chart(figmph, theme="streamlit", use_container_width=True)
+
+    with grafik_rup_mp_pd_tab_2:
+
+        grafik_rup_mp_pd_tab_2_1, grafik_rup_mp_pd_tab_2_2 = st.columns((3,7))
+
+        with grafik_rup_mp_pd_tab_2_1:
+
+            gd = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_mp_nilai)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+            gridOptions = gd.build()
+            AgGrid(df_RUPPP_PD_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        with grafik_rup_mp_pd_tab_2_2:
+
+            figmpn = px.pie(df_RUPPP_PD_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
+            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
 
     st.divider()
-
+    
     st.subheader("BERDASARKAN JENIS PENGADAAN")
 
-    jphpd1, jpnpd2 = st.columns((5,5))
-    with jphpd1:
-        st.markdown("#### Berdasarkan Jumlah Paket")
-        AgGrid(df_RUPPP_PD_jp_hitung)
+    ### Buat grafik RUP Berdasarkan jenis pengadaan Perangkat Daerah
+    grafik_rup_jp_pd_tab_1, grafik_rup_jp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"])
 
-    with jpnpd2:
-        st.markdown("#### Berdasarkan Nilai Paket")
-        gd = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_jp_nilai)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+    with grafik_rup_jp_pd_tab_1:
 
-        gridOptions = gd.build()
-        AgGrid(df_RUPPP_PD_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+        grafik_rup_jp_pd_tab_1_1, grafik_rup_jp_pd_tab_1_2 = st.columns((3,7))
 
-    jphgpd1, jpngpd2 = st.columns((5,5))
-    with jphgpd1:
-        figjphpd = px.pie(df_RUPPP_PD_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
-        st.plotly_chart(figjphpd, theme="streamlit", use_container_width=True)
-    with jpngpd2:
-        figjpnpd = px.pie(df_RUPPP_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-        st.plotly_chart(figjpnpd, theme='streamlit', use_container_width=True)
+        with grafik_rup_jp_pd_tab_1_1:
 
+            AgGrid(df_RUPPP_PD_jp_hitung)
+
+        with grafik_rup_jp_pd_tab_1_2:
+
+            figjph = px.pie(df_RUPPP_PD_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
+            st.plotly_chart(figjph, theme="streamlit", use_container_width=True)
+
+    with grafik_rup_jp_pd_tab_2:
+
+        grafik_rup_jp_pd_tab_2_1, grafik_rup_jp_pd_tab_2_2 = st.columns((3,7))
+
+        with grafik_rup_jp_pd_tab_2_1:
+
+            gd = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_jp_nilai)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+            gridOptions = gd.build()
+            AgGrid(df_RUPPP_PD_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        with grafik_rup_jp_pd_tab_2_2:
+
+            figjpn = px.pie(df_RUPPP_PD_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
+    
 ## Tab menu STRUKTUR ANGGARAN
 with menu_rup_3:
 
