@@ -668,7 +668,7 @@ with menu_spse_2:
 ## Tab menu SPSE - Pencatatan
 with menu_spse_3:
 
-    st.header("SPSE - Pencatatan Transaksi PBJ - {pilih}")
+    st.header(f"SPSE - Pencatatan Transaksi PBJ - {pilih}")
 
     ### Buat sub menu SPSE - Pencatatan Transaksi PBJ
     menu_spse_3_1, menu_spse_3_2 = st.tabs(["| Pencatatan Non Tender |", "| Pencatatan Swakelola |"])
