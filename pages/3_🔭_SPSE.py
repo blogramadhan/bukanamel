@@ -668,7 +668,48 @@ with menu_spse_2:
 ## Tab menu SPSE - Pencatatan
 with menu_spse_3:
 
-    st.header("SPSE - Pencatatan")
+    st.header("SPSE - Pencatatan Transaksi PBJ - {pilih}")
+
+    ### Buat sub menu SPSE - Pencatatan Transaksi PBJ
+    menu_spse_3_1, menu_spse_3_2 = st.tabs(["| Pencatatan Non Tender |", "| Pencatatan Swakelola |"])
+
+    #### Tab menu SPSE - Pencatatan - Non Tender
+    with menu_spse_3_1:
+
+        #### Buat tombol unduh dataset SPSE-Pencatatan-Non Tender
+        unduh_CATAT_NonTender = unduh_data(df_CatatNonTender)
+
+        SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
+        with SPSE_CATAT_NonTender_1:
+            st.subheader("Pencatatan Non Tender")
+        with SPSE_CATAT_NonTender_2:
+            st.download_button(
+                label = "📥 Download Data Pencatatan Non Tender",
+                data = unduh_CATAT_NonTender,
+                file_name = f"SPSEPencatatanNonTender-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
+
+    #### Tab menu SPSE - Pencatatan - Swakelola
+    with menu_spse_3_2:
+
+        #### Buat tombol unduh dataset SPSE-Pencatatan-Swakelola
+        unduh_CATAT_Swakelola = unduh_data(df_CatatSwakelola)
+
+        SPSE_CATAT_Swakelola_1, SPSE_CATAT_Swakelola_2 = st.columns((7,3))
+        with SPSE_CATAT_Swakelola_1:
+            st.subheader("Pencatatan Swakelola")
+        with SPSE_CATAT_Swakelola_2:
+            st.download_button(
+                label = "📥 Download Data Pencatatan Swakelola",
+                data = unduh_CATAT_Swakelola,
+                file_name = f"SPSEPencatatanSwakelola-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
