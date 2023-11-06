@@ -71,5 +71,5 @@ Dibuat dengan menggunakan bahasa [Python](https://www.python.org/) dengan tambah
 
 Sumber data *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
-Dibuat oleh: **Kurnia Ramadhan** - LPSE PROV KALBAR - @2023 
+@2023 - **Kurnia Ramadhan** - LPSE PROV. KALBAR 
 """)
