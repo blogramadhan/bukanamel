@@ -735,10 +735,10 @@ with menu_spse_3:
 
         st.divider()
 
-        df_CatatSwakelola_OK_filter_tabel = df_CatatSwakelola_OK_filter[["nama_satker", "nama_paket", "jenis_realisasi", "no_realisasi", "nilai_realisasi"]]
+        df_CatatSwakelola_OK_filter_tabel = df_CatatSwakelola_OK_filter
         
         st.dataframe(df_CatatSwakelola_OK_filter_tabel)
-        
+
         #gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
         #gd.configure_pagination()
         #gd.configure_side_bar()
