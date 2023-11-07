@@ -718,7 +718,7 @@ with menu_spse_3:
 
         st.divider()
 
-        sumber_dana_cs = st.radio("**Sumber Dana :**", df_CatatSwakelola_OK.unique(), key="CatatSwakelola")
+        sumber_dana_cs = st.radio("**Sumber Dana :**", df_CatatSwakelola_OK['sumber_dana'].unique(), key="CatatSwakelola")
         st.write(f"Anda memilih : **{sumber_dana_cs}**")
 
 ## Tab menu SPSE - Peserta Tender
