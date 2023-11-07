@@ -677,15 +677,9 @@ with menu_spse_3:
     df_CatatNonTenderRealisasi_Filter = ""
     df_CatatNonTender_OK = ""
 
-    df_CatatSwakelolaRealisasi_Filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
-    #df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_Filter, how='left', on='kd_swakelola_pct')
+    df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
+    df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_filter, how='left', on='kd_swakelola_pct')
     
-    sql_query_CatatSwakelola = """
-        SELECT * FROM df_CatatSwakelola LEFT JOIN df_CatatSwakelolaRealisasi_Filter 
-        ON df_CatatSwakelola.kd_swakelola_pct = df_CatatSwakelolaRealisasi_Filter.kd_swakelola_pct
-    """
-    df_CatatSwakelola_OK = con.execute(sql_query_CatatSwakelola).df()
-
     #### Tab menu SPSE - Pencatatan - Non Tender
     with menu_spse_3_1:
 
@@ -743,14 +737,16 @@ with menu_spse_3:
 
         df_CatatSwakelola_OK_filter_tabel = df_CatatSwakelola_OK_filter[["nama_satker", "nama_paket", "jenis_realisasi", "no_realisasi", "nilai_realisasi"]]
         
-        gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("nilai_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        st.dataframe(df_CatatSwakelola_OK_filter_tabel)
         
-        gridOptions = gd.build()
-        AgGrid(df_CatatSwakelola_OK_filter_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
+        #gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
+        #gd.configure_pagination()
+        #gd.configure_side_bar()
+        #gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        #gd.configure_column("nilai_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        
+        #gridOptions = gd.build()
+        #AgGrid(df_CatatSwakelola_OK_filter_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
