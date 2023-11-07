@@ -673,6 +673,13 @@ with menu_spse_3:
     ### Buat sub menu SPSE - Pencatatan Transaksi PBJ
     menu_spse_3_1, menu_spse_3_2 = st.tabs(["| Pencatatan Non Tender |", "| Pencatatan Swakelola |"])
 
+    #### Query penggabungan dataset CatatNonTender dan CatatSwakelola
+    df_CatatNonTenderRealisasi_Filter = ""
+    df_CatatNonTender_OK = ""
+
+    df_CatatSwakelolaRealisasi_Filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
+    df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_Filter, how='left', on='kd_swakelola_pct')
+
     #### Tab menu SPSE - Pencatatan - Non Tender
     with menu_spse_3_1:
 
@@ -696,7 +703,7 @@ with menu_spse_3:
     with menu_spse_3_2:
 
         #### Buat tombol unduh dataset SPSE-Pencatatan-Swakelola
-        unduh_CATAT_Swakelola = unduh_data(df_CatatSwakelola)
+        unduh_CATAT_Swakelola = unduh_data(df_CatatSwakelola_OK)
 
         SPSE_CATAT_Swakelola_1, SPSE_CATAT_Swakelola_2 = st.columns((7,3))
         with SPSE_CATAT_Swakelola_1:
@@ -710,6 +717,8 @@ with menu_spse_3:
             )
 
         st.divider()
+
+        
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
