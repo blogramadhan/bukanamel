@@ -677,7 +677,7 @@ with menu_spse_3:
     df_CatatNonTenderRealisasi_Filter = ""
     df_CatatNonTender_OK = ""
 
-    df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
+    df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
     df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_filter, how='left', on='kd_swakelola_pct')
     
     #### Tab menu SPSE - Pencatatan - Non Tender
@@ -735,9 +735,7 @@ with menu_spse_3:
 
         st.divider()
 
-        df_CatatSwakelola_OK_filter_tabel = df_CatatSwakelola_OK_filter
-        
-        st.dataframe(df_CatatSwakelola_OK_filter_tabel)
+        st.dataframe(df_CatatSwakelola_OK_filter)
 
         #gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
         #gd.configure_pagination()
