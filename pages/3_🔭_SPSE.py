@@ -723,9 +723,9 @@ with menu_spse_3:
 
         #### Hitung-hitungan dataset Catat Swakelola
         df_CatatSwakelola_OK_filter = con.execute(f"SELECT * FROM df_CatatSwakelola_OK WHERE sumber_dana = '{sumber_dana_cs}'").df()
-        jumlah_CatatSwakelola_Berjalan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan' AND nilai_realisasi != 0").df()
-        jumlah_CatatSwakelola_Selesai = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai' AND nilai_realisasi != 0").df()
-        jumlah_CatatSwakelola_dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan' AND nilai_realisasi != 0").df()
+        jumlah_CatatSwakelola_Berjalan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan' AND status_swakelola_pct = 'Aktif'").df()
+        jumlah_CatatSwakelola_Selesai = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai' AND status_swakelola_pct = 'Aktif'").df()
+        jumlah_CatatSwakelola_dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan' AND status_swakelola_pct = 'Aktif'").df()
 
         data_cs_1, data_cs_2, data_cs_3 = st.columns(3)
         data_cs_1.metric(label="Jumlah Pencatatan Swakelola Berjalan", value="{:,}".format(jumlah_CatatSwakelola_Berjalan.shape[0]))
@@ -734,6 +734,17 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
+
+        df_CatatSwakelola_OK_filter_tabel = df_CatatSwakelola_OK_filter[["nama_satker", "nama_paket", "jenis_realisasi", "no_realisasi", "nilai_realisasi"]]
+        
+        gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("nilai_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        
+        gridOptions = gd.build()
+        AgGrid(df_CatatSwakelola_OK_filter_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
