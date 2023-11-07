@@ -759,8 +759,8 @@ with menu_spse_4:
     jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang != 0").df()
 
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
-    data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar (Unik)", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].unique().shape[0]))
-    data_pt_2.metric(label="Jumlah Peserta Yang Menawar (Unik)", value="{:,}".format(jumlah_PesertaTender_nawar['nama_penyedia'].unique().shape[0]))
+    data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar (Unik)", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
+    data_pt_2.metric(label="Jumlah Peserta Yang Menawar (Unik)", value="{:,}".format(jumlah_PesertaTender_nawar['nama_penyedia'].shape[0]))
     data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang.shape[0]))
     style_metric_cards()
 
