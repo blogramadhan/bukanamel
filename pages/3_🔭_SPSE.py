@@ -678,7 +678,13 @@ with menu_spse_3:
     df_CatatNonTender_OK = ""
 
     df_CatatSwakelolaRealisasi_Filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
-    df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_Filter, how='left', on='kd_swakelola_pct')
+    #df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_Filter, how='left', on='kd_swakelola_pct')
+    
+    sql_query_CatatSwakelola = """
+        SELECT * FROM df_CatatSwakelola LEFT JOIN df_CatatSwakelolaRealisasi_Filter 
+        ON df_CatatSwakelola.kd_swakelola_pct = df_CatatSwakelolaRealisasi_Filter.kd_swakelola_pct
+    """
+    df_CatatSwakelola_OK = con.execute(sql_query_CatatSwakelola).df()
 
     #### Tab menu SPSE - Pencatatan - Non Tender
     with menu_spse_3_1:
