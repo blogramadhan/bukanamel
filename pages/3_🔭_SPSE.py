@@ -735,6 +735,9 @@ with menu_spse_3:
 
         st.divider()
 
+        status_swakelola = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
+        status_opd = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
+
         st.dataframe(df_CatatSwakelola_OK_filter)
 
         #gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
