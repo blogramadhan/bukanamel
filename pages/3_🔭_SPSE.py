@@ -735,19 +735,19 @@ with menu_spse_3:
 
         st.divider()
 
-        status_swakelola = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
-        status_opd = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
+        status_swakelola_cs = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
+        status_opd_cs = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
 
-        st.dataframe(df_CatatSwakelola_OK_filter)
+        df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket, jenis_realisasi, no_realisasi, tgl_realisasi, nilai_realisasi, nama_ppk FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
 
-        #gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_OK_filter_tabel)
-        #gd.configure_pagination()
-        #gd.configure_side_bar()
-        #gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        #gd.configure_column("nilai_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_tabel)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("nilai_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
         
-        #gridOptions = gd.build()
-        #AgGrid(df_CatatSwakelola_OK_filter_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
+        gridOptions = gd.build()
+        AgGrid(df_CatatSwakelola_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
