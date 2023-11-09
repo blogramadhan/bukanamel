@@ -222,7 +222,6 @@ with menu_spse_1:
         with SPSE_Umumkan_1:
             st.subheader("Pengumuman Tender")
         with SPSE_Umumkan_2:
-            #st.subheader("Download Tender")
             st.download_button(
                 label = "📥 Download Data Pengumuman Tender",
                 data = unduh_SPSE_Pengumuman,
@@ -261,6 +260,23 @@ with menu_spse_1:
             st.subheader("Berdasarkan Jumlah Status PDN")
 
             #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Status PDN
+            sql_pdn_jumlah = """
+                SELECT status_pdn AS STATUS_PDN, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_PDN ORDER BY JUMLAH_PAKET DESC
+            """
+
+            tabel_pdn_jumlah_trx = con.execute(sql_pdn_jumlah).df()
+
+            grafik_pdn_1_1, grafik_pdn_1_2 = st.columns((3,7))
+
+            with grafik_pdn_1_1:
+
+                AgGrid(tabel_pdn_jumlah_trx)
+
+            with grafik_pdn_1_2:
+
+                figpdnh = px.pie(tabel_pdn_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Jumlah Paket', hole=.3)
+                st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
         with grafik_pdn_2:
 
