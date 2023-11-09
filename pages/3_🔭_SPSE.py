@@ -893,17 +893,17 @@ with menu_spse_4:
 
     #### Query penggabungan dataset Peserta Tender vs Master Satker
 
-    sql_query_PesertaTenderDetail_1 = """
-        SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi, kd_tender
-        FROM df_PesertaTender, df_RUPMasterSatker 
-        WHERE df_PesertaTender.kd_satker_str = df_RUPMasterSatker.kd_satker_str 
-    """
+    #sql_query_PesertaTenderDetail_1 = """
+    #    SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi, kd_tender
+    #    FROM df_PesertaTender, df_RUPMasterSatker 
+    #    WHERE df_PesertaTender.kd_satker_str = df_RUPMasterSatker.kd_satker_str 
+    #"""
 
-    sql_query_PesertaTenderDetail_2 = """
-        SELECT df_PesertaTenderDetail_1.nama_satker, df_SPSETenderPengumuman.nama_paket, df_SPSETenderPengumuman.pagu, df_SPSETenderPengumuman.hps, df_SPSETenderPengumuman.sumber_dana, df_PesertaTenderDetail_1.nama_penyedia, df_PesertaTenderDetail_1.npwp_penyedia, df_PesertaTenderDetail_1.nilai_penawaran, df_PesertaTenderDetail_1.nilai_terkoreksi, df_PesertaTenderDetail_1.pemenang, df_PesertaTenderDetail_1.pemenang_terverifikasi
-        FROM df_PesertaTenderDetail_1, df_SPSETenderPengumuman 
-        WHERE df_PesertaTenderDetail_1.kd_tender = df_SPSETenderPengumuman.kd_tender
-    """
+    #sql_query_PesertaTenderDetail_2 = """
+    #    SELECT df_PesertaTenderDetail_1.nama_satker, df_SPSETenderPengumuman.nama_paket, df_SPSETenderPengumuman.pagu, df_SPSETenderPengumuman.hps, df_SPSETenderPengumuman.sumber_dana, df_PesertaTenderDetail_1.nama_penyedia, df_PesertaTenderDetail_1.npwp_penyedia, df_PesertaTenderDetail_1.nilai_penawaran, df_PesertaTenderDetail_1.nilai_terkoreksi, df_PesertaTenderDetail_1.pemenang, df_PesertaTenderDetail_1.pemenang_terverifikasi
+    #    FROM df_PesertaTenderDetail_1, df_SPSETenderPengumuman 
+    #    WHERE df_PesertaTenderDetail_1.kd_tender = df_SPSETenderPengumuman.kd_tender
+    #"""
 
     #df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
     #df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
@@ -936,12 +936,12 @@ with menu_spse_4:
     ### Tes
     st.dataframe(df_PesertaTenderDetail_1)
     st.dataframe(df_PesertaTenderDetail_2)
-    
+    st.subheader(sumber_dana_pt)
     ###
 
     #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
-    st.dataframe(df_PesertaTenderDetail)
+    #df_PesertaTenderDetail = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
+    #st.dataframe(df_PesertaTenderDetail)
     #df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
     #st.dataframe(df_PesertaTenderDetail_filter)
     #jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
