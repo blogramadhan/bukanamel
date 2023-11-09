@@ -935,7 +935,7 @@ with menu_spse_4:
     #### Hitung-hitungan dataset Peserta Tender
     df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
 
-    SPSE_PT_DD_1, SPSE_PT_DD_2 = st.columns((5,5))
+    SPSE_PT_DD_1, SPSE_PT_DD_2 = st.columns((7,3))
     with SPSE_PT_DD_1:
         st.write(f"Anda memilih : **{sumber_dana_pt}**")
     with SPSE_PT_DD_2:
