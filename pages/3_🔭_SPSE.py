@@ -974,6 +974,8 @@ with menu_spse_4:
     else:
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
 
+    st.subheader(jumlah_PeserteTender.shape[0])
+
     gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
     gd.configure_pagination()
     gd.configure_side_bar()
