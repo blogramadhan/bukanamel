@@ -233,7 +233,8 @@ with menu_spse_1:
 
         SPSE_radio_1, SPSE_radio_2, SPSE_radio_3 = st.columns((1,1,8))
         with SPSE_radio_1:
-            sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "BLUD"])
+            sumber_dana_unik = df_SPSETenderPengumuman_OK['sumber_dana'].unique()
+            sumber_dana = st.radio("**Sumber Dana**", sumber_dana_unik)
         with SPSE_radio_2:
             status_tender = st.radio("**Status Tender**", ["Selesai", "Gagal/Batal", "Berlangsung"])
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
