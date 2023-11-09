@@ -914,6 +914,8 @@ with menu_spse_4:
     df_PesertaTenderDetail_1 = df_PesertaTender.merge(df_RUPMasterSatker_filter_pt, how='left', on='kd_satker_str')
     df_PesertaTenderDetail_2 = df_PesertaTenderDetail_1.merge(df_SPSETenderPengumuman_filter_pt, how='left', on='kd_tender')
 
+    df_PesertaTenderDetail_tes = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2").df()
+
     #### Buat tombol unduh dataset Peserta Tender
     unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
 
@@ -934,15 +936,15 @@ with menu_spse_4:
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     ### Tes
-    st.dataframe(df_PesertaTenderDetail_1)
+    st.dataframe(df_PesertaTenderDetail_tes)
     st.dataframe(df_PesertaTenderDetail_2)
     st.subheader(sumber_dana_pt)
     ###
 
     #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail_tes = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2").df()
+    #df_PesertaTenderDetail_tes = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2").df()
     #df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
-    st.dataframe(df_PesertaTenderDetail_tes)
+    #st.dataframe(df_PesertaTenderDetail_tes)
     #jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     #jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
     #jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang = 1").df()
