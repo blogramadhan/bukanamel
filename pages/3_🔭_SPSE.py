@@ -936,10 +936,9 @@ with menu_spse_4:
     #### Hitung-hitungan dataset Peserta Tender
     df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
 
-    jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
-    jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
-    #jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang = 1").df()
-    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("pemenang == 1")
+    jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
+    jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
+    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("pemenang == 0")
 
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
