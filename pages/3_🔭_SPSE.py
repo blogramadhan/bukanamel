@@ -935,6 +935,7 @@ with menu_spse_4:
 
     ### Tes
     st.dataframe(df_PesertaTenderDetail_1)
+    st.dataframe(df_PesertaTenderDetail_2)
     ###
 
     #### Hitung-hitungan dataset Peserta Tender
