@@ -222,12 +222,13 @@ with menu_spse_1:
         with SPSE_Umumkan_1:
             st.subheader("Pengumuman Tender")
         with SPSE_Umumkan_2:
-            st.download_button(
-                label = "📥 Download Data Pengumuman Tender",
-                data = unduh_SPSE_Pengumuman,
-                file_name = f"SPSETenderPengumuman-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
-            )
+            st.subheader("Download Tender")
+            #st.download_button(
+            #    label = "📥 Download Data Pengumuman Tender",
+            #    data = unduh_SPSE_Pengumuman,
+            #    file_name = f"SPSETenderPengumuman-{kodeFolder}-{tahun}.csv",
+            #    mime = "text/csv"
+            #)
 
         st.divider()
 
