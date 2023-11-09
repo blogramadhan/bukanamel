@@ -285,6 +285,31 @@ with menu_spse_1:
 
             #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Status PDN
 
+            sql_pdn_nilai = """
+                SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_PDN ORDER BY NILAI_PAKET DESC
+            """
+
+            tabel_pdn_nilai_trx = con.execute(sql_pdn_nilai).df()
+
+            grafik_pdn_2_1, grafik_pdn_2_2 = st.columns((3,7))
+
+            with grafik_pdn_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_pdn_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_pdn_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)    
+                
+            with grafik_pdn_2_2:
+
+                figpdnn = px.pie(tabel_pdn_nilai_trx, values="NILAI_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Nilai Paket', hole=.3)
+                st.plotly_chart(figpdnn, theme="streamlit", use_container_width=True)
+
 
         ####### Grafik jumlah dan nilai transaksi berdasarkan kualifikasi paket
         grafik_kp_1, grafik_kp_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
