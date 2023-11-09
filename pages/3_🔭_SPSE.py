@@ -947,9 +947,13 @@ with menu_spse_4:
             mime = "text/csv" 
         )
 
-    jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
-    jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
-    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == '10'")
+    #jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
+    #jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
+    #jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == '1'")
+
+    jumlah_PesertaTender_daftar = con.execute("SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+    jumlah_PesertaTender_nawar = con.execute("SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran > 0 AND nilai_terkoreksi > 0").df()
+    jumlah_PesertaTender_menang = con.execute("SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran > 0 AND nilai_terkoreksi > 0 AND pemenang > 0 GROUP BY kd_tender).df()  ")
 
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
