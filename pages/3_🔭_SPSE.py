@@ -933,13 +933,13 @@ with menu_spse_4:
     sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
-    ### Tes
-    st.dataframe(df_PesertaTenderDetail_1)
-    st.dataframe(df_PesertaTenderDetail_2)
-    st.subheader(sumber_dana_pt)
-    ###
-
     #### Hitung-hitungan dataset Peserta Tender
+    sql_query_PesertaTenderDetail = f"""
+        SELECT * FROM df_PesertaTenderDetal_2
+    """
+    df_PesertaTenderDetail_filter = con.execute(sql_query_PesertaTenderDetail).df()
+    st.dataframe(df_PesertaTenderDetail_filter)
+
     #df_PesertaTenderDetail_tes = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2").df()
     #df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
     #st.dataframe(df_PesertaTenderDetail_tes)
