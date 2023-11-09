@@ -275,8 +275,9 @@ with menu_spse_1:
 
             with grafik_pdn_1_2:
 
-                figpdnh = px.pie(tabel_pdn_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Jumlah Paket', hole=.3)
-                st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+                st.subheader("Grafik Jumlah PDN")
+                #figpdnh = px.pie(tabel_pdn_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Jumlah Paket', hole=.3)
+                #st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
         with grafik_pdn_2:
 
