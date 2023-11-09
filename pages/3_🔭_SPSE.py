@@ -310,7 +310,65 @@ with menu_spse_1:
                 figpdnn = px.pie(tabel_pdn_nilai_trx, values="NILAI_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Nilai Paket', hole=.3)
                 st.plotly_chart(figpdnn, theme="streamlit", use_container_width=True)
 
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Status UKM
+        grafik_ukm_1, grafik_ukm_2 = st.tabs(["| Berdasarkan Jumlah Status UKM |", "| Berdasarkan Nilai Status UKM |"])
 
+        with grafik_ukm_1:
+
+            st.subheader("Berdasarkan Jumlah Status UKM")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Status UKM
+            
+            sql_ukm_jumlah = """
+                SELECT status_ukm AS STATUS_UKM, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_UKM ORDER BY JUMLAH_PAKET DESC
+            """
+
+            tabel_ukm_jumlah_trx = con.execute(sql_ukm_jumlah).df()
+
+            grafik_ukm_1_1, grafik_ukm_1_2 = st.columns((3,7))
+
+            with grafik_ukm_1_1:
+
+                AgGrid(tabel_ukm_jumlah_trx)
+
+            with grafik_ukm_1_2:
+
+                figukmh = px.pie(tabel_ukm_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_UKM", title='Grafik Status UKM - Jumlah Paket', hole=.3)
+                st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
+
+        with grafik_ukm_2:
+
+            st.subheader("Berdasarkan Nilai Status UKM")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Status UKM
+
+            sql_ukm_nilai = """
+                SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_UKM ORDER BY NILAI_PAKET DESC
+            """
+
+            tabel_ukm_nilai_trx = con.execute(sql_ukm_nilai).df()
+
+            grafik_ukm_2_1, grafik_ukm_2_2 = st.columns((3,7))
+
+            with grafik_ukm_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_ukm_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_ukm_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)    
+                
+            with grafik_ukm_2_2:
+
+                figukmn = px.pie(tabel_ukm_nilai_trx, values="NILAI_PAKET", names="STATUS_UKM", title='Grafik Status UKM - Nilai Paket', hole=.3)
+                st.plotly_chart(figukmn, theme="streamlit", use_container_width=True)
+
+        
         ####### Grafik jumlah dan nilai transaksi berdasarkan kualifikasi paket
         grafik_kp_1, grafik_kp_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
 
