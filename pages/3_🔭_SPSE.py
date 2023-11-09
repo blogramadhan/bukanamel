@@ -933,17 +933,21 @@ with menu_spse_4:
     sumber_dana_pt = st.radio("**Sumber Dana :**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
-    #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}' AND nama_penyedia IS NOT NULL").df()
-    jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
-    jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
-    jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang = 1").df()
+    ### Tes
+    st.dataframe(df_PesertaTenderDetail_1)
+    ###
 
-    data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
-    data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
-    data_pt_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_nawar['nama_penyedia'].shape[0]))
-    data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang['pemenang'].shape[0]))
-    style_metric_cards()
+    #### Hitung-hitungan dataset Peserta Tender
+    #df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}' AND nama_penyedia IS NOT NULL").df()
+    #jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+    #jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+    #jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang = 1").df()
+
+    #data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
+    #data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
+    #data_pt_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_nawar['nama_penyedia'].shape[0]))
+    #data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang['pemenang'].shape[0]))
+    #style_metric_cards()
 
     st.divider()
 
