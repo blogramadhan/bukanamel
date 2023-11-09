@@ -96,6 +96,9 @@ DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/s
 ### Dataset RUP Master Satker
 DatasetRUPMasterSatker = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPMasterSatker{tahun}.parquet"
 
+### Dataset RUP Paket Penyedia Terumumkan
+DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
+
 ## Buat dataframe SPSE
 ### Baca file parquet dataset SPSE Tender
 try:
@@ -183,6 +186,14 @@ try:
 except Exception:
     st.error("Gagal baca dataset RUP Master Satker")
 
+### Baca file parquet dataset RUP Paket Penyedia Terumumkan
+try:
+    df_RUPPP = tarik_data(DatasetRUPPP)
+    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+    df_RUPPP_umumkan_filter = df_RUPPP_umumkan[["kd_rup", "status_pdn", "status_ukm"]]
+except Exception:
+    st.error("Gagal baca dataset RUP Paket Penyedia Terumumkan")
+
 #####
 # Mulai membuat presentasi data SPSE
 #####
@@ -195,6 +206,9 @@ with menu_spse_1:
 
     st.header(f"SPSE - Tender - {pilih}")
 
+    ### Buat dataset gabung df_SPSETenderPengumuman + df_RUPPP_umumkan_filter
+    df_SPSETenderPengumuman_OK = df_SPSETenderPengumuman.merge(df_RUPPP_umumkan_filter, how='left', on='kd_rup')
+
     ### Buat sub menu SPSE - Tender
     menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5, menu_spse_1_6 = st.tabs(["| PENGUMUMAN |", "| SELESAI |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
 
@@ -202,7 +216,7 @@ with menu_spse_1:
     with menu_spse_1_1:
 
         ##### Buat tombol unduh dataset SPSE-Tender-Pengumuman
-        unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman)
+        unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman_OK)
         
         SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((7,3))
         with SPSE_Umumkan_1:
@@ -225,7 +239,7 @@ with menu_spse_1:
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
         ##### Hitung-hitungan dataset Tender Pengumuman
-        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
+        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
         nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
@@ -237,6 +251,22 @@ with menu_spse_1:
         style_metric_cards()
 
         st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi berdasarkan Status PDN
+        grafik_pdn_1, grafik_pdn_2 = st.tabs(["| Berdasarkan Jumlah Status PDN |", "| Berdasarkan Nilai Status PDN |"])
+
+        with grafik_pdn_1:
+
+            st.subheader("Berdasarkan Jumlah Status PDN")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Status PDN
+
+        with grafik_pdn_2:
+
+            st.subheader("Berdasarkan Nilai Status PDN")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Status PDN
+
 
         ####### Grafik jumlah dan nilai transaksi berdasarkan kualifikasi paket
         grafik_kp_1, grafik_kp_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
