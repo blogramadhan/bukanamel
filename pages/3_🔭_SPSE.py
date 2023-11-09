@@ -934,15 +934,10 @@ with menu_spse_4:
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     #### Hitung-hitungan dataset Peserta Tender
-    sql_query_PesertaTenderDetail = f"""
-        SELECT * FROM df_PesertaTenderDetal_2
-    """
-    df_PesertaTenderDetail_filter = con.execute(sql_query_PesertaTenderDetail).df()
+    df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
     st.dataframe(df_PesertaTenderDetail_filter)
 
-    #df_PesertaTenderDetail_tes = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2").df()
     #df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
-    #st.dataframe(df_PesertaTenderDetail_tes)
     #jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     #jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
     #jumlah_PesertaTender_menang = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE pemenang = 1").df()
