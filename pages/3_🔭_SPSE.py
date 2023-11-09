@@ -936,7 +936,7 @@ with menu_spse_4:
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
     data_pt_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_nawar['nama_penyedia'].shape[0]))
-    data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang['nama_penyedia'].shape[1]))
+    data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang['nama_penyedia'].shape))
     style_metric_cards()
 
     st.divider()
