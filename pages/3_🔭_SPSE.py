@@ -941,7 +941,7 @@ with menu_spse_4:
     with SPSE_PT_DD_2:
         unduh_PesertaTenderDetail = unduh_data(df_PesertaTenderDetail_filter)
         st.download_button(
-            label = "Download Data Peserta Tender Detail",
+            label = "📥 Download Data Peserta Tender Detail",
             data = unduh_PesertaTenderDetail,
             file_name = f"SPSEPesertaTenderDetailOK-{kodeFolder}-{tahun}.csv",
             mime = "text/csv" 
