@@ -917,7 +917,7 @@ with menu_spse_4:
     #### Buat tombol unduh dataset Peserta Tender
     unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
 
-    SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,2))
+    SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,3))
     with SPSE_PT_D_1:
         st.header(f"SPSE - Peserta Tender - {pilih}")
     with SPSE_PT_D_2:
@@ -925,20 +925,31 @@ with menu_spse_4:
             label = "📥 Download Data Peserta Tender",
             data = unduh_Peserta_Tender,
             file_name = f"SPSEPesertaTenderDetail-{kodeFolder}-{tahun}.csv",
-            mime = "text/csc"
+            mime = "text/csv"
         )
 
     st.divider()
 
     sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
-    st.write(f"Anda memilih : **{sumber_dana_pt}**")
-
+    
     #### Hitung-hitungan dataset Peserta Tender
     df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
 
+    SPSE_PT_DD_1, SPSE_PT_DD_2 = st.columns((5,5))
+    with SPSE_PT_DD_1:
+        st.write(f"Anda memilih : **{sumber_dana_pt}**")
+    with SPSE_PT_DD_2:
+        unduh_PesertaTenderDetail = unduh_data(df_PesertaTenderDetail_filter)
+        st.download_button(
+            label = "Download Data Peserta Tender Detail",
+            data = unduh_PesertaTenderDetail,
+            file_name = f"SPSEPesertaTenderDetailOK-{kodeFolder}-{tahun}.csv",
+            mime = "text/csv" 
+        )
+
     jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
     jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
-    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("pemenang == 1")
+    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 1")
 
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
