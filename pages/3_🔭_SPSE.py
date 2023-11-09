@@ -930,7 +930,7 @@ with menu_spse_4:
 
     st.divider()
 
-    sumber_dana_pt = st.radio("**Sumber Dana :**", ["APBD", "APBDP", "BLUD"], key="PesertaTender")
+    sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     ### Tes
@@ -939,7 +939,7 @@ with menu_spse_4:
     ###
 
     #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}' AND nama_penyedia IS NOT NULL").df()
+    df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
     st.dataframe(df_PesertaTenderDetail_filter)
     #jumlah_PesertaTender_daftar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     #jumlah_PesertaTender_nawar = con.execute(f"SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
