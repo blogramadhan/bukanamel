@@ -931,26 +931,10 @@ with menu_spse_4:
     st.divider()
 
     sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
-    
+    st.write(f"Anda memilih : **{sumber_dana_pt}**")
+
     #### Hitung-hitungan dataset Peserta Tender
     df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
-
-    SPSE_PT_DD_1, SPSE_PT_DD_2 = st.columns((7,3))
-    with SPSE_PT_DD_1:
-        st.write(f"Anda memilih : **{sumber_dana_pt}**")
-    with SPSE_PT_DD_2:
-        unduh_PesertaTenderDetail = unduh_data(df_PesertaTenderDetail_filter)
-        st.download_button(
-            label = "📥 Download Data Peserta Tender Detail",
-            data = unduh_PesertaTenderDetail,
-            file_name = f"SPSEPesertaTenderDetailOK-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv" 
-        )
-
-    #jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
-    #jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
-    #jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == '1'")
-
     jumlah_PesertaTender_daftar = con.execute("SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     jumlah_PesertaTender_nawar = con.execute("SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran > 0 AND nilai_terkoreksi > 0").df()
     jumlah_PesertaTender_menang = con.execute("SELECT * FROM df_PesertaTenderDetail_filter WHERE nilai_penawaran > 0 AND nilai_terkoreksi > 0 AND pemenang > 0").df()
@@ -973,8 +957,6 @@ with menu_spse_4:
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     else:
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
-
-    st.subheader(jumlah_PeserteTender.shape[0])
 
     gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
     gd.configure_pagination()
