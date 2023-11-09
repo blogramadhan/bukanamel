@@ -949,7 +949,7 @@ with menu_spse_4:
 
     jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
     jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
-    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang > 0")
+    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 10")
 
     data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar['nama_penyedia'].shape[0]))
