@@ -940,7 +940,7 @@ with menu_spse_4:
     ###
 
     #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'")
+    df_PesertaTenderDetail = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
     st.dataframe(df_PesertaTenderDetail)
     #df_PesertaTenderDetail_filter = con.execute(f"SELECT * FROM df_PesertaTenderDetail_2 WHERE sumber_dana = '{sumber_dana_pt}'").df()
     #st.dataframe(df_PesertaTenderDetail_filter)
