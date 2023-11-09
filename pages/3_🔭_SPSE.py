@@ -236,7 +236,8 @@ with menu_spse_1:
             sumber_dana_unik = df_SPSETenderPengumuman_OK['sumber_dana'].unique()
             sumber_dana = st.radio("**Sumber Dana**", sumber_dana_unik)
         with SPSE_radio_2:
-            status_tender = st.radio("**Status Tender**", ["Selesai", "Gagal/Batal", "Berlangsung"])
+            status_tender_unik = df_SPSETenderPengumuman_OK['status_tender'].unique()
+            status_tender = st.radio("**Status Tender**", status_tender_unik)
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
         ##### Hitung-hitungan dataset Tender Pengumuman
