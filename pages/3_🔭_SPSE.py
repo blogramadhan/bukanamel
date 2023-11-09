@@ -239,7 +239,7 @@ with menu_spse_1:
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
         ##### Hitung-hitungan dataset Tender Pengumuman
-        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
+        df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran, status_pdn, status_ukm FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}' AND kualifikasi_paket IS NOT NULL").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
         nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
@@ -260,6 +260,7 @@ with menu_spse_1:
             st.subheader("Berdasarkan Jumlah Status PDN")
 
             #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Status PDN
+            
             sql_pdn_jumlah = """
                 SELECT status_pdn AS STATUS_PDN, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
                 FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_PDN ORDER BY JUMLAH_PAKET DESC
@@ -275,9 +276,8 @@ with menu_spse_1:
 
             with grafik_pdn_1_2:
 
-                st.subheader("Grafik Jumlah PDN")
-                #figpdnh = px.pie(tabel_pdn_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Jumlah Paket', hole=.3)
-                #st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+                figpdnh = px.pie(tabel_pdn_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Jumlah Paket', hole=.3)
+                st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
         with grafik_pdn_2:
 
