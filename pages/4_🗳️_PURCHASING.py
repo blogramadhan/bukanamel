@@ -35,6 +35,9 @@ from streamlit_extras.metric_cards import style_metric_cards
 # Import fungsi pribadi
 from fungsi import *
 
+# App Logo
+logo()
+
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK"]
 

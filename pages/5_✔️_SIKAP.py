@@ -35,6 +35,9 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 # Import fungsi pribadi
 from fungsi import *
 
+# App Logo
+logo()
+
 # Konfigurasi variabel lokasi UKPBJ
 daerah = ["PROV. KALBAR"]
 
