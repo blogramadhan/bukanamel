@@ -37,7 +37,7 @@ from streamlit_extras.app_logo import add_logo
 from fungsi import *
 
 # App Logo
-add_logo("https://lpse.kalbarprov.go.id/eproc4/public/images/imgng/instansi-logo.png", height=120)
+logo()
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK"]

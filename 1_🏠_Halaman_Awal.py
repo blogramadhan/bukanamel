@@ -19,7 +19,25 @@
 # @ Pontianak, 2023                                                                 #
 #####################################################################################
 
+# Import Library
+import duckdb
+import openpyxl
 import streamlit as st
+import pandas as pd
+import plotly.express as px
+# Import library currency
+from babel.numbers import format_currency
+# Import library Aggrid
+from st_aggrid import AgGrid
+from st_aggrid.grid_options_builder import GridOptionsBuilder
+# Import Streamlit Extras
+from streamlit_extras.metric_cards import style_metric_cards
+from streamlit_extras.app_logo import add_logo 
+# Import fungsi pribadi
+from fungsi import *
+
+# App Logo
+logo()
 
 st.set_page_config(
     page_title="Dashboard Pengadaan Barang dan Jasa",
