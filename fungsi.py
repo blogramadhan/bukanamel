@@ -27,4 +27,4 @@ def tarik_data(url):
     return pd.read_parquet(url)
 
 def logo():
-    add_logo("https://lpse.kalbarprov.go.id/eproc4/public/images/imgng/instansi-logo.png", height=120)
+    add_logo("https://storage.googleapis.com/bukanamel/img/instansi-logo.png")
