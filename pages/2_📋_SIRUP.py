@@ -32,8 +32,12 @@ from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 # Import Streamlit Extras
 from streamlit_extras.metric_cards import style_metric_cards
+from streamlit_extras.app_logo import add_logo 
 # Import fungsi pribadi
 from fungsi import *
+
+# App Logo
+add_logo("https://lpse.kalbarprov.go.id/eproc4/public/images/imgng/instansi-logo.png")
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK"]
