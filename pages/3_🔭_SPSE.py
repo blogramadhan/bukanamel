@@ -963,7 +963,7 @@ with menu_spse_4:
 
     data_pt_pd_1, data_pt_pd_2, data_pt_pd_3, data_pt_pd_4 = st.columns(4)
     data_pt_pd_1.subheader("")
-    data_pt_pd_2.metric(label="Jumlah Peserta", value="{:,}".format(jumlah_PeserteTender.shape[0]))
+    data_pt_pd_2.metric(label="Jumlah Peserta Tender", value="{:,}".format(jumlah_PeserteTender.shape[0]))
     data_pt_pd_3.metric(label="Nilai Total Terkoreksi", value="{:,.2f}".format(jumlah_PeserteTender['nilai_terkoreksi'].sum()))
     data_pt_pd_4.subheader("")
     style_metric_cards()
