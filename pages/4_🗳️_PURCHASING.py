@@ -347,11 +347,11 @@ with menu_purchasing_2:
 
     st.divider()
 
-    grafik_bela_11, grafik_bela_12 = st.tabs(["| Grafik Jumlah Transaksi Toko Daring Perangkat Daerah |", "| Grafik Nilai Transaksi Toko Daring Perangkat Daerah |"])
+    st.subheader("Berdasarkan Perangkat Daerah (10 Besar)")
 
-    with grafik_bela_11:
+    grafik_bela_pd_11, grafik_bela_pd_12 = st.tabs(["| Jumlah Transaksi Perangkat Daerah |", "| Nilai Transaksi Perangkat Daerah |"])
 
-        st.subheader("Grafik Jumlah Transaksi Toko Daring Perangkat Daerah (10 Besar)")
+    with grafik_bela_pd_11:
 
         #### Query data grafik jumlah Transaksi Toko Daring Perangkat Daerah
 
@@ -363,21 +363,19 @@ with menu_purchasing_2:
 
         tabel_jumlah_transaksi_bela_pd = con.execute(sql_jumlah_transaksi_bela_pd).df()
 
-        grafik_bela_11_1, grafik_bela_11_2 = st.columns((4,6))
+        grafik_bela_pd_11_1, grafik_bela_pd_11_2 = st.columns((4,6))
 
-        with grafik_bela_11_1:
+        with grafik_bela_pd_11_1:
 
             AgGrid(tabel_jumlah_transaksi_bela_pd)
 
-        with grafik_bela_11_2:
+        with grafik_bela_pd_11_2:
 
-            grafik_jumlah_transaksi_bela = px.bar(tabel_jumlah_transaksi_bela_pd, x='NAMA_SATKER', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi Toko Daring Perangkat Daerah')
-            grafik_jumlah_transaksi_bela.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-            st.plotly_chart(grafik_jumlah_transaksi_bela, theme="streamlit", use_container_width=True)
+            grafik_jumlah_transaksi_bela_pd = px.bar(tabel_jumlah_transaksi_bela_pd, x='NAMA_SATKER', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi Toko Daring Perangkat Daerah')
+            grafik_jumlah_transaksi_bela_pd.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_jumlah_transaksi_bela_pd, theme="streamlit", use_container_width=True)
 
-    with grafik_bela_12:
-
-        st.subheader("Grafik Nilai Transaksi Toko Daring Perangkat Daerah (10 Besar)")
+    with grafik_bela_pd_12:
 
         #### Query data grafik nilai Transaksi Toko Daring Perangkat Daerah
 
@@ -389,9 +387,9 @@ with menu_purchasing_2:
 
         tabel_nilai_transaksi_bela_pd = con.execute(sql_nilai_transaksi_bela_pd).df()
 
-        grafik_bela_12_1, grafik_bela_12_2 = st.columns((4,6))
+        grafik_bela_pd_12_1, grafik_bela_pd_12_2 = st.columns((4,6))
 
-        with grafik_bela_12_1:
+        with grafik_bela_pd_12_1:
 
             gd = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_bela_pd)
             gd.configure_pagination()
@@ -402,8 +400,69 @@ with menu_purchasing_2:
             gridOptions = gd.build()
             AgGrid(tabel_nilai_transaksi_bela_pd, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        with grafik_bela_12_2:
+        with grafik_bela_pd_12_2:
 
-            grafik_nilai_transaksi_bela = px.bar(tabel_nilai_transaksi_bela_pd, x='NAMA_SATKER', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi Toko Daring Perangkat Daerah')
-            grafik_nilai_transaksi_bela.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-            st.plotly_chart(grafik_nilai_transaksi_bela, theme="streamlit", use_container_width=True)
+            grafik_nilai_transaksi_bela_pd = px.bar(tabel_nilai_transaksi_bela_pd, x='NAMA_SATKER', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi Toko Daring Perangkat Daerah')
+            grafik_nilai_transaksi_bela_pd.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_nilai_transaksi_bela_pd, theme="streamlit", use_container_width=True)
+
+    st.divider()
+
+    st.subheader("Berdasarkan Pelaku Usaha (10 Besar)")
+
+    grafik_bela_pu_11, grafik_bela_pu_12 = st.tabs(["| Jumlah Transaksi Pelaku Usaha |", "| Nilai Transaksi Pelaku Usaha |"])
+
+    with grafik_bela_pu_11:
+
+        #### Query data grafik jumlah Transaksi Toko Daring Pelaku Usaha
+
+        sql_jumlah_transaksi_bela_pu = """
+            SELECT nama_merchant AS NAMA_MERCHANT, COUNT(DISTINCT(order_id)) AS JUMLAH_TRANSAKSI
+            FROM df_BELA_filter WHERE NAMA_MERCHANT IS NOT NULL
+            GROUP BY NAMA_MERCHANT ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
+        """
+
+        tabel_jumlah_transaksi_bela_pu = con.execute(sql_jumlah_transaksi_bela_pu).df()
+
+        grafik_bela_pu_11_1, grafik_bela_pu_11_2 = st.columns((4,6))
+
+        with grafik_bela_pu_11_1:
+
+            AgGrid(tabel_jumlah_transaksi_bela_pu)
+
+        with grafik_bela_pu_11_2:
+
+            grafik_jumlah_transaksi_bela_pu = px.bar(tabel_jumlah_transaksi_bela_pu, x='NAMA_MERCHANT', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi Toko Daring Pelaku Usaha')
+            grafik_jumlah_transaksi_bela_pu.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_jumlah_transaksi_bela_pu, theme="streamlit", use_container_width=True)
+
+    with grafik_bela_pu_12:
+
+        #### Query data grafik nilai Transaksi Toko Daring Pelaku Usaha
+
+        sql_nilai_transaksi_bela_pu = """
+            SELECT nama_merchant AS NAMA_MERCHANT, SUM(valuasi) AS NILAI_TRANSAKSI
+            FROM df_BELA_filter WHERE NAMA_MERCHANT IS NOT NULL
+            GROUP BY NAMA_MERCHANT ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
+        """
+
+        tabel_nilai_transaksi_bela_pu = con.execute(sql_nilai_transaksi_bela_pu).df()
+
+        grafik_bela_pu_12_1, grafik_bela_pu_12_2 = st.columns((4,6))
+
+        with grafik_bela_pu_12_1:
+
+            gd = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_bela_pu)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+            gridOptions = gd.build()
+            AgGrid(tabel_nilai_transaksi_bela_pu, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        with grafik_bela_pu_12_2:
+
+            grafik_nilai_transaksi_bela_pu = px.bar(tabel_nilai_transaksi_bela_pu, x='NAMA_MERCHANT', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi Toko Daring Pelaku Usaha')
+            grafik_nilai_transaksi_bela_pu.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_nilai_transaksi_bela_pu, theme="streamlit", use_container_width=True)
