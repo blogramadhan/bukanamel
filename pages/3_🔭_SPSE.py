@@ -955,16 +955,16 @@ with menu_spse_4:
     status_opd_pt = st.selectbox("**Pilih Satker :**", opd_pt)
 
     if status_pemenang_pt == "PEMENANG":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran > 0 AND nilai_terkoreksi > 0  AND pemenang = 1").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI, pemenang AS PEMENANG FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND PEMENANG = 1").df()
     elif status_pemenang_pt == "MENDAFTAR":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI, pemenang AS PEMENANG FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     else:
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran > 0 AND nilai_terkoreksi > 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI, pemenang AS PEMENANG FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND nilai_penawaran > 0 AND nilai_terkoreksi > 0").df()
 
     data_pt_pd_1, data_pt_pd_2, data_pt_pd_3, data_pt_pd_4 = st.columns(4)
     data_pt_pd_1.subheader("")
-    data_pt_pd_2.metric(label="Jumlah Peserta Tender", value="{:,}".format(jumlah_PeserteTender.shape[0]))
-    data_pt_pd_3.metric(label="Nilai Total Terkoreksi", value="{:,.2f}".format(jumlah_PeserteTender['nilai_terkoreksi'].sum()))
+    data_pt_pd_2.metric(label=f"Jumlah Peserta Tender ({status_pemenang_pt})", value="{:,}".format(jumlah_PeserteTender.shape[0]))
+    data_pt_pd_3.metric(label=f"Nilai Total Terkoreksi ({status_pemenang_pt})", value="{:,.2f}".format(jumlah_PeserteTender['NILAI_TERKOREKSI'].sum()))
     data_pt_pd_4.subheader("")
     style_metric_cards()
 
@@ -972,10 +972,10 @@ with menu_spse_4:
     gd.configure_pagination()
     gd.configure_side_bar()
     gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    gd.configure_column("pagu", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.pagu.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("hps", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.hps.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("nilai_penawaran", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_penawaran.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("nilai_terkoreksi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_terkoreksi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("HPS", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HPS.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("NILAI_PENAWARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PENAWARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd.configure_column("NILAI_TERKOREKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TERKOREKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
     
     gridOptions = gd.build()
     AgGrid(jumlah_PeserteTender, gridOptions=gridOptions, enable_enterprise_modules=True)
