@@ -329,7 +329,7 @@ with menu_purchasing_2:
 
     st.divider()
 
-    status_verifikasi = st.radio("**Status Verifikasi Transaksi**", ["verified", "unverified"], index=None)
+    status_verifikasi = st.radio("**Status Verifikasi Transaksi**", ["verified", "unverified"])
     st.write(f"Anda memilih : **{status_verifikasi}**")
 
     ### Hitung-hitungan dataset
