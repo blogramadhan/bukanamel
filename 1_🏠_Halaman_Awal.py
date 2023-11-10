@@ -36,14 +36,14 @@ from streamlit_extras.app_logo import add_logo
 # Import fungsi pribadi
 from fungsi import *
 
-# App Logo
-logo()
-
 st.set_page_config(
     page_title="Dashboard Pengadaan Barang dan Jasa",
     page_icon="👋",
     layout="wide"
 )
+
+# App Logo
+logo()
 
 st.title("Dashboard Pengadaan Barang dan Jasa")
 
