@@ -73,17 +73,12 @@ st.markdown("""
     * BAPBAST
   * Pencatatan
     * Pencatatan Non Tender
-    * Pencatatan SwakelolaNon Tender
+    * Pencatatan Swakelola
   * Peserta Tender
 * **PURCHASING**
   * Tramsaksi Katalog
   * Transaksi Toko Daring
 * **SIKAP**
-
-Dibuat dengan menggunakan bahasa [Python](https://www.python.org/) dengan tambahan beberapa *library* utama seperti:
-* [Pandas](https://pandas.pydata.org/)
-* [Streamlit](https://streamlit.io)
-* [DuckDB](https://duckdb.org)
 
 Sumber data *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
