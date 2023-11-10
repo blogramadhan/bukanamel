@@ -955,21 +955,17 @@ with menu_spse_4:
     status_opd_pt = st.selectbox("**Pilih Satker :**", opd_pt)
 
     if status_pemenang_pt == "PEMENANG":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND pemenang != 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran > 0 AND nilai_terkoreksi > 0  AND pemenang = 1").df()
     elif status_pemenang_pt == "MENDAFTAR":
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran = 0 AND nilai_terkoreksi = 0").df()
     else:
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran != 0 AND nilai_terkoreksi != 0").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_paket, nama_penyedia, npwp_penyedia, pagu, hps, nilai_penawaran, nilai_terkoreksi, pemenang FROM df_PesertaTenderDetail_filter WHERE nama_satker = '{status_opd_pt}' AND nilai_penawaran > 0 AND nilai_terkoreksi > 0").df()
 
-    #### Hitung-hitungan dataset Peserta Tender Perangkat Daerah
-    jumlah_PesertaTender_pd_daftar = jumlah_PeserteTender.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
-    jumlah_PesertaTender_pd_nawar = jumlah_PeserteTender.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
-    jumlah_PesertaTender_pd_menang = jumlah_PeserteTender.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 1")
-
-    data_pt_pd_1, data_pt_pd_2, data_pt_pd_3 = st.columns(3)
-    data_pt_pd_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_pd_daftar.shape[0]))
-    data_pt_pd_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_pd_nawar.shape[0]))
-    data_pt_pd_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_pd_menang.shape[0]))
+    data_pt_pd_1, data_pt_pd_2, data_pt_pd_3, data_pt_pd_4 = st.columns(4)
+    data_pt_pd_1.subheader("")
+    data_pt_pd_2.metric(label="Jumlah Peserta", value="{:,}".format(jumlah_PeserteTender.shape[0]))
+    data_pt_pd_3.metric(label="Nilai Total Terkoreksi", value="{:,.2f}".format(jumlah_PeserteTender['nilai_terkoreksi'].sum()))
+    data_pt_pd_4.subheader("")
     style_metric_cards()
 
     gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
