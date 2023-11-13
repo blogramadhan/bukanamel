@@ -853,6 +853,7 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
+        
 
     #### Tab menu SPSE - Pencatatan - Swakelola
     with menu_spse_3_2:
