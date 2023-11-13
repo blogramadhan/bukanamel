@@ -853,7 +853,7 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
-        AgGrid(df_CatatNonTender_OK_filter.head(5))
+        st.dataframe(df_CatatNonTender_OK_filter.head(5))
         st.divider()
 
         SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3 = st.columns((2,2,2))
