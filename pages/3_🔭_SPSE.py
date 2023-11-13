@@ -853,14 +853,16 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
+        AgGrid(df_CatatNonTender_OK_filter)
+        st.divider()
 
         SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3 = st.columns((2,2,2))
         with SPSE_CNT_radio_1:
             status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
         #with SPSE_CNT_radio_2:
         #    kategori_pengadaan_cnt = st.radio("**Kategori Pengadaan :**", df_CatatNonTender_OK_filter['kategori_pengadaan'].unique())
-        with SPSE_CNT_radio_3:
-            mtd_pemilihan_cnt = st.radio("**Metode Pemilihan :**", df_CatatNonTender_OK_filter['mtd_pemilihan'].unique())
+        #with SPSE_CNT_radio_3:
+        #    mtd_pemilihan_cnt = st.radio("**Metode Pemilihan :**", df_CatatNonTender_OK_filter['mtd_pemilihan'].unique())
 
         
 
