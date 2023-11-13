@@ -841,7 +841,7 @@ with menu_spse_3:
         st.write(f"Anda memilih : **{sumber_dana_cnt}**")
 
         #### Hitung-hitungan dataset Catat Non Tender
-        df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}'")
+        df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}' and status_nontender_pct == 'Aktif'")
         jumlah_CatatNonTender_Berjalan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Sedang Berjalan'")
         jumlah_CatatNonTender_Selesai = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Selesai'")
         jumlah_CatatNonTender_Dibatalkan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Dibatalkan'")
@@ -854,6 +854,15 @@ with menu_spse_3:
 
         st.divider()
 
+        SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3 = st.columns((2,2,2))
+        with SPSE_CNT_radio_1:
+            status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
+        with SPSE_CNT_radio_2:
+            kategori_pengadaan_cnt = st.radio("**Kategori Pengadaan :**", df_CatatNonTender_OK_filter['kategori_pengadaan'].unique())
+        with SPSE_CNT_radio_3:
+            mtd_pemilihan_cnt = st.radio("**Metode Pemilihan :**", df_CatatNonTender_OK_filter['mtd_pemilihan'].unique())
+
+        
 
     #### Tab menu SPSE - Pencatatan - Swakelola
     with menu_spse_3_2:
