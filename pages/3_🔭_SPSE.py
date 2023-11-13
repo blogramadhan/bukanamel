@@ -879,6 +879,8 @@ with menu_spse_3:
         with SPSE_CS_radio_2:
             status_opd_cs = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
 
+        st.divider()
+
         df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
 
         gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_tabel)
@@ -939,6 +941,8 @@ with menu_spse_4:
         status_pemenang_pt = st.radio("**Tabel Data Peserta :**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
     with SPSE_PT_radio_2:
         status_opd_pt = st.selectbox("**Pilih Satker :**", df_PesertaTenderDetail_filter['nama_satker'].unique())
+
+    st.divider()
 
     if status_pemenang_pt == "PEMENANG":
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI, pemenang AS PEMENANG FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND PEMENANG = 1").df()
