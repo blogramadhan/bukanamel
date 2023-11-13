@@ -841,7 +841,7 @@ with menu_spse_3:
         st.write(f"Anda memilih : **{sumber_dana_cnt}**")
 
         #### Hitung-hitungan dataset Catat Non Tender
-        df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}' and status_nontender_pct == 'Aktif'")
+        df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}'")
         jumlah_CatatNonTender_Berjalan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Sedang Berjalan'")
         jumlah_CatatNonTender_Selesai = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Selesai'")
         jumlah_CatatNonTender_Dibatalkan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Dibatalkan'")
