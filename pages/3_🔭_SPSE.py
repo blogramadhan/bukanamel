@@ -812,8 +812,8 @@ with menu_spse_3:
     menu_spse_3_1, menu_spse_3_2 = st.tabs(["| Pencatatan Non Tender |", "| Pencatatan Swakelola |"])
 
     #### Query penggabungan dataset CatatNonTender dan CatatSwakelola
-    df_CatatNonTenderRealisasi_Filter = ""
-    df_CatatNonTender_OK = ""
+    df_CatatNonTenderRealisasi_Filter = df_CatatNonTenderRealisasi[["kd_nontender_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi", "nama_penyedia", "npwp_penyedia"]]
+    df_CatatNonTender_OK = df_CatatNonTender.merge(df_CatatNonTenderRealisasi, how='left', on='kd_nontender_pct')
 
     df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
     df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_filter, how='left', on='kd_swakelola_pct')
@@ -822,7 +822,7 @@ with menu_spse_3:
     with menu_spse_3_1:
 
         #### Buat tombol unduh dataset SPSE-Pencatatan-Non Tender
-        unduh_CATAT_NonTender = unduh_data(df_CatatNonTender)
+        unduh_CATAT_NonTender = unduh_data(df_CatatNonTender_OK)
 
         SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
         with SPSE_CATAT_NonTender_1:
@@ -836,6 +836,11 @@ with menu_spse_3:
             )
 
         st.divider()
+
+        sumber_dana_cnt = st.radio("**Sumber Dana :**", df_CatatNonTender_OK['sumber_dana'].unique(), key="CatatNonTender")
+        st.write(f"Anda memilih : **{sumber_dana_cnt}**")
+
+        
 
     #### Tab menu SPSE - Pencatatan - Swakelola
     with menu_spse_3_2:
