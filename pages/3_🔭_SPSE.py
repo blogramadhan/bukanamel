@@ -840,7 +840,19 @@ with menu_spse_3:
         sumber_dana_cnt = st.radio("**Sumber Dana :**", df_CatatNonTender_OK['sumber_dana'].unique(), key="CatatNonTender")
         st.write(f"Anda memilih : **{sumber_dana_cnt}**")
 
-        
+        #### Hitung-hitungan dataset Catat Non Tender
+        df_CatatNonTender_OK_filter = con.execute(f"SELECT * FROM df_CatatNonTender_OK WHERE sumber_dana = '{sumber_dana_cnt}'").df()
+        jumlah_CatatNonTender_Berjalan = con.execute(f"SELECT * FROM df_CatatNonTender_OK_filter WHERE status_nontender_pct_ket = 'Paket Sedang Berjalan'").df()
+        jumlah_CatatNonTender_Selesai = con.execute(f"SELECT * FROM df_CatatNonTender_OK_filter WHERE status_nontender_pct_ket = 'Paket Selesai'").df()
+        jumlah_CatatNonTender_Dibatalkan = con.execute(f"SELECT * FROM df_CatatNonTender_OK_filter WHERE status_nontender_pct_ket = 'Paket Dibatalkan'").df()
+
+        data_cnt_1, data_cnt_2, data_cnt_3 = st.columns(3)
+        data_cnt_1.metric(label="Jumlah Pencatatan NonTender Berjalan", value="{:,}".format(jumlah_CatatNonTender_Berjalan.shape[0]))
+        data_cnt_2.metric(label="Jumlah Pencatatan NonTender Selesai", value="{:,}".format(jumlah_CatatNonTender_Selesai.shape[0]))
+        data_cnt_3.metric(label="Jumlah Pencatatan NonTender Dibatalkan", velue="{:,}".format(jumlah_CatatNonTender_Dibatalkan.shape[0]))
+        style_metric_cards()
+
+        st.divider()
 
     #### Tab menu SPSE - Pencatatan - Swakelola
     with menu_spse_3_2:
@@ -868,12 +880,12 @@ with menu_spse_3:
         df_CatatSwakelola_OK_filter = con.execute(f"SELECT * FROM df_CatatSwakelola_OK WHERE sumber_dana = '{sumber_dana_cs}'").df()
         jumlah_CatatSwakelola_Berjalan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan'").df()
         jumlah_CatatSwakelola_Selesai = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai'").df()
-        jumlah_CatatSwakelola_dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan'").df()
+        jumlah_CatatSwakelola_Dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan'").df()
 
         data_cs_1, data_cs_2, data_cs_3 = st.columns(3)
         data_cs_1.metric(label="Jumlah Pencatatan Swakelola Berjalan", value="{:,}".format(jumlah_CatatSwakelola_Berjalan.shape[0]))
         data_cs_2.metric(label="Jumlah Pencacatan Swakelola Selesai", value="{:,}".format(jumlah_CatatSwakelola_Selesai.shape[0]))
-        data_cs_3.metric(label="Jumlah Pencatatan Swakelola Dibatalkan", value="{:,}".format(jumlah_CatatSwakelola_dibatalkan.shape[0]))
+        data_cs_3.metric(label="Jumlah Pencatatan Swakelola Dibatalkan", value="{:,}".format(jumlah_CatatSwakelola_Dibatalkan.shape[0]))
         style_metric_cards()
 
         st.divider()
