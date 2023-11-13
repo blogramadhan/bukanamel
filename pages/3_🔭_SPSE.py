@@ -873,8 +873,11 @@ with menu_spse_3:
 
         st.divider()
 
-        status_swakelola_cs = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
-        status_opd_cs = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
+        SPSE_CS_radio_1, SPSE_CS_radio_2 = st.columns((2,8))
+        with SPSE_CS_radio_1:
+            status_swakelola_cs = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
+        with SPSE_CS_radio_2:
+            status_opd_cs = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
 
         df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
 
@@ -891,25 +894,6 @@ with menu_spse_3:
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
-
-    ### Persiapan dataset Peserta Tender vs Master Satker
-
-    #### Query penggabungan dataset Peserta Tender vs Master Satker
-
-    #sql_query_PesertaTenderDetail_1 = """
-    #    SELECT nama_satker, nama_penyedia, npwp_penyedia, nilai_penawaran, nilai_terkoreksi, pemenang, pemenang_terverifikasi, kd_tender
-    #    FROM df_PesertaTender, df_RUPMasterSatker 
-    #    WHERE df_PesertaTender.kd_satker_str = df_RUPMasterSatker.kd_satker_str 
-    #"""
-
-    #sql_query_PesertaTenderDetail_2 = """
-    #    SELECT df_PesertaTenderDetail_1.nama_satker, df_SPSETenderPengumuman.nama_paket, df_SPSETenderPengumuman.pagu, df_SPSETenderPengumuman.hps, df_SPSETenderPengumuman.sumber_dana, df_PesertaTenderDetail_1.nama_penyedia, df_PesertaTenderDetail_1.npwp_penyedia, df_PesertaTenderDetail_1.nilai_penawaran, df_PesertaTenderDetail_1.nilai_terkoreksi, df_PesertaTenderDetail_1.pemenang, df_PesertaTenderDetail_1.pemenang_terverifikasi
-    #    FROM df_PesertaTenderDetail_1, df_SPSETenderPengumuman 
-    #    WHERE df_PesertaTenderDetail_1.kd_tender = df_SPSETenderPengumuman.kd_tender
-    #"""
-
-    #df_PesertaTenderDetail_1 = con.execute(sql_query_PesertaTenderDetail_1).df()
-    #df_PesertaTenderDetail_2 = con.execute(sql_query_PesertaTenderDetail_2).df()
 
     df_RUPMasterSatker_filter_pt = df_RUPMasterSatker[["kd_satker_str", "nama_satker"]]
     df_SPSETenderPengumuman_filter_pt = df_SPSETenderPengumuman[["kd_tender", "nama_paket", "pagu", "hps", "sumber_dana"]]
@@ -950,9 +934,11 @@ with menu_spse_4:
 
     st.divider()
 
-    opd_pt = df_PesertaTenderDetail_filter['nama_satker'].unique()
-    status_pemenang_pt = st.radio("**Tabel Data Peserta :**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
-    status_opd_pt = st.selectbox("**Pilih Satker :**", opd_pt)
+    SPSE_PT_radio_1, SPSE_PT_radio_2 = st.columns((2,8))
+    with SPSE_PT_radio_1:
+        status_pemenang_pt = st.radio("**Tabel Data Peserta :**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
+    with SPSE_PT_radio_2:
+        status_opd_pt = st.selectbox("**Pilih Satker :**", df_PesertaTenderDetail_filter['nama_satker'].unique())
 
     if status_pemenang_pt == "PEMENANG":
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI, pemenang AS PEMENANG FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND PEMENANG = 1").df()
