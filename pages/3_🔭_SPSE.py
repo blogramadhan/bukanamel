@@ -841,19 +841,19 @@ with menu_spse_3:
         st.write(f"Anda memilih : **{sumber_dana_cnt}**")
 
         #### Hitung-hitungan dataset Catat Non Tender
-        df_CatatNonTender_OK_filter = con.execute(f"SELECT * FROM df_CatatNonTender_OK WHERE sumber_dana = '{sumber_dana_cnt}'").df()
-        jumlah_CatatNonTender_Berjalan = con.execute(f"SELECT * FROM df_CatatNonTender_OK_filter WHERE status_nontender_pct_ket = 'Paket Sedang Berjalan'").df()
-        jumlah_CatatNonTender_Selesai = con.execute(f"SELECT * FROM df_CatatNonTender_OK_filter WHERE status_nontender_pct_ket = 'Paket Selesai'").df()
-        jumlah_CatatNonTender_Dibatalkan = con.execute(f"SELECT * FROM df_CatatNonTender_OK_filter WHERE status_nontender_pct_ket = 'Paket Dibatalkan'").df()
+        df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}'")
+        jumlah_CatatNonTender_Berjalan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Sedang Berjalan'")
+        jumlah_CatatNonTender_Selesai = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Selesai'")
+        jumlah_CatatNonTender_Dibatalkan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Dibatalkan'")
 
         data_cnt_1, data_cnt_2, data_cnt_3 = st.columns(3)
         data_cnt_1.metric(label="Jumlah Pencatatan NonTender Berjalan", value="{:,}".format(jumlah_CatatNonTender_Berjalan.shape[0]))
         data_cnt_2.metric(label="Jumlah Pencatatan NonTender Selesai", value="{:,}".format(jumlah_CatatNonTender_Selesai.shape[0]))
-        data_cnt_3.metric(label="Jumlah Pencatatan NonTender Dibatalkan", velue="{:,}".format(jumlah_CatatNonTender_Dibatalkan.shape[0]))
+        data_cnt_3.metric(label="Jumlah Pencatatan NonTender Dibatalkan", value="{:,}".format(jumlah_CatatNonTender_Dibatalkan.shape[0]))
         style_metric_cards()
 
         st.divider()
-        
+
 
     #### Tab menu SPSE - Pencatatan - Swakelola
     with menu_spse_3_2:
