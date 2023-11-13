@@ -856,14 +856,31 @@ with menu_spse_3:
         st.dataframe(df_CatatNonTender_OK_filter.head(5))
         st.divider()
 
-        SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3 = st.columns((2,2,2))
+        SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3, SPSE_CNT_radio_4 = st.columns((2,2,2,6))
         with SPSE_CNT_radio_1:
             status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
         with SPSE_CNT_radio_2:
             kategori_pengadaan_cnt = st.radio("**Kategori Pengadaan :**", df_CatatNonTender_OK_filter['kategori_pengadaan_x'].unique())
         with SPSE_CNT_radio_3:
             mtd_pemilihan_cnt = st.radio("**Metode Pemilihan :**", df_CatatNonTender_OK_filter['mtd_pemilihan_x'].unique())
+        with SPSE_CNT_radio_4:
+            status_opd_cnt = st.selectbox("**Pilih Satker :**", df_CatatNonTender_OK_filter['nama_satker'].unique())
 
+        st.divider()
+
+        df_CatatNonTender_tabel = df_CatatNonTender_OK_filter.query(f"status_nontender_pct_ket == '{status_nontender_cnt}' and kategori_pengadaan_x == '{kategori_pengadaan_cnt}' and mtd_pemilihan_x == '{mtd_pemilihan_cnt}' and nama_satker == '{status_opd_cnt}'")
+        df_CatatNonTender_tabel_OK = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatNonTender_tabel").df()
+
+        gd = GridOptionsBuilder.from_dataframe(df_CatatNonTender_tabel_OK)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("TOTAL_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        
+        gridOptions = gd.build()
+        AgGrid(df_CatatNonTender_tabel_OK, gridOptions=gridOptions, enable_enterprise_modules=True)
         
 
     #### Tab menu SPSE - Pencatatan - Swakelola
