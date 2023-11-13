@@ -853,8 +853,6 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
-        st.dataframe(df_CatatNonTender_OK_filter.head(5))
-        st.divider()
 
         SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3, SPSE_CNT_radio_4 = st.columns((2,2,2,6))
         with SPSE_CNT_radio_1:
@@ -869,25 +867,23 @@ with menu_spse_3:
         st.divider()
 
         sql_CatatNonTender_query = f"""
-            SELECT nama_paket, jenis_realisasi, no_realisasi, tgl_realisasi, pagu,
-            total_realisasi, nilai_realisasi FROM df_CatatNonTender_OK_filter
+            SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU,
+            total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI FROM df_CatatNonTender_OK_filter
             WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
             kategori_pengadaan_x = '{kategori_pengadaan_cnt}' AND
             mtd_pemilihan_x = '{mtd_pemilihan_cnt}' AND
             nama_satker = '{status_opd_cnt}'
         """
 
-        #df_CatatNonTender_tabel = df_CatatNonTender_OK_filter.query(f"status_nontender_pct_ket == '{status_nontender_cnt}' and kategori_pengadaan_x == '{kategori_pengadaan_cnt}' and mtd_pemilihan_x == '{mtd_pemilihan_cnt}' and nama_satker == '{status_opd_cnt}'")
-        #df_CatatNonTender_tabel_OK = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatNonTender_tabel").df()
         df_CatatNonTender_tabel = con.execute(sql_CatatNonTender_query).df()
 
         gd = GridOptionsBuilder.from_dataframe(df_CatatNonTender_tabel)
         gd.configure_pagination()
         gd.configure_side_bar()
         gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("pagu", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.pagu.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("total_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.total_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("nilai_realisasi", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.nilai_realisasi.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("TOTAL_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
         
         gridOptions = gd.build()
         AgGrid(df_CatatNonTender_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
