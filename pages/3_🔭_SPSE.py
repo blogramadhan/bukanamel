@@ -934,6 +934,13 @@ with menu_spse_3:
 
         df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
 
+        data_cs_pd_1, data_cs_pd_2, data_cs_pd_3, data_cs_pd_4 = st.columns(4)
+        data_cs_pd_1.subheader("")
+        data_cs_pd_2.metric(label=f"Jumlah Pencatatan Swakelola ({status_swakelola_cs})", value="{:,}".format(df_CatatSwakelola_tabel.shape[0]))
+        data_cs_pd_3.metric(label=f"Nilai Total Pencatatan Transaksi Swakelola ({status_swakelola_cs})", value="{:,.2f}".format(df_CatatSwakelola_tabel['NILAI_REALISASI'].sum()))
+        data_cs_pd_4.subheader("")
+        style_metric_cards()
+
         gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_tabel)
         gd.configure_pagination()
         gd.configure_side_bar()
