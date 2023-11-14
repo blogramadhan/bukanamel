@@ -854,13 +854,9 @@ with menu_spse_3:
 
         st.divider()
 
-        SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3, SPSE_CNT_radio_4 = st.columns((2,2,2,6))
+        SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3, SPSE_CNT_radio_4 = st.columns((2,8))
         with SPSE_CNT_radio_1:
             status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
-        with SPSE_CNT_radio_2:
-            kategori_pengadaan_cnt = st.radio("**Kategori Pengadaan :**", df_CatatNonTender_OK_filter['kategori_pengadaan_x'].unique())
-        with SPSE_CNT_radio_3:
-            mtd_pemilihan_cnt = st.radio("**Metode Pemilihan :**", df_CatatNonTender_OK_filter['mtd_pemilihan_x'].unique())
         with SPSE_CNT_radio_4:
             status_opd_cnt = st.selectbox("**Pilih Satker :**", df_CatatNonTender_OK_filter['nama_satker'].unique())
 
@@ -870,8 +866,6 @@ with menu_spse_3:
             SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU,
             total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI FROM df_CatatNonTender_OK_filter
             WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
-            kategori_pengadaan_x = '{kategori_pengadaan_cnt}' AND
-            mtd_pemilihan_x = '{mtd_pemilihan_cnt}' AND
             nama_satker = '{status_opd_cnt}'
         """
 
