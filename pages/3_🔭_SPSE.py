@@ -853,9 +853,7 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
-        st.dataframe(df_CatatNonTender_OK_filter)
-        st.divider()
-
+        
         SPSE_CNT_radio_1, SPSE_CNT_radio_2 = st.columns((2,8))
         with SPSE_CNT_radio_1:
             status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
@@ -887,6 +885,28 @@ with menu_spse_3:
         data_cnt_pd_3.metric(label=f"Nilai Total Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel['NILAI_REALISASI'].sum()))
         data_cnt_pd_4.subheader("")
         style_metric_cards()
+
+        st.divider()
+
+        #### Grafik jumlah dan nilai transaksi berdasarkan kategori pengadaan dan metode pemilihan
+        grafik_cnt_1, grafik_cnt_2, grafik_cnt_3, grafik_cnt_4 = st.tabs(["| Jumlah Transaksi - Kategori Pengadaan |","| Nilai Transaksi - Kategori Pengadaan |","| Jumlah Transaksi - Metode Pemilihan |","| Nilai Transaksi - Metode Pemilihan |"])
+        
+        with grafik_cnt_1:
+
+            st.subheader("Berdasarkan Jumlah Kategori Pemilihan")
+
+        with grafik_cnt_2:
+
+            st.subheader("Berdasarkan Nilai Kategori Pemilihan")
+
+        with grafik_cnt_3:
+
+            st.subheader("Berdasarkan Jumlah Metode Pemilihan")
+
+        with grafik_cnt_4:
+            st.subheader("Berdasarkan Nilai Metode Pemilihan")
+
+        st.divider()
 
         gd = GridOptionsBuilder.from_dataframe(df_CatatNonTender_tabel)
         gd.configure_pagination()
