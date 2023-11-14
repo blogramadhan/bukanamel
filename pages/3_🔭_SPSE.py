@@ -871,7 +871,22 @@ with menu_spse_3:
             nama_satker = '{status_opd_cnt}'
         """
 
+        sql_CatatNonTender_query_grafik = f"""
+            SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, mtd_pemilihan AS METODE_PEMILIHAN, nilai_realisasi AS NILAI_REALISASI
+            FROM df_CatatNonTender_OK_filter
+            WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
+            nama_satker = '{status_opd_cnt}'
+        """
+
         df_CatatNonTender_tabel = con.execute(sql_CatatNonTender_query).df()
+        df_CatatNonTender_grafik = con.execute(sql_CatatNonTender_query_grafik).df()
+
+        data_cnt_pd_1, data_cnt_pd_2, data_cnt_pd_3, data_cnt_pd_4 = st.columns((2,3,3,2))
+        data_cnt_pd_1.subheader("")
+        data_cnt_pd_2.metric(label=f"Jumlah Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel.shape[0]))
+        data_cnt_pd_3.metric(label=f"Nilai Total Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel['NILAI_REALISASI'].sum()))
+        data_cnt_pd_4.subheader("")
+        style_metric_cards()
 
         gd = GridOptionsBuilder.from_dataframe(df_CatatNonTender_tabel)
         gd.configure_pagination()
