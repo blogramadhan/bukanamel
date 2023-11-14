@@ -853,6 +853,8 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
+        st.dataframe(df_CatatNonTender_OK_filter)
+        st.divider()
 
         SPSE_CNT_radio_1, SPSE_CNT_radio_2 = st.columns((2,8))
         with SPSE_CNT_radio_1:
@@ -864,7 +866,7 @@ with menu_spse_3:
 
         sql_CatatNonTender_query = f"""
             SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU,
-            total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, kategori_pengadaan, mtd_pemilihan FROM df_CatatNonTender_OK_filter
+            total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI FROM df_CatatNonTender_OK_filter
             WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
             nama_satker = '{status_opd_cnt}'
         """
