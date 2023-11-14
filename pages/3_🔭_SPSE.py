@@ -861,6 +861,26 @@ with menu_spse_3:
 
             st.subheader("Berdasarkan Jumlah Kategori Pemilihan")
 
+            ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
+
+            sql_cnt_kp_jumlah = """
+                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
+                FROM df_CatatNonTender_OK_filter GROUP KATEGORI_PENGADAAN ORDER BY JUMLAH_PAKET DESC
+            """
+
+            tabel_cnt_kp_jumlah = con.execute(sql_cnt_kp_jumlah).df()
+
+            grafik_cnt_1_1, grafik_cnt_1_2 = st.columns((3,7))
+
+            with grafik_cnt_1_1:
+
+                AgGrid(tabel_cnt_kp_jumlah)
+
+            with grafik_cnt_1_2:
+
+                figcntkph = px.pie(tabel_cnt_kp_jumlah, values="JUMLAH_PAKET", names="KATEGORI_PENGADAAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Kategori Pengadaan", hole=.3)
+                st.plotly_chart(figcntkph, theme="streamlit", use_container_width=True)
+
         with grafik_cnt_2:
 
             st.subheader("Berdasarkan Nilai Kategori Pemilihan")
