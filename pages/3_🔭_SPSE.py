@@ -885,6 +885,33 @@ with menu_spse_3:
 
             st.subheader("Berdasarkan Nilai Kategori Pemilihan")
 
+            ##### Query data grafik nilai transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
+
+            sql_cnt_kp_nilai = """
+                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, SUM(nilai_realisasi) AS NILAI_REALISASI
+                FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY NILAI_REALISASI
+            """
+
+            tabel_cnt_kp_nilai = con.execute(sql_cnt_kp_nilai).df()
+
+            grafik_cnt_2_1, grafik_cnt_2_2 = st.columns((3,7))
+
+            with grafik_cnt_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_cnt_kp_nilai)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_cnt_kp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)    
+
+            with grafik_cnt_2_2:
+
+                figcntkpn = px.pie(tabel_cnt_kp_nilai, values="NILAI_REALISASI", names="KATEGORI_PENGADAAN", title="Grafik Pencatatan Non Tender - Nilai Transaksi - Kategori Pengadaan", hole=.3)
+                st.plotly_chart(figcntkpn, theme="streamlit", use_container_width=True)
+
         with grafik_cnt_3:
 
             st.subheader("Berdasarkan Jumlah Metode Pemilihan")
