@@ -866,8 +866,8 @@ with menu_spse_3:
             ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
 
             sql_cnt_kp_jumlah = """
-                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
-                FROM df_CatatNonTender_OK_filter GROUP KATEGORI_PENGADAAN ORDER BY JUMLAH_PAKET DESC
+                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, COUNT(DISTINCT(kd_nontender_pct)) AS JUMLAH_PAKET
+                FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY JUMLAH_PAKET DESC
             """
 
             tabel_cnt_kp_jumlah = con.execute(sql_cnt_kp_jumlah).df()
