@@ -853,6 +853,8 @@ with menu_spse_3:
         style_metric_cards()
 
         st.divider()
+        st.dataframe(df_CatatNonTender_OK_filter)
+        st.divider()
 
         #### Grafik jumlah dan nilai transaksi berdasarkan kategori pengadaan dan metode pemilihan
         grafik_cnt_1, grafik_cnt_2, grafik_cnt_3, grafik_cnt_4 = st.tabs(["| Jumlah Transaksi - Kategori Pengadaan |","| Nilai Transaksi - Kategori Pengadaan |","| Jumlah Transaksi - Metode Pemilihan |","| Nilai Transaksi - Metode Pemilihan |"])
