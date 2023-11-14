@@ -937,7 +937,7 @@ with menu_spse_3:
         data_cs_pd_1, data_cs_pd_2, data_cs_pd_3, data_cs_pd_4 = st.columns(4)
         data_cs_pd_1.subheader("")
         data_cs_pd_2.metric(label=f"Jumlah Pencatatan Swakelola ({status_swakelola_cs})", value="{:,}".format(df_CatatSwakelola_tabel.shape[0]))
-        data_cs_pd_3.metric(label=f"Nilai Total Pencatatan Transaksi Swakelola ({status_swakelola_cs})", value="{:,.2f}".format(df_CatatSwakelola_tabel['NILAI_REALISASI'].sum()))
+        data_cs_pd_3.metric(label=f"Nilai Total Pencatatan Swakelola ({status_swakelola_cs})", value="{:,.2f}".format(df_CatatSwakelola_tabel['NILAI_REALISASI'].sum()))
         data_cs_pd_4.subheader("")
         style_metric_cards()
 
