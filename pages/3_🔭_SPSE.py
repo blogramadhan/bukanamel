@@ -916,8 +916,57 @@ with menu_spse_3:
 
             st.subheader("Berdasarkan Jumlah Metode Pemilihan")
 
+            ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Metode Pemilihan
+
+            sql_cnt_mp_jumlah = """
+                SELECT mtd_pemilihan AS METODE_PEMILIHAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
+                FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
+            """
+
+            tabel_cnt_mp_jumlah = con.execute(sql_cnt_mp_jumlah).df()
+
+            grafik_cnt_3_1, grafik_cnt_3_2 = st.columns((3,7))
+
+            with grafik_cnt_3_1:
+
+                AgGrid(tabel_cnt_mp_jumlah)
+
+            with grafik_cnt_3_2:
+
+                figcntmph = px.pie(tabel_cnt_mp_jumlah, values="JUMLAH_PAKET", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Metode Pemilihan", hole=.3)
+                st.plotly_chart(figcntmph, theme="streamlit", use_container_width=True)
+
+
         with grafik_cnt_4:
+
             st.subheader("Berdasarkan Nilai Metode Pemilihan")
+
+            ##### Query data grafik nilai transaksi Pencatatan Non Tender berdasarkan Metode Pemilihan
+
+            sql_cnt_mp_nilai = """
+                SELECT mtd_pemilihan AS METODE_PEMILIHAN, SUM(nilai_realisasi) AS NILAI_REALISASI
+                FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_REALISASI
+            """
+
+            tabel_cnt_mp_nilai = con.execute(sql_cnt_mp_nilai).df()
+
+            grafik_cnt_4_1, grafik_cnt_4_2 = st.columns((3,7))
+
+            with grafik_cnt_4_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_cnt_mp_nilai)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_cnt_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)    
+
+            with grafik_cnt_4_2:
+
+                figcntmpn = px.pie(tabel_cnt_mp_nilai, values="NILAI_REALISASI", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Nilai Transaksi - Metode Pemilihan", hole=.3)
+                st.plotly_chart(figcntmpn, theme="streamlit", use_container_width=True)
 
         st.divider()
         
