@@ -854,10 +854,10 @@ with menu_spse_3:
 
         st.divider()
 
-        SPSE_CNT_radio_1, SPSE_CNT_radio_2, SPSE_CNT_radio_3, SPSE_CNT_radio_4 = st.columns((2,8))
+        SPSE_CNT_radio_1, SPSE_CNT_radio_2 = st.columns((2,8))
         with SPSE_CNT_radio_1:
             status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
-        with SPSE_CNT_radio_4:
+        with SPSE_CNT_radio_2:
             status_opd_cnt = st.selectbox("**Pilih Satker :**", df_CatatNonTender_OK_filter['nama_satker'].unique())
 
         st.divider()
