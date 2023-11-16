@@ -1115,10 +1115,11 @@ with menu_spse_4:
     jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
     jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 1")
 
-    data_pt_1, data_pt_2, data_pt_3 = st.columns(3)
+    data_pt_1, data_pt_2, data_pt_3, data_pt_4 = st.columns(4)
     data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar.shape[0]))
     data_pt_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_nawar.shape[0]))
     data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang.shape[0]))
+    data_pt_4.metric(label="Nilai Total Terkoreksi (Pemenang)", value="{:,.2f}".format(jumlah_PesertaTender_menang['nilai_terkoreksi'].sum()))
     style_metric_cards()
 
     st.divider()
