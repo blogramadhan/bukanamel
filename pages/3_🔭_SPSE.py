@@ -837,6 +837,21 @@ with menu_spse_2:
             status_nontender = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman_OK['status_nontender'].unique())
         st.write(f"Anda memilih : **{sumber_dana_nt}** dan **{status_nontender}**")
 
+        ##### Hitung-hitungan dataset Non Tender Pengumuman
+        df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman_OK WHERE sumber_dana = '{sumber_dana_nt}' AND status_nontender = '{status_nontender}'").df()
+        jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_pengumuman_pagu = df_SPSENonTenderPengumuman_filter['pagu'].sum()
+        nilai_trx_spse_nt_pengumuman_hps = df_SPSENonTenderPengumuman_filter['hps'].sum()
+
+        data_umum_nt_1, data_umum_nt_2, data_umum_nt_3 = st.columns(3)
+        data_umum_nt_1.metric(label="Jumlah Non Tender Diumumkan", value="{:,}".format(jumlah_trx_spse_nt_pengumuman))
+        data_umum_nt_2.metric(label="Nilai Pagu Non Tender Diumumkan", value="{:,}".format(nilai_trx_spse_nt_pengumuman_pagu))
+        data_umum_nt_3.metric(label="Nilai HPS Non Tender Diumumkan", value="{:,}".format(nilai_trx_spse_nt_pengumuman_hps))
+        style_metric_cards()
+
+        st.divider()
+
+
     #### Tab menu SPSE - Non Tender - Selesai
     with menu_spse_2_2:
 
