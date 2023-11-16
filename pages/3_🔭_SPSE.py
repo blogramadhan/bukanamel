@@ -851,6 +851,235 @@ with menu_spse_2:
 
         st.divider()
 
+        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan kualifikasi paket
+        grafik_kp_nt_1, grafik_kp_nt_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
+
+        with grafik_kp_nt_1:
+
+            st.subheader("Berdasarkan Jumlah Kualifikasi Paket (Non Tender)")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan kualifikasi paket
+
+            sql_kp_nt_jumlah = """
+                SELECT kualifikasi_paket AS KUALIFIKASI_PAKET, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_kp_nt_jumlah_trx = con.execute(sql_kp_nt_jumlah).df()
+
+            grafik_kp_nt_1_1, grafik_kp_nt_1_2 = st.columns((3,7))
+
+            with grafik_kp_nt_1_1:
+
+                AgGrid(tabel_kp_nt_jumlah_trx)
+
+            with grafik_kp_nt_1_2:
+
+                st.bar_chart(tabel_kp_nt_jumlah_trx, x="KUALIFIKASI_PAKET", y="JUMLAH_PAKET", color="KUALIFIKASI_PAKET")
+    
+        with grafik_kp_nt_2:
+
+            st.subheader("Berdasarkan Nilai Kualifikasi Paket (Non Tender)")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan kualifikasi paket
+
+            sql_kp_nt_nilai = """
+                SELECT kualifikasi_paket AS KUALIFIKASI_PAKET, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_kp_nt_nilai_trx = con.execute(sql_kp_nt_nilai).df()
+
+            grafik_kp_nt_2_1, grafik_kp_nt_2_2 = st.columns((3,7))
+
+            with grafik_kp_nt_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_kp_nt_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_kp_nt_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_kp_2_2:
+
+                st.bar_chart(tabel_kp_nt_nilai_trx, x="KUALIFIKASI_PAKET", y="NILAI_PAKET", color="KUALIFIKASI_PAKET")
+
+        st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan Jenis Pengadaan
+        grafik_jp_nt_1, grafik_jp_nt_2 = st.tabs(["| Berdasarkan Jumlah Jenis Pengadaan |", "| Berdasarkan Nilai Jenis Pengadaan |"])
+
+        with grafik_jp_nt_1:
+
+            st.subheader("Berdasarkan Jumlah Jenis Pengadaan (Non Tender)")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan Jenis Pengadaan
+
+            sql_jp_nt_jumlah = """
+                SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_jp_nt_jumlah_trx = con.execute(sql_jp_nt_jumlah).df()
+
+            grafik_jp_nt_1_1, grafik_jp_nt_1_2 = st.columns((3,7))
+
+            with grafik_jp_nt_1_1:
+
+                AgGrid(tabel_jp_nt_jumlah_trx)
+
+            with grafik_jp_nt_1_2:
+
+                st.bar_chart(tabel_jp_nt_jumlah_trx, x="JENIS_PENGADAAN", y="JUMLAH_PAKET", color="JENIS_PENGADAAN")
+    
+        with grafik_jp_nt_2:
+
+            st.subheader("Berdasarkan Nilai Jenis Pengadaan (Non Tender)")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan Jenis Pengadaan
+
+            sql_jp_nt_nilai = """
+                SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_jp_nt_nilai_trx = con.execute(sql_jp_nt_nilai).df()
+
+            grafik_jp_nt_2_1, grafik_jp_nt_2_2 = st.columns((3,7))
+
+            with grafik_jp_nt_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_jp_nt_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_jp_nt_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_jp_2_2:
+
+                st.bar_chart(tabel_jp_nt_nilai_trx, x="JENIS_PENGADAAN", y="NILAI_PAKET", color="JENIS_PENGADAAN")
+
+        st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan Metode Pemilihan
+        grafik_mp_nt_1, grafik_mp_nt_2 = st.tabs(["| Berdasarkan Jumlah Metode Pemilihan |", "| Berdasarkan Nilai Metode Pemilihan |"])
+
+        with grafik_mp_nt_1:
+
+            st.subheader("Berdasarkan Jumlah Metode Pemilihan (Non Tender)")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan Metode Pemilihan
+
+            sql_mp_nt_jumlah = """
+                SELECT mtd_pemilihan AS METODE_PEMILIHAN, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_mp_nt_jumlah_trx = con.execute(sql_mp_nt_jumlah).df()
+
+            grafik_mp_nt_1_1, grafik_mp_nt_1_2 = st.columns((3,7))
+
+            with grafik_mp_nt_1_1:
+
+                AgGrid(tabel_mp_nt_jumlah_trx)
+
+            with grafik_mp_nt_1_2:
+
+                st.bar_chart(tabel_mp_nt_jumlah_trx, x="METODE_PEMILIHAN", y="JUMLAH_PAKET", color="METODE_PEMILIHAN")
+    
+        with grafik_mp_nt_2:
+
+            st.subheader("Berdasarkan Nilai Metode Pemilihan (Non Tender)")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan Metode Pemilihan
+
+            sql_mp_nt_nilai = """
+                SELECT mtd_pemilihan AS METODE_PEMILIHAN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_mp_nt_nilai_trx = con.execute(sql_mp_nt_nilai).df()
+
+            grafik_mp_nt_2_1, grafik_mp_nt_2_2 = st.columns((3,7))
+
+            with grafik_mp_nt_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_mp_nt_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_mp_nt_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_mp_nt_2_2:
+
+                st.bar_chart(tabel_mp_nt_nilai_trx, x="METODE_PEMILIHAN", y="NILAI_PAKET", color="METODE_PEMILIHAN")
+
+        st.divider()
+
+        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan Kontrak Pembayaran
+        grafik_kontrak_nt_1, grafik_kontrak_nt_2 = st.tabs(["| Berdasarkan Jumlah Kontrak Pembayaran |", "| Berdasarkan Nilai Kontrak Pembayaran |"])
+
+        with grafik_kontrak_nt_1:
+
+            st.subheader("Berdasarkan Jumlah Kontrak Pembayaran (Non Tender)")
+
+            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan Kontrak Pembayaran
+
+            sql_kontrak_nt_jumlah = """
+                SELECT kontrak_pembayaran AS KONTRAK_PEMBAYARAN, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY JUMLAH_PAKET DESC
+            """
+            
+            tabel_kontrak_nt_jumlah_trx = con.execute(sql_kontrak_nt_jumlah).df()
+
+            grafik_kontrak_nt_1_1, grafik_kontrak_nt_1_2 = st.columns((3,7))
+
+            with grafik_kontrak_nt_1_1:
+
+                AgGrid(tabel_kontrak_nt_jumlah_trx)
+
+            with grafik_kontrak_nt_1_2:
+
+                st.bar_chart(tabel_kontrak_nt_jumlah_trx, x="KONTRAK_PEMBAYARAN", y="JUMLAH_PAKET", color="KONTRAK_PEMBAYARAN")
+    
+        with grafik_kontrak_nt_2:
+
+            st.subheader("Berdasarkan Nilai Kontrak Pembayaran (Non Tender)")
+
+            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan Kontrak Pembayaran
+
+            sql_kontrak_nt_nilai = """
+                SELECT kontrak_pembayaran AS KONTRAK_PEMBAYARAN, SUM(pagu) AS NILAI_PAKET
+                FROM df_SPSENonTenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY NILAI_PAKET DESC
+            """
+            
+            tabel_kontrak_nt_nilai_trx = con.execute(sql_kontrak_nt_nilai).df()
+
+            grafik_kontrak_nt_2_1, grafik_kontrak_nt_2_2 = st.columns((3,7))
+
+            with grafik_kontrak_nt_2_1:
+
+                gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_nilai_trx)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                gridOptions = gd.build()
+                AgGrid(tabel_kontrak_nt_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+            with grafik_kontrak_nt_2_2:
+
+                st.bar_chart(tabel_kontrak_nt_nilai_trx, x="KONTRAK_PEMBAYARAN", y="NILAI_PAKET", color="KONTRAK_PEMBAYARAN")
 
     #### Tab menu SPSE - Non Tender - Selesai
     with menu_spse_2_2:
