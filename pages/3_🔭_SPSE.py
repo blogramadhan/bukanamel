@@ -767,22 +767,22 @@ with menu_spse_1:
 
         st.divider()
         
-        sql_query_sppbj_tbl = """
+        sql_sppbj_trx = """
             SELECT nama_paket AS NAMA_PAKET, no_sppbj AS NO_SPPBJ, tgl_sppbj AS TGL_SPPBJ, 
             nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
             harga_final AS HARGA_FINAL FROM df_SPSETenderSPPBJ_filter
         """
-        df_SPSETenderSPPBJ_tbl_tampil = con.execute(sql_query_sppbj_tbl).df()
+        tabel_sppbj_tampil = con.execute(sql_sppbj_trx).df()
 
         ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
-        gd = GridOptionsBuilder.from_dataframe(df_SPSETenderSPPBJ_tbl_tampil)
+        gd = GridOptionsBuilder.from_dataframe(tabel_sppbj_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
         gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
         gd.configure_column("HARGA_FINAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HARGA_FINAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
         gridOptions = gd.build()
-        AgGrid(df_SPSETenderSPPBJ_tbl_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+        AgGrid(tabel_sppbj_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
 
     #### Tab menu SPSE - Tender - Kontrak
@@ -1089,7 +1089,58 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - SPPBJ
     with menu_spse_2_3:
 
-        st.subheader("SPSE - Non Tender - SPPBJ")
+        ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
+        unduh_SPSE_NonTender_SPPBJ = unduh_data(df_SPSENonTenderSPPBJ)
+
+        SPSE_SPPBJ_NT_1, SPSE_SPPBJ_NT_2 = st.columns((7,3))
+        with SPSE_SPPBJ_NT_1:
+            st.subheader("SPSE - Non Tender - SPPBJ")
+        with SPSE_SPPBJ_NT_2:
+            st.download_button(
+                label = "📥 Download Data Non Tender SPPBJ",
+                data = unduh_SPSE_Tender_SPPBJ,
+                file_name = f"SPSENonTenderSPPBJ-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
+
+        SPSE_SPPBJ_NT_radio_1, SPSE_SPPBJ_NT_radio_2 = st.columns((2,8))
+        with SPSE_SPPBJ_NT_radio_1:
+            status_kontrak_nt = st.radio("**Status Kontrak**", df_SPSENonTenderSPPBJ['status_kontrak'].unique())
+        with SPSE_SPPBJ_NT_radio_2:
+            opd_nt = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPPBJ['nama_satker'].unique())
+        st.write(f"Anda memilih : **{status_kontrak_nt}** dari **{opd_nt}**")
+
+        ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
+        df_SPSENonTenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPPBJ WHERE status_kontrak = '{status_kontrak_nt}' AND nama_satker = '{opd_nt}'").df()
+        jumlah_trx_spse_nt_sppbj = df_SPSENonTenderSPPBJ_filter['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_sppbj_final = df_SPSENonTenderSPPBJ_filter['harga_final'].sum()
+
+        data_sppbj_nt_1, data_sppbj_nt_2 = st.columns(2)
+        data_sppbj_nt_1.metric(label="Jumlah Non Tender SPPBJ", value="{:,}".format(jumlah_trx_spse_nt_sppbj))
+        data_sppbj_nt_2.metric(label="Nilai Non Tender SPPBJ", value="{:,.2f}".format(nilai_trx_spse_nt_sppbj_final))
+        style_metric_cards()
+
+        st.divider()
+        
+        sql_sppbj_nt_trx = """
+            SELECT nama_paket AS NAMA_PAKET, no_sppbj AS NO_SPPBJ, tgl_sppbj AS TGL_SPPBJ, 
+            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
+            harga_final AS HARGA_FINAL FROM df_SPSENonTenderSPPBJ_filter
+        """
+        tabel_sppbj_nt_tampil = con.execute(sql_sppbj_nt_trx).df()
+
+        ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
+        gd = GridOptionsBuilder.from_dataframe(tabel_sppbj_nt_tampil)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("HARGA_FINAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HARGA_FINAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+        gridOptions = gd.build()
+        AgGrid(tabel_sppbj_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+
 
     #### Tab menu SPSE - Non Tender - Kontrak
     with menu_spse_2_4:
