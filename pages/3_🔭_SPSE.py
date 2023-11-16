@@ -816,6 +816,8 @@ with menu_spse_2:
 
         st.subheader("SPSE-NonTender-Pengumuman")
 
+        st.dataframe(df_SPSENonTenderPengumuman_OK)
+
     #### Tab menu SPSE - Non Tender - Selesai
     with menu_spse_2_2:
 
