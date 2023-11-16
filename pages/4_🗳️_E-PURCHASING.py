@@ -136,7 +136,7 @@ with menu_purchasing_1:
     jumlah_trx = df_ECAT_filter['no_paket'].unique().shape[0]
     nilai_trx = df_ECAT_filter['total_harga'].sum()
 
-    colokal1, colokal2, colokal3, colokal4 = st.columns(4)
+    colokal1, colokal2, colokal3, colokal4 = st.columns((2,2,2,4))
     colokal1.metric(label="Jumlah Produk Katalog", value="{:,}".format(jumlah_produk))
     colokal2.metric(label="Jumlah Penyedia Katalog", value="{:,}".format(jumlah_penyedia))
     colokal3.metric(label="Jumlah Transaksi Katalog", value="{:,}".format(jumlah_trx))
