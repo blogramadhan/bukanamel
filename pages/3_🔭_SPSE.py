@@ -806,7 +806,7 @@ with menu_spse_2:
     st.header(f"SPSE - Non Tender - {pilih}")
 
     ### Buat dataset gabung df_SPSENonTenderPengumuman + df_RUPPP_umumkan_filter
-    df_SPSENonTenderPengumuman_OK = df_SPSENonTenderPengumuman.merge(df_RUPPP_umumkan_filter, how='left', on='kd_rup')
+    #df_SPSENonTenderPengumuman_OK = df_SPSENonTenderPengumuman.merge(df_RUPPP_umumkan_filter, how='left', on='kd_rup')
 
     ### Buat sub menu SPSE - Non Tender
     menu_spse_2_1, menu_spse_2_2, menu_spse_2_3, menu_spse_2_3, menu_spse_2_4, menu_spse_2_5, menu_spse_2_5, menu_spse_2_6 = st.tabs(["| PENGUMUMAN |", "| SELESAI |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
