@@ -341,11 +341,14 @@ with menu_purchasing_2:
 
     st.divider()
 
-    status_verifikasi = st.radio("**Status Verifikasi Transaksi**", ["verified", "unverified"])
+    status_verifikasi = st.radio("**Status Verifikasi Transaksi**", ["verified", "unverified", "Gabungan"])
     st.write(f"Anda memilih : **{status_verifikasi}**")
 
     ### Hitung-hitungan dataset
-    df_BELA_filter = con.execute(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = '{status_verifikasi}'").df()
+    if status_verifikasi == "Gabungan":
+        df_BELA_filter = con.execute(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL").df()
+    else:
+        df_BELA_filter = con.execute(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = '{status_verifikasi}'").df()
 
     jumlah_trx_daring = df_BELA_filter['order_id'].unique().shape[0]
     nilai_trx_daring = df_BELA_filter['valuasi'].sum()
