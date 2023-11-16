@@ -903,7 +903,7 @@ with menu_spse_2:
                 gridOptions = gd.build()
                 AgGrid(tabel_kp_nt_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-            with grafik_kp_2_2:
+            with grafik_kp_nt_2_2:
 
                 st.bar_chart(tabel_kp_nt_nilai_trx, x="KUALIFIKASI_PAKET", y="NILAI_PAKET", color="KUALIFIKASI_PAKET")
 
@@ -961,7 +961,7 @@ with menu_spse_2:
                 gridOptions = gd.build()
                 AgGrid(tabel_jp_nt_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-            with grafik_jp_2_2:
+            with grafik_jp_nt_2_2:
 
                 st.bar_chart(tabel_jp_nt_nilai_trx, x="JENIS_PENGADAAN", y="NILAI_PAKET", color="JENIS_PENGADAAN")
 
