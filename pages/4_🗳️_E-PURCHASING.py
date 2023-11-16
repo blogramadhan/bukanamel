@@ -116,13 +116,13 @@ with menu_purchasing_1:
     with KATALOG_radio_1:
         jenis_katalog = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"])
     with KATALOG_radio_2:
-        nama_sumber_dana = st.radio("**Sumber Dana**", df_ECAT['sumber_dana'].unique())    
+        nama_sumber_dana = st.radio("**Sumber Dana**", df_ECAT['nama_sumber_dana'].unique())    
     with KATALOG_radio_3:
         status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"])
     st.write(f"Anda memilih : **{status_paket}** dan **{jenis_katalog}** dan **{nama_sumber_dana}**")
 
     ### Hitung-hitung dataset Katalog
-    df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE paket_status_str = '{status_paket}' AND jenis_katalog = '{jenis_katalog}' AND nama_sumber_dana = '{nama_sumber_dana}'").df()
+    df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE paket_status_str IN '{status_paket}' AND jenis_katalog IN '{jenis_katalog}' AND nama_sumber_dana IN '{nama_sumber_dana}'").df()
   
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
