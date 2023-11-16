@@ -122,7 +122,10 @@ with menu_purchasing_1:
     st.write(f"Anda memilih : **{status_paket}** dan **{jenis_katalog}** dan **{nama_sumber_dana}**")
 
     ### Hitung-hitung dataset Katalog
-    df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE paket_status_str = '{status_paket}' AND jenis_katalog = '{jenis_katalog}' AND nama_sumber_dana = '{nama_sumber_dana}'").df()
+    if (jenis_katalog and status_paket) == "Gabungan":
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
+    else:    
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE paket_status_str = '{status_paket}' AND jenis_katalog = '{jenis_katalog}' AND nama_sumber_dana = '{nama_sumber_dana}'").df()
   
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
