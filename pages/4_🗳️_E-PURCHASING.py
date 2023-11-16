@@ -114,14 +114,11 @@ with menu_purchasing_1:
 
     KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((1,1,2,6))
     with KATALOG_radio_1:
-        jk_unik = df_ECAT['jenis_katalog'].unique()
-        st.write(jk_unik)
-        st.write(type(jk_unik))
-        #jenis_katalog = st.radio("**Jenis Katalog**", jk_unik)
+        jenis_katalog = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"])
     with KATALOG_radio_2:
-        nama_sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "BLU", "BLUD", "BUMN"])    
+        nama_sumber_dana = st.radio("**Sumber Dana**", df_ECAT['sumber_dana'].unique())    
     with KATALOG_radio_3:
-        status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses"])
+        status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"])
     st.write(f"Anda memilih : **{status_paket}** dan **{jenis_katalog}** dan **{nama_sumber_dana}**")
 
     ### Hitung-hitung dataset Katalog
