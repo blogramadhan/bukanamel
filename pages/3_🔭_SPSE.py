@@ -819,7 +819,7 @@ with menu_spse_2:
 
         SPSE_NT_Umumkan_1, SPSE_NT_Umumkan_2 = st.columns((7,3))
         with SPSE_NT_Umumkan_1:
-            st.subheader("Pengumuman Non Tender")
+            st.subheader("SPSE - Non Tender - Pengumuman")
         with SPSE_NT_Umumkan_2:
             st.download_button(
                 label = "📥 Download Data Pengumuman Non Tender",
@@ -1084,27 +1084,27 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Selesai
     with menu_spse_2_2:
 
-        st.subheader("SPSE-NonTender-Selesai")
+        st.subheader("SPSE - Non Tender - Selesai")
 
     #### Tab menu SPSE - Non Tender - SPPBJ
     with menu_spse_2_3:
 
-        st.subheader("SPSE-NonTender-SPPBJ")
+        st.subheader("SPSE - Non Tender - SPPBJ")
 
     #### Tab menu SPSE - Non Tender - Kontrak
     with menu_spse_2_4:
 
-        st.subheader("SPSE-NonTender-Kontrak")
+        st.subheader("SPSE - Non Tender - Kontrak")
 
     #### Tab menu SPSE - Non Tender - SPMK
     with menu_spse_2_5:
 
-        st.subheader("SPSE-NonTender-SPMK")
+        st.subheader("SPSE - Non Tender - SPMK")
 
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_6:
 
-        st.subheader("SPSE-NonTender-BAPBAST")
+        st.subheader("SPSE - Non Tender - BAPBAST")
 
 
 ## Tab menu SPSE - Pencatatan
