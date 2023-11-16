@@ -814,9 +814,21 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Pengumuman
     with menu_spse_2_1:
 
-        st.subheader("SPSE-NonTender-Pengumuman")
+        ##### Buat tombol unduh dataset SPSE-NonTender-Pengumuman
+        unduh_SPSE_NT_Pengumuman = unduh_data(df_SPSENonTenderPengumuman_OK)
 
-        st.dataframe(df_SPSENonTenderPengumuman_OK)
+        SPSE_NT_Umumkan_1, SPSE_NT_Umumkan_2 = st.columns((7,3))
+        with SPSE_NT_Umumkan_1:
+            st.subheader("Pengumuman Non Tender")
+        with SPSE_NT_Umumkan_2:
+            st.download_button(
+                label = "📥 Download Data Pengumuman Non Tender",
+                data = unduh_SPSE_NT_Pengumuman,
+                file_name = f"SPSENonTenderPengumuman-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
 
     #### Tab menu SPSE - Non Tender - Selesai
     with menu_spse_2_2:
