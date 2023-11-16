@@ -803,7 +803,9 @@ with menu_spse_1:
 ## Tab menu SPSE - Non Tender
 with menu_spse_2:
 
-    st.header("SPSE - Non Tender")
+    st.header(f"SPSE - Non Tender - {pilih}")
+
+    
 
 ## Tab menu SPSE - Pencatatan
 with menu_spse_3:
