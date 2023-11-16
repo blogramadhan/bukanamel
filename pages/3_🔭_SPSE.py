@@ -830,6 +830,13 @@ with menu_spse_2:
 
         st.divider()
 
+        SPSE_NT_radio_1, SPSE_NT_radio_2, SPSE_NT_radio_3 = st.columns((1,1,8))
+        with SPSE_NT_radio_1:
+            sumber_dana_nt = st.radio("**Sumber Dana**", df_SPSENonTenderPengumuman_OK['sumber_dana'].unique())
+        with SPSE_NT_radio_2:
+            status_nontender = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman_OK['status_nontender'].unique())
+        st.write(f"Anda memilih : **{sumber_dana_nt}** dan **{status_nontender}**")
+
     #### Tab menu SPSE - Non Tender - Selesai
     with menu_spse_2_2:
 
