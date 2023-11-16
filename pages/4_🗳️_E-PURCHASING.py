@@ -114,7 +114,8 @@ with menu_purchasing_1:
 
     KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((1,1,2,6))
     with KATALOG_radio_1:
-        jenis_katalog = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral"])
+        jk_unik = df_ECAT['jenis_katalog'].unique().append["Gabungan"]
+        jenis_katalog = st.radio("**Jenis Katalog**", jk_unik)
     with KATALOG_radio_2:
         nama_sumber_dana = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "BLU", "BLUD", "BUMN"])    
     with KATALOG_radio_3:
