@@ -1439,14 +1439,15 @@ with menu_spse_4:
 
     df_RUPMasterSatker_filter_pt = df_RUPMasterSatker[["kd_satker_str", "nama_satker"]]
     df_SPSETenderPengumuman_filter_pt = df_SPSETenderPengumuman[["kd_tender", "nama_paket", "pagu", "hps", "sumber_dana"]]
+    df_SPSETenderKontrak_filter_pt = con.execute("SELECT kd_penyedia, wakil_sah_penyedia FROM df_SPSETenderKontrak GROUP BY kd_penyedia").df()
     #df_SPSETenderKontrak_filter_pt = df_SPSETenderKontrak[["kd_penyedia", "wakil_sah_penyedia"]]
 
     df_PesertaTenderDetail_1 = df_PesertaTender.merge(df_RUPMasterSatker_filter_pt, how='left', on='kd_satker_str')
     df_PesertaTenderDetail_2 = df_PesertaTenderDetail_1.merge(df_SPSETenderPengumuman_filter_pt, how='left', on='kd_tender')
-    #df_PesertaTenderDetail_3 = df_PesertaTenderDetail_2.merge(df_SPSETenderKontrak_filter_pt, how='left', on='kd_penyedia')
+    df_PesertaTenderDetail_3 = df_PesertaTenderDetail_2.merge(df_SPSETenderKontrak_filter_pt, how='left', on='kd_penyedia')
 
     #### Buat tombol unduh dataset Peserta Tender
-    unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
+    unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_3)
 
     SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,3))
     with SPSE_PT_D_1:
@@ -1461,11 +1462,11 @@ with menu_spse_4:
 
     st.divider()
 
-    sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
+    sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_3['sumber_dana'].unique(), key="PesertaTender")
     st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
     #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
+    df_PesertaTenderDetail_filter = df_PesertaTenderDetail_3.query(f"sumber_dana == '{sumber_dana_pt}'")
     jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
     jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
     jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 1")
@@ -1488,7 +1489,7 @@ with menu_spse_4:
     st.divider()
 
     if status_pemenang_pt == "PEMENANG":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND pemenang = 1").df()
+        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, wakil_sah_penyedia AS DIREKTUR, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND pemenang = 1").df()
     elif status_pemenang_pt == "MENDAFTAR":
         jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN = 0 AND NILAI_TERKOREKSI = 0").df()
     else:
