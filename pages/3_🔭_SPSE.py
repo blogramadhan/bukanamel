@@ -1439,12 +1439,12 @@ with menu_spse_4:
 
     df_RUPMasterSatker_filter_pt = df_RUPMasterSatker[["kd_satker_str", "nama_satker"]]
     df_SPSETenderPengumuman_filter_pt = df_SPSETenderPengumuman[["kd_tender", "nama_paket", "pagu", "hps", "sumber_dana"]]
-    #df_SPSETenderKontrak_filter_pt = df_SPSETenderKontrak[["kd_penyedia", "wakil_sah_penyedia"]]
     df_SPSETenderKontrak_filter_pt_OK = con.execute(f"SELECT DISTINCT(kd_penyedia), wakil_sah_penyedia FROM df_SPSETenderKontrak").df()
 
     df_PesertaTenderDetail_1 = df_PesertaTender.merge(df_RUPMasterSatker_filter_pt, how='left', on='kd_satker_str')
     df_PesertaTenderDetail_2 = df_PesertaTenderDetail_1.merge(df_SPSETenderPengumuman_filter_pt, how='left', on='kd_tender')
     df_PesertaTenderDetail_3 = df_PesertaTenderDetail_2.merge(df_SPSETenderKontrak_filter_pt_OK, how='left', on='kd_penyedia')
+    df_PesertaTenderDetail_3 = con.execute("SELECT DISTINCT(nama_paket), * FROM df_PesertaTenderDetail_3").df()
 
     #### Buat tombol unduh dataset Peserta Tender
     unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_3)
