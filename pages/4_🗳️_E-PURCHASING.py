@@ -25,8 +25,6 @@ import openpyxl
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import io
-import xlsxwriter
 # Import library currency
 from babel.numbers import format_currency
 # Import library Aggrid
@@ -36,9 +34,6 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit_extras.metric_cards import style_metric_cards
 # Import fungsi pribadi
 from fungsi import *
-
-# buffer to use for excel writer
-buffer = io.BytesIO()
 
 # App Logo
 logo()
@@ -108,22 +103,22 @@ with menu_purchasing_1:
     with ecat1:
         st.header(f"Transaksi e-Katalog {pilih} Tahun {tahun}")
     with ecat2:
-        #st.download_button(
-        #    label = "📥 Download Data Transaksi Katalog",
-        #    data = unduh_ECAT,
-        #    file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
-        #    mime = "text/csv"
-        #)
-        with pd.ExcelWriter(buffer, engine = 'xlsxwriter') as writer:
-            # Write each dataframe to a different worksheet.
-            df_ECAT.to_excel(writer.save(), sheet_name='Sheet1', index=False)
+        st.download_button(
+            label = "📥 Download Data Transaksi Katalog",
+            data = unduh_ECAT,
+            file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
+            mime = "text/csv"
+        )
+        #with pd.ExcelWriter(buffer, engine = 'xlsxwriter') as writer:
+        #    # Write each dataframe to a different worksheet.
+        #    df_ECAT.to_excel(writer.save(), sheet_name='Sheet1', index=False)
 
-            download2 = st.download_button(
-                label = "Download data as Excel",
-                data = buffer,
-                file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.xlsx",
-                mime = "application/vnd.ms-excel"
-            )
+        #    download2 = st.download_button(
+        #        label = "Download data as Excel",
+        #        data = buffer,
+        #        file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.xlsx",
+        #        mime = "application/vnd.ms-excel"
+        #    )
 
     st.divider()
 
