@@ -26,6 +26,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import io
+import xlsxwriter
 # Import library currency
 from babel.numbers import format_currency
 # Import library Aggrid
@@ -113,15 +114,15 @@ with menu_purchasing_1:
         #    file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
         #    mime = "text/csv"
         #)
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        with pd.ExcelWriter(buffer, engine = 'xlsxwriter') as writer:
             # Write each dataframe to a different worksheet.
             df_ECAT.to_excel(writer.save(), sheet_name='Sheet1', index=False)
 
             download2 = st.download_button(
-                label="Download data as Excel",
-                data=buffer,
-                file_name=f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.xlsx",
-                mime="application/vnd.ms-excel"
+                label = "Download data as Excel",
+                data = buffer,
+                file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.xlsx",
+                mime = "application/vnd.ms-excel"
             )
 
     st.divider()
