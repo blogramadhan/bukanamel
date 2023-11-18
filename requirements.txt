@@ -4,5 +4,7 @@ pandas
 streamlit
 babel
 plotly.express
+io
+xlsxwriter
 streamlit-aggrid
 streamlit-extras
