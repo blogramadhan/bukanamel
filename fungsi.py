@@ -16,7 +16,7 @@ from streamlit_extras.app_logo import add_logo
 # Fungsi-fungsi yang bisa digunakan
 ## Fungsi Download Dataframe ke CSV
 def unduh_data(unduhdata):
-    return unduhdata.to_csv(index=False).encode('utf')
+    return unduhdata.to_csv(index=False).encode('utf-8')
 
 @st.cache_data(ttl=(4*3600))
 def tarik_data_excel(url):
