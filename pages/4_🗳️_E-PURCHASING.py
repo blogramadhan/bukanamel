@@ -109,17 +109,7 @@ with menu_purchasing_1:
             file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
             mime = "text/csv"
         )
-        #with pd.ExcelWriter(buffer, engine = 'xlsxwriter') as writer:
-        #    # Write each dataframe to a different worksheet.
-        #    df_ECAT.to_excel(writer.save(), sheet_name='Sheet1', index=False)
-
-        #    download2 = st.download_button(
-        #        label = "Download data as Excel",
-        #        data = buffer,
-        #        file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.xlsx",
-        #        mime = "application/vnd.ms-excel"
-        #    )
-
+        
     st.divider()
 
     KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((1,1,2,6))
@@ -155,62 +145,62 @@ with menu_purchasing_1:
 
     st.divider()
 
-    st.subheader("Berdasarkan Kualifikasi Usaha")
-
-    ### Buat grafik Katalog Penyedia UKM
-    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia |", "| Nilai Transaksi Penyedia |"])
-
-    with grafik_ukm_tab_1:
-
-        #### Query data grafik jumlah transaksi penyedia ukm
-        sql_jumlah_ukm = f"""
-            SELECT penyedia_ukm AS PENYEDIA_UKM, COUNT(DISTINCT(kd_penyedia)) AS JUMLAH_UKM
-            FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
-        """ 
-
-        tabel_jumlah_ukm = con.execute(sql_jumlah_ukm).df()
-        
-        grafik_ukm_tab_1_1, grafik_ukm_tab_1_2 = st.columns((3,7))
-        
-        with grafik_ukm_tab_1_1:
-
-            AgGrid(tabel_jumlah_ukm)
-
-        with grafik_ukm_tab_1_2:
-
-            fig_katalog_jumlah_ukm = px.pie(tabel_jumlah_ukm, values='JUMLAH_UKM', names="PENYEDIA_UKM", title='Grafik Jumlah Transaksi Katalog PENYEDIA UKM', hole=.3)
-            st.plotly_chart(fig_katalog_jumlah_ukm, theme='streamlit', use_container_width=True)           
-
-    with grafik_ukm_tab_2:
-
-        #### Query data grafik nilai transaksi penyedia ukm
-        sql_nilai_ukm = f"""
-            SELECT penyedia_ukm AS PENYEDIA_UKM, SUM(total_harga) AS NILAI_UKM
-            FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
-        """ 
-
-        tabel_nilai_ukm = con.execute(sql_nilai_ukm).df()
-        
-        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((3.5,6.5))
-        
-        with grafik_ukm_tab_2_1:
-
-            gd = GridOptionsBuilder.from_dataframe(tabel_nilai_ukm)
-            gd.configure_pagination()
-            gd.configure_side_bar()
-            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            gd.configure_column("NILAI_UKM", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UKM.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
-
-            gridOptions = gd.build()
-            AgGrid(tabel_nilai_ukm, gridOptions=gridOptions, enable_enterprise_modules=True)
-
-
-        with grafik_ukm_tab_2_2:
-
-            fig_katalog_nilai_ukm = px.pie(tabel_nilai_ukm, values='NILAI_UKM', names="PENYEDIA_UKM", title='Grafik Nilai Transaksi Katalog PENYEDIA UKM', hole=.3)
-            st.plotly_chart(fig_katalog_nilai_ukm, theme='streamlit', use_container_width=True)           
-
-    st.divider()
+#    st.subheader("Berdasarkan Kualifikasi Usaha")
+#
+#    ### Buat grafik Katalog Penyedia UKM
+#    grafik_ukm_tab_1, grafik_ukm_tab_2 = st.tabs(["| Jumlah Transaksi Penyedia |", "| Nilai Transaksi Penyedia |"])
+#
+#    with grafik_ukm_tab_1:
+#
+#        #### Query data grafik jumlah transaksi penyedia ukm
+#        sql_jumlah_ukm = f"""
+#            SELECT penyedia_ukm AS PENYEDIA_UKM, COUNT(DISTINCT(kd_penyedia)) AS JUMLAH_UKM
+#            FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
+#        """ 
+#
+#        tabel_jumlah_ukm = con.execute(sql_jumlah_ukm).df()
+#        
+#        grafik_ukm_tab_1_1, grafik_ukm_tab_1_2 = st.columns((3,7))
+#        
+#        with grafik_ukm_tab_1_1:
+#
+#            AgGrid(tabel_jumlah_ukm)
+#
+#        with grafik_ukm_tab_1_2:
+#
+#            fig_katalog_jumlah_ukm = px.pie(tabel_jumlah_ukm, values='JUMLAH_UKM', names="PENYEDIA_UKM", title='Grafik Jumlah Transaksi Katalog PENYEDIA UKM', hole=.3)
+#            st.plotly_chart(fig_katalog_jumlah_ukm, theme='streamlit', use_container_width=True)           
+#
+#    with grafik_ukm_tab_2:
+#
+#        #### Query data grafik nilai transaksi penyedia ukm
+#        sql_nilai_ukm = f"""
+#            SELECT penyedia_ukm AS PENYEDIA_UKM, SUM(total_harga) AS NILAI_UKM
+#            FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
+#        """ 
+#
+#        tabel_nilai_ukm = con.execute(sql_nilai_ukm).df()
+#        
+#        grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((3.5,6.5))
+#        
+#        with grafik_ukm_tab_2_1:
+#
+#            gd = GridOptionsBuilder.from_dataframe(tabel_nilai_ukm)
+#            gd.configure_pagination()
+#            gd.configure_side_bar()
+#            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+#            gd.configure_column("NILAI_UKM", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UKM.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+#
+#            gridOptions = gd.build()
+#            AgGrid(tabel_nilai_ukm, gridOptions=gridOptions, enable_enterprise_modules=True)
+#
+#
+#        with grafik_ukm_tab_2_2:
+#
+#            fig_katalog_nilai_ukm = px.pie(tabel_nilai_ukm, values='NILAI_UKM', names="PENYEDIA_UKM", title='Grafik Nilai Transaksi Katalog PENYEDIA UKM', hole=.3)
+#            st.plotly_chart(fig_katalog_nilai_ukm, theme='streamlit', use_container_width=True)           
+#
+#    st.divider()
 
     st.subheader("Berdasarkan Perangkat Daerah (10 Besar)")
 
