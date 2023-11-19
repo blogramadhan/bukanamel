@@ -210,11 +210,70 @@ with menu_purchasing_1:
 
     st.divider()
 
+    st.subheader("Berdasarkan Nama Komoditas")
+
+    grafik_ecat_nk_1, grafik_ecat_nk_2 = st.tabs(["| Jumlah Transaksi Tiap Komoditas |", "| Nilai Transaksi Tiap Komoditas |"])
+
+    with grafik_ecat_nk_1:
+
+        #### Query data grafik jumlah Transaksi Katalog Lokal berdasarkan Nama Komoditas
+        sql_jumlah_transaksi_lokal_nk = """
+            SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
+            FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL 
+            GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
+        """
+
+        tabel_jumlah_transaksi_lokal_nk = con.execute(sql_jumlah_transaksi_lokal_nk).df()
+
+        grafik_ecat_nk_11, grafik_ecat_nk_12 = st.columns((4,6))
+
+        with grafik_ecat_nk_11:
+            
+            AgGrid(tabel_jumlah_transaksi_lokal_nk)
+            
+        with grafik_ecat_nk_12:
+
+            grafik_jumlah_transaksi_katalog_lokal_nk = px.bar(tabel_jumlah_transaksi_lokal_nk, x='NAMA_KOMODITAS', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi e-Katalog Lokal - Nama Komoditas')
+            grafik_jumlah_transaksi_katalog_lokal_nk.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_jumlah_transaksi_katalog_lokal_nk, theme="streamlit", use_container_width=True)
+
+    with grafik_ecat_nk_2:
+
+        #### Query data grafik nilai Transaksi Katalog Lokal berdasarkan Nama Komoditas
+        sql_nilai_transaksi_lokal_nk = """
+            SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
+            FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL
+            GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
+        """
+
+        tabel_nilai_transaksi_lokal_nk = con.execute(sql_nilai_transaksi_lokal_nk).df()
+
+        grafik_ecat_nk_21, grafik_ecat_nk_22 = st.columns((4,6))
+
+        with grafik_ecat_nk_21:
+
+            gd = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_lokal_nk)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+            gridOptions = gd.build()
+            AgGrid(tabel_nilai_transaksi_lokal_nk, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        with grafik_ecat_nk_22:
+            
+            grafik_nilai_transaksi_katalog_lokal_nk = px.bar(tabel_nilai_transaksi_lokal_nk, x='NAMA_KOMODITAS', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi e-Katalog Lokal - Nama Komoditas')
+            grafik_nilai_transaksi_katalog_lokal_nk.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_nilai_transaksi_katalog_lokal_nk, theme="streamlit", use_container_width=True)
+
+    st.divider()
+
     st.subheader("Berdasarkan Perangkat Daerah (10 Besar)")
 
-    grafik_ecat_21, grafik_ecat_22 = st.tabs(["| Jumlah Transaksi Perangkat Daerah |", "| Nilai Transaksi Perangkat Daerah |"])
+    grafik_ecat_pd_1, grafik_ecat_pd_2 = st.tabs(["| Jumlah Transaksi Perangkat Daerah |", "| Nilai Transaksi Perangkat Daerah |"])
 
-    with grafik_ecat_21:
+    with grafik_ecat_pd_1:
 
         #### Query data grafik jumlah Transaksi Katalog Lokal Perangkat Daerah
         sql_jumlah_transaksi_lokal_pd = """
@@ -225,19 +284,19 @@ with menu_purchasing_1:
 
         tabel_jumlah_transaksi_lokal_pd = con.execute(sql_jumlah_transaksi_lokal_pd).df()
 
-        grafik_ecat_21_1, grafik_ecat_21_2 = st.columns((4,6))
+        grafik_ecat_pd_11, grafik_ecat_pd_12 = st.columns((4,6))
 
-        with grafik_ecat_21_1:
+        with grafik_ecat_pd_11:
             
             AgGrid(tabel_jumlah_transaksi_lokal_pd)
             
-        with grafik_ecat_21_2:
+        with grafik_ecat_pd_12:
 
-            grafik_jumlah_transaksi_katalog_lokal = px.bar(tabel_jumlah_transaksi_lokal_pd, x='NAMA_SATKER', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi e-Katalog Lokal Perangkat Daerah')
-            grafik_jumlah_transaksi_katalog_lokal.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-            st.plotly_chart(grafik_jumlah_transaksi_katalog_lokal, theme="streamlit", use_container_width=True)
+            grafik_jumlah_transaksi_katalog_lokal_pd = px.bar(tabel_jumlah_transaksi_lokal_pd, x='NAMA_SATKER', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi e-Katalog Lokal Perangkat Daerah')
+            grafik_jumlah_transaksi_katalog_lokal_pd.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+            st.plotly_chart(grafik_jumlah_transaksi_katalog_lokal_pd, theme="streamlit", use_container_width=True)
 
-    with grafik_ecat_22:
+    with grafik_ecat_pd_2:
 
         #### Query data grafik nilai Transaksi Katalog Lokal Perangkat Daerah
         sql_nilai_transaksi_lokal_pd = """
@@ -248,9 +307,9 @@ with menu_purchasing_1:
 
         tabel_nilai_transaksi_lokal_pd = con.execute(sql_nilai_transaksi_lokal_pd).df()
 
-        grafik_ecat_22_1, grafik_ecat_22_2 = st.columns((4,6))
+        grafik_ecat_pd_21, grafik_ecat_pd_22 = st.columns((4,6))
 
-        with grafik_ecat_22_1:
+        with grafik_ecat_pd_21:
 
             gd = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_lokal_pd)
             gd.configure_pagination()
@@ -261,7 +320,7 @@ with menu_purchasing_1:
             gridOptions = gd.build()
             AgGrid(tabel_nilai_transaksi_lokal_pd, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        with grafik_ecat_22_2:
+        with grafik_ecat_pd_22:
             
             grafik_nilai_transaksi_katalog_lokal = px.bar(tabel_nilai_transaksi_lokal_pd, x='NAMA_SATKER', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi e-Katalog Lokal Perangkat Daerah')
             grafik_nilai_transaksi_katalog_lokal.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
