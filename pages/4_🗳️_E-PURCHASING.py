@@ -89,6 +89,7 @@ DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder
 
 ## Download Excel ECAT Detail
 DatasetPURCHASINGECATDETAIL_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.xlsx"
+DatasetPURCHASINGBELA_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.xlsx"
 
 ## Buat dataframe PURCHASING
 try:
@@ -140,12 +141,6 @@ with menu_purchasing_1:
         st.header(f"Transaksi e-Katalog {pilih} Tahun {tahun}")
     with ecat2:
         st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
-        #st.download_button(
-        #    label = "📥 Download Data Transaksi Katalog",
-        #    data = unduh_ECAT,
-        #    file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
-        #    mime = "text/csv"
-        #)
         
     st.divider()
 
@@ -437,13 +432,8 @@ with menu_purchasing_2:
     with bela1:
         st.header(f"Transaksi Toko Daring {pilih} Tahun {tahun}")
     with bela2:
-        st.download_button(
-            label = "📥 Download Data Transaksi Katalog",
-            data = unduh_BELA,
-            file_name = f"BELATokoDaringRealisasi-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv"
-        )
-
+        st.link_button("📥 Download Data Transaksi Toko Daring", DatasetPURCHASINGBELA_DOWNLOAD)
+        
     st.divider()
 
     status_verifikasi = st.radio("**Status Verifikasi Transaksi**", ["verified", "unverified", "Gabungan"])
@@ -474,7 +464,6 @@ with menu_purchasing_2:
     with grafik_bela_pd_11:
 
         #### Query data grafik jumlah Transaksi Toko Daring Perangkat Daerah
-
         sql_jumlah_transaksi_bela_pd = """
             SELECT nama_satker AS NAMA_SATKER, COUNT(DISTINCT(order_id)) AS JUMLAH_TRANSAKSI
             FROM df_BELA_filter WHERE NAMA_SATKER IS NOT NULL
@@ -498,7 +487,6 @@ with menu_purchasing_2:
     with grafik_bela_pd_12:
 
         #### Query data grafik nilai Transaksi Toko Daring Perangkat Daerah
-
         sql_nilai_transaksi_bela_pd = """
             SELECT nama_satker AS NAMA_SATKER, SUM(valuasi) AS NILAI_TRANSAKSI
             FROM df_BELA_filter WHERE NAMA_SATKER IS NOT NULL
@@ -535,7 +523,6 @@ with menu_purchasing_2:
     with grafik_bela_pu_11:
 
         #### Query data grafik jumlah Transaksi Toko Daring Pelaku Usaha
-
         sql_jumlah_transaksi_bela_pu = """
             SELECT nama_merchant AS NAMA_MERCHANT, COUNT(DISTINCT(order_id)) AS JUMLAH_TRANSAKSI
             FROM df_BELA_filter WHERE NAMA_MERCHANT IS NOT NULL
@@ -559,7 +546,6 @@ with menu_purchasing_2:
     with grafik_bela_pu_12:
 
         #### Query data grafik nilai Transaksi Toko Daring Pelaku Usaha
-
         sql_nilai_transaksi_bela_pu = """
             SELECT nama_merchant AS NAMA_MERCHANT, SUM(valuasi) AS NILAI_TRANSAKSI
             FROM df_BELA_filter WHERE NAMA_MERCHANT IS NOT NULL
