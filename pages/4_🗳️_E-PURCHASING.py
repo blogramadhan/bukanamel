@@ -87,9 +87,6 @@ DatasetPURCHASINGECATKD = f"https://storage.googleapis.com/bukanamel/{kodeFolder
 DatasetPURCHASINGECATIS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATInstansiSatker{tahun}.parquet"
 DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
 
-#PaketPurchasingDetail_0 = bacaPaketPurchasing.merge(bacaKomoditasDetail, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
-#PaketPurchasingDetail_1 = pd.merge(PaketPurchasingDetail_0, bacaInstansiSatker, left_on='satker_id', right_on='kd_satker', how='left')
-
 ## Buat dataframe PURCHASING
 try:
     ### Baca dataset PURCHASING - Katalog
@@ -133,7 +130,7 @@ menu_purchasing_1, menu_purchasing_2 = st.tabs(["| TRANSAKSI KATALOG |", "| TRAN
 with menu_purchasing_1:
 
     ### Buat tombol unduh dataset
-    unduh_ECAT = unduh_data(df_ECAT_1)
+    unduh_ECAT = unduh_data(df_ECAT_OK)
 
     ecat1, ecat2 = st.columns((8,2))
     with ecat1:
