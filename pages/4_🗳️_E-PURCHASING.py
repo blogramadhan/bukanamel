@@ -51,22 +51,31 @@ if pilih == "PROV. KALBAR":
     kodeInstansi = "D197"
 if pilih == "KAB. BENGKAYANG":
     kodeFolder = "bky"
+    kodeInstansi = "D206"
 if pilih == "KAB. MELAWI":
     kodeFolder = "mlw"
+    kodeInstansi = "D210"
 if pilih == "KOTA PONTIANAK":
     kodeFolder = "ptk"
+    kodeInstansi = "D199"
 if pilih == "KAB. SANGGAU":
     kodeFolder = "sgu"
+    kodeInstansi = "D204"
 if pilih == "KAB. SEKADAU":
     kodeFolder = "skd"
+    kodeInstansi = "D198"
 if pilih == "KAB. KAPUAS HULU":
     kodeFolder = "kph"
+    kodeInstansi = "D209"
 if pilih == "KAB. KUBU RAYA":
     kodeFolder = "kkr"
+    kodeInstansi = "D202"
 if pilih == "KAB. LANDAK":
     kodeFolder = "ldk"
+    kodeInstansi = "D205"
 if pilih == "KOTA SINGKAWANG":
     kodeFolder = "skw"
+    kodeInstansi = "D200"
 
 # Persiapan Dataset
 con = duckdb.connect(database=':memory:')
@@ -137,10 +146,16 @@ with menu_purchasing_1:
     elif jenis_katalog == "Gabungan":
         df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
     elif status_paket == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
+        if jenis_katalog == "Lokal":
+            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND kd_instansi_katalog = '{kodeInstansi}").df()
+        else:
+            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
     else:    
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
-  
+        if jenis_katalog == "Lokal":
+            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}' AND kd_instansi_katalog = '{kodeInstansi}'").df()
+        else:
+            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
+
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
     jumlah_trx = df_ECAT_filter['no_paket'].unique().shape[0]
@@ -221,7 +236,7 @@ with menu_purchasing_1:
             #### Query data grafik jumlah Transaksi Katalog Lokal berdasarkan Nama Komoditas
             sql_jumlah_transaksi_lokal_nk = f"""
                 SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}' 
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL 
                 GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
             """
 
@@ -244,7 +259,7 @@ with menu_purchasing_1:
             #### Query data grafik nilai Transaksi Katalog Lokal berdasarkan Nama Komoditas
             sql_nilai_transaksi_lokal_nk = f"""
                 SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
-                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}'
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL
                 GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
             """
 
