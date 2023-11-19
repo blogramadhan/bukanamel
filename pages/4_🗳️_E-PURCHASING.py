@@ -133,13 +133,13 @@ with menu_purchasing_1:
 
     ### Hitung-hitung dataset Katalog
     if (jenis_katalog == "Gabungan" and status_paket == "Gabungan"):
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kd_instansi_katalog = '{kodeInstansi}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
     elif jenis_katalog == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kd_instansi_katalog = '{kodeInstansi}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
     elif status_paket == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kd_instansi_katalog = '{kodeInstansi}' AND jenis_katalog = '{jenis_katalog}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
     else:    
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kd_instansi_katalog = '{kodeInstansi}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
   
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
@@ -211,64 +211,65 @@ with menu_purchasing_1:
 
     st.divider()
 
-    st.subheader("Berdasarkan Nama Komoditas")
+    if jenis_katalog == "Lokal":
+        st.subheader("Berdasarkan Nama Komoditas")
 
-    grafik_ecat_nk_1, grafik_ecat_nk_2 = st.tabs(["| Jumlah Transaksi Tiap Komoditas |", "| Nilai Transaksi Tiap Komoditas |"])
+        grafik_ecat_nk_1, grafik_ecat_nk_2 = st.tabs(["| Jumlah Transaksi Tiap Komoditas |", "| Nilai Transaksi Tiap Komoditas |"])
 
-    with grafik_ecat_nk_1:
+        with grafik_ecat_nk_1:
 
-        #### Query data grafik jumlah Transaksi Katalog Lokal berdasarkan Nama Komoditas
-        sql_jumlah_transaksi_lokal_nk = """
-            SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-            FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL 
-            GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
-        """
+            #### Query data grafik jumlah Transaksi Katalog Lokal berdasarkan Nama Komoditas
+            sql_jumlah_transaksi_lokal_nk = f"""
+                SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}' 
+                GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
+            """
 
-        tabel_jumlah_transaksi_lokal_nk = con.execute(sql_jumlah_transaksi_lokal_nk).df()
+            tabel_jumlah_transaksi_lokal_nk = con.execute(sql_jumlah_transaksi_lokal_nk).df()
 
-        grafik_ecat_nk_11, grafik_ecat_nk_12 = st.columns((4,6))
+            grafik_ecat_nk_11, grafik_ecat_nk_12 = st.columns((4,6))
 
-        with grafik_ecat_nk_11:
-            
-            AgGrid(tabel_jumlah_transaksi_lokal_nk)
-            
-        with grafik_ecat_nk_12:
+            with grafik_ecat_nk_11:
+                
+                AgGrid(tabel_jumlah_transaksi_lokal_nk)
+                
+            with grafik_ecat_nk_12:
 
-            grafik_jumlah_transaksi_katalog_lokal_nk = px.bar(tabel_jumlah_transaksi_lokal_nk, x='NAMA_KOMODITAS', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi e-Katalog Lokal - Nama Komoditas')
-            grafik_jumlah_transaksi_katalog_lokal_nk.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-            st.plotly_chart(grafik_jumlah_transaksi_katalog_lokal_nk, theme="streamlit", use_container_width=True)
+                grafik_jumlah_transaksi_katalog_lokal_nk = px.bar(tabel_jumlah_transaksi_lokal_nk, x='NAMA_KOMODITAS', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi e-Katalog Lokal - Nama Komoditas')
+                grafik_jumlah_transaksi_katalog_lokal_nk.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+                st.plotly_chart(grafik_jumlah_transaksi_katalog_lokal_nk, theme="streamlit", use_container_width=True)
 
-    with grafik_ecat_nk_2:
+        with grafik_ecat_nk_2:
 
-        #### Query data grafik nilai Transaksi Katalog Lokal berdasarkan Nama Komoditas
-        sql_nilai_transaksi_lokal_nk = """
-            SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
-            FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL
-            GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
-        """
+            #### Query data grafik nilai Transaksi Katalog Lokal berdasarkan Nama Komoditas
+            sql_nilai_transaksi_lokal_nk = f"""
+                SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}'
+                GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
+            """
 
-        tabel_nilai_transaksi_lokal_nk = con.execute(sql_nilai_transaksi_lokal_nk).df()
+            tabel_nilai_transaksi_lokal_nk = con.execute(sql_nilai_transaksi_lokal_nk).df()
 
-        grafik_ecat_nk_21, grafik_ecat_nk_22 = st.columns((4,6))
+            grafik_ecat_nk_21, grafik_ecat_nk_22 = st.columns((4,6))
 
-        with grafik_ecat_nk_21:
+            with grafik_ecat_nk_21:
 
-            gd = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_lokal_nk)
-            gd.configure_pagination()
-            gd.configure_side_bar()
-            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            gd.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+                gd = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_lokal_nk)
+                gd.configure_pagination()
+                gd.configure_side_bar()
+                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
-            gridOptions = gd.build()
-            AgGrid(tabel_nilai_transaksi_lokal_nk, gridOptions=gridOptions, enable_enterprise_modules=True)
+                gridOptions = gd.build()
+                AgGrid(tabel_nilai_transaksi_lokal_nk, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-        with grafik_ecat_nk_22:
-            
-            grafik_nilai_transaksi_katalog_lokal_nk = px.bar(tabel_nilai_transaksi_lokal_nk, x='NAMA_KOMODITAS', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi e-Katalog Lokal - Nama Komoditas')
-            grafik_nilai_transaksi_katalog_lokal_nk.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-            st.plotly_chart(grafik_nilai_transaksi_katalog_lokal_nk, theme="streamlit", use_container_width=True)
+            with grafik_ecat_nk_22:
+                
+                grafik_nilai_transaksi_katalog_lokal_nk = px.bar(tabel_nilai_transaksi_lokal_nk, x='NAMA_KOMODITAS', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi e-Katalog Lokal - Nama Komoditas')
+                grafik_nilai_transaksi_katalog_lokal_nk.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+                st.plotly_chart(grafik_nilai_transaksi_katalog_lokal_nk, theme="streamlit", use_container_width=True)
 
-    st.divider()
+        st.divider()
 
     st.subheader("Berdasarkan Perangkat Daerah (10 Besar)")
 
