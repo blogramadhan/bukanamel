@@ -48,6 +48,7 @@ tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
 
 if pilih == "PROV. KALBAR":
     kodeFolder = "prov"
+    kodeInstansi = "D197"
 if pilih == "KAB. BENGKAYANG":
     kodeFolder = "bky"
 if pilih == "KAB. MELAWI":
@@ -132,13 +133,13 @@ with menu_purchasing_1:
 
     ### Hitung-hitung dataset Katalog
     if (jenis_katalog == "Gabungan" and status_paket == "Gabungan"):
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kode_instansi_katalog = '{kodeInstansi}'").df()
     elif jenis_katalog == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kode_instansi_katalog = '{kodeInstansi}' AND paket_status_str = '{status_paket}'").df()
     elif status_paket == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kode_instansi_katalog = '{kodeInstansi}' AND jenis_katalog = '{jenis_katalog}'").df()
     else:    
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND kode_instansi_katalog = '{kodeInstansi}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
   
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
