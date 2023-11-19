@@ -428,7 +428,7 @@ with menu_purchasing_2:
     ### Buat tombol unduh dataset
     unduh_BELA = unduh_data(df_BELA)
 
-    bela1, bela2 = st.columns((8,2))
+    bela1, bela2 = st.columns((7,3))
     with bela1:
         st.header(f"Transaksi Toko Daring {pilih} Tahun {tahun}")
     with bela2:
