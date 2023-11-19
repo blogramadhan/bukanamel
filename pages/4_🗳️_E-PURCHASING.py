@@ -73,11 +73,12 @@ con = duckdb.connect(database=':memory:')
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.parquet" 
 DatasetPURCHASINGBELA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.parquet"
+DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
 
 ## Buat dataframe PURCHASING
 try:
     ### Baca dataset PURCHASING - Katalog
-    df_ECAT = tarik_data(DatasetPURCHASINGECAT)
+    df_ECATDETAIL = tarik_data(DatasetPURCHASINGECAT)
 except Exception:
     st.error("Gagal baca dataset Katalog")
 try:
@@ -85,6 +86,14 @@ try:
     df_BELA = tarik_data(DatasetPURCHASINGBELA)
 except Exception:
     st.error("Gagal baca dataset Toko Daring")
+try:
+    ### Baca dataset PURCHASING - Katalog Penyedia Detail
+    df_ECATPD = tarik_data_excel(DatasetPURCHASINGECATPD)
+except Exception:
+    st.error("Gagal baca dataset Katalog Penyedia Detail")
+
+## Gabung dataframe Katalog + Katalog Penyedia Detail
+df_ECAT = df_ECATDETAIL.merge(df_ECATPD, how='left', on='kd_penyedia')
 
 #####
 # Mulai membuat presentasi data Purchasing
