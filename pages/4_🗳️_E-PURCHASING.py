@@ -81,29 +81,46 @@ if pilih == "KOTA SINGKAWANG":
 con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
-DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.parquet" 
+DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasing{tahun}.parquet" 
 DatasetPURCHASINGBELA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.parquet"
+DatasetPURCHASINGECATKD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATKomoditasDetail{tahun}.parquet"
+DatasetPURCHASINGECATIS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATInstansiSatker{tahun}.parquet"
 DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
+
+#PaketPurchasingDetail_0 = bacaPaketPurchasing.merge(bacaKomoditasDetail, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
+#PaketPurchasingDetail_1 = pd.merge(PaketPurchasingDetail_0, bacaInstansiSatker, left_on='satker_id', right_on='kd_satker', how='left')
 
 ## Buat dataframe PURCHASING
 try:
     ### Baca dataset PURCHASING - Katalog
-    df_ECATDETAIL = tarik_data(DatasetPURCHASINGECAT)
+    df_ECAT = tarik_data(DatasetPURCHASINGECAT)
 except Exception:
     st.error("Gagal baca dataset Katalog")
 try:
-    ### Baca dataset PURCHASING - TokoDaring
-    df_BELA = tarik_data(DatasetPURCHASINGBELA)
+    ### Baca dataset PURCHASING - Komoditas Detail
+    df_ECAT_KD = tarik_data(DatasetPURCHASINGECATKD)
 except Exception:
-    st.error("Gagal baca dataset Toko Daring")
+    st.error("Gagal baca dataset Katalog - Komoditas Detail")
+try:
+    ### Baca dataset PURCHASING - Instansi Satker
+    df_ECAT_IS = tarik_data(DatasetPURCHASINGECATIS)
+except Exception:
+    st.error("Gagal baca dataset Katalog - Instansi Satker")
 try:
     ### Baca dataset PURCHASING - Katalog Penyedia Detail
     df_ECATPD = tarik_data_excel(DatasetPURCHASINGECATPD)
 except Exception:
     st.error("Gagal baca dataset Katalog Penyedia Detail")
+try:
+    ### Baca dataset PURCHASING - TokoDaring
+    df_BELA = tarik_data(DatasetPURCHASINGBELA)
+except Exception:
+    st.error("Gagal baca dataset Toko Daring")
 
-## Gabung dataframe Katalog + Katalog Penyedia Detail
-df_ECAT = df_ECATDETAIL.merge(df_ECATPD, how='left', on='kd_penyedia')
+## Gabung dataframe Katalog + Katalog Komoditas Detail + Katalog Instansi Satker + Katalog Penyedia Detail
+df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, hoe='left' on='kd_komoditas').drop('nama_satker', axis=1)
+df_ECAT_1 = pd.merge(df_ECAT_0, df_ECAT_IS, left_on='satker_id', right_on='kd_satker', how='left')
+df_ECAT_OK = df_ECAT_1.merge(df_ECATPD, how='left', on='kd_penyedia')
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -116,7 +133,7 @@ menu_purchasing_1, menu_purchasing_2 = st.tabs(["| TRANSAKSI KATALOG |", "| TRAN
 with menu_purchasing_1:
 
     ### Buat tombol unduh dataset
-    unduh_ECAT = unduh_data(df_ECATDETAIL)
+    unduh_ECAT = unduh_data(df_ECAT_1)
 
     ecat1, ecat2 = st.columns((8,2))
     with ecat1:
@@ -135,20 +152,20 @@ with menu_purchasing_1:
     with KATALOG_radio_1:
         jenis_katalog = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"])
     with KATALOG_radio_2:
-        nama_sumber_dana = st.radio("**Sumber Dana**", df_ECAT['nama_sumber_dana'].unique())    
+        nama_sumber_dana = st.radio("**Sumber Dana**", df_ECAT_OK['nama_sumber_dana'].unique())    
     with KATALOG_radio_3:
         status_paket = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"])
     st.write(f"Anda memilih : **{status_paket}** dan **{jenis_katalog}** dan **{nama_sumber_dana}**")
 
     ### Hitung-hitung dataset Katalog
     if (jenis_katalog == "Gabungan" and status_paket == "Gabungan"):
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
     elif jenis_katalog == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
     elif status_paket == "Gabungan":
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
     else:    
-        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
 
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
