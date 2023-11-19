@@ -146,15 +146,9 @@ with menu_purchasing_1:
     elif jenis_katalog == "Gabungan":
         df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
     elif status_paket == "Gabungan":
-        if jenis_katalog == "Lokal":
-            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND kd_instansi_katalog = '{kodeInstansi}'").df()
-        else:
-            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
     else:    
-        if jenis_katalog == "Lokal":
-            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}' AND kd_instansi_katalog = '{kodeInstansi}'").df()
-        else:
-            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
+        df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
 
     jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
     jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
@@ -233,11 +227,18 @@ with menu_purchasing_1:
     with grafik_ecat_nk_1:
 
         #### Query data grafik jumlah Transaksi Katalog Lokal berdasarkan Nama Komoditas
-        sql_jumlah_transaksi_lokal_nk = f"""
-            SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-            FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL 
-            GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
-        """
+        if jenis_katalog == "Lokal":
+            sql_jumlah_transaksi_lokal_nk = f"""
+                SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}'
+                GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
+            """
+        else:
+            sql_jumlah_transaksi_lokal_nk = f"""
+                SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL 
+                GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
+            """
 
         tabel_jumlah_transaksi_lokal_nk = con.execute(sql_jumlah_transaksi_lokal_nk).df()
 
@@ -256,11 +257,18 @@ with menu_purchasing_1:
     with grafik_ecat_nk_2:
 
         #### Query data grafik nilai Transaksi Katalog Lokal berdasarkan Nama Komoditas
-        sql_nilai_transaksi_lokal_nk = f"""
-            SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
-            FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL
-            GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
-        """
+        if jenis_katalog == "Lokal":
+            sql_nilai_transaksi_lokal_nk = f"""
+                SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}'
+                GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
+            """
+        else:
+            sql_nilai_transaksi_lokal_nk = f"""
+                SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
+                FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL
+                GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
+            """
 
         tabel_nilai_transaksi_lokal_nk = con.execute(sql_nilai_transaksi_lokal_nk).df()
 
