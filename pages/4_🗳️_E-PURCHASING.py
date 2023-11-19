@@ -116,7 +116,7 @@ menu_purchasing_1, menu_purchasing_2 = st.tabs(["| TRANSAKSI KATALOG |", "| TRAN
 with menu_purchasing_1:
 
     ### Buat tombol unduh dataset
-    unduh_ECAT = unduh_data(df_ECAT)
+    unduh_ECAT = unduh_data(df_ECATDETAIL)
 
     ecat1, ecat2 = st.columns((8,2))
     with ecat1:
