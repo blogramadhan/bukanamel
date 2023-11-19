@@ -87,6 +87,9 @@ DatasetPURCHASINGECATKD = f"https://storage.googleapis.com/bukanamel/{kodeFolder
 DatasetPURCHASINGECATIS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATInstansiSatker{tahun}.parquet"
 DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
 
+## Download Excel ECAT Detail
+DatasetPURCHASINGECATDETAIL_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.xlsx"
+
 ## Buat dataframe PURCHASING
 try:
     ### Baca dataset PURCHASING - Katalog
@@ -136,12 +139,13 @@ with menu_purchasing_1:
     with ecat1:
         st.header(f"Transaksi e-Katalog {pilih} Tahun {tahun}")
     with ecat2:
-        st.download_button(
-            label = "📥 Download Data Transaksi Katalog",
-            data = unduh_ECAT,
-            file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv"
-        )
+        st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
+        #st.download_button(
+        #    label = "📥 Download Data Transaksi Katalog",
+        #    data = unduh_ECAT,
+        #    file_name = f"ECATPaketEpurchasingDetail-{kodeFolder}-{tahun}.csv",
+        #    mime = "text/csv"
+        #)
         
     st.divider()
 
