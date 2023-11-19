@@ -71,13 +71,13 @@ if pilih == "KOTA SINGKAWANG":
 con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
-DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.xlsx" 
+DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.parquet" 
 DatasetPURCHASINGBELA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.parquet"
 
 ## Buat dataframe PURCHASING
 try:
     ### Baca dataset PURCHASING - Katalog
-    df_ECAT = tarik_data_excel(DatasetPURCHASINGECAT)
+    df_ECAT = tarik_data(DatasetPURCHASINGECAT)
 except Exception:
     st.error("Gagal baca dataset Katalog")
 try:
