@@ -147,7 +147,7 @@ with menu_purchasing_1:
         df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
     elif status_paket == "Gabungan":
         if jenis_katalog == "Lokal":
-            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND kd_instansi_katalog = '{kodeInstansi}").df()
+            df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND kd_instansi_katalog = '{kodeInstansi}'").df()
         else:
             df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
     else:    
