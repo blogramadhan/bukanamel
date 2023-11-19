@@ -118,7 +118,7 @@ except Exception:
     st.error("Gagal baca dataset Toko Daring")
 
 ## Gabung dataframe Katalog + Katalog Komoditas Detail + Katalog Instansi Satker + Katalog Penyedia Detail
-df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, hoe='left' on='kd_komoditas').drop('nama_satker', axis=1)
+df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
 df_ECAT_1 = pd.merge(df_ECAT_0, df_ECAT_IS, left_on='satker_id', right_on='kd_satker', how='left')
 df_ECAT_OK = df_ECAT_1.merge(df_ECATPD, how='left', on='kd_penyedia')
 
