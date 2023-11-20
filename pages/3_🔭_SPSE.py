@@ -842,8 +842,8 @@ with menu_spse_1:
 
         ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
         df_SPSETenderKontrak_filter_kolom = df_SPSETenderKontrak[["kd_tender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
-        #df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
-        df_SPSETenderSPMK_OK = df_SPSETenderSPMK
+        df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
+        #df_SPSETenderSPMK_OK = df_SPSETenderSPMK
         unduh_SPSE_Tender_SPMK = unduh_data(df_SPSETenderSPMK_OK)
 
         SPSE_SPMK_1, SPSE_SPMK_2 = st.columns((7,3))
@@ -858,7 +858,7 @@ with menu_spse_1:
             )
 
         st.divider()
-        st.dataframe(df_SPSETenderKontrak_filter_kolom)
+        st.dataframe(df_SPSETenderSPMK_OK)
         st.divider()
 
         opd_TSPMK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPMK_OK['nama_satker'].unique(), key='Tender_OPD_SPMK')
