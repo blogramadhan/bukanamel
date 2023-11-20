@@ -783,7 +783,30 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_3:
 
-        st.subheader("SPSE-Tender-Kontrak")
+        ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
+        unduh_SPSE_Tender_KONTRAK = unduh_data(df_SPSETenderKontrak)
+
+        SPSE_KONTRAK_1, SPSE_KONTRAK_2 = st.columns((7,3))
+        with SPSE_KONTRAK_1:
+            st.subheader("SPSE-Tender-KONTRAK")
+        with SPSE_KONTRAK_2:
+            st.download_button(
+                label = "📥 Download Data Tender Kontrak",
+                data = unduh_SPSE_Tender_KONTRAK,
+                file_name = f"SPSETenderKontrak-{kodeFolder}-{tahun}.csv",
+                mime = "txt/csv"
+            )
+
+        st.divider()
+
+        SPSE_KONTRAK_radio_1, SPSE_KONTRAK_radio_2 = st.columns((2,8))
+        with SPSE_KONTRAK_radio_1:
+            status_kontrak_kontrak = st.radio("**Status Kontrak**", df_SPSETenderKontrak['status_kontrak'].unique())
+        with SPSE_KONTRAK_radio_2:
+            opd_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique())
+        st.write(f"Anda memilih : **{status_kontrak_kontrak}** dari **{opd_kontrak}**")
+
+        
 
     #### Tab menu SPSE - Tender - SPMK
     with menu_spse_1_4:
