@@ -959,7 +959,7 @@ with menu_spse_2:
     df_SPSENonTenderPengumuman_OK = df_SPSENonTenderPengumuman
 
     ### Buat sub menu SPSE - Non Tender
-    menu_spse_2_1, menu_spse_2_2, menu_spse_2_3, menu_spse_2_4, menu_spse_2_5, menu_spse_2_6 = st.tabs(["| PENGUMUMAN |", "| SELESAI |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
+    menu_spse_2_1, menu_spse_2_2, menu_spse_2_3, menu_spse_2_4, menu_spse_2_5 = st.tabs(["| PENGUMUMAN |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
 
     #### Tab menu SPSE - Non Tender - Pengumuman
     with menu_spse_2_1:
@@ -1231,13 +1231,8 @@ with menu_spse_2:
 
                 st.bar_chart(tabel_kontrak_nt_nilai_trx, x="KONTRAK_PEMBAYARAN", y="NILAI_PAKET", color="KONTRAK_PEMBAYARAN")
 
-    #### Tab menu SPSE - Non Tender - Selesai
-    with menu_spse_2_2:
-
-        st.subheader("SPSE - Non Tender - Selesai")
-
     #### Tab menu SPSE - Non Tender - SPPBJ
-    with menu_spse_2_3:
+    with menu_spse_2_2:
 
         ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
         unduh_SPSE_NonTender_SPPBJ = unduh_data(df_SPSENonTenderSPPBJ)
@@ -1293,17 +1288,17 @@ with menu_spse_2:
 
 
     #### Tab menu SPSE - Non Tender - Kontrak
-    with menu_spse_2_4:
+    with menu_spse_2_3:
 
         st.subheader("SPSE - Non Tender - Kontrak")
 
     #### Tab menu SPSE - Non Tender - SPMK
-    with menu_spse_2_5:
+    with menu_spse_2_4:
 
         st.subheader("SPSE - Non Tender - SPMK")
 
     #### Tab menu SPSE - Non Tender - BABBAST
-    with menu_spse_2_6:
+    with menu_spse_2_5:
 
         st.subheader("SPSE - Non Tender - BAPBAST")
 
