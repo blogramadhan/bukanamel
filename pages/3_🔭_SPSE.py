@@ -215,7 +215,7 @@ with menu_spse_1:
     df_SPSETenderPengumuman_OK = df_SPSETenderPengumuman.merge(df_RUPPP_umumkan_filter, how='left', on='kd_rup')
 
     ### Buat sub menu SPSE - Tender
-    menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5, menu_spse_1_6 = st.tabs(["| PENGUMUMAN |", "| SELESAI |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
+    menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5 = st.tabs(["| PENGUMUMAN |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
 
     #### Tab menu SPSE - Tender - Pengumuman
     with menu_spse_1_1:
@@ -724,13 +724,8 @@ with menu_spse_1:
 
         st.divider()
 
-    #### Tab menu SPSE - Tender - Selesai
-    with menu_spse_1_2:
-        
-        st.subheader("SPSE-Tender-Selesai")
-
     #### Tab menu SPSE - Tender - SPPBJ
-    with menu_spse_1_3:
+    with menu_spse_1_2:
 
         ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
         unduh_SPSE_Tender_SPPBJ = unduh_data(df_SPSETenderSPPBJ)
@@ -786,17 +781,17 @@ with menu_spse_1:
 
 
     #### Tab menu SPSE - Tender - Kontrak
-    with menu_spse_1_4:
+    with menu_spse_1_3:
 
         st.subheader("SPSE-Tender-Kontrak")
 
     #### Tab menu SPSE - Tender - SPMK
-    with menu_spse_1_5:
+    with menu_spse_1_4:
 
         st.subheader("SPSE-Tender-SPMK")
 
     #### Tab menu SPSE - Tender - BAPBAST
-    with menu_spse_1_6:
+    with menu_spse_1_5:
 
         st.subheader("SPSE-Tender-BAPBAST")
 
