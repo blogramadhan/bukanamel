@@ -858,6 +858,8 @@ with menu_spse_1:
             )
 
         st.divider()
+        st.dataframe(df_SPSETenderKontrak_filter_kolom)
+        st.divider()
 
         opd_TSPMK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPMK_OK['nama_satker'].unique(), key='Tender_OPD_SPMK')
         st.write(f"Anda memilih : **{opd_TSPMK}**")
