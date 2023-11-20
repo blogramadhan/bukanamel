@@ -745,13 +745,13 @@ with menu_spse_1:
 
         SPSE_SPPBJ_radio_1, SPSE_SPPBJ_radio_2 = st.columns((2,8))
         with SPSE_SPPBJ_radio_1:
-            status_kontrak = st.radio("**Status Kontrak**", ["Kontrak Selesai", "Kontrak Sedang Berjalan"])
+            status_kontrak_TSPPBJ = st.radio("**Status Kontrak**", df_SPSETenderSPPBJ['status_kontrak'].unique())
         with SPSE_SPPBJ_radio_2:
-            opd = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ['nama_satker'].unique(), key='opd_sppbj')
-        st.write(f"Anda memilih : **{status_kontrak}** dari **{opd}**")
+            opd_TSPPBJ = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ['nama_satker'].unique(), key='opd_sppbj')
+        st.write(f"Anda memilih : **{status_kontrak_TSPPBJ}** dari **{opd_TSPPBJ}**")
 
         ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
-        df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak}' AND nama_satker = '{opd}'").df()
+        df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak_TSPPBJ}' AND nama_satker = '{opd_TSPPBJ}'").df()
         jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_sppbj_final = df_SPSETenderSPPBJ_filter['harga_final'].sum()
 
@@ -779,7 +779,6 @@ with menu_spse_1:
         gridOptions = gd.build()
         AgGrid(tabel_sppbj_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
-
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_3:
 
@@ -801,12 +800,23 @@ with menu_spse_1:
 
         SPSE_KONTRAK_radio_1, SPSE_KONTRAK_radio_2 = st.columns((2,8))
         with SPSE_KONTRAK_radio_1:
-            status_kontrak_kontrak = st.radio("**Status Kontrak**", df_SPSETenderKontrak['status_kontrak'].unique())
+            status_kontrak_TKONTRAK = st.radio("**Status Kontrak**", df_SPSETenderKontrak['status_kontrak'].unique())
         with SPSE_KONTRAK_radio_2:
-            opd_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique())
-        st.write(f"Anda memilih : **{status_kontrak_kontrak}** dari **{opd_kontrak}**")
+            opd_TKONTRAK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique())
+        st.write(f"Anda memilih : **{status_kontrak_TKONTRAK}** dari **{opd_TKONTRAK}**")
 
-        
+        ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
+        df_SPSETenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSETenderKontrak WHERE status_kontrak = '{status_kontrak_TKONTRAK}' AND nama_satker = '{opd_TKONTRAK}'").df()
+        jumlah_trx_spse_kontrak = df_SPSETenderKontrak_filter['kd_tender'].unique().shape[0]
+        nilai_trx_spse_kontrak_nilaikontrak = df_SPSETenderKontrak_filter['nilai_kontrak'].sum()
+
+        data_kontrak_1, data_kontrak_2 = st.columns(2)
+        data_kontrak_1.metric(label="Jumlah Tender Berkontrak", value="{:,}".format(jumlah_trx_spse_kontrak))
+        data_kontrak_2.metric(label="Nilai Tender Berkontrak", value="{:,.2f}".format(nilai_trx_spse_kontrak_nilaikontrak))
+        style_metric_cards()
+
+        st.divider()
+
 
     #### Tab menu SPSE - Tender - SPMK
     with menu_spse_1_4:
