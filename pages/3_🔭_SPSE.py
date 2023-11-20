@@ -902,7 +902,7 @@ with menu_spse_1:
 
         SPSE_BAST_1, SPSE_BAST_2 = st.columns((7,3))
         with SPSE_BAST_1:
-            st.subheader("SPSE-Tender-KONTRAK")
+            st.subheader("SPSE-Tender-BAPBAST")
         with SPSE_BAST_2:
             st.download_button(
                 label = "📥 Download Data Tender BAPBAST",
@@ -917,7 +917,7 @@ with menu_spse_1:
         with SPSE_BAST_radio_1:
             status_kontrak_TBAST = st.radio("**Status Kontrak**", df_SPSETenderBAST['status_kontrak'].unique(), key='Tender_Status_BAPBAST')
         with SPSE_BAST_radio_2:
-            opd_TBAST = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique(), key='Tender_OPD_BAPBAST')
+            opd_TBAST = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderBAST['nama_satker'].unique(), key='Tender_OPD_BAPBAST')
         st.write(f"Anda memilih : **{status_kontrak_TBAST}** dari **{opd_TBAST}**")
 
         ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
