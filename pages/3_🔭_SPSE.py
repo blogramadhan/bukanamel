@@ -896,7 +896,61 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - BAPBAST
     with menu_spse_1_5:
 
-        st.subheader("SPSE-Tender-BAPBAST")
+### Edit Tender BAST
+        ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
+        unduh_SPSE_Tender_BAST = unduh_data(df_SPSETenderBAST)
+
+        SPSE_BAST_1, SPSE_BAST_2 = st.columns((7,3))
+        with SPSE_BAST_1:
+            st.subheader("SPSE-Tender-KONTRAK")
+        with SPSE_BAST_2:
+            st.download_button(
+                label = "📥 Download Data Tender BAPBAST",
+                data = unduh_SPSE_Tender_BAST,
+                file_name = f"SPSETenderBAPBAST-{kodeFolder}-{tahun}.csv",
+                mime = "txt/csv"
+            )
+
+        st.divider()
+
+        SPSE_BAST_radio_1, SPSE_BAST_radio_2 = st.columns((2,8))
+        with SPSE_BAST_radio_1:
+            status_kontrak_TBAST = st.radio("**Status Kontrak**", df_SPSETenderBAST['status_kontrak'].unique(), key='Tender_Status_BAPBAST')
+        with SPSE_BAST_radio_2:
+            opd_TBAST = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique(), key='Tender_OPD_BAPBAST')
+        st.write(f"Anda memilih : **{status_kontrak_TBAST}** dari **{opd_TBAST}**")
+
+        ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
+        df_SPSETenderBAST_filter = con.execute(f"SELECT * FROM df_SPSETenderBAST WHERE status_kontrak = '{status_kontrak_TBAST}' AND nama_satker = '{opd_TBAST}'").df()
+        jumlah_trx_spse_bast = df_SPSETenderBAST_filter['kd_tender'].unique().shape[0]
+        nilai_trx_spse_bast_nilaikontrak = df_SPSETenderBAST_filter['nilai_kontrak'].sum()
+
+        data_bast_1, data_bast_2 = st.columns(2)
+        data_bast_1.metric(label="Jumlah Tender BAPBAST", value="{:,}".format(jumlah_trx_spse_bast))
+        data_bast_2.metric(label="Nilai Tender BAPBAST", value="{:,.2f}".format(nilai_trx_spse_bast_nilaikontrak))
+        style_metric_cards()
+
+        st.divider()
+
+        sql_tender_bast_trx = """
+            SELECT nama_paket AS NAMA_PAKET, no_bast AS NO_BAST, tgl_bast AS TGL_BAST,
+            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH,
+            npwp_penyedia AS NPWP_PENYEDIA, nilai_kontrak AS NILAI_KONTRAK, besar_pembayaran AS NILAI_PEMBAYARAN
+            FROM df_SPSETenderBAST_filter 
+        """
+        tabel_tender_bast_tampil = con.execute(sql_tender_bast_trx).df()
+
+        ##### Tampilkan data SPSE Tender Kontrak menggunakan AgGrid
+        gd = GridOptionsBuilder.from_dataframe(tabel_tender_bast_tampil)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_PEMBAYARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PEMBAYARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+        gridOptions = gd.build()
+        AgGrid(tabel_tender_bast_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
+### end Edit Tender BAST       
 
 ## Tab menu SPSE - Non Tender
 with menu_spse_2:
