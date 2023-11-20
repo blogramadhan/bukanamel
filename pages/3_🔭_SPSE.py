@@ -745,9 +745,9 @@ with menu_spse_1:
 
         SPSE_SPPBJ_radio_1, SPSE_SPPBJ_radio_2 = st.columns((2,8))
         with SPSE_SPPBJ_radio_1:
-            status_kontrak_TSPPBJ = st.radio("**Status Kontrak**", df_SPSETenderSPPBJ['status_kontrak'].unique())
+            status_kontrak_TSPPBJ = st.radio("**Status Kontrak**", df_SPSETenderSPPBJ['status_kontrak'].unique(), key='Tender_Status_SPPBJ')
         with SPSE_SPPBJ_radio_2:
-            opd_TSPPBJ = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ['nama_satker'].unique(), key='opd_sppbj')
+            opd_TSPPBJ = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ['nama_satker'].unique(), key='Tender_OPD_SPPBJ')
         st.write(f"Anda memilih : **{status_kontrak_TSPPBJ}** dari **{opd_TSPPBJ}**")
 
         ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
@@ -800,9 +800,9 @@ with menu_spse_1:
 
         SPSE_KONTRAK_radio_1, SPSE_KONTRAK_radio_2 = st.columns((2,8))
         with SPSE_KONTRAK_radio_1:
-            status_kontrak_TKONTRAK = st.radio("**Status Kontrak**", df_SPSETenderKontrak['status_kontrak'].unique())
+            status_kontrak_TKONTRAK = st.radio("**Status Kontrak**", df_SPSETenderKontrak['status_kontrak'].unique(), key='Tender_Status_Kontrak')
         with SPSE_KONTRAK_radio_2:
-            opd_TKONTRAK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique())
+            opd_TKONTRAK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique(), key='Tender_OPD_Kontrak')
         st.write(f"Anda memilih : **{status_kontrak_TKONTRAK}** dari **{opd_TKONTRAK}**")
 
         ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
