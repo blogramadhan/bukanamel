@@ -842,7 +842,8 @@ with menu_spse_1:
 
         ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
         df_SPSETenderKontrak_filter_kolom = df_SPSETenderKontrak[["kd_tender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
-        df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
+        #df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
+        df_SPSETenderSPMK_OK = df_SPSETenderSPMK
         unduh_SPSE_Tender_SPMK = unduh_data(df_SPSETenderSPMK_OK)
 
         SPSE_SPMK_1, SPSE_SPMK_2 = st.columns((7,3))
@@ -858,17 +859,17 @@ with menu_spse_1:
 
         st.divider()
 
-        opd_TSPMK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPMK_OK['nama_satker'].unique(), key='Tender_OPD_Kontrak')
-        st.write(f"Anda memilih : **{opd_TKONTRAK}**")
+        opd_TSPMK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPMK_OK['nama_satker'].unique(), key='Tender_OPD_SPMK')
+        st.write(f"Anda memilih : **{opd_TSPMK}**")
 
         ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
         df_SPSETenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSETenderSPMK_OK WHERE nama_satker = '{opd_TSPMK}'").df()
         jumlah_trx_spse_spmk = df_SPSETenderSPMK_filter['kd_tender'].unique().shape[0]
-        nilai_trx_spse_spmk_nilaikontrak = df_SPSETenderSPMK_filter['nilai_kontrak'].sum()
+        #nilai_trx_spse_spmk_nilaikontrak = df_SPSETenderSPMK_filter['nilai_kontrak'].sum()
 
         data_spmk_1, data_spmk_2 = st.columns(2)
         data_spmk_1.metric(label="Jumlah Tender SPMK", value="{:,}".format(jumlah_trx_spse_spmk))
-        data_spmk_2.metric(label="Nilai Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_spmk_nilaikontrak))
+        #data_spmk_2.metric(label="Nilai Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_spmk_nilaikontrak))
         style_metric_cards()
 
         st.divider()
