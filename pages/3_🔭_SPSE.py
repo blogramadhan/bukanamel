@@ -896,7 +896,6 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - BAPBAST
     with menu_spse_1_5:
 
-### Edit Tender BAST
         ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
         unduh_SPSE_Tender_BAST = unduh_data(df_SPSETenderBAST)
 
@@ -950,7 +949,6 @@ with menu_spse_1:
 
         gridOptions = gd.build()
         AgGrid(tabel_tender_bast_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
-### end Edit Tender BAST       
 
 ## Tab menu SPSE - Non Tender
 with menu_spse_2:
