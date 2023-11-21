@@ -1425,7 +1425,8 @@ with menu_spse_2:
             st.download_button(
                 label = "📥 Download Data Non Tender SPMK",
                 data = unduh_SPSE_NonTender_SPMK,
-                file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv"
+                file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
             )
 
         st.divider()
@@ -1481,7 +1482,68 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_5:
 
-        st.subheader("SPSE - Non Tender - BAPBAST")
+        ##### Buat tombol unduh dataset SPSE - Non Tender - BAPBAST
+        unduh_SPSE_NonTender_BAST = unduh_data(df_SPSENonTenderBAST)
+
+        SPSE_BAST_NT_1, SPSE_BAST_NT_2 = st.columns((7,3))
+        with SPSE_BAST_NT_1:
+            st.subheader("SPSE - Non Tender - BAPBAST")
+        with SPSE_BAST_NT_2:
+            st.download_button(
+                label = "📥 Download Data Non Tender BAPBAST",
+                data = unduh_SPSE_NonTender_BAST,
+                file_name = f"SPSENonTenderBAPBAST-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
+        st.divider()
+
+        jumlah_trx_spse_nt_bast_total = df_SPSENonTenderBAST['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_bast_total = df_SPSENonTenderBAST['nilai_kontrak'].sum()
+
+        data_bast_nt_total_1, data_bast_nt_total_2 = st.columns(2)
+        data_bast_nt_total_1.metric(label="Jumlah Total Non Tender BAPBAST", value="{:,}".format(jumlah_trx_spse_nt_bast_total))
+        data_bast_nt_total_2.metric(label="Nilai Total Non Tender BAPBAST", value="{:,.2f}".format(nilai_trx_spse_nt_bast_total))
+        style_metric_cards()
+
+        st.divider()
+
+        SPSE_BAST_NT_radio_1, SPSE_BAST_NT_radio_2 = st.columns((2,8))
+        with SPSE_BAST_NT_radio_1:
+            status_kontrak_nt_bast = st.radio("**Status Kontrak**", df_SPSENonTenderBAST['status_kontrak'].unique(), key='NonTender_Status_BAST')
+        with SPSE_BAST_NT_radio_2:
+            opd_nt_bast = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderBAST['nama_satker'].unique(), key='NonTender_OPD_BAST')
+        st.write(f"Anda memilih : **{status_kontrak_nt_bast}** dari **{opd_nt_bast}**")
+
+        ##### Hitung-hitungan dataset SPSE - Non Tender - BAPBAST
+        df_SPSENonTenderBAST_filter = con.execute(f"SELECT * FROM df_SPSENonTenderBAST WHERE nama_satker = '{opd_nt_bast}' AND status_kontrak = '{status_kontrak_nt_bast}'").df()
+        jumlah_trx_spse_nt_bast = df_SPSENonTenderBAST_filter['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_bast = df_SPSENonTenderBAST_filter['nilai_kontrak'].sum()
+
+        data_bast_nt_1, data_bast_nt_2 = st.columns(2)
+        data_bast_nt_1.metric(label="Jumlah Non Tender BAPBAST", value="{:,}".format(jumlah_trx_spse_nt_bast))
+        data_bast_nt_2.metric(label="Nilai Non Tender BAPBAST", value="{:,.2f}".format(nilai_trx_spse_nt_bast))
+        style_metric_cards()
+
+        st.divider()
+
+        sql_bast_nt_trx = """
+            SELECT nama_paket AS NAMA_PAKET, no_bap AS NO_BAP, tgl_bap AS TGL_BAP, no_bast AS NO_BAST, tgl_bast AS TGL_BAST, 
+            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
+            nilai_kontrak AS NILAI_KONTRAK, besar_pembyaran AS NILAI_PEMBAYARAN FROM df_SPSENonTenderBAST_filter
+        """
+        tabel_bast_nt_tampil = con.execute(sql_bast_nt_trx).df()
+            
+        ##### Tampilkan data SPSE - Non Tender - BAPBAST menggunakan AgGrid
+        gd = GridOptionsBuilder.from_dataframe(tabel_bast_nt_tampil)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_PEMBAYARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PEMBAYARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        
+        gridOptions = gd.build()
+        AgGrid(tabel_bast_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
 
 ## Tab menu SPSE - Pencatatan
