@@ -221,12 +221,12 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - Pengumuman
     with menu_spse_1_1:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-Pengumuman
+        ##### Buat tombol unduh dataset SPSE - Tender - Pengumuman
         unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman_OK)
         
         SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((7,3))
         with SPSE_Umumkan_1:
-            st.subheader("Pengumuman Tender")
+            st.subheader("SPSE - Tender - Pengumuman")
         with SPSE_Umumkan_2:
             st.download_button(
                 label = "📥 Download Data Pengumuman Tender",
@@ -246,7 +246,7 @@ with menu_spse_1:
             status_tender = st.radio("**Status Tender**", status_tender_unik)
         st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
-        ##### Hitung-hitungan dataset Tender Pengumuman
+        ##### Hitung-hitungan dataset SPSE - Tender - Pengumuman
         #df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran, status_pdn, status_ukm FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
         df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
         jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
@@ -732,12 +732,12 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - SPPBJ
     with menu_spse_1_2:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
+        ##### Buat tombol unduh dataset SPSE - Tender - SPPBJ
         unduh_SPSE_Tender_SPPBJ = unduh_data(df_SPSETenderSPPBJ)
 
         SPSE_SPPBJ_1, SPSE_SPPBJ_2 = st.columns((7,3))
         with SPSE_SPPBJ_1:
-            st.subheader("SPSE-Tender-SPPBJ")
+            st.subheader("SPSE - Tender - SPPBJ")
         with SPSE_SPPBJ_2:
             st.download_button(
                 label = "📥 Download Data Tender SPPBJ",
@@ -765,7 +765,7 @@ with menu_spse_1:
             opd_TSPPBJ = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPPBJ['nama_satker'].unique(), key='Tender_OPD_SPPBJ')
         st.write(f"Anda memilih : **{status_kontrak_TSPPBJ}** dari **{opd_TSPPBJ}**")
 
-        ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
+        ##### Hitung-hitungan dataset SPSE - Tender - SPPBJ
         df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak_TSPPBJ}' AND nama_satker = '{opd_TSPPBJ}'").df()
         jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_sppbj_final = df_SPSETenderSPPBJ_filter['harga_final'].sum()
@@ -784,7 +784,7 @@ with menu_spse_1:
         """
         tabel_tender_sppbj_tampil = con.execute(sql_tender_sppbj_trx).df()
 
-        ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
+        ##### Tampilkan data SPSE - Tender - SPPBJ menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_tender_sppbj_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -797,12 +797,12 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - Kontrak
     with menu_spse_1_3:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
+        ##### Buat tombol unduh dataset SPSE - Tender - Kontrak
         unduh_SPSE_Tender_KONTRAK = unduh_data(df_SPSETenderKontrak)
 
         SPSE_KONTRAK_1, SPSE_KONTRAK_2 = st.columns((7,3))
         with SPSE_KONTRAK_1:
-            st.subheader("SPSE-Tender-KONTRAK")
+            st.subheader("SPSE - Tender - KONTRAK")
         with SPSE_KONTRAK_2:
             st.download_button(
                 label = "📥 Download Data Tender Kontrak",
@@ -830,7 +830,7 @@ with menu_spse_1:
             opd_TKONTRAK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderKontrak['nama_satker'].unique(), key='Tender_OPD_Kontrak')
         st.write(f"Anda memilih : **{status_kontrak_TKONTRAK}** dari **{opd_TKONTRAK}**")
 
-        ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
+        ##### Hitung-hitungan dataset SPSE - Tender - Kontrak
         df_SPSETenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSETenderKontrak WHERE status_kontrak = '{status_kontrak_TKONTRAK}' AND nama_satker = '{opd_TKONTRAK}'").df()
         jumlah_trx_spse_kontrak = df_SPSETenderKontrak_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_kontrak_nilaikontrak = df_SPSETenderKontrak_filter['nilai_kontrak'].sum()
@@ -850,7 +850,7 @@ with menu_spse_1:
         """
         tabel_tender_kontrak_tampil = con.execute(sql_tender_kontrak_trx).df()
 
-        ##### Tampilkan data SPSE Tender Kontrak menggunakan AgGrid
+        ##### Tampilkan data SPSE - Tender - Kontrak menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_tender_kontrak_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -865,7 +865,7 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - SPMK
     with menu_spse_1_4:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
+        ##### Buat tombol unduh dataset SPSE - Tender - SPMK
         df_SPSETenderKontrak_filter_kolom = df_SPSETenderKontrak[["kd_tender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
         df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
 
@@ -897,7 +897,7 @@ with menu_spse_1:
         opd_TSPMK = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderSPMK_OK['nama_satker'].unique(), key='Tender_OPD_SPMK')
         st.write(f"Anda memilih : **{opd_TSPMK}**")
 
-        ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
+        ##### Hitung-hitungan dataset SPSE - Tender - SPMK
         df_SPSETenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSETenderSPMK_OK WHERE nama_satker = '{opd_TSPMK}'").df()
         jumlah_trx_spse_spmk = df_SPSETenderSPMK_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_spmk_nilaikontrak = df_SPSETenderSPMK_filter['nilai_kontrak'].sum()
@@ -917,7 +917,7 @@ with menu_spse_1:
         """
         tabel_tender_spmk_tampil = con.execute(sql_tender_spmk_trx).df()
         
-        ##### Tampilkan data SPSE Tender Kontrak menggunakan AgGrid
+        ##### Tampilkan data SPSE - Tender - SPMK menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_tender_spmk_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -932,7 +932,7 @@ with menu_spse_1:
     #### Tab menu SPSE - Tender - BAPBAST
     with menu_spse_1_5:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
+        ##### Buat tombol unduh dataset SPSE - Tender - BAPBAST
         unduh_SPSE_Tender_BAST = unduh_data(df_SPSETenderBAST)
 
         SPSE_BAST_1, SPSE_BAST_2 = st.columns((7,3))
@@ -965,7 +965,7 @@ with menu_spse_1:
             opd_TBAST = st.selectbox("Pilih Perangkat Daerah :", df_SPSETenderBAST['nama_satker'].unique(), key='Tender_OPD_BAPBAST')
         st.write(f"Anda memilih : **{status_kontrak_TBAST}** dari **{opd_TBAST}**")
 
-        ##### Hitung-hitungan dataset SPSE-Tender-Kontrak
+        ##### Hitung-hitungan dataset SPSE - Tender - BAPBAST
         df_SPSETenderBAST_filter = con.execute(f"SELECT * FROM df_SPSETenderBAST WHERE status_kontrak = '{status_kontrak_TBAST}' AND nama_satker = '{opd_TBAST}'").df()
         jumlah_trx_spse_bast = df_SPSETenderBAST_filter['kd_tender'].unique().shape[0]
         nilai_trx_spse_bast_nilaikontrak = df_SPSETenderBAST_filter['nilai_kontrak'].sum()
@@ -985,7 +985,7 @@ with menu_spse_1:
         """
         tabel_tender_bast_tampil = con.execute(sql_tender_bast_trx).df()
 
-        ##### Tampilkan data SPSE Tender Kontrak menggunakan AgGrid
+        ##### Tampilkan data SPSE - Tender - BAPBAST menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_tender_bast_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -1010,7 +1010,7 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Pengumuman
     with menu_spse_2_1:
 
-        ##### Buat tombol unduh dataset SPSE-NonTender-Pengumuman
+        ##### Buat tombol unduh dataset SPSE - Non Tender - Pengumuman
         unduh_SPSE_NT_Pengumuman = unduh_data(df_SPSENonTenderPengumuman_OK)
 
         SPSE_NT_Umumkan_1, SPSE_NT_Umumkan_2 = st.columns((7,3))
@@ -1033,7 +1033,7 @@ with menu_spse_2:
             status_nontender = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman_OK['status_nontender'].unique())
         st.write(f"Anda memilih : **{sumber_dana_nt}** dan **{status_nontender}**")
 
-        ##### Hitung-hitungan dataset Non Tender Pengumuman
+        ##### Hitung-hitungan dataset SPSE - Non Tender - Pengumuman
         df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman_OK WHERE sumber_dana = '{sumber_dana_nt}' AND status_nontender = '{status_nontender}'").df()
         jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
         nilai_trx_spse_nt_pengumuman_pagu = df_SPSENonTenderPengumuman_filter['pagu'].sum()
@@ -1047,14 +1047,14 @@ with menu_spse_2:
 
         st.divider()
 
-        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan kualifikasi paket
+        ####### Grafik jumlah dan nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan kualifikasi paket
         grafik_kp_nt_1, grafik_kp_nt_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
 
         with grafik_kp_nt_1:
 
             st.subheader("Berdasarkan Jumlah Kualifikasi Paket (Non Tender)")
 
-            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan kualifikasi paket
+            #### Query data grafik jumlah transaksi pengumuman SPSE - Non Tender - Pengumuman berdasarkan kualifikasi paket
 
             sql_kp_nt_jumlah = """
                 SELECT kualifikasi_paket AS KUALIFIKASI_PAKET, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
@@ -1077,7 +1077,7 @@ with menu_spse_2:
 
             st.subheader("Berdasarkan Nilai Kualifikasi Paket (Non Tender)")
 
-            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan kualifikasi paket
+            #### Query data grafik nilai transaksi pengumuman SPSE - Non Tender - Pengumuman berdasarkan kualifikasi paket
 
             sql_kp_nt_nilai = """
                 SELECT kualifikasi_paket AS KUALIFIKASI_PAKET, SUM(pagu) AS NILAI_PAKET
@@ -1105,14 +1105,14 @@ with menu_spse_2:
 
         st.divider()
 
-        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan Jenis Pengadaan
+        ####### Grafik jumlah dan nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan Jenis Pengadaan
         grafik_jp_nt_1, grafik_jp_nt_2 = st.tabs(["| Berdasarkan Jumlah Jenis Pengadaan |", "| Berdasarkan Nilai Jenis Pengadaan |"])
 
         with grafik_jp_nt_1:
 
             st.subheader("Berdasarkan Jumlah Jenis Pengadaan (Non Tender)")
 
-            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan Jenis Pengadaan
+            #### Query data grafik jumlah transaksi  SPSE - Non Tender - Pengumuman berdasarkan Jenis Pengadaan
 
             sql_jp_nt_jumlah = """
                 SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
@@ -1135,7 +1135,7 @@ with menu_spse_2:
 
             st.subheader("Berdasarkan Nilai Jenis Pengadaan (Non Tender)")
 
-            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan Jenis Pengadaan
+            #### Query data grafik nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan Jenis Pengadaan
 
             sql_jp_nt_nilai = """
                 SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET
@@ -1163,14 +1163,14 @@ with menu_spse_2:
 
         st.divider()
 
-        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan Metode Pemilihan
+        ####### Grafik jumlah dan nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan Metode Pemilihan
         grafik_mp_nt_1, grafik_mp_nt_2 = st.tabs(["| Berdasarkan Jumlah Metode Pemilihan |", "| Berdasarkan Nilai Metode Pemilihan |"])
 
         with grafik_mp_nt_1:
 
             st.subheader("Berdasarkan Jumlah Metode Pemilihan (Non Tender)")
 
-            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan Metode Pemilihan
+            #### Query data grafik jumlah transaksi SPSE - Non Tender - Pengumuman berdasarkan Metode Pemilihan
 
             sql_mp_nt_jumlah = """
                 SELECT mtd_pemilihan AS METODE_PEMILIHAN, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
@@ -1193,7 +1193,7 @@ with menu_spse_2:
 
             st.subheader("Berdasarkan Nilai Metode Pemilihan (Non Tender)")
 
-            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan Metode Pemilihan
+            #### Query data grafik nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan Metode Pemilihan
 
             sql_mp_nt_nilai = """
                 SELECT mtd_pemilihan AS METODE_PEMILIHAN, SUM(pagu) AS NILAI_PAKET
@@ -1221,14 +1221,14 @@ with menu_spse_2:
 
         st.divider()
 
-        ####### Grafik jumlah dan nilai transaksi Non Tender berdasarkan Kontrak Pembayaran
+        ####### Grafik jumlah dan nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan Kontrak Pembayaran
         grafik_kontrak_nt_1, grafik_kontrak_nt_2 = st.tabs(["| Berdasarkan Jumlah Kontrak Pembayaran |", "| Berdasarkan Nilai Kontrak Pembayaran |"])
 
         with grafik_kontrak_nt_1:
 
             st.subheader("Berdasarkan Jumlah Kontrak Pembayaran (Non Tender)")
 
-            #### Query data grafik jumlah transaksi pengumuman SPSE Non Tender berdasarkan Kontrak Pembayaran
+            #### Query data grafik jumlah transaksi SPSE - Non Tender - Pengumuman berdasarkan Kontrak Pembayaran
 
             sql_kontrak_nt_jumlah = """
                 SELECT kontrak_pembayaran AS KONTRAK_PEMBAYARAN, COUNT(DISTINCT(kd_nontender)) AS JUMLAH_PAKET
@@ -1251,7 +1251,7 @@ with menu_spse_2:
 
             st.subheader("Berdasarkan Nilai Kontrak Pembayaran (Non Tender)")
 
-            #### Query data grafik nilai transaksi pengumuman SPSE Non Tender berdasarkan Kontrak Pembayaran
+            #### Query data grafik nilai transaksi SPSE - Non Tender - Pengumuman berdasarkan Kontrak Pembayaran
 
             sql_kontrak_nt_nilai = """
                 SELECT kontrak_pembayaran AS KONTRAK_PEMBAYARAN, SUM(pagu) AS NILAI_PAKET
@@ -1280,7 +1280,7 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - SPPBJ
     with menu_spse_2_2:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
+        ##### Buat tombol unduh dataset SPSE - Non Tender - SPPBJ
         unduh_SPSE_NonTender_SPPBJ = unduh_data(df_SPSENonTenderSPPBJ)
 
         SPSE_SPPBJ_NT_1, SPSE_SPPBJ_NT_2 = st.columns((7,3))
@@ -1313,7 +1313,7 @@ with menu_spse_2:
             opd_nt = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPPBJ['nama_satker'].unique())
         st.write(f"Anda memilih : **{status_kontrak_nt}** dari **{opd_nt}**")
 
-        ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
+        ##### Hitung-hitungan dataset SPSE - Non Tender - SPPBJ
         df_SPSENonTenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPPBJ WHERE status_kontrak = '{status_kontrak_nt}' AND nama_satker = '{opd_nt}'").df()
         jumlah_trx_spse_nt_sppbj = df_SPSENonTenderSPPBJ_filter['kd_nontender'].unique().shape[0]
         nilai_trx_spse_nt_sppbj_final = df_SPSENonTenderSPPBJ_filter['harga_final'].sum()
@@ -1332,7 +1332,7 @@ with menu_spse_2:
         """
         tabel_sppbj_nt_tampil = con.execute(sql_sppbj_nt_trx).df()
 
-        ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
+        ##### Tampilkan data SPSE - Non Tender - SPPBJ menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_sppbj_nt_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -1345,7 +1345,7 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Kontrak
     with menu_spse_2_3:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-KONTRAK
+        ##### Buat tombol unduh dataset SPSE - Non Tender - KONTRAK
         unduh_SPSE_NonTender_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
 
         SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
@@ -1378,7 +1378,7 @@ with menu_spse_2:
             opd_nt_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderKontrak['nama_satker'].unique(), key='NonTender_Kontrak_OPD')
         st.write(f"Anda memilih : **{status_kontrak_nt_kontrak}** dari **{opd_nt_kontrak}**")
             
-        ##### Hitung-hitungan dataset SPSE-Tender-KONTRAK
+        ##### Hitung-hitungan dataset SPSE - Non Tender - KONTRAK
         df_SPSENonTenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
         jumlah_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['kd_nontender'].unique().shape[0]
         nilai_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['nilai_kontrak'].sum()
@@ -1397,7 +1397,7 @@ with menu_spse_2:
         """
         tabel_kontrak_nt_tampil = con.execute(sql_kontrak_nt_trx).df()
             
-        ##### Tampilkan data SPSE Tender KONTRAK menggunakan AgGrid
+        ##### Tampilkan data SPSE - Non Tender - KONTRAK menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -1412,7 +1412,7 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - SPMK
     with menu_spse_2_4:
 
-        ##### Buat tombol unduh dataset SPSE-NonTender-SPMK
+        ##### Buat tombol unduh dataset SPSE - Non Tender - SPMK
         df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
         df_SPSENonTenderSPMK_OK = df_SPSENonTenderSPMK.merge(df_SPSENonTenderKontrak_filter_kolom, how='left', on='kd_nontender')
 
