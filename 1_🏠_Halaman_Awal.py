@@ -59,14 +59,12 @@ st.markdown("""
 * **SPSE**
   * Tender
     * Pengumuman
-    * Selesai
     * SPPBJ
     * Kontrak
     * SPMK
     * BAPBAST
   * Non Tender
     * Pengumuman
-    * Selesai
     * SPPBJ
     * Kontrak
     * SPMK
@@ -79,6 +77,7 @@ st.markdown("""
   * Tramsaksi Katalog
   * Transaksi Toko Daring
 * **SIKAP**
+* **MONITORING**
 
 Sumber data *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
