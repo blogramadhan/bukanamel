@@ -1458,7 +1458,25 @@ with menu_spse_2:
         style_metric_cards()
 
         st.divider()
-        
+
+        sql_spmk_nt_trx = """
+            SELECT nama_paket AS NAMA_PAKET, no_spmk_spp AS NO_SPMK, tgl_spmk_spp AS TGL_SPMK, 
+            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
+            nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderSPMK_filter
+        """
+        tabel_spmk_nt_tampil = con.execute(sql_spmk_nt_trx).df()
+            
+        ##### Tampilkan data SPSE - Non Tender - SPMK menggunakan AgGrid
+        gd = GridOptionsBuilder.from_dataframe(tabel_spmk_nt_tampil)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_PDN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PDN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_UMK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UMK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+        gridOptions = gd.build()
+        AgGrid(tabel_spmk_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_5:
