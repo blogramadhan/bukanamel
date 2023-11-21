@@ -1296,6 +1296,16 @@ with menu_spse_2:
 
         st.divider()
 
+        jumlah_trx_spse_nt_sppbj_total = df_SPSENonTenderSPPBJ['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_sppbj_final_total = df_SPSENonTenderSPPBJ['harga_final'].sum()
+
+        data_sppbj_nt_total_1, data_sppbj_nt_total_2 = st.columns(2)
+        data_sppbj_nt_total_1.metric(label="Jumlah Total Non Tender SPPBJ", value="{:,}".format(jumlah_trx_spse_nt_sppbj_total))
+        data_sppbj_nt_total_2.metric(label="Nilai Total Non Tender SPPBJ", value="{:,.2f}".format(nilai_trx_spse_nt_sppbj_final_total))
+        style_metric_cards()
+
+        st.divider()
+
         SPSE_SPPBJ_NT_radio_1, SPSE_SPPBJ_NT_radio_2 = st.columns((2,8))
         with SPSE_SPPBJ_NT_radio_1:
             status_kontrak_nt = st.radio("**Status Kontrak**", df_SPSENonTenderSPPBJ['status_kontrak'].unique())
