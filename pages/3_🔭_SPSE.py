@@ -1440,6 +1440,26 @@ with menu_spse_2:
 
         st.divider()
 
+        SPSE_SPMK_NT_radio_1, SPSE_SPMK_NT_radio_2 = st.columns((2,8))
+        with SPSE_SPMK_NT_radio_1:
+            status_kontrak_nt_spmk = st.radio("**Status Kontrak**", df_SPSENonTenderSPMK_OK['status_kontrak'].unique(), key='NonTender_Status_SPMK')
+        with SPSE_SPMK_NT_radio_2:
+            opd_nt_spmk = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPMK_OK['nama_satker'].unique(), key='NonTender_OPD_SPMK')
+        st.write(f"Anda memilih : **{status_kontrak_nt_spmk}** dari **{opd_nt_spmk}**")
+
+        ##### Hitung-hitungan dataset SPSE - Non Tender - SPMK
+        df_SPSENonTenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPMK_OK WHERE nama_satker = '{opd_nt_spmk}' AND status_kontrak = '{status_kontrak_nt_spmk}'").df()
+        jumlah_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['nilai_kontrak'].sum()
+
+        data_spmk_nt_1, data_spmk_nt_2 = st.columns(2)
+        data_spmk_nt_1.metric(label="Jumlah Non Tender SPMK", value="{:,}".format(jumlah_trx_spse_nt_spmk))
+        data_spmk_nt_2.metric(label="Nilai Non Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_nt_spmk))
+        style_metric_cards()
+
+        st.divider()
+        
+
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_5:
 
