@@ -1345,7 +1345,7 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Kontrak
     with menu_spse_2_3:
 
-        ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
+        ##### Buat tombol unduh dataset SPSE-Tender-KONTRAK
         unduh_SPSE_NonTender_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
 
         SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
@@ -1378,7 +1378,7 @@ with menu_spse_2:
             opd_nt_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderKontrak['nama_satker'].unique(), key='NonTender_Kontrak_OPD')
         st.write(f"Anda memilih : **{status_kontrak_nt_kontrak}** dari **{opd_nt_kontrak}**")
             
-        ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
+        ##### Hitung-hitungan dataset SPSE-Tender-KONTRAK
         df_SPSENonTenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
         jumlah_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['kd_nontender'].unique().shape[0]
         nilai_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['nilai_kontrak'].sum()
@@ -1397,7 +1397,7 @@ with menu_spse_2:
         """
         tabel_kontrak_nt_tampil = con.execute(sql_kontrak_nt_trx).df()
             
-        ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
+        ##### Tampilkan data SPSE Tender KONTRAK menggunakan AgGrid
         gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_tampil)
         gd.configure_pagination()
         gd.configure_side_bar()
@@ -1412,7 +1412,23 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - SPMK
     with menu_spse_2_4:
 
-        st.subheader("SPSE - Non Tender - SPMK")
+        ##### Buat tombol unduh dataset SPSE-NonTender-SPMK
+        df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
+        df_SPSENonTenderSPMK_OK = df_SPSENonTenderSPMK.merge(df_SPSENonTenderKontrak_filter_kolom, how='left', on='kd_nontender')
+
+        unduh_SPSE_NonTender_SPMK = unduh_data(df_SPSENonTenderSPMK_OK)
+
+        SPSE_SPMK_NT_1, SPSE_SPMK_NT_2 = st.columns((7,3))
+        with SPSE_SPMK_NT_1:
+            st.subheader("SPSE - Non Tender - SPMK")
+        with SPSE_SPMK_NT_2:
+            st.download_button(
+                label = "📥 Download Data Non Tender SPMK",
+                data = unduh_SPSE_NonTender_SPMK,
+                file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv"
+            )
+
+        st.divider()
 
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_5:
