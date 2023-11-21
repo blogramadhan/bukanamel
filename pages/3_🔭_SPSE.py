@@ -813,6 +813,16 @@ with menu_spse_1:
 
         st.divider()
 
+        jumlah_trx_spse_kontrak_total = df_SPSETenderKontrak['kd_tender'].unique().shape[0]
+        nilai_trx_spse_kontrak_nilaikontrak_total = df_SPSETenderKontrak['nilai_kontrak'].sum()
+
+        data_kontrak_total_1, data_kontrak_total_2 = st.columns(2)
+        data_kontrak_total_1.metric(label="Jumlah Total Tender Berkontrak", value="{:,}".format(jumlah_trx_spse_kontrak_total))
+        data_kontrak_total_2.metric(label="Nilai Total Tender Berkontrak", value="{:,.2f}".format(nilai_trx_spse_kontrak_nilaikontrak_total))
+        style_metric_cards()
+
+        st.divider()
+
         SPSE_KONTRAK_radio_1, SPSE_KONTRAK_radio_2 = st.columns((2,8))
         with SPSE_KONTRAK_radio_1:
             status_kontrak_TKONTRAK = st.radio("**Status Kontrak**", df_SPSETenderKontrak['status_kontrak'].unique(), key='Tender_Status_Kontrak')
