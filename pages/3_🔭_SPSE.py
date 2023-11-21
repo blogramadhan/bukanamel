@@ -948,6 +948,16 @@ with menu_spse_1:
 
         st.divider()
 
+        jumlah_trx_spse_bast_total = df_SPSETenderBAST['kd_tender'].unique().shape[0]
+        nilai_trx_spse_bast_total = df_SPSETenderBAST['nilai_kontrak'].sum()
+
+        data_bast_total_1, data_bast_total_2 = st.columns(2)
+        data_bast_total_1.metric(label="Jumlah Total Tender BAPBAST", value="{:,}".format(jumlah_trx_spse_bast_total))
+        data_bast_total_2.metric(label="Nilai Total Tender BAPBAST", value="{:,.2f}".format(nilai_trx_spse_bast_total))
+        style_metric_cards()
+
+        st.divider()
+
         SPSE_BAST_radio_1, SPSE_BAST_radio_2 = st.columns((2,8))
         with SPSE_BAST_radio_1:
             status_kontrak_TBAST = st.radio("**Status Kontrak**", df_SPSETenderBAST['status_kontrak'].unique(), key='Tender_Status_BAPBAST')
