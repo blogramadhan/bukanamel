@@ -1545,7 +1545,6 @@ with menu_spse_2:
         gridOptions = gd.build()
         AgGrid(tabel_bast_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-
 ## Tab menu SPSE - Pencatatan
 with menu_spse_3:
 
