@@ -708,7 +708,7 @@ with menu_rup_6:
     st.divider()
 
     sql_query_ps_tbl = """
-        SELECT kd_rup AS ID_RUP, nama_paket AS NAMA_PAKET, kd_rup AS ID_RUP, tipe_swakelola AS TIPE_SWAKELOLA, 
+        SELECT nama_paket AS NAMA_PAKET, kd_rup AS ID_RUP, tipe_swakelola AS TIPE_SWAKELOLA, 
         tgl_pengumuman_paket AS TANGGAL_PENGUMUMAN, tgl_awal_pelaksanaan_kontrak AS TANGGAL_PELAKSANAAN, pagu AS PAGU 
         FROM df_RUPPS_PD_tbl
     """
