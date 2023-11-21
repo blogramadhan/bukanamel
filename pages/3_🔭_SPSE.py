@@ -1530,7 +1530,7 @@ with menu_spse_2:
         sql_bast_nt_trx = """
             SELECT nama_paket AS NAMA_PAKET, no_bap AS NO_BAP, tgl_bap AS TGL_BAP, no_bast AS NO_BAST, tgl_bast AS TGL_BAST, 
             nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
-            nilai_kontrak AS NILAI_KONTRAK, besar_pembyaran AS NILAI_PEMBAYARAN FROM df_SPSENonTenderBAST_filter
+            nilai_kontrak AS NILAI_KONTRAK, besar_pembayaran AS NILAI_PEMBAYARAN FROM df_SPSENonTenderBAST_filter
         """
         tabel_bast_nt_tampil = con.execute(sql_bast_nt_trx).df()
             
