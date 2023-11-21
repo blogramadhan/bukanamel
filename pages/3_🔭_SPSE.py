@@ -1345,7 +1345,6 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Kontrak
     with menu_spse_2_3:
 
-#### Start Non Tender - Kontrak
         ##### Buat tombol unduh dataset SPSE-Tender-SPPBJ
         unduh_SPSE_NonTender_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
 
@@ -1391,24 +1390,24 @@ with menu_spse_2:
         
         st.divider()
         
-        #sql_sppbj_nt_trx = """
-        #    SELECT nama_paket AS NAMA_PAKET, no_sppbj AS NO_SPPBJ, tgl_sppbj AS TGL_SPPBJ, 
-        #    nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
-        #    harga_final AS HARGA_FINAL FROM df_SPSENonTenderSPPBJ_filter
-        #"""
-        #tabel_sppbj_nt_tampil = con.execute(sql_sppbj_nt_trx).df()
-        #    
-        ###### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
-        #gd = GridOptionsBuilder.from_dataframe(tabel_sppbj_nt_tampil)
-        #gd.configure_pagination()
-        #gd.configure_side_bar()
-        #gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        #gd.configure_column("HARGA_FINAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HARGA_FINAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        #
-        #gridOptions = gd.build()
-        #AgGrid(tabel_sppbj_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+        sql_kontrak_nt_trx = """
+            SELECT nama_paket AS NAMA_PAKET, no_kontrak AS NO_KONTRAK, tgl_kontrak AS TGL_KONTRAK, 
+            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
+            nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderKontrak_filter
+        """
+        tabel_kontrak_nt_tampil = con.execute(sql_kontrak_nt_trx).df()
+            
+        ##### Tampilkan data SPSE Tender SPPBJ menggunakan AgGrid
+        gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_tampil)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_PDN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PDN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_UMK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UMK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-####
+        gridOptions = gd.build()
+        AgGrid(tabel_kontrak_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
     #### Tab menu SPSE - Non Tender - SPMK
     with menu_spse_2_4:
