@@ -1372,25 +1372,25 @@ with menu_spse_2:
 
         st.divider()
 
-        #SPSE_SPPBJ_NT_radio_1, SPSE_SPPBJ_NT_radio_2 = st.columns((2,8))
-        #with SPSE_SPPBJ_NT_radio_1:
-        #    status_kontrak_nt = st.radio("**Status Kontrak**", df_SPSENonTenderSPPBJ['status_kontrak'].unique())
-        #with SPSE_SPPBJ_NT_radio_2:
-        #    opd_nt = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPPBJ['nama_satker'].unique())
-        #st.write(f"Anda memilih : **{status_kontrak_nt}** dari **{opd_nt}**")
-        #    
-        ###### Hitung-hitungan dataset SPSE-Tender-SPPBJ
-        #df_SPSENonTenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPPBJ WHERE status_kontrak = '{status_kontrak_nt}' AND nama_satker = '{opd_nt}'").df()
-        #jumlah_trx_spse_nt_sppbj = df_SPSENonTenderSPPBJ_filter['kd_nontender'].unique().shape[0]
-        #nilai_trx_spse_nt_sppbj_final = df_SPSENonTenderSPPBJ_filter['harga_final'].sum()
-        #
-        #data_sppbj_nt_1, data_sppbj_nt_2 = st.columns(2)
-        #data_sppbj_nt_1.metric(label="Jumlah Non Tender SPPBJ", value="{:,}".format(jumlah_trx_spse_nt_sppbj))
-        #data_sppbj_nt_2.metric(label="Nilai Non Tender SPPBJ", value="{:,.2f}".format(nilai_trx_spse_nt_sppbj_final))
-        #style_metric_cards()
-        #
-        #st.divider()
-        #
+        SPSE_KONTRAK_NT_radio_1, SPSE_KONTRAK_NT_radio_2 = st.columns((2,8))
+        with SPSE_KONTRAK_NT_radio_1:
+            status_kontrak_nt_kontrak = st.radio("**Status Kontrak**", df_SPSENonTenderKontrak['status_kontrak'].unique(), key='NonTender_Kontrak')
+        with SPSE_KONTRAK_NT_radio_2:
+            opd_nt_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderKontrak['nama_satker'].unique(), key='NonTender_Kontrak_OPD')
+        st.write(f"Anda memilih : **{status_kontrak_nt_kontrak}** dari **{opd_nt_kontrak}**")
+            
+        ##### Hitung-hitungan dataset SPSE-Tender-SPPBJ
+        df_SPSENonTenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
+        jumlah_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['nilai_kontrak'].sum()
+        
+        data_kontrak_nt_1, data_kontrak_nt_2 = st.columns(2)
+        data_kontrak_nt_1.metric(label="Jumlah Non Tender KONTRAK", value="{:,}".format(jumlah_trx_spse_nt_kontrak))
+        data_kontrak_nt_2.metric(label="Nilai Non Tender KONTRAK", value="{:,.2f}".format(nilai_trx_spse_nt_kontrak))
+        style_metric_cards()
+        
+        st.divider()
+        
         #sql_sppbj_nt_trx = """
         #    SELECT nama_paket AS NAMA_PAKET, no_sppbj AS NO_SPPBJ, tgl_sppbj AS TGL_SPPBJ, 
         #    nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
