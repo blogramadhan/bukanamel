@@ -1430,6 +1430,16 @@ with menu_spse_2:
 
         st.divider()
 
+        jumlah_trx_spse_nt_spmk_total = df_SPSENonTenderSPMK_OK['kd_nontender'].unique().shape[0]
+        nilai_trx_spse_nt_spmk_total = df_SPSENonTenderSPMK_OK['nilai_kontrak'].sum()
+
+        data_spmk_nt_total_1, data_spmk_nt_total_2 = st.columns(2)
+        data_spmk_nt_total_1.metric(label="Jumlah Total Non Tender SPMK", value="{:,}".format(jumlah_trx_spse_nt_spmk_total))
+        data_spmk_nt_total_2.metric(label="Nilai Total Non Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_nt_spmk_total))
+        style_metric_cards()
+
+        st.divider()
+
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_5:
 
