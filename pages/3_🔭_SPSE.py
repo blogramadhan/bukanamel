@@ -868,6 +868,7 @@ with menu_spse_1:
         ##### Buat tombol unduh dataset SPSE-Tender-Kontrak
         df_SPSETenderKontrak_filter_kolom = df_SPSETenderKontrak[["kd_tender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
         df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
+
         unduh_SPSE_Tender_SPMK = unduh_data(df_SPSETenderSPMK_OK)
 
         SPSE_SPMK_1, SPSE_SPMK_2 = st.columns((7,3))
@@ -880,6 +881,16 @@ with menu_spse_1:
                 file_name = f"SPSETenderSPMK-{kodeFolder}-{tahun}.csv",
                 mime = "txt/csv"
             )
+
+        st.divider()
+
+        jumlah_trx_spse_spmk_total = df_SPSETenderSPMK_OK['kd_tender'].unique().shape[0]
+        nilai_trx_spse_spmk_nilaikontrak_total = df_SPSETenderSPMK_OK['nilai_kontrak'].sum()
+
+        data_spmk_total_1, data_spmk_total_2 = st.columns(2)
+        data_spmk_total_1.metric(label="Jumlah Total Tender SPMK", value="{:,}".format(jumlah_trx_spse_spmk_total))
+        data_spmk_total_2.metric(label="Nilai Total Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_spmk_nilaikontrak_total))
+        style_metric_cards()
 
         st.divider()
         
