@@ -159,12 +159,6 @@ try:
 except Exception:
     st.error("Gagal baca dataset Catat Swakelola Realisasi")
 
-### Baca file parquet dataset RUP Master Satker
-#try:
-#    df_RUPMasterSatker = tarik_data(DatasetRUPMasterSatker)
-#except Exception:
-#    st.error("Gagal baca dataset RUP Master Satker")
-
 ### Baca file parquet dataset RUP Paket Penyedia Terumumkan
 #try:
 #    df_RUPPP = tarik_data(DatasetRUPPP)
