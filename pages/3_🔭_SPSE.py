@@ -1132,7 +1132,7 @@ with menu_spse_2:
             df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - SPPBJ
-            unduh_SPSE_NonTender_SPPBJ = unduh_data(df_SPSENonTenderSPPBJ)
+            unduh_SPSE_NT_SPPBJ = unduh_data(df_SPSENonTenderSPPBJ)
 
             SPSE_SPPBJ_NT_1, SPSE_SPPBJ_NT_2 = st.columns((7,3))
             with SPSE_SPPBJ_NT_1:
@@ -1140,7 +1140,7 @@ with menu_spse_2:
             with SPSE_SPPBJ_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender SPPBJ",
-                    data = unduh_SPSE_Tender_SPPBJ,
+                    data = unduh_SPSE_NT_SPPBJ,
                     file_name = f"SPSENonTenderSPPBJ-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )
@@ -1204,7 +1204,7 @@ with menu_spse_2:
             df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - KONTRAK
-            unduh_SPSE_NonTender_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
+            unduh_SPSE_NT_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
 
             SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
             with SPSE_KONTRAK_NT_1:
@@ -1212,7 +1212,7 @@ with menu_spse_2:
             with SPSE_KONTRAK_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender KONTRAK",
-                    data = unduh_SPSE_NonTender_KONTRAK,
+                    data = unduh_SPSE_NT_KONTRAK,
                     file_name = f"SPSENonTenderKONTRAK-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )
@@ -1282,7 +1282,7 @@ with menu_spse_2:
             df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
             df_SPSENonTenderSPMK_OK = df_SPSENonTenderSPMK.merge(df_SPSENonTenderKontrak_filter_kolom, how='left', on='kd_nontender')
 
-            unduh_SPSE_NonTender_SPMK = unduh_data(df_SPSENonTenderSPMK_OK)
+            unduh_SPSE_NT_SPMK = unduh_data(df_SPSENonTenderSPMK_OK)
 
             SPSE_SPMK_NT_1, SPSE_SPMK_NT_2 = st.columns((7,3))
             with SPSE_SPMK_NT_1:
@@ -1290,7 +1290,7 @@ with menu_spse_2:
             with SPSE_SPMK_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender SPMK",
-                    data = unduh_SPSE_NonTender_SPMK,
+                    data = unduh_SPSE_NT_SPMK,
                     file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )
@@ -1356,7 +1356,7 @@ with menu_spse_2:
             df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - BAPBAST
-            unduh_SPSE_NonTender_BAST = unduh_data(df_SPSENonTenderBAST)
+            unduh_SPSE_NT_BAST = unduh_data(df_SPSENonTenderBAST)
 
             SPSE_BAST_NT_1, SPSE_BAST_NT_2 = st.columns((7,3))
             with SPSE_BAST_NT_1:
@@ -1364,7 +1364,7 @@ with menu_spse_2:
             with SPSE_BAST_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender BAPBAST",
-                    data = unduh_SPSE_NonTender_BAST,
+                    data = unduh_SPSE_NT_BAST,
                     file_name = f"SPSENonTenderBAPBAST-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )
@@ -1440,7 +1440,7 @@ with menu_spse_3:
             df_CatatNonTenderRealisasi_filter = df_CatatNonTenderRealisasi[["kd_nontender_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi", "nama_penyedia", "npwp_penyedia"]]
             df_CatatNonTender_OK = df_CatatNonTender.merge(df_CatatNonTenderRealisasi_filter, how='left', on='kd_nontender_pct')
 
-            unduh_CATAT_NonTender = unduh_data(df_CatatNonTender_OK)
+            unduh_CATAT_NT = unduh_data(df_CatatNonTender_OK)
 
             SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
             with SPSE_CATAT_NonTender_1:
@@ -1448,7 +1448,7 @@ with menu_spse_3:
             with SPSE_CATAT_NonTender_2:
                 st.download_button(
                     label = "📥 Download Data Pencatatan Non Tender",
-                    data = unduh_CATAT_NonTender,
+                    data = unduh_CATAT_NT,
                     file_name = f"SPSEPencatatanNonTender-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )
