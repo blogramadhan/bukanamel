@@ -1432,274 +1432,288 @@ with menu_spse_3:
 
     ### Buat sub menu SPSE - Pencatatan Transaksi PBJ
     menu_spse_3_1, menu_spse_3_2 = st.tabs(["| Pencatatan Non Tender |", "| Pencatatan Swakelola |"])
-
-    #### Query penggabungan dataset CatatNonTender dan CatatSwakelola
-    df_CatatNonTenderRealisasi_filter = df_CatatNonTenderRealisasi[["kd_nontender_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi", "nama_penyedia", "npwp_penyedia"]]
-    df_CatatNonTender_OK = df_CatatNonTender.merge(df_CatatNonTenderRealisasi_filter, how='left', on='kd_nontender_pct')
-
-    df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
-    df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_filter, how='left', on='kd_swakelola_pct')
-    
+  
     #### Tab menu SPSE - Pencatatan - Non Tender
     with menu_spse_3_1:
 
-        #### Buat tombol unduh dataset SPSE-Pencatatan-Non Tender
-        unduh_CATAT_NonTender = unduh_data(df_CatatNonTender_OK)
+        try:
+            df_CatatNonTenderRealisasi = tarik_data(DatasetCatatNonTenderRealisasi)
+            df_CatatNonTender = tarik_data(DatasetCatatNonTender)
 
-        SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
-        with SPSE_CATAT_NonTender_1:
-            st.subheader("Pencatatan Non Tender")
-        with SPSE_CATAT_NonTender_2:
-            st.download_button(
-                label = "📥 Download Data Pencatatan Non Tender",
-                data = unduh_CATAT_NonTender,
-                file_name = f"SPSEPencatatanNonTender-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
-            )
+            #### Buat tombol unduh dataset SPSE-Pencatatan-Non Tender
+            df_CatatNonTenderRealisasi_filter = df_CatatNonTenderRealisasi[["kd_nontender_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi", "nama_penyedia", "npwp_penyedia"]]
+            df_CatatNonTender_OK = df_CatatNonTender.merge(df_CatatNonTenderRealisasi_filter, how='left', on='kd_nontender_pct')
 
-        st.divider()
+            unduh_CATAT_NonTender = unduh_data(df_CatatNonTender_OK)
 
-        sumber_dana_cnt = st.radio("**Sumber Dana :**", df_CatatNonTender_OK['sumber_dana'].unique(), key="CatatNonTender")
-        st.write(f"Anda memilih : **{sumber_dana_cnt}**")
+            SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
+            with SPSE_CATAT_NonTender_1:
+                st.subheader("Pencatatan Non Tender")
+            with SPSE_CATAT_NonTender_2:
+                st.download_button(
+                    label = "📥 Download Data Pencatatan Non Tender",
+                    data = unduh_CATAT_NonTender,
+                    file_name = f"SPSEPencatatanNonTender-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
 
-        #### Hitung-hitungan dataset Catat Non Tender
-        df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}'")
-        jumlah_CatatNonTender_Berjalan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Sedang Berjalan'")
-        jumlah_CatatNonTender_Selesai = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Selesai'")
-        jumlah_CatatNonTender_Dibatalkan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Dibatalkan'")
+            st.divider()
 
-        data_cnt_1, data_cnt_2, data_cnt_3 = st.columns(3)
-        data_cnt_1.metric(label="Jumlah Pencatatan NonTender Berjalan", value="{:,}".format(jumlah_CatatNonTender_Berjalan.shape[0]))
-        data_cnt_2.metric(label="Jumlah Pencatatan NonTender Selesai", value="{:,}".format(jumlah_CatatNonTender_Selesai.shape[0]))
-        data_cnt_3.metric(label="Jumlah Pencatatan NonTender Dibatalkan", value="{:,}".format(jumlah_CatatNonTender_Dibatalkan.shape[0]))
-        style_metric_cards()
+            sumber_dana_cnt = st.radio("**Sumber Dana :**", df_CatatNonTender_OK['sumber_dana'].unique(), key="CatatNonTender")
+            st.write(f"Anda memilih : **{sumber_dana_cnt}**")
 
-        st.divider()
-        
-        #### Grafik jumlah dan nilai transaksi berdasarkan kategori pengadaan dan metode pemilihan
-        grafik_cnt_1, grafik_cnt_2, grafik_cnt_3, grafik_cnt_4 = st.tabs(["| Jumlah Transaksi - Kategori Pengadaan |","| Nilai Transaksi - Kategori Pengadaan |","| Jumlah Transaksi - Metode Pemilihan |","| Nilai Transaksi - Metode Pemilihan |"])
-        
-        with grafik_cnt_1:
+            #### Hitung-hitungan dataset Catat Non Tender
+            df_CatatNonTender_OK_filter = df_CatatNonTender_OK.query(f"sumber_dana == '{sumber_dana_cnt}'")
+            jumlah_CatatNonTender_Berjalan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Sedang Berjalan'")
+            jumlah_CatatNonTender_Selesai = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Selesai'")
+            jumlah_CatatNonTender_Dibatalkan = df_CatatNonTender_OK_filter.query("status_nontender_pct_ket == 'Paket Dibatalkan'")
 
-            st.subheader("Berdasarkan Jumlah Kategori Pemilihan")
+            data_cnt_1, data_cnt_2, data_cnt_3 = st.columns(3)
+            data_cnt_1.metric(label="Jumlah Pencatatan NonTender Berjalan", value="{:,}".format(jumlah_CatatNonTender_Berjalan.shape[0]))
+            data_cnt_2.metric(label="Jumlah Pencatatan NonTender Selesai", value="{:,}".format(jumlah_CatatNonTender_Selesai.shape[0]))
+            data_cnt_3.metric(label="Jumlah Pencatatan NonTender Dibatalkan", value="{:,}".format(jumlah_CatatNonTender_Dibatalkan.shape[0]))
+            style_metric_cards()
 
-            ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
+            st.divider()
+            
+            #### Grafik jumlah dan nilai transaksi berdasarkan kategori pengadaan dan metode pemilihan
+            grafik_cnt_1, grafik_cnt_2, grafik_cnt_3, grafik_cnt_4 = st.tabs(["| Jumlah Transaksi - Kategori Pengadaan |","| Nilai Transaksi - Kategori Pengadaan |","| Jumlah Transaksi - Metode Pemilihan |","| Nilai Transaksi - Metode Pemilihan |"])
+            
+            with grafik_cnt_1:
 
-            sql_cnt_kp_jumlah = """
-                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
-                FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY JUMLAH_PAKET DESC
+                st.subheader("Berdasarkan Jumlah Kategori Pemilihan")
+
+                ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
+
+                sql_cnt_kp_jumlah = """
+                    SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
+                    FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY JUMLAH_PAKET DESC
+                """
+
+                tabel_cnt_kp_jumlah = con.execute(sql_cnt_kp_jumlah).df()
+
+                grafik_cnt_1_1, grafik_cnt_1_2 = st.columns((3,7))
+
+                with grafik_cnt_1_1:
+
+                    AgGrid(tabel_cnt_kp_jumlah)
+
+                with grafik_cnt_1_2:
+
+                    figcntkph = px.pie(tabel_cnt_kp_jumlah, values="JUMLAH_PAKET", names="KATEGORI_PENGADAAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Kategori Pengadaan", hole=.3)
+                    st.plotly_chart(figcntkph, theme="streamlit", use_container_width=True)
+
+            with grafik_cnt_2:
+
+                st.subheader("Berdasarkan Nilai Kategori Pemilihan")
+
+                ##### Query data grafik nilai transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
+
+                sql_cnt_kp_nilai = """
+                    SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, SUM(nilai_realisasi) AS NILAI_REALISASI
+                    FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY NILAI_REALISASI
+                """
+
+                tabel_cnt_kp_nilai = con.execute(sql_cnt_kp_nilai).df()
+
+                grafik_cnt_2_1, grafik_cnt_2_2 = st.columns((3,7))
+
+                with grafik_cnt_2_1:
+
+                    gd = GridOptionsBuilder.from_dataframe(tabel_cnt_kp_nilai)
+                    gd.configure_pagination()
+                    gd.configure_side_bar()
+                    gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                    gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                    gridOptions = gd.build()
+                    AgGrid(tabel_cnt_kp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)    
+
+                with grafik_cnt_2_2:
+
+                    figcntkpn = px.pie(tabel_cnt_kp_nilai, values="NILAI_REALISASI", names="KATEGORI_PENGADAAN", title="Grafik Pencatatan Non Tender - Nilai Transaksi - Kategori Pengadaan", hole=.3)
+                    st.plotly_chart(figcntkpn, theme="streamlit", use_container_width=True)
+
+            with grafik_cnt_3:
+
+                st.subheader("Berdasarkan Jumlah Metode Pemilihan")
+
+                ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Metode Pemilihan
+
+                sql_cnt_mp_jumlah = """
+                    SELECT mtd_pemilihan AS METODE_PEMILIHAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
+                    FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
+                """
+
+                tabel_cnt_mp_jumlah = con.execute(sql_cnt_mp_jumlah).df()
+
+                grafik_cnt_3_1, grafik_cnt_3_2 = st.columns((3,7))
+
+                with grafik_cnt_3_1:
+
+                    AgGrid(tabel_cnt_mp_jumlah)
+
+                with grafik_cnt_3_2:
+
+                    figcntmph = px.pie(tabel_cnt_mp_jumlah, values="JUMLAH_PAKET", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Metode Pemilihan", hole=.3)
+                    st.plotly_chart(figcntmph, theme="streamlit", use_container_width=True)
+
+
+            with grafik_cnt_4:
+
+                st.subheader("Berdasarkan Nilai Metode Pemilihan")
+
+                ##### Query data grafik nilai transaksi Pencatatan Non Tender berdasarkan Metode Pemilihan
+
+                sql_cnt_mp_nilai = """
+                    SELECT mtd_pemilihan AS METODE_PEMILIHAN, SUM(nilai_realisasi) AS NILAI_REALISASI
+                    FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_REALISASI
+                """
+
+                tabel_cnt_mp_nilai = con.execute(sql_cnt_mp_nilai).df()
+
+                grafik_cnt_4_1, grafik_cnt_4_2 = st.columns((3,7))
+
+                with grafik_cnt_4_1:
+
+                    gd = GridOptionsBuilder.from_dataframe(tabel_cnt_mp_nilai)
+                    gd.configure_pagination()
+                    gd.configure_side_bar()
+                    gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                    gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                    gridOptions = gd.build()
+                    AgGrid(tabel_cnt_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)    
+
+                with grafik_cnt_4_2:
+
+                    figcntmpn = px.pie(tabel_cnt_mp_nilai, values="NILAI_REALISASI", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Nilai Transaksi - Metode Pemilihan", hole=.3)
+                    st.plotly_chart(figcntmpn, theme="streamlit", use_container_width=True)
+
+            st.divider()
+            
+            SPSE_CNT_radio_1, SPSE_CNT_radio_2 = st.columns((2,8))
+            with SPSE_CNT_radio_1:
+                status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
+            with SPSE_CNT_radio_2:
+                status_opd_cnt = st.selectbox("**Pilih Satker :**", df_CatatNonTender_OK_filter['nama_satker'].unique())
+
+            st.divider()
+
+            sql_CatatNonTender_query = f"""
+                SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU,
+                total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI FROM df_CatatNonTender_OK_filter
+                WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
+                nama_satker = '{status_opd_cnt}'
             """
 
-            tabel_cnt_kp_jumlah = con.execute(sql_cnt_kp_jumlah).df()
-
-            grafik_cnt_1_1, grafik_cnt_1_2 = st.columns((3,7))
-
-            with grafik_cnt_1_1:
-
-                AgGrid(tabel_cnt_kp_jumlah)
-
-            with grafik_cnt_1_2:
-
-                figcntkph = px.pie(tabel_cnt_kp_jumlah, values="JUMLAH_PAKET", names="KATEGORI_PENGADAAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Kategori Pengadaan", hole=.3)
-                st.plotly_chart(figcntkph, theme="streamlit", use_container_width=True)
-
-        with grafik_cnt_2:
-
-            st.subheader("Berdasarkan Nilai Kategori Pemilihan")
-
-            ##### Query data grafik nilai transaksi Pencatatan Non Tender berdasarkan Kategori Pengadaan
-
-            sql_cnt_kp_nilai = """
-                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, SUM(nilai_realisasi) AS NILAI_REALISASI
-                FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY NILAI_REALISASI
+            sql_CatatNonTender_query_grafik = f"""
+                SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, mtd_pemilihan AS METODE_PEMILIHAN, nilai_realisasi AS NILAI_REALISASI
+                FROM df_CatatNonTender_OK_filter
+                WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
+                nama_satker = '{status_opd_cnt}'
             """
 
-            tabel_cnt_kp_nilai = con.execute(sql_cnt_kp_nilai).df()
+            df_CatatNonTender_tabel = con.execute(sql_CatatNonTender_query).df()
+            df_CatatNonTender_grafik = con.execute(sql_CatatNonTender_query_grafik).df()
 
-            grafik_cnt_2_1, grafik_cnt_2_2 = st.columns((3,7))
+            data_cnt_pd_1, data_cnt_pd_2, data_cnt_pd_3, data_cnt_pd_4 = st.columns((2,3,3,2))
+            data_cnt_pd_1.subheader("")
+            data_cnt_pd_2.metric(label=f"Jumlah Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel.shape[0]))
+            data_cnt_pd_3.metric(label=f"Nilai Total Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel['NILAI_REALISASI'].sum()))
+            data_cnt_pd_4.subheader("")
+            style_metric_cards()
 
-            with grafik_cnt_2_1:
+            st.divider()
 
-                gd = GridOptionsBuilder.from_dataframe(tabel_cnt_kp_nilai)
-                gd.configure_pagination()
-                gd.configure_side_bar()
-                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-                gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+            gd = GridOptionsBuilder.from_dataframe(df_CatatNonTender_tabel)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("TOTAL_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            
+            gridOptions = gd.build()
+            AgGrid(df_CatatNonTender_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
 
-                gridOptions = gd.build()
-                AgGrid(tabel_cnt_kp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)    
+        except Exception:
+            st.error("Gagal baca dataset Pencatatan Non Tender")
 
-            with grafik_cnt_2_2:
-
-                figcntkpn = px.pie(tabel_cnt_kp_nilai, values="NILAI_REALISASI", names="KATEGORI_PENGADAAN", title="Grafik Pencatatan Non Tender - Nilai Transaksi - Kategori Pengadaan", hole=.3)
-                st.plotly_chart(figcntkpn, theme="streamlit", use_container_width=True)
-
-        with grafik_cnt_3:
-
-            st.subheader("Berdasarkan Jumlah Metode Pemilihan")
-
-            ##### Query data grafik jumlah transaksi Pencatatan Non Tender berdasarkan Metode Pemilihan
-
-            sql_cnt_mp_jumlah = """
-                SELECT mtd_pemilihan AS METODE_PEMILIHAN, COUNT(kd_nontender_pct) AS JUMLAH_PAKET
-                FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
-            """
-
-            tabel_cnt_mp_jumlah = con.execute(sql_cnt_mp_jumlah).df()
-
-            grafik_cnt_3_1, grafik_cnt_3_2 = st.columns((3,7))
-
-            with grafik_cnt_3_1:
-
-                AgGrid(tabel_cnt_mp_jumlah)
-
-            with grafik_cnt_3_2:
-
-                figcntmph = px.pie(tabel_cnt_mp_jumlah, values="JUMLAH_PAKET", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Metode Pemilihan", hole=.3)
-                st.plotly_chart(figcntmph, theme="streamlit", use_container_width=True)
-
-
-        with grafik_cnt_4:
-
-            st.subheader("Berdasarkan Nilai Metode Pemilihan")
-
-            ##### Query data grafik nilai transaksi Pencatatan Non Tender berdasarkan Metode Pemilihan
-
-            sql_cnt_mp_nilai = """
-                SELECT mtd_pemilihan AS METODE_PEMILIHAN, SUM(nilai_realisasi) AS NILAI_REALISASI
-                FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_REALISASI
-            """
-
-            tabel_cnt_mp_nilai = con.execute(sql_cnt_mp_nilai).df()
-
-            grafik_cnt_4_1, grafik_cnt_4_2 = st.columns((3,7))
-
-            with grafik_cnt_4_1:
-
-                gd = GridOptionsBuilder.from_dataframe(tabel_cnt_mp_nilai)
-                gd.configure_pagination()
-                gd.configure_side_bar()
-                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-                gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
-
-                gridOptions = gd.build()
-                AgGrid(tabel_cnt_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)    
-
-            with grafik_cnt_4_2:
-
-                figcntmpn = px.pie(tabel_cnt_mp_nilai, values="NILAI_REALISASI", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Nilai Transaksi - Metode Pemilihan", hole=.3)
-                st.plotly_chart(figcntmpn, theme="streamlit", use_container_width=True)
-
-        st.divider()
-        
-        SPSE_CNT_radio_1, SPSE_CNT_radio_2 = st.columns((2,8))
-        with SPSE_CNT_radio_1:
-            status_nontender_cnt = st.radio("**Status NonTender :**", df_CatatNonTender_OK_filter['status_nontender_pct_ket'].unique())
-        with SPSE_CNT_radio_2:
-            status_opd_cnt = st.selectbox("**Pilih Satker :**", df_CatatNonTender_OK_filter['nama_satker'].unique())
-
-        st.divider()
-
-        sql_CatatNonTender_query = f"""
-            SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU,
-            total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI FROM df_CatatNonTender_OK_filter
-            WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
-            nama_satker = '{status_opd_cnt}'
-        """
-
-        sql_CatatNonTender_query_grafik = f"""
-            SELECT kategori_pengadaan AS KATEGORI_PENGADAAN, mtd_pemilihan AS METODE_PEMILIHAN, nilai_realisasi AS NILAI_REALISASI
-            FROM df_CatatNonTender_OK_filter
-            WHERE status_nontender_pct_ket = '{status_nontender_cnt}' AND
-            nama_satker = '{status_opd_cnt}'
-        """
-
-        df_CatatNonTender_tabel = con.execute(sql_CatatNonTender_query).df()
-        df_CatatNonTender_grafik = con.execute(sql_CatatNonTender_query_grafik).df()
-
-        data_cnt_pd_1, data_cnt_pd_2, data_cnt_pd_3, data_cnt_pd_4 = st.columns((2,3,3,2))
-        data_cnt_pd_1.subheader("")
-        data_cnt_pd_2.metric(label=f"Jumlah Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel.shape[0]))
-        data_cnt_pd_3.metric(label=f"Nilai Total Pencatatan Non Tender ({status_nontender_cnt})", value="{:,}".format(df_CatatNonTender_tabel['NILAI_REALISASI'].sum()))
-        data_cnt_pd_4.subheader("")
-        style_metric_cards()
-
-        st.divider()
-
-        gd = GridOptionsBuilder.from_dataframe(df_CatatNonTender_tabel)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("TOTAL_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        
-        gridOptions = gd.build()
-        AgGrid(df_CatatNonTender_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
-        
     #### Tab menu SPSE - Pencatatan - Swakelola
     with menu_spse_3_2:
 
-        #### Buat tombol unduh dataset SPSE-Pencatatan-Swakelola
-        unduh_CATAT_Swakelola = unduh_data(df_CatatSwakelola_OK)
+        try:
+            #### Tarik dataset CatatSwakelola dan CatatSwakelolaRealisasi
+            df_CatatSwakelola = tarik_data(DatasetCatatSwakelola)
+            df_CatatSwakelolaRealisasi = tarik_data(DatasetCatatSwakelolaRealisasi)
 
-        SPSE_CATAT_Swakelola_1, SPSE_CATAT_Swakelola_2 = st.columns((7,3))
-        with SPSE_CATAT_Swakelola_1:
-            st.subheader("Pencatatan Swakelola")
-        with SPSE_CATAT_Swakelola_2:
-            st.download_button(
-                label = "📥 Download Data Pencatatan Swakelola",
-                data = unduh_CATAT_Swakelola,
-                file_name = f"SPSEPencatatanSwakelola-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
-            )
+            #### Buat tombol unduh dataset SPSE-Pencatatan-Swakelola
+            df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
+            df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_filter, how='left', on='kd_swakelola_pct')
 
-        st.divider()
+            unduh_CATAT_Swakelola = unduh_data(df_CatatSwakelola_OK)
 
-        sumber_dana_cs = st.radio("**Sumber Dana :**", df_CatatSwakelola_OK['sumber_dana'].unique(), key="CatatSwakelola")
-        st.write(f"Anda memilih : **{sumber_dana_cs}**")
+            SPSE_CATAT_Swakelola_1, SPSE_CATAT_Swakelola_2 = st.columns((7,3))
+            with SPSE_CATAT_Swakelola_1:
+                st.subheader("Pencatatan Swakelola")
+            with SPSE_CATAT_Swakelola_2:
+                st.download_button(
+                    label = "📥 Download Data Pencatatan Swakelola",
+                    data = unduh_CATAT_Swakelola,
+                    file_name = f"SPSEPencatatanSwakelola-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
 
-        #### Hitung-hitungan dataset Catat Swakelola
-        df_CatatSwakelola_OK_filter = con.execute(f"SELECT * FROM df_CatatSwakelola_OK WHERE sumber_dana = '{sumber_dana_cs}'").df()
-        jumlah_CatatSwakelola_Berjalan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan'").df()
-        jumlah_CatatSwakelola_Selesai = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai'").df()
-        jumlah_CatatSwakelola_Dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan'").df()
+            st.divider()
 
-        data_cs_1, data_cs_2, data_cs_3 = st.columns(3)
-        data_cs_1.metric(label="Jumlah Pencatatan Swakelola Berjalan", value="{:,}".format(jumlah_CatatSwakelola_Berjalan.shape[0]))
-        data_cs_2.metric(label="Jumlah Pencacatan Swakelola Selesai", value="{:,}".format(jumlah_CatatSwakelola_Selesai.shape[0]))
-        data_cs_3.metric(label="Jumlah Pencatatan Swakelola Dibatalkan", value="{:,}".format(jumlah_CatatSwakelola_Dibatalkan.shape[0]))
-        style_metric_cards()
+            sumber_dana_cs = st.radio("**Sumber Dana :**", df_CatatSwakelola_OK['sumber_dana'].unique(), key="CatatSwakelola")
+            st.write(f"Anda memilih : **{sumber_dana_cs}**")
 
-        st.divider()
+            #### Hitung-hitungan dataset Catat Swakelola
+            df_CatatSwakelola_OK_filter = con.execute(f"SELECT * FROM df_CatatSwakelola_OK WHERE sumber_dana = '{sumber_dana_cs}'").df()
+            jumlah_CatatSwakelola_Berjalan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan'").df()
+            jumlah_CatatSwakelola_Selesai = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai'").df()
+            jumlah_CatatSwakelola_Dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan'").df()
 
-        SPSE_CS_radio_1, SPSE_CS_radio_2 = st.columns((2,8))
-        with SPSE_CS_radio_1:
-            status_swakelola_cs = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
-        with SPSE_CS_radio_2:
-            status_opd_cs = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
+            data_cs_1, data_cs_2, data_cs_3 = st.columns(3)
+            data_cs_1.metric(label="Jumlah Pencatatan Swakelola Berjalan", value="{:,}".format(jumlah_CatatSwakelola_Berjalan.shape[0]))
+            data_cs_2.metric(label="Jumlah Pencacatan Swakelola Selesai", value="{:,}".format(jumlah_CatatSwakelola_Selesai.shape[0]))
+            data_cs_3.metric(label="Jumlah Pencatatan Swakelola Dibatalkan", value="{:,}".format(jumlah_CatatSwakelola_Dibatalkan.shape[0]))
+            style_metric_cards()
 
-        st.divider()
+            st.divider()
 
-        df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
+            SPSE_CS_radio_1, SPSE_CS_radio_2 = st.columns((2,8))
+            with SPSE_CS_radio_1:
+                status_swakelola_cs = st.radio("**Status Swakelola :**", df_CatatSwakelola_OK_filter['status_swakelola_pct_ket'].unique())
+            with SPSE_CS_radio_2:
+                status_opd_cs = st.selectbox("**Pilih Satker :**", df_CatatSwakelola_OK_filter['nama_satker'].unique())
 
-        data_cs_pd_1, data_cs_pd_2, data_cs_pd_3, data_cs_pd_4 = st.columns((2,3,3,2))
-        data_cs_pd_1.subheader("")
-        data_cs_pd_2.metric(label=f"Jumlah Pencatatan Swakelola ({status_swakelola_cs})", value="{:,}".format(df_CatatSwakelola_tabel.shape[0]))
-        data_cs_pd_3.metric(label=f"Nilai Total Pencatatan Swakelola ({status_swakelola_cs})", value="{:,.2f}".format(df_CatatSwakelola_tabel['NILAI_REALISASI'].sum()))
-        data_cs_pd_4.subheader("")
-        style_metric_cards()
+            st.divider()
 
-        gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_tabel)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("TOTAL_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        
-        gridOptions = gd.build()
-        AgGrid(df_CatatSwakelola_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
+            df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
+
+            data_cs_pd_1, data_cs_pd_2, data_cs_pd_3, data_cs_pd_4 = st.columns((2,3,3,2))
+            data_cs_pd_1.subheader("")
+            data_cs_pd_2.metric(label=f"Jumlah Pencatatan Swakelola ({status_swakelola_cs})", value="{:,}".format(df_CatatSwakelola_tabel.shape[0]))
+            data_cs_pd_3.metric(label=f"Nilai Total Pencatatan Swakelola ({status_swakelola_cs})", value="{:,.2f}".format(df_CatatSwakelola_tabel['NILAI_REALISASI'].sum()))
+            data_cs_pd_4.subheader("")
+            style_metric_cards()
+
+            gd = GridOptionsBuilder.from_dataframe(df_CatatSwakelola_tabel)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("TOTAL_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("NILAI_REALISASI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_REALISASI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            
+            gridOptions = gd.build()
+            AgGrid(df_CatatSwakelola_tabel, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        except Exception:
+            st.error("Gagal tarik dataset Pencatatan Swakelola")
 
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
