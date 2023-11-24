@@ -219,16 +219,15 @@ with menu_spse_1:
 
             SPSE_radio_1, SPSE_radio_2, SPSE_radio_3 = st.columns((1,1,8))
             with SPSE_radio_1:
-                sumber_dana_unik = df_SPSETenderPengumuman_OK['sumber_dana'].unique()
+                sumber_dana_unik = df_SPSETenderPengumuman['sumber_dana'].unique()
                 sumber_dana = st.radio("**Sumber Dana**", sumber_dana_unik)
             with SPSE_radio_2:
-                status_tender_unik = df_SPSETenderPengumuman_OK['status_tender'].unique()
+                status_tender_unik = df_SPSETenderPengumuman['status_tender'].unique()
                 status_tender = st.radio("**Status Tender**", status_tender_unik)
             st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - Pengumuman
-            #df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran, status_pdn, status_ukm FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
-            df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman_OK WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
+            df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
             jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
             nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
             nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
