@@ -141,24 +141,6 @@ try:
 except Exception:
     st.error("Gagal baca dataset SPSE Non Tender BAST")
 
-### Baca file parquet dataset Pencatatan
-try:
-    df_CatatNonTender = tarik_data(DatasetCatatNonTender)
-except Exception:
-    st.error("Gagal baca dataset Catat Non Tender")
-try:
-    df_CatatNonTenderRealisasi = tarik_data(DatasetCatatNonTenderRealisasi)
-except Exception:
-    st.error("Gagal baca dataset Catat Non Tender Realisasi")
-try:
-    df_CatatSwakelola = tarik_data(DatasetCatatSwakelola)
-except Exception:
-    st.error("Gagal baca dataset Catat Swakelola")
-try:
-    df_CatatSwakelolaRealisasi = tarik_data(DatasetCatatSwakelolaRealisasi)
-except Exception:
-    st.error("Gagal baca dataset Catat Swakelola Realisasi")
-
 ### Baca file parquet dataset RUP Paket Penyedia Terumumkan
 #try:
 #    df_RUPPP = tarik_data(DatasetRUPPP)
