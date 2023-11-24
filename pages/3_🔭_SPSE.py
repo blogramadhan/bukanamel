@@ -219,7 +219,7 @@ with menu_spse_1:
     menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5 = st.tabs(["| PENGUMUMAN |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
 
     #### Tab menu SPSE - Tender - Pengumuman
-    if df_SPSETenderPengumuman:
+    if df_SPSETenderPengumuman.shape[0] > 0:
         with menu_spse_1_1:
 
             ##### Buat tombol unduh dataset SPSE - Tender - Pengumuman
@@ -731,7 +731,7 @@ with menu_spse_1:
             st.divider()
 
     #### Tab menu SPSE - Tender - SPPBJ
-    if df_SPSETenderSPPBJ:
+    if df_SPSETenderSPPBJ.shape[0] > 0:
         with menu_spse_1_2:
 
             ##### Buat tombol unduh dataset SPSE - Tender - SPPBJ
@@ -797,7 +797,7 @@ with menu_spse_1:
             AgGrid(tabel_tender_sppbj_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
     #### Tab menu SPSE - Tender - Kontrak
-    if df_SPSETenderKontrak:
+    if df_SPSETenderKontrak.shape[0] > 0:
         with menu_spse_1_3:
 
             ##### Buat tombol unduh dataset SPSE - Tender - Kontrak
@@ -866,7 +866,7 @@ with menu_spse_1:
             AgGrid(tabel_tender_kontrak_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
     #### Tab menu SPSE - Tender - SPMK
-    if df_SPSETenderSPMK:
+    if df_SPSETenderSPMK.shape[0] > 0:
         with menu_spse_1_4:
 
             ##### Buat tombol unduh dataset SPSE - Tender - SPMK
@@ -934,7 +934,7 @@ with menu_spse_1:
             AgGrid(tabel_tender_spmk_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
     #### Tab menu SPSE - Tender - BAPBAST
-    if df_SPSETenderBAST:
+    if df_SPSETenderBAST.shape[0] > 0:
         with menu_spse_1_5:
 
             ##### Buat tombol unduh dataset SPSE - Tender - BAPBAST
