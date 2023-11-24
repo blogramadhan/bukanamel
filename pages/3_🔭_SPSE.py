@@ -107,10 +107,6 @@ DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUP
 ## Buat dataframe SPSE
 ### Baca file parquet dataset SPSE Tender
 try:
-    df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender Pengumuman")
-try:
     df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
 except Exception:
     st.error("Gagal baca dataset SPSE Tender Selesai")
@@ -118,22 +114,6 @@ try:
     df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
 except Exception:
     st.error("Gagal baca dataset SPSE Tender Selesai Nilai")
-try:
-    df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender SPPBJ")    
-try:    
-    df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender Kontrak")
-try:
-    df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender SPMK")
-#try:
-#    df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
-#except Exception:
-#    st.error("Gagal baca dataset SPSE Tender BAST")
 
 ### Baca file parquet dataset SPSE Non Tender
 try:
@@ -211,19 +191,18 @@ with menu_spse_1:
 
     st.header(f"SPSE - Tender - {pilih}")
 
-    ### Buat dataset gabung df_SPSETenderPengumuman + df_RUPPP_umumkan_filter
-    #df_SPSETenderPengumuman_OK = df_SPSETenderPengumuman.merge(df_RUPPP_umumkan_filter, how='left', on='kd_rup')
-    df_SPSETenderPengumuman_OK = df_SPSETenderPengumuman
-
     ### Buat sub menu SPSE - Tender
     menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5 = st.tabs(["| PENGUMUMAN |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
 
     #### Tab menu SPSE - Tender - Pengumuman
-    if df_SPSETenderPengumuman.shape[0] > 0:
-        with menu_spse_1_1:
+    with menu_spse_1_1:
+
+        try:
+            ##### Tarik dataset SPSETenderPengumuman
+            df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
 
             ##### Buat tombol unduh dataset SPSE - Tender - Pengumuman
-            unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman_OK)
+            unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman)
             
             SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((7,3))
             with SPSE_Umumkan_1:
@@ -261,127 +240,7 @@ with menu_spse_1:
             style_metric_cards()
 
             st.divider()
-
-    ######## Sementara dibuang karena penggabungan data membuat error di beberapa kabupaten
-
-            ####### Grafik jumlah dan nilai transaksi berdasarkan Status PDN
-            #grafik_pdn_1, grafik_pdn_2 = st.tabs(["| Berdasarkan Jumlah Status PDN |", "| Berdasarkan Nilai Status PDN |"])
-
-            #with grafik_pdn_1:
-            #
-            #    st.subheader("Berdasarkan Jumlah Status PDN")
-            #
-            #    #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Status PDN
-            #    
-            #    sql_pdn_jumlah = """
-            #        SELECT status_pdn AS STATUS_PDN, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
-            #        FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_PDN ORDER BY JUMLAH_PAKET DESC
-            #    """
-            #
-            #    tabel_pdn_jumlah_trx = con.execute(sql_pdn_jumlah).df()
-            #
-            #    grafik_pdn_1_1, grafik_pdn_1_2 = st.columns((3,7))
-            #    
-            #    with grafik_pdn_1_1:
-            #
-            #        AgGrid(tabel_pdn_jumlah_trx)
-            #
-            #    with grafik_pdn_1_2:
-            #
-            #        figpdnh = px.pie(tabel_pdn_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Jumlah Paket', hole=.3)
-            #        st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
-            #
-            #with grafik_pdn_2:
-            #
-            #    st.subheader("Berdasarkan Nilai Status PDN")
-            #
-            #    #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Status PDN
-            #
-            #    sql_pdn_nilai = """
-            #        SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET
-            #        FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_PDN ORDER BY NILAI_PAKET DESC
-            #    """
-            #
-            #    tabel_pdn_nilai_trx = con.execute(sql_pdn_nilai).df()
-            #
-            #    grafik_pdn_2_1, grafik_pdn_2_2 = st.columns((3,7))
-            #
-            #    with grafik_pdn_2_1:
-            #
-            #        gd = GridOptionsBuilder.from_dataframe(tabel_pdn_nilai_trx)
-            #        gd.configure_pagination()
-            #        gd.configure_side_bar()
-            #        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            #        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
-            #
-            #        gridOptions = gd.build()
-            #        AgGrid(tabel_pdn_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)    
-            #        
-            #    with grafik_pdn_2_2:
-            #
-            #        figpdnn = px.pie(tabel_pdn_nilai_trx, values="NILAI_PAKET", names="STATUS_PDN", title='Grafik Status PDN - Nilai Paket', hole=.3)
-            #        st.plotly_chart(figpdnn, theme="streamlit", use_container_width=True)
-
-            ####### Grafik jumlah dan nilai transaksi berdasarkan Status UKM
-            #grafik_ukm_1, grafik_ukm_2 = st.tabs(["| Berdasarkan Jumlah Status UKM |", "| Berdasarkan Nilai Status UKM |"])
-            #
-            #with grafik_ukm_1:
-            #
-            #    st.subheader("Berdasarkan Jumlah Status UKM")
-            #
-            #    #### Query data grafik jumlah transaksi pengumuman SPSE berdasarkan Status UKM
-            #    
-            #    sql_ukm_jumlah = """
-            #        SELECT status_ukm AS STATUS_UKM, COUNT(DISTINCT(kd_tender)) AS JUMLAH_PAKET
-            #        FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_UKM ORDER BY JUMLAH_PAKET DESC
-            #    """
-            #
-            #    tabel_ukm_jumlah_trx = con.execute(sql_ukm_jumlah).df()
-            #
-            #    grafik_ukm_1_1, grafik_ukm_1_2 = st.columns((3,7))
-            #
-            #    with grafik_ukm_1_1:
-            #
-            #        AgGrid(tabel_ukm_jumlah_trx)
-            #
-            #    with grafik_ukm_1_2:
-            #
-            #        figukmh = px.pie(tabel_ukm_jumlah_trx, values="JUMLAH_PAKET", names="STATUS_UKM", title='Grafik Status UKM - Jumlah Paket', hole=.3)
-            #        st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
-            #
-            #with grafik_ukm_2:
-            #
-            #    st.subheader("Berdasarkan Nilai Status UKM")
-            #
-            #    #### Query data grafik nilai transaksi pengumuman SPSE berdasarkan Status UKM
-            #
-            #    sql_ukm_nilai = """
-            #        SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET
-            #        FROM df_SPSETenderPengumuman_filter GROUP BY STATUS_UKM ORDER BY NILAI_PAKET DESC
-            #    """
-            #
-            #    tabel_ukm_nilai_trx = con.execute(sql_ukm_nilai).df()
-            #
-            #    grafik_ukm_2_1, grafik_ukm_2_2 = st.columns((3,7))
-            #
-            #    with grafik_ukm_2_1:
-            #
-            #        gd = GridOptionsBuilder.from_dataframe(tabel_ukm_nilai_trx)
-            #        gd.configure_pagination()
-            #        gd.configure_side_bar()
-            #        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            #        gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
-            #
-            #        gridOptions = gd.build()
-            #        AgGrid(tabel_ukm_nilai_trx, gridOptions=gridOptions, enable_enterprise_modules=True)    
-            #        
-            #    with grafik_ukm_2_2:
-            #
-            #        figukmn = px.pie(tabel_ukm_nilai_trx, values="NILAI_PAKET", names="STATUS_UKM", title='Grafik Status UKM - Nilai Paket', hole=.3)
-            #        st.plotly_chart(figukmn, theme="streamlit", use_container_width=True)
-
-    ######## Sementara dibuang karena penggabungan data membuat error di beberapa kabupaten
-            
+          
             ####### Grafik jumlah dan nilai transaksi berdasarkan kualifikasi paket
             grafik_kp_1, grafik_kp_2 = st.tabs(["| Berdasarkan Jumlah Kualifikasi Paket |", "| Berdasarkan Nilai Kualifikasi Paket |"])
 
@@ -730,9 +589,15 @@ with menu_spse_1:
 
             st.divider()
 
+        except Exception:
+            st.error("Gagal baca dataset SPSETenderPengumuman")
+
     #### Tab menu SPSE - Tender - SPPBJ
-    if df_SPSETenderSPPBJ.shape[0] > 0:
-        with menu_spse_1_2:
+    with menu_spse_1_2:
+            
+        try:
+            ##### Tarik dataset SPSETenderSPPBJ
+            df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
 
             ##### Buat tombol unduh dataset SPSE - Tender - SPPBJ
             unduh_SPSE_Tender_SPPBJ = unduh_data(df_SPSETenderSPPBJ)
@@ -796,9 +661,15 @@ with menu_spse_1:
             gridOptions = gd.build()
             AgGrid(tabel_tender_sppbj_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
 
+        except Exception:
+            st.error("Gagal baca dataset SPSETenderSPPBJ")
+
     #### Tab menu SPSE - Tender - Kontrak
-    if df_SPSETenderKontrak.shape[0] > 0:
-        with menu_spse_1_3:
+    with menu_spse_1_3:
+
+        try:
+            ##### Tarik dataset SPSETenderKontrak
+            df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
 
             ##### Buat tombol unduh dataset SPSE - Tender - Kontrak
             unduh_SPSE_Tender_KONTRAK = unduh_data(df_SPSETenderKontrak)
@@ -865,11 +736,14 @@ with menu_spse_1:
             gridOptions = gd.build()
             AgGrid(tabel_tender_kontrak_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
+        except Exception:
+            st.error("Gagal baca dataset SPSETenderKontrak")
+
     #### Tab menu SPSE - Tender - SPMK
     with menu_spse_1_4:
 
         try:
-            #####
+            ##### Tarik dataset SPSETenderKontrak dan SPSETenderSPMK
             df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
             df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
 
