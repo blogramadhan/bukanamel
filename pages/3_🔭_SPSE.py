@@ -130,10 +130,10 @@ try:
     df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
 except Exception:
     st.error("Gagal baca dataset SPSE Tender SPMK")
-try:
-    df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender BAST")
+#try:
+#    df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
+#except Exception:
+#    st.error("Gagal baca dataset SPSE Tender BAST")
 
 ### Baca file parquet dataset SPSE Non Tender
 try:
@@ -934,9 +934,10 @@ with menu_spse_1:
             AgGrid(tabel_tender_spmk_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
 
     #### Tab menu SPSE - Tender - BAPBAST
-    if df_SPSETenderBAST.shape[0] > 0:
-        with menu_spse_1_5:
-
+    with menu_spse_1_5:
+        try:
+            df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
+        
             ##### Buat tombol unduh dataset SPSE - Tender - BAPBAST
             unduh_SPSE_Tender_BAST = unduh_data(df_SPSETenderBAST)
 
@@ -1000,6 +1001,10 @@ with menu_spse_1:
 
             gridOptions = gd.build()
             AgGrid(tabel_tender_bast_tampil, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+        except Exception:
+            st.error("Data SPSETenderBAST tidak ada")
+
 
 ## Tab menu SPSE - Non Tender
 with menu_spse_2:
