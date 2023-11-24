@@ -117,29 +117,10 @@ except Exception:
 
 ### Baca file parquet dataset SPSE Non Tender
 try:
-    df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
-except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender Pengumuman")
-try:
     df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
 except Exception:
     st.error("Gagal baca dataset SPSE Non Tender Selesai")
-try:
-    df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
-except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender SPPBJ")
-try:
-    df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
-except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender Kontrak")
-try:
-    df_SPSENonTenderSPMK = tarik_data(DatasetSPSENonTenderSPMK)
-except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender SPMK")
-try:
-    df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
-except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender BAST")
+
 
 ### Baca file parquet dataset RUP Paket Penyedia Terumumkan
 #try:
