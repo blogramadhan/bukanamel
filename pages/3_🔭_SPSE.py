@@ -1199,139 +1199,154 @@ with menu_spse_2:
     #### Tab menu SPSE - Non Tender - Kontrak
     with menu_spse_2_3:
 
-        ##### Buat tombol unduh dataset SPSE - Non Tender - KONTRAK
-        unduh_SPSE_NonTender_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
+        try:
+            ##### Tarik dataset SPSENonTenderKontrak
+            df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
 
-        SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
-        with SPSE_KONTRAK_NT_1:
-            st.subheader("SPSE - Non Tender - KONTRAK")
-        with SPSE_KONTRAK_NT_2:
-            st.download_button(
-                label = "📥 Download Data Non Tender KONTRAK",
-                data = unduh_SPSE_NonTender_KONTRAK,
-                file_name = f"SPSENonTenderKONTRAK-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
-            )
+            ##### Buat tombol unduh dataset SPSE - Non Tender - KONTRAK
+            unduh_SPSE_NonTender_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
 
-        st.divider()
+            SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
+            with SPSE_KONTRAK_NT_1:
+                st.subheader("SPSE - Non Tender - KONTRAK")
+            with SPSE_KONTRAK_NT_2:
+                st.download_button(
+                    label = "📥 Download Data Non Tender KONTRAK",
+                    data = unduh_SPSE_NonTender_KONTRAK,
+                    file_name = f"SPSENonTenderKONTRAK-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
 
-        jumlah_trx_spse_nt_kontrak_total = df_SPSENonTenderKontrak['kd_nontender'].unique().shape[0]
-        nilai_trx_spse_nt_kontrak_total = df_SPSENonTenderKontrak['nilai_kontrak'].sum()
+            st.divider()
 
-        data_kontrak_nt_total_1, data_kontrak_nt_total_2 = st.columns(2)
-        data_kontrak_nt_total_1.metric(label="Jumlah Total Non Tender KONTRAK", value="{:,}".format(jumlah_trx_spse_nt_kontrak_total))
-        data_kontrak_nt_total_2.metric(label="Nilai Total Non Tender KONTRAK", value="{:,.2f}".format(nilai_trx_spse_nt_kontrak_total))
-        style_metric_cards()
+            jumlah_trx_spse_nt_kontrak_total = df_SPSENonTenderKontrak['kd_nontender'].unique().shape[0]
+            nilai_trx_spse_nt_kontrak_total = df_SPSENonTenderKontrak['nilai_kontrak'].sum()
 
-        st.divider()
+            data_kontrak_nt_total_1, data_kontrak_nt_total_2 = st.columns(2)
+            data_kontrak_nt_total_1.metric(label="Jumlah Total Non Tender KONTRAK", value="{:,}".format(jumlah_trx_spse_nt_kontrak_total))
+            data_kontrak_nt_total_2.metric(label="Nilai Total Non Tender KONTRAK", value="{:,.2f}".format(nilai_trx_spse_nt_kontrak_total))
+            style_metric_cards()
 
-        SPSE_KONTRAK_NT_radio_1, SPSE_KONTRAK_NT_radio_2 = st.columns((2,8))
-        with SPSE_KONTRAK_NT_radio_1:
-            status_kontrak_nt_kontrak = st.radio("**Status Kontrak**", df_SPSENonTenderKontrak['status_kontrak'].unique(), key='NonTender_Kontrak')
-        with SPSE_KONTRAK_NT_radio_2:
-            opd_nt_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderKontrak['nama_satker'].unique(), key='NonTender_Kontrak_OPD')
-        st.write(f"Anda memilih : **{status_kontrak_nt_kontrak}** dari **{opd_nt_kontrak}**")
+            st.divider()
+
+            SPSE_KONTRAK_NT_radio_1, SPSE_KONTRAK_NT_radio_2 = st.columns((2,8))
+            with SPSE_KONTRAK_NT_radio_1:
+                status_kontrak_nt_kontrak = st.radio("**Status Kontrak**", df_SPSENonTenderKontrak['status_kontrak'].unique(), key='NonTender_Kontrak')
+            with SPSE_KONTRAK_NT_radio_2:
+                opd_nt_kontrak = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderKontrak['nama_satker'].unique(), key='NonTender_Kontrak_OPD')
+            st.write(f"Anda memilih : **{status_kontrak_nt_kontrak}** dari **{opd_nt_kontrak}**")
+                
+            ##### Hitung-hitungan dataset SPSE - Non Tender - KONTRAK
+            df_SPSENonTenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
+            jumlah_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['kd_nontender'].unique().shape[0]
+            nilai_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['nilai_kontrak'].sum()
             
-        ##### Hitung-hitungan dataset SPSE - Non Tender - KONTRAK
-        df_SPSENonTenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
-        jumlah_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['kd_nontender'].unique().shape[0]
-        nilai_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['nilai_kontrak'].sum()
-        
-        data_kontrak_nt_1, data_kontrak_nt_2 = st.columns(2)
-        data_kontrak_nt_1.metric(label="Jumlah Non Tender KONTRAK", value="{:,}".format(jumlah_trx_spse_nt_kontrak))
-        data_kontrak_nt_2.metric(label="Nilai Non Tender KONTRAK", value="{:,.2f}".format(nilai_trx_spse_nt_kontrak))
-        style_metric_cards()
-        
-        st.divider()
-        
-        sql_kontrak_nt_trx = """
-            SELECT nama_paket AS NAMA_PAKET, no_kontrak AS NO_KONTRAK, tgl_kontrak AS TGL_KONTRAK, 
-            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
-            nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderKontrak_filter
-        """
-        tabel_kontrak_nt_tampil = con.execute(sql_kontrak_nt_trx).df()
+            data_kontrak_nt_1, data_kontrak_nt_2 = st.columns(2)
+            data_kontrak_nt_1.metric(label="Jumlah Non Tender KONTRAK", value="{:,}".format(jumlah_trx_spse_nt_kontrak))
+            data_kontrak_nt_2.metric(label="Nilai Non Tender KONTRAK", value="{:,.2f}".format(nilai_trx_spse_nt_kontrak))
+            style_metric_cards()
             
-        ##### Tampilkan data SPSE - Non Tender - KONTRAK menggunakan AgGrid
-        gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_tampil)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("NILAI_PDN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PDN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("NILAI_UMK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UMK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            st.divider()
+            
+            sql_kontrak_nt_trx = """
+                SELECT nama_paket AS NAMA_PAKET, no_kontrak AS NO_KONTRAK, tgl_kontrak AS TGL_KONTRAK, 
+                nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
+                nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderKontrak_filter
+            """
+            tabel_kontrak_nt_tampil = con.execute(sql_kontrak_nt_trx).df()
+                
+            ##### Tampilkan data SPSE - Non Tender - KONTRAK menggunakan AgGrid
+            gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_tampil)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("NILAI_PDN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PDN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("NILAI_UMK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UMK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-        gridOptions = gd.build()
-        AgGrid(tabel_kontrak_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+            gridOptions = gd.build()
+            AgGrid(tabel_kontrak_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+
+        except Exception:
+            st.error("Gagal baca dataset SPSENonTenderKontrak")
 
     #### Tab menu SPSE - Non Tender - SPMK
     with menu_spse_2_4:
 
-        ##### Buat tombol unduh dataset SPSE - Non Tender - SPMK
-        df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
-        df_SPSENonTenderSPMK_OK = df_SPSENonTenderSPMK.merge(df_SPSENonTenderKontrak_filter_kolom, how='left', on='kd_nontender')
+        try:
+            ##### Tarik dataset SPSENonTenderKontrak dan SPSENonTenderSPMK
+            df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
+            df_SPSENonTenderSPMK = tarik_data(DatasetSPSENonTenderSPMK)
 
-        unduh_SPSE_NonTender_SPMK = unduh_data(df_SPSENonTenderSPMK_OK)
+            ##### Buat tombol unduh dataset SPSE - Non Tender - SPMK
+            df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
+            df_SPSENonTenderSPMK_OK = df_SPSENonTenderSPMK.merge(df_SPSENonTenderKontrak_filter_kolom, how='left', on='kd_nontender')
 
-        SPSE_SPMK_NT_1, SPSE_SPMK_NT_2 = st.columns((7,3))
-        with SPSE_SPMK_NT_1:
-            st.subheader("SPSE - Non Tender - SPMK")
-        with SPSE_SPMK_NT_2:
-            st.download_button(
-                label = "📥 Download Data Non Tender SPMK",
-                data = unduh_SPSE_NonTender_SPMK,
-                file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
-            )
+            unduh_SPSE_NonTender_SPMK = unduh_data(df_SPSENonTenderSPMK_OK)
 
-        st.divider()
+            SPSE_SPMK_NT_1, SPSE_SPMK_NT_2 = st.columns((7,3))
+            with SPSE_SPMK_NT_1:
+                st.subheader("SPSE - Non Tender - SPMK")
+            with SPSE_SPMK_NT_2:
+                st.download_button(
+                    label = "📥 Download Data Non Tender SPMK",
+                    data = unduh_SPSE_NonTender_SPMK,
+                    file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
 
-        jumlah_trx_spse_nt_spmk_total = df_SPSENonTenderSPMK_OK['kd_nontender'].unique().shape[0]
-        nilai_trx_spse_nt_spmk_total = df_SPSENonTenderSPMK_OK['nilai_kontrak'].sum()
+            st.divider()
 
-        data_spmk_nt_total_1, data_spmk_nt_total_2 = st.columns(2)
-        data_spmk_nt_total_1.metric(label="Jumlah Total Non Tender SPMK", value="{:,}".format(jumlah_trx_spse_nt_spmk_total))
-        data_spmk_nt_total_2.metric(label="Nilai Total Non Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_nt_spmk_total))
-        style_metric_cards()
+            jumlah_trx_spse_nt_spmk_total = df_SPSENonTenderSPMK_OK['kd_nontender'].unique().shape[0]
+            nilai_trx_spse_nt_spmk_total = df_SPSENonTenderSPMK_OK['nilai_kontrak'].sum()
 
-        st.divider()
+            data_spmk_nt_total_1, data_spmk_nt_total_2 = st.columns(2)
+            data_spmk_nt_total_1.metric(label="Jumlah Total Non Tender SPMK", value="{:,}".format(jumlah_trx_spse_nt_spmk_total))
+            data_spmk_nt_total_2.metric(label="Nilai Total Non Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_nt_spmk_total))
+            style_metric_cards()
 
-        SPSE_SPMK_NT_radio_1, SPSE_SPMK_NT_radio_2 = st.columns((2,8))
-        with SPSE_SPMK_NT_radio_1:
-            status_kontrak_nt_spmk = st.radio("**Status Kontrak**", df_SPSENonTenderSPMK_OK['status_kontrak'].unique(), key='NonTender_Status_SPMK')
-        with SPSE_SPMK_NT_radio_2:
-            opd_nt_spmk = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPMK_OK['nama_satker'].unique(), key='NonTender_OPD_SPMK')
-        st.write(f"Anda memilih : **{status_kontrak_nt_spmk}** dari **{opd_nt_spmk}**")
+            st.divider()
 
-        ##### Hitung-hitungan dataset SPSE - Non Tender - SPMK
-        df_SPSENonTenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPMK_OK WHERE nama_satker = '{opd_nt_spmk}' AND status_kontrak = '{status_kontrak_nt_spmk}'").df()
-        jumlah_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['kd_nontender'].unique().shape[0]
-        nilai_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['nilai_kontrak'].sum()
+            SPSE_SPMK_NT_radio_1, SPSE_SPMK_NT_radio_2 = st.columns((2,8))
+            with SPSE_SPMK_NT_radio_1:
+                status_kontrak_nt_spmk = st.radio("**Status Kontrak**", df_SPSENonTenderSPMK_OK['status_kontrak'].unique(), key='NonTender_Status_SPMK')
+            with SPSE_SPMK_NT_radio_2:
+                opd_nt_spmk = st.selectbox("Pilih Perangkat Daerah :", df_SPSENonTenderSPMK_OK['nama_satker'].unique(), key='NonTender_OPD_SPMK')
+            st.write(f"Anda memilih : **{status_kontrak_nt_spmk}** dari **{opd_nt_spmk}**")
 
-        data_spmk_nt_1, data_spmk_nt_2 = st.columns(2)
-        data_spmk_nt_1.metric(label="Jumlah Non Tender SPMK", value="{:,}".format(jumlah_trx_spse_nt_spmk))
-        data_spmk_nt_2.metric(label="Nilai Non Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_nt_spmk))
-        style_metric_cards()
+            ##### Hitung-hitungan dataset SPSE - Non Tender - SPMK
+            df_SPSENonTenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPMK_OK WHERE nama_satker = '{opd_nt_spmk}' AND status_kontrak = '{status_kontrak_nt_spmk}'").df()
+            jumlah_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['kd_nontender'].unique().shape[0]
+            nilai_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['nilai_kontrak'].sum()
 
-        st.divider()
+            data_spmk_nt_1, data_spmk_nt_2 = st.columns(2)
+            data_spmk_nt_1.metric(label="Jumlah Non Tender SPMK", value="{:,}".format(jumlah_trx_spse_nt_spmk))
+            data_spmk_nt_2.metric(label="Nilai Non Tender SPMK", value="{:,.2f}".format(nilai_trx_spse_nt_spmk))
+            style_metric_cards()
 
-        sql_spmk_nt_trx = """
-            SELECT nama_paket AS NAMA_PAKET, no_spmk_spp AS NO_SPMK, tgl_spmk_spp AS TGL_SPMK, 
-            nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
-            nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderSPMK_filter
-        """
-        tabel_spmk_nt_tampil = con.execute(sql_spmk_nt_trx).df()
-            
-        ##### Tampilkan data SPSE - Non Tender - SPMK menggunakan AgGrid
-        gd = GridOptionsBuilder.from_dataframe(tabel_spmk_nt_tampil)
-        gd.configure_pagination()
-        gd.configure_side_bar()
-        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("NILAI_PDN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PDN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-        gd.configure_column("NILAI_UMK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UMK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            st.divider()
 
-        gridOptions = gd.build()
-        AgGrid(tabel_spmk_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+            sql_spmk_nt_trx = """
+                SELECT nama_paket AS NAMA_PAKET, no_spmk_spp AS NO_SPMK, tgl_spmk_spp AS TGL_SPMK, 
+                nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
+                nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderSPMK_filter
+            """
+            tabel_spmk_nt_tampil = con.execute(sql_spmk_nt_trx).df()
+                
+            ##### Tampilkan data SPSE - Non Tender - SPMK menggunakan AgGrid
+            gd = GridOptionsBuilder.from_dataframe(tabel_spmk_nt_tampil)
+            gd.configure_pagination()
+            gd.configure_side_bar()
+            gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd.configure_column("NILAI_KONTRAK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_KONTRAK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("NILAI_PDN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PDN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+            gd.configure_column("NILAI_UMK", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_UMK.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+            gridOptions = gd.build()
+            AgGrid(tabel_spmk_nt_tampil, gridOptions=gridOptions, enable_enterprise_modules=True) 
+
+        except Exception:
+            st.error("Gagal baca dataset SPSENonTenderSPMK")
 
     #### Tab menu SPSE - Non Tender - BABBAST
     with menu_spse_2_5:
