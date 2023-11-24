@@ -1558,7 +1558,6 @@ with menu_spse_3:
                     figcntmph = px.pie(tabel_cnt_mp_jumlah, values="JUMLAH_PAKET", names="METODE_PEMILIHAN", title="Grafik Pencatatan Non Tender - Jumlah Paket - Metode Pemilihan", hole=.3)
                     st.plotly_chart(figcntmph, theme="streamlit", use_container_width=True)
 
-
             with grafik_cnt_4:
 
                 st.subheader("Berdasarkan Nilai Metode Pemilihan")
