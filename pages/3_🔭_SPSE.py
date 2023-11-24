@@ -159,25 +159,19 @@ try:
 except Exception:
     st.error("Gagal baca dataset Catat Swakelola Realisasi")
 
-### Baca file parquet dataset Peserta Tender
-try:
-    df_PesertaTender = tarik_data(DatasetPesertaTender)
-except Exception:
-    st.error("Gagal baca dataset Peserta Tender")
-
 ### Baca file parquet dataset RUP Master Satker
-try:
-    df_RUPMasterSatker = tarik_data(DatasetRUPMasterSatker)
-except Exception:
-    st.error("Gagal baca dataset RUP Master Satker")
+#try:
+#    df_RUPMasterSatker = tarik_data(DatasetRUPMasterSatker)
+#except Exception:
+#    st.error("Gagal baca dataset RUP Master Satker")
 
 ### Baca file parquet dataset RUP Paket Penyedia Terumumkan
-try:
-    df_RUPPP = tarik_data(DatasetRUPPP)
-    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-    df_RUPPP_umumkan_filter = df_RUPPP_umumkan[["kd_rup", "status_pdn", "status_ukm"]]
-except Exception:
-    st.error("Gagal baca dataset RUP Paket Penyedia Terumumkan")
+#try:
+#    df_RUPPP = tarik_data(DatasetRUPPP)
+#    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+#    df_RUPPP_umumkan_filter = df_RUPPP_umumkan[["kd_rup", "status_pdn", "status_ukm"]]
+#except Exception:
+#    st.error("Gagal baca dataset RUP Paket Penyedia Terumumkan")
 
 #####
 # Mulai membuat presentasi data SPSE
@@ -1716,78 +1710,85 @@ with menu_spse_3:
 ## Tab menu SPSE - Peserta Tender
 with menu_spse_4:
 
-    df_RUPMasterSatker_filter_pt = df_RUPMasterSatker[["kd_satker_str", "nama_satker"]]
-    df_SPSETenderPengumuman_filter_pt = df_SPSETenderPengumuman[["kd_tender", "nama_paket", "pagu", "hps", "sumber_dana"]]
-    #df_SPSETenderKontrak_filter_pt_OK = con.execute(f"SELECT DISTINCT(kd_penyedia), wakil_sah_penyedia FROM df_SPSETenderKontrak").df()
+    try:
+        #### Tarik dataset RUPMasterSatker dan SPSETenderPengumuman dan SPSEPesertaTender
+        df_RUPMasterSatker = tarik_data(DatasetRUPMasterSatker)
+        df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
+        df_PesertaTender = tarik_data(DatasetPesertaTender)
 
-    df_PesertaTenderDetail_1 = df_PesertaTender.merge(df_RUPMasterSatker_filter_pt, how='left', on='kd_satker_str')
-    df_PesertaTenderDetail_2 = df_PesertaTenderDetail_1.merge(df_SPSETenderPengumuman_filter_pt, how='left', on='kd_tender')
-    #df_PesertaTenderDetail_3 = df_PesertaTenderDetail_2.merge(df_SPSETenderKontrak_filter_pt_OK, how='left', on='kd_penyedia')
+        #### Buat tombol unduh dataset Peserta Tender
+        df_RUPMasterSatker_filter_pt = df_RUPMasterSatker[["kd_satker_str", "nama_satker"]]
+        df_SPSETenderPengumuman_filter_pt = df_SPSETenderPengumuman[["kd_tender", "nama_paket", "pagu", "hps", "sumber_dana"]]
 
-    #### Buat tombol unduh dataset Peserta Tender
-    unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
+        df_PesertaTenderDetail_1 = df_PesertaTender.merge(df_RUPMasterSatker_filter_pt, how='left', on='kd_satker_str')
+        df_PesertaTenderDetail_2 = df_PesertaTenderDetail_1.merge(df_SPSETenderPengumuman_filter_pt, how='left', on='kd_tender')
 
-    SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,3))
-    with SPSE_PT_D_1:
-        st.header(f"SPSE - Peserta Tender - {pilih}")
-    with SPSE_PT_D_2:
-        st.download_button(
-            label = "📥 Download Data Peserta Tender",
-            data = unduh_Peserta_Tender,
-            file_name = f"SPSEPesertaTenderDetail-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv"
-        )
+        unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
 
-    st.divider()
+        SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,3))
+        with SPSE_PT_D_1:
+            st.header(f"SPSE - Peserta Tender - {pilih}")
+        with SPSE_PT_D_2:
+            st.download_button(
+                label = "📥 Download Data Peserta Tender",
+                data = unduh_Peserta_Tender,
+                file_name = f"SPSEPesertaTenderDetail-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
 
-    sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
-    st.write(f"Anda memilih : **{sumber_dana_pt}**")
+        st.divider()
 
-    #### Hitung-hitungan dataset Peserta Tender
-    df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
-    jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
-    jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
-    jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 1")
+        sumber_dana_pt = st.radio("**Sumber Dana :**", df_PesertaTenderDetail_2['sumber_dana'].unique(), key="PesertaTender")
+        st.write(f"Anda memilih : **{sumber_dana_pt}**")
 
-    data_pt_1, data_pt_2, data_pt_3, data_pt_4 = st.columns(4)
-    data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar.shape[0]))
-    data_pt_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_nawar.shape[0]))
-    data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang.shape[0]))
-    data_pt_4.metric(label="Nilai Total Terkoreksi (Pemenang)", value="{:,.2f}".format(jumlah_PesertaTender_menang['nilai_terkoreksi'].sum()))
-    style_metric_cards()
+        #### Hitung-hitungan dataset Peserta Tender
+        df_PesertaTenderDetail_filter = df_PesertaTenderDetail_2.query(f"sumber_dana == '{sumber_dana_pt}'")
+        jumlah_PesertaTender_daftar = df_PesertaTenderDetail_filter.query("nilai_penawaran == 0 and nilai_terkoreksi == 0")
+        jumlah_PesertaTender_nawar = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0")
+        jumlah_PesertaTender_menang = df_PesertaTenderDetail_filter.query("nilai_penawaran > 0 and nilai_terkoreksi > 0 and pemenang == 1")
 
-    st.divider()
+        data_pt_1, data_pt_2, data_pt_3, data_pt_4 = st.columns(4)
+        data_pt_1.metric(label="Jumlah Peserta Yang Mendaftar", value="{:,}".format(jumlah_PesertaTender_daftar.shape[0]))
+        data_pt_2.metric(label="Jumlah Peserta Yang Menawar", value="{:,}".format(jumlah_PesertaTender_nawar.shape[0]))
+        data_pt_3.metric(label="Jumlah Peserta Yang Menang", value="{:,}".format(jumlah_PesertaTender_menang.shape[0]))
+        data_pt_4.metric(label="Nilai Total Terkoreksi (Pemenang)", value="{:,.2f}".format(jumlah_PesertaTender_menang['nilai_terkoreksi'].sum()))
+        style_metric_cards()
 
-    SPSE_PT_radio_1, SPSE_PT_radio_2 = st.columns((2,8))
-    with SPSE_PT_radio_1:
-        status_pemenang_pt = st.radio("**Tabel Data Peserta :**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
-    with SPSE_PT_radio_2:
-        status_opd_pt = st.selectbox("**Pilih Satker :**", df_PesertaTenderDetail_filter['nama_satker'].unique())
+        st.divider()
 
-    st.divider()
+        SPSE_PT_radio_1, SPSE_PT_radio_2 = st.columns((2,8))
+        with SPSE_PT_radio_1:
+            status_pemenang_pt = st.radio("**Tabel Data Peserta :**", ["PEMENANG", "MENDAFTAR", "MENAWAR"])
+        with SPSE_PT_radio_2:
+            status_opd_pt = st.selectbox("**Pilih Satker :**", df_PesertaTenderDetail_filter['nama_satker'].unique())
 
-    if status_pemenang_pt == "PEMENANG":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND pemenang = 1").df()
-    elif status_pemenang_pt == "MENDAFTAR":
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN = 0 AND NILAI_TERKOREKSI = 0").df()
-    else:
-        jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0").df()
+        st.divider()
 
-    data_pt_pd_1, data_pt_pd_2, data_pt_pd_3, data_pt_pd_4 = st.columns(4)
-    data_pt_pd_1.subheader("")
-    data_pt_pd_2.metric(label=f"Jumlah Peserta Tender ({status_pemenang_pt})", value="{:,}".format(jumlah_PeserteTender.shape[0]))
-    data_pt_pd_3.metric(label=f"Nilai Total Terkoreksi ({status_pemenang_pt})", value="{:,.2f}".format(jumlah_PeserteTender['NILAI_TERKOREKSI'].sum()))
-    data_pt_pd_4.subheader("")
-    style_metric_cards()
+        if status_pemenang_pt == "PEMENANG":
+            jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND pemenang = 1").df()
+        elif status_pemenang_pt == "MENDAFTAR":
+            jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN = 0 AND NILAI_TERKOREKSI = 0").df()
+        else:
+            jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0").df()
 
-    gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
-    gd.configure_pagination()
-    gd.configure_side_bar()
-    gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("HPS", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HPS.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("NILAI_PENAWARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PENAWARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd.configure_column("NILAI_TERKOREKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TERKOREKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    
-    gridOptions = gd.build()
-    AgGrid(jumlah_PeserteTender, gridOptions=gridOptions, enable_enterprise_modules=True)
+        data_pt_pd_1, data_pt_pd_2, data_pt_pd_3, data_pt_pd_4 = st.columns(4)
+        data_pt_pd_1.subheader("")
+        data_pt_pd_2.metric(label=f"Jumlah Peserta Tender ({status_pemenang_pt})", value="{:,}".format(jumlah_PeserteTender.shape[0]))
+        data_pt_pd_3.metric(label=f"Nilai Total Terkoreksi ({status_pemenang_pt})", value="{:,.2f}".format(jumlah_PeserteTender['NILAI_TERKOREKSI'].sum()))
+        data_pt_pd_4.subheader("")
+        style_metric_cards()
+
+        gd = GridOptionsBuilder.from_dataframe(jumlah_PeserteTender)
+        gd.configure_pagination()
+        gd.configure_side_bar()
+        gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gd.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("HPS", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.HPS.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_PENAWARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PENAWARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        gd.configure_column("NILAI_TERKOREKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TERKOREKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+        
+        gridOptions = gd.build()
+        AgGrid(jumlah_PeserteTender, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+    except Exception:
+        st.error("Gagal baca dataset Peserta Tender")
