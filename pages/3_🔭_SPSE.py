@@ -84,7 +84,7 @@ DatasetSPSETenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/
 DatasetSPSETenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakBAPBAST{tahun}.parquet"
 
 ### Dataset SPSE Non Tender
-DatasetSPSENonTenderPengumuman = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderPengumuman{tahun}.xlsx"
+DatasetSPSENonTenderPengumuman = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderPengumuman{tahun}.parquet"
 DatasetSPSENonTenderSelesai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderSelesai{tahun}.parquet"
 DatasetSPSENonTenderSPPBJ = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakSPPBJ{tahun}.parquet"
 DatasetSPSENonTenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakKontrak{tahun}.parquet"
@@ -854,7 +854,7 @@ with menu_spse_2:
 
         try:
             ##### Tarik dataset SPSENonTenderPengumuman
-            df_SPSENonTenderPengumuman = tarik_data_excel(DatasetSPSENonTenderPengumuman)
+            df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - Pengumuman
             unduh_SPSE_NT_Pengumuman = unduh_data(df_SPSENonTenderPengumuman)
@@ -874,9 +874,9 @@ with menu_spse_2:
 
             SPSE_NT_radio_1, SPSE_NT_radio_2, SPSE_NT_radio_3 = st.columns((1,1,8))
             with SPSE_NT_radio_1:
-                sumber_dana_nt = st.radio("**Sumber Dana**", df_SPSENonTenderPengumuman['sumber_dana'].unique())
+                sumber_dana_nt = st.radio("**Sumber Dana**", df_SPSENonTenderPengumuman['sumber_dana'].unique(), key="Sumber_Dana_NT_Pengumuman")
             with SPSE_NT_radio_2:
-                status_nontender = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman['status_nontender'].unique())
+                status_nontender = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman['status_nontender'].unique(), key="Status_NT_Pengumuman")
             st.write(f"Anda memilih : **{sumber_dana_nt}** dan **{status_nontender}**")
 
             ##### Hitung-hitungan dataset SPSE - Non Tender - Pengumuman
