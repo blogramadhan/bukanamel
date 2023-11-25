@@ -108,29 +108,20 @@ DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUP
 
 ## Buat dataframe SPSE
 ### Baca file parquet dataset SPSE Tender
-try:
-    df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender Selesai")
-try:
-    df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
-except Exception:
-    st.error("Gagal baca dataset SPSE Tender Selesai Nilai")
+#try:
+#    df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
+#except Exception:
+#    st.error("Gagal baca dataset SPSE Tender Selesai")
+#try:
+#    df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
+#except Exception:
+#    st.error("Gagal baca dataset SPSE Tender Selesai Nilai")
 
 ### Baca file parquet dataset SPSE Non Tender
-try:
-    df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
-except Exception:
-    st.error("Gagal baca dataset SPSE Non Tender Selesai")
-
-
-### Baca file parquet dataset RUP Paket Penyedia Terumumkan
 #try:
-#    df_RUPPP = tarik_data(DatasetRUPPP)
-#    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-#    df_RUPPP_umumkan_filter = df_RUPPP_umumkan[["kd_rup", "status_pdn", "status_ukm"]]
+#    df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
 #except Exception:
-#    st.error("Gagal baca dataset RUP Paket Penyedia Terumumkan")
+#    st.error("Gagal baca dataset SPSE Non Tender Selesai")
 
 #####
 # Mulai membuat presentasi data SPSE
@@ -142,7 +133,7 @@ menu_spse_1, menu_spse_2, menu_spse_3, menu_spse_4 = st.tabs(["| TENDER |", "| N
 ## Tab menu SPSE - Tender
 with menu_spse_1:
 
-    st.header(f"SPSE - Tender - {pilih}")
+    st.header(f"SPSE - TENDER - {pilih} - TAHUN {tahun}")
 
     ### Buat sub menu SPSE - Tender
     menu_spse_1_1, menu_spse_1_2, menu_spse_1_3, menu_spse_1_4, menu_spse_1_5 = st.tabs(["| PENGUMUMAN |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
@@ -556,7 +547,7 @@ with menu_spse_1:
 
             SPSE_SPPBJ_1, SPSE_SPPBJ_2 = st.columns((7,3))
             with SPSE_SPPBJ_1:
-                st.subheader("SPSE - Tender - SPPBJ")
+                st.subheader("SPSE - TENDER - SPPBJ")
             with SPSE_SPPBJ_2:
                 st.download_button(
                     label = "📥 Download Data Tender SPPBJ",
@@ -628,7 +619,7 @@ with menu_spse_1:
 
             SPSE_KONTRAK_1, SPSE_KONTRAK_2 = st.columns((7,3))
             with SPSE_KONTRAK_1:
-                st.subheader("SPSE - Tender - KONTRAK")
+                st.subheader("SPSE - TENDER - KONTRAK")
             with SPSE_KONTRAK_2:
                 st.download_button(
                     label = "📥 Download Data Tender Kontrak",
@@ -707,7 +698,7 @@ with menu_spse_1:
 
             SPSE_SPMK_1, SPSE_SPMK_2 = st.columns((7,3))
             with SPSE_SPMK_1:
-                st.subheader("SPSE-Tender-SPMK")
+                st.subheader("SPSE - TENDER - SPMK")
             with SPSE_SPMK_2:
                 st.download_button(
                     label = "📥 Download Data Tender SPMK",
@@ -778,7 +769,7 @@ with menu_spse_1:
 
             SPSE_BAST_1, SPSE_BAST_2 = st.columns((7,3))
             with SPSE_BAST_1:
-                st.subheader("SPSE-Tender-BAPBAST")
+                st.subheader("SPSE - TENDER - BAPBAST")
             with SPSE_BAST_2:
                 st.download_button(
                     label = "📥 Download Data Tender BAPBAST",
@@ -844,7 +835,7 @@ with menu_spse_1:
 ## Tab menu SPSE - Non Tender
 with menu_spse_2:
 
-    st.header(f"SPSE - Non Tender - {pilih}")
+    st.header(f"SPSE - NON TENDER - {pilih} - TAHUN {tahun}")
 
     ### Buat sub menu SPSE - Non Tender
     menu_spse_2_1, menu_spse_2_2, menu_spse_2_3, menu_spse_2_4, menu_spse_2_5 = st.tabs(["| PENGUMUMAN |", "| SPPBJ |", "| KONTRAK |", "| SPMK |", "| BAPBAST |"])
@@ -861,7 +852,7 @@ with menu_spse_2:
 
             SPSE_NT_Umumkan_1, SPSE_NT_Umumkan_2 = st.columns((7,3))
             with SPSE_NT_Umumkan_1:
-                st.subheader("SPSE - Non Tender - Pengumuman")
+                st.subheader("SPSE - NON TENDER - PENGUMUMAN")
             with SPSE_NT_Umumkan_2:
                 st.download_button(
                     label = "📥 Download Data Pengumuman Non Tender",
@@ -1138,7 +1129,7 @@ with menu_spse_2:
 
             SPSE_SPPBJ_NT_1, SPSE_SPPBJ_NT_2 = st.columns((7,3))
             with SPSE_SPPBJ_NT_1:
-                st.subheader("SPSE - Non Tender - SPPBJ")
+                st.subheader("SPSE - NON TENDER - SPPBJ")
             with SPSE_SPPBJ_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender SPPBJ",
@@ -1210,7 +1201,7 @@ with menu_spse_2:
 
             SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
             with SPSE_KONTRAK_NT_1:
-                st.subheader("SPSE - Non Tender - KONTRAK")
+                st.subheader("SPSE - NON TENDER - KONTRAK")
             with SPSE_KONTRAK_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender KONTRAK",
@@ -1288,7 +1279,7 @@ with menu_spse_2:
 
             SPSE_SPMK_NT_1, SPSE_SPMK_NT_2 = st.columns((7,3))
             with SPSE_SPMK_NT_1:
-                st.subheader("SPSE - Non Tender - SPMK")
+                st.subheader("SPSE - NON TENDER - SPMK")
             with SPSE_SPMK_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender SPMK",
@@ -1362,7 +1353,7 @@ with menu_spse_2:
 
             SPSE_BAST_NT_1, SPSE_BAST_NT_2 = st.columns((7,3))
             with SPSE_BAST_NT_1:
-                st.subheader("SPSE - Non Tender - BAPBAST")
+                st.subheader("SPSE - NON TENDER - BAPBAST")
             with SPSE_BAST_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender BAPBAST",
@@ -1426,7 +1417,7 @@ with menu_spse_2:
 ## Tab menu SPSE - Pencatatan
 with menu_spse_3:
 
-    st.header(f"SPSE - Pencatatan Transaksi PBJ - {pilih}")
+    st.header(f"SPSE - PENCATATAN TRANSAKSI PBJ - {pilih} - TAHUN {tahun}")
 
     ### Buat sub menu SPSE - Pencatatan Transaksi PBJ
     menu_spse_3_1, menu_spse_3_2 = st.tabs(["| Pencatatan Non Tender |", "| Pencatatan Swakelola |"])
@@ -1446,7 +1437,7 @@ with menu_spse_3:
 
             SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
             with SPSE_CATAT_NonTender_1:
-                st.subheader("Pencatatan Non Tender")
+                st.subheader(f"PENCATATAN NON TENDER TAHUN {tahun}")
             with SPSE_CATAT_NonTender_2:
                 st.download_button(
                     label = "📥 Download Data Pencatatan Non Tender",
@@ -1653,7 +1644,7 @@ with menu_spse_3:
 
             SPSE_CATAT_Swakelola_1, SPSE_CATAT_Swakelola_2 = st.columns((7,3))
             with SPSE_CATAT_Swakelola_1:
-                st.subheader("Pencatatan Swakelola")
+                st.subheader(f"PENCATATAN SWAKELOLA TAHUN {tahun}")
             with SPSE_CATAT_Swakelola_2:
                 st.download_button(
                     label = "📥 Download Data Pencatatan Swakelola",
@@ -1732,7 +1723,7 @@ with menu_spse_4:
 
         SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,3))
         with SPSE_PT_D_1:
-            st.header(f"SPSE - Peserta Tender - {pilih}")
+            st.header(f"SPSE - PESERTA TENDER - {pilih} - TAHUN {tahun}")
         with SPSE_PT_D_2:
             st.download_button(
                 label = "📥 Download Data Peserta Tender",
