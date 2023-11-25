@@ -173,10 +173,10 @@ with menu_spse_1:
             SPSE_radio_1, SPSE_radio_2, SPSE_radio_3 = st.columns((1,1,8))
             with SPSE_radio_1:
                 sumber_dana_unik = df_SPSETenderPengumuman['sumber_dana'].unique()
-                sumber_dana = st.radio("**Sumber Dana**", sumber_dana_unik)
+                sumber_dana = st.radio("**Sumber Dana**", sumber_dana_unik, key="Sumber_Dana_Tender_pengumuman")
             with SPSE_radio_2:
                 status_tender_unik = df_SPSETenderPengumuman['status_tender'].unique()
-                status_tender = st.radio("**Status Tender**", status_tender_unik)
+                status_tender = st.radio("**Status Tender**", status_tender_unik, key="Status_Tender_Pengumuman")
             st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - Pengumuman
