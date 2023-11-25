@@ -40,7 +40,7 @@ from fungsi import *
 logo()
 
 # Konfigurasi variabel lokasi UKPBJ
-daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG"]
+daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", "KAB. KATINGAN"]
 
 tahuns = ["2023", "2022"]
 
@@ -67,6 +67,8 @@ if pilih == "KAB. LANDAK":
     kodeFolder = "ldk"
 if pilih == "KOTA SINGKAWANG":
     kodeFolder = "skw"
+if pilih == "KAB. KATINGAN":
+    kodeFolder = "ktn"
 
 # Persiapan Dataset
 con = duckdb.connect(database=':memory:')

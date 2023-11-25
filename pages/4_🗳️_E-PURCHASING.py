@@ -76,6 +76,9 @@ if pilih == "KAB. LANDAK":
 if pilih == "KOTA SINGKAWANG":
     kodeFolder = "skw"
     kodeInstansi = "D200"
+if pilih == "KAB. KATINGAN":
+    kodeFolder = "ktn"
+    kodeInstansi = "D236"
 
 # Persiapan Dataset
 con = duckdb.connect(database=':memory:')
