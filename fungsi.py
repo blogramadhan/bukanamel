@@ -3,6 +3,7 @@ import duckdb
 import openpyxl
 import streamlit as st
 import pandas as pd
+import polars as pl
 import plotly.express as px
 # Import library currency
 from babel.numbers import format_currency
