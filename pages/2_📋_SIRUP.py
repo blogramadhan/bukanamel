@@ -148,56 +148,64 @@ with menu_rup_1:
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['metode_pengadaan'].is_not_null())
         .groupby('metode_pengadaan')
-        .agg(pl.col('metode_pengadaan').count().alias('JUMLAH_PAKET'))
+        .agg(pl.col('metode_pengadaan').alias('METODE_PENGADAAN'), 
+             pl.col('METODE_PENGADAAN').count().alias('JUMLAH_PAKET'))
     )
 
     df_RUPPP_mp_nilai = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['metode_pengadaan'].is_not_null())
         .groupby('metode_pengadaan')
-        .agg(pl.col('metode_pengadaan').alias('METODE_PENGADAAN'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+        .agg(pl.col('metode_pengadaan').alias('METODE_PENGADAAN'), 
+             pl.col('pagu').sum().alias('NILAI_PAKET'))
     )
 
     df_RUPPP_jp_hitung = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['jenis_pengadaan'].is_not_null())
         .groupby('jenis_pengadaan')
-        .agg(pl.col('jenis_pengadaan').alias('JENIS_PENGADAAN'), pl.col('jenis_pengadaan').count().alias('JUMLAH_PAKET'))
+        .agg(pl.col('jenis_pengadaan').alias('JENIS_PENGADAAN'), 
+             pl.col('JENIS_PENGADAAN').count().alias('JUMLAH_PAKET'))
     )
 
     df_RUPPP_jp_nilai = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['jenis_pengadaan'].is_not_null())
         .groupby('jenis_pengadaan')
-        .agg(pl.col('jenis_pengadaan').alias('JENIS_PENGADAAN'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+        .agg(pl.col('jenis_pengadaan').alias('JENIS_PENGADAAN'), 
+             pl.col('pagu').sum().alias('NILAI_PAKET'))
     )
 
     df_RUPPP_ukm_hitung = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['status_ukm'].is_not_null())
         .groupby('status_ukm')
-        .agg(pl.col('status_ukm').alias('STATUS_UKM'), pl.col('status_ukm').count().alias('JUMLAH_PAKET'))
+        .agg(pl.col('status_ukm').alias('STATUS_UKM'), 
+             pl.col('STATUS_UKM').count().alias('JUMLAH_PAKET'))
     )
 
     df_RUPPP_ukm_nilai = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['status_ukm'].is_not_null())
         .groupby('status_ukm')
-        .agg(pl.col('status_ukm').alias('STATUS_UKM'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+        .agg(pl.col('status_ukm').alias('STATUS_UKM'), 
+             pl.col('pagu').sum().alias('NILAI_PAKET'))
     )
 
     df_RUPPP_pdn_hitung = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['status_pdn'].is_not_null())
         .groupby('status_pdn')
-        .agg(pl.col('status_pdn').alias('STATUS_PDN'), pl.col('status_pdn').count().alias('JUMLAH_PAKET'))
+        .agg(pl.col('status_pdn').alias('STATUS_PDN'), 
+             pl.col('STATUS_PDN').count().alias('JUMLAH_PAKET'))
     )
 
     df_RUPPP_pdn_nilai = (
         df_RUPPP_umumkan
         .filter(df_RUPPP_umumkan['status_pdn'].is_not_null())
         .groupby('status_pdn')
-        .agg(pl.col('status_pdn').alias('STATUS_PDN'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+        .agg(pl.col('status_pdn').alias('STATUS_PDN'), 
+             pl.col('pagu').sum().alias('NILAI_PAKET'))
     )
 
     ### Buat tombol unduh dataset
