@@ -26,5 +26,9 @@ def tarik_data_excel(url):
 def tarik_data(url):
     return pd.read_parquet(url)
 
+@st.cache_data(ttl=(6*3600))
+def tarik_data_pl(url):
+    return pl.read_parquet(url)
+
 def logo():
     add_logo("https://storage.googleapis.com/bukanamel/img/instansi-logo.png")
