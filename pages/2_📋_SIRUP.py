@@ -209,26 +209,26 @@ with menu_rup_1:
     )
 
     ### Buat tombol unduh dataset
-    unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
-    unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
+    #unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
+    #unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:
         st.header(f"PROFIL RUP {pilih} TAHUN {tahun}")
-    with prd2:
-        st.download_button(
-            label = "📥 Download RUP Paket Penyedia",
-            data = unduh_RUPPP,
-            file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
-            mime = "text/csv"
-        )
-    with prd3:
-        st.download_button(
-            label = "📥 Download RUP Paket Swakelola",
-            data = unduh_RUPSW,
-            file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
-            mime = "text/csv"
-        )
+    #with prd2:
+    #    st.download_button(
+    #        label = "📥 Download RUP Paket Penyedia",
+    #        data = unduh_RUPPP,
+    #        file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
+    #        mime = "text/csv"
+    #    )
+    #with prd3:
+    #    st.download_button(
+    #        label = "📥 Download RUP Paket Swakelola",
+    #        data = unduh_RUPSW,
+    #        file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
+    #        mime = "text/csv"
+    #    )
 
     st.divider()
 
