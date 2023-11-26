@@ -209,8 +209,8 @@ with menu_rup_1:
     )
 
     ### Buat tombol unduh dataset
-    unduh_RUPPP = unduh_data(df_RUPPP_umumkan.to_pandas())
-    unduh_RUPSW = unduh_data(df_RUPPS_umumkan.to_pandas())
+    unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
+    unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:
