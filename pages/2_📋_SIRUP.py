@@ -82,13 +82,21 @@ DatasetRUPSA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUP
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
-    df_RUPPP = tarik_data(DatasetRUPPP)
+    df_RUPPP = tarik_data_pl(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-    df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
-    df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
-    df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
+    #df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+    #df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
+    #df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
+    #df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
+
+    #namaopd = df_RUPPP_umumkan['nama_satker'].unique()
+
+    ### Using Polars ###
+    df_RUPPP_umumkan = df_RUPPP.filter((pl.col('status_umumkan_rup') == 'Terumumkan') & (pl.col('status_aktif_rup') == 'true'))
+    df_RUPPP_belum_umumkan = df_RUPPP.filter((pl.col('status_umumkan_rup') == 'Terinisiasi'))
+    df_RUPPP_umumkan_ukm = df_RUPPP.filter((pl.col('status_ukm') == 'UKM'))
+    df_RUPPP_umumkan_pdn = df_RUPPP.filter((pl.col('status_pdn') == 'PDN'))
 
     namaopd = df_RUPPP_umumkan['nama_satker'].unique()
 
@@ -97,17 +105,20 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Paket Swakelola
-    df_RUPPS = tarik_data(DatasetRUPPS)
+    df_RUPPS = tarik_data_pl(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
-    df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    #df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+
+    ### Using Polars ###
+    df_RUPPS_umumkan = df_RUPPS.filter((pl.col('status_umumkan_rup') == 'Terumumkan'))
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
 
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
-    df_RUPSA = tarik_data(DatasetRUPSA)
+    df_RUPSA = tarik_data_pl(DatasetRUPSA)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
@@ -123,36 +134,93 @@ menu_rup_1, menu_rup_2, menu_rup_3, menu_rup_4, menu_rup_5, menu_rup_6 = st.tabs
 with menu_rup_1:
 
     ### Hitung-hitung dataset
-    df_RUPPP_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
-    df_RUPPP_mp_nilai = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
-    df_RUPPP_jp_hitung = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
-    df_RUPPP_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
-    df_RUPPP_ukm_hitung = con.execute("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
-    df_RUPPP_ukm_nilai = con.execute("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
-    df_RUPPP_pdn_hitung = con.execute("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
-    df_RUPPP_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df() 
+    #df_RUPPP_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
+    #df_RUPPP_mp_nilai = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
+    #df_RUPPP_jp_hitung = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
+    #df_RUPPP_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
+    #df_RUPPP_ukm_hitung = con.execute("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    #df_RUPPP_ukm_nilai = con.execute("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    #df_RUPPP_pdn_hitung = con.execute("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
+    #df_RUPPP_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df() 
+
+    ### Using Polars ###
+    df_RUPPP_mp_hitung = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['metode_pengadaan'].is_not_null())
+        .groupby('metode_pengadaan')
+        .agg(pl.col('metode_pengadaan').count().alias('JUMLAH_PAKET'))
+    )
+
+    df_RUPPP_mp_nilai = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['metode_pengadaan'].is_not_null())
+        .groupby('metode_pengadaan')
+        .agg(pl.col('metode_pengadaan').alias('METODE_PENGADAAN'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+    )
+
+    df_RUPPP_jp_hitung = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['jenis_pengadaan'].is_not_null())
+        .groupby('jenis_pengadaan')
+        .agg(pl.col('jenis_pengadaan').alias('JENIS_PENGADAAN'), pl.col('jenis_pengadaan').count().alias('JUMLAH_PAKET'))
+    )
+
+    df_RUPPP_jp_nilai = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['jenis_pengadaan'].is_not_null())
+        .groupby('jenis_pengadaan')
+        .agg(pl.col('jenis_pengadaan').alias('JENIS_PENGADAAN'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+    )
+
+    df_RUPPP_ukm_hitung = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['status_ukm'].is_not_null())
+        .groupby('status_ukm')
+        .agg(pl.col('status_ukm').alias('STATUS_UKM'), pl.col('status_ukm').count().alias('JUMLAH_PAKET'))
+    )
+
+    df_RUPPP_ukm_nilai = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['status_ukm'].is_not_null())
+        .groupby('status_ukm')
+        .agg(pl.col('status_ukm').alias('STATUS_UKM'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+    )
+
+    df_RUPPP_pdn_hitung = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['status_pdn'].is_not_null())
+        .groupby('status_pdn')
+        .agg(pl.col('status_pdn').alias('STATUS_PDN'), pl.col('status_pdn').count().alias('JUMLAH_PAKET'))
+    )
+
+    df_RUPPP_pdn_nilai = (
+        df_RUPPP_umumkan
+        .filter(df_RUPPP_umumkan['status_pdn'].is_not_null())
+        .groupby('status_pdn')
+        .agg(pl.col('status_pdn').alias('STATUS_PDN'), pl.col('pagu').sum().alias('NILAI_PAKET'))
+    )
 
     ### Buat tombol unduh dataset
-    unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
-    unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
+    #unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
+    #unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:
         st.header(f"PROFIL RUP {pilih} TAHUN {tahun}")
-    with prd2:
-        st.download_button(
-            label = "📥 Download RUP Paket Penyedia",
-            data = unduh_RUPPP,
-            file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
-            mime = "text/csv"
-        )
-    with prd3:
-        st.download_button(
-            label = "📥 Download RUP Paket Swakelola",
-            data = unduh_RUPSW,
-            file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
-            mime = "text/csv"
-        )
+    #with prd2:
+    #    st.download_button(
+    #        label = "📥 Download RUP Paket Penyedia",
+    #        data = unduh_RUPPP,
+    #        file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
+    #        mime = "text/csv"
+    #    )
+    #with prd3:
+    #    st.download_button(
+    #        label = "📥 Download RUP Paket Swakelola",
+    #        data = unduh_RUPSW,
+    #        file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
+    #        mime = "text/csv"
+    #    )
 
     st.divider()
 
