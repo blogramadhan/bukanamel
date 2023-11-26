@@ -1,7 +1,6 @@
 duckdb
 openpyxl
 pandas
-polars
 streamlit
 babel
 plotly.express

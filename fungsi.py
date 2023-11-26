@@ -3,7 +3,6 @@ import duckdb
 import openpyxl
 import streamlit as st
 import pandas as pd
-import polars as pl
 import plotly.express as px
 # Import library currency
 from babel.numbers import format_currency
@@ -19,17 +18,13 @@ from streamlit_extras.app_logo import add_logo
 def unduh_data(unduhdata):
     return unduhdata.to_csv(index=False).encode('utf-8')
 
-@st.cache_data(ttl=(4*3600))
+@st.cache_data(ttl=(6*3600))
 def tarik_data_excel(url):
     return pd.read_excel(url)
 
-@st.cache_data(ttl=(4*3600))
+@st.cache_data(ttl=(6*3600))
 def tarik_data(url):
     return pd.read_parquet(url)
-
-@st.cache_data(ttl=(6*3600))
-def tarik_data_pl(url):
-    return pl.read_parquet(url)
 
 def logo():
     add_logo("https://storage.googleapis.com/bukanamel/img/instansi-logo.png")
