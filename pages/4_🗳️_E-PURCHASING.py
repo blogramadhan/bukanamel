@@ -39,7 +39,8 @@ from fungsi import *
 logo()
 
 # Konfigurasi variabel lokasi UKPBJ
-daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", "KAB. KATINGAN"]
+daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", 
+             "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KATINGAN"]
 
 tahuns = ["2023", "2022"]
 
@@ -76,6 +77,12 @@ if pilih == "KAB. LANDAK":
 if pilih == "KOTA SINGKAWANG":
     kodeFolder = "skw"
     kodeInstansi = "D200"
+if pilih == "KAB. SINTANG":
+    kodeFolder = "stg"
+    kodeInstansi = "D211"
+if pilih == "KAB. MEMPAWAH":
+    kodeFolder = "mpw"
+    kodeInstansi = "D552"
 if pilih == "KAB. KATINGAN":
     kodeFolder = "ktn"
     kodeInstansi = "D236"
