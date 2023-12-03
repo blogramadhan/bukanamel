@@ -466,7 +466,7 @@ with menu_rup_2:
         with grafik_rup_ukm_pd_tab_1_2:
 
             figukmh = px.pie(df_RUPPP_PD_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
-            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True, key="UKMPDHitung")
 
     with grafik_rup_ukm_pd_tab_2:
 
@@ -486,7 +486,7 @@ with menu_rup_2:
         with grafik_rup_ukm_pd_tab_2_2:
 
             figukmn = px.pie(df_RUPPP_PD_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
-            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMPDNilai")
 
     ### Buat grafik RUP Status PDN Perangkat Daerah
     grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
@@ -502,7 +502,7 @@ with menu_rup_2:
         with grafik_rup_pdn_pd_tab_1_2:
 
             figpdnh = px.pie(df_RUPPP_PD_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
-            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True, key="PDNPDHitung")
 
     with grafik_rup_pdn_pd_tab_2:
 
@@ -522,7 +522,7 @@ with menu_rup_2:
         with grafik_rup_pdn_pd_tab_2_2:
 
             figpdnn = px.pie(df_RUPPP_PD_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
-            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True, key="PDNPDNilai")
 
     st.divider()
 
@@ -542,7 +542,7 @@ with menu_rup_2:
         with grafik_rup_mp_pd_tab_1_2:
 
             figmph = px.pie(df_RUPPP_PD_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figmph, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figmph, theme="streamlit", use_container_width=True, key="MPPDHitung")
 
     with grafik_rup_mp_pd_tab_2:
 
@@ -562,7 +562,7 @@ with menu_rup_2:
         with grafik_rup_mp_pd_tab_2_2:
 
             figmpn = px.pie(df_RUPPP_PD_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True, key="MPPDNilai")
 
     st.divider()
     
@@ -582,7 +582,7 @@ with menu_rup_2:
         with grafik_rup_jp_pd_tab_1_2:
 
             figjph = px.pie(df_RUPPP_PD_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figjph, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figjph, theme="streamlit", use_container_width=True, key="JPPDHitung")
 
     with grafik_rup_jp_pd_tab_2:
 
@@ -602,7 +602,7 @@ with menu_rup_2:
         with grafik_rup_jp_pd_tab_2_2:
 
             figjpn = px.pie(df_RUPPP_PD_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key="JPPDNilai")
     
 ## Tab menu STRUKTUR ANGGARAN
 with menu_rup_3:
