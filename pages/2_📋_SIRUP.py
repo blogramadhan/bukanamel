@@ -208,7 +208,7 @@ with menu_rup_1:
     st.subheader("STATUS UKM DAN PDN")
 
     ### Buat grafik RUP Status UKM
-    grafik_rup_ukm_tab_1, grafik_rup_ukm_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"])
+    grafik_rup_ukm_tab_1, grafik_rup_ukm_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"], key="TabUKM")
 
     with grafik_rup_ukm_tab_1:
 
@@ -244,7 +244,7 @@ with menu_rup_1:
             st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMNilai")
 
     ### Buat grafik RUP Status PDN
-    grafik_rup_pdn_tab_1, grafik_rup_pdn_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
+    grafik_rup_pdn_tab_1, grafik_rup_pdn_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"], key="TabPDN")
 
     with grafik_rup_pdn_tab_1:
 
@@ -284,7 +284,7 @@ with menu_rup_1:
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan Metode Pengadaan
-    grafik_rup_mp_tab_1, grafik_rup_mp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"])
+    grafik_rup_mp_tab_1, grafik_rup_mp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"], key="TabMP")
 
     with grafik_rup_mp_tab_1:
 
@@ -324,7 +324,7 @@ with menu_rup_1:
     st.subheader("BERDASARKAN JENIS PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan jenis Pengadaan
-    grafik_rup_jp_tab_1, grafik_rup_jp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"])
+    grafik_rup_jp_tab_1, grafik_rup_jp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"], key="TabJP")
 
     with grafik_rup_jp_tab_1:
 
@@ -453,7 +453,7 @@ with menu_rup_2:
     st.subheader("STATUS UKM DAN PDN")
 
     ### Buat grafik RUP Status UKM Perangkat Daerah
-    grafik_rup_ukm_pd_tab_1, grafik_rup_ukm_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"], key="TabUKM")
+    grafik_rup_ukm_pd_tab_1, grafik_rup_ukm_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"], key="TabUKMPD")
 
     with grafik_rup_ukm_pd_tab_1:
 
@@ -489,7 +489,7 @@ with menu_rup_2:
             st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMPDNilai")
 
     ### Buat grafik RUP Status PDN Perangkat Daerah
-    grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
+    grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"], key="TabPDNPD")
 
     with grafik_rup_pdn_pd_tab_1:
 
@@ -529,7 +529,7 @@ with menu_rup_2:
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan Metode Pengadaan Perangkat Daerah
-    grafik_rup_mp_pd_tab_1, grafik_rup_mp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"])
+    grafik_rup_mp_pd_tab_1, grafik_rup_mp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"], key="TabMPPD")
 
     with grafik_rup_mp_pd_tab_1:
 
@@ -569,7 +569,7 @@ with menu_rup_2:
     st.subheader("BERDASARKAN JENIS PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan jenis pengadaan Perangkat Daerah
-    grafik_rup_jp_pd_tab_1, grafik_rup_jp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"])
+    grafik_rup_jp_pd_tab_1, grafik_rup_jp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"], key="TABJPPD")
 
     with grafik_rup_jp_pd_tab_1:
 
