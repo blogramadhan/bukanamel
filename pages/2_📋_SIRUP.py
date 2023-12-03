@@ -453,7 +453,7 @@ with menu_rup_2:
     st.subheader("STATUS UKM DAN PDN")
 
     ### Buat grafik RUP Status UKM Perangkat Daerah
-    grafik_rup_ukm_pd_tab_1, grafik_rup_ukm_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"])
+    grafik_rup_ukm_pd_tab_1, grafik_rup_ukm_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"], key="TabUKM")
 
     with grafik_rup_ukm_pd_tab_1:
 
