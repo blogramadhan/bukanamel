@@ -208,7 +208,7 @@ with menu_rup_1:
     st.subheader("STATUS UKM DAN PDN")
 
     ### Buat grafik RUP Status UKM
-    grafik_rup_ukm_tab_1, grafik_rup_ukm_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"], key="TabUKM")
+    grafik_rup_ukm_tab_1, grafik_rup_ukm_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"])
 
     with grafik_rup_ukm_tab_1:
 
@@ -244,7 +244,7 @@ with menu_rup_1:
             st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMNilai")
 
     ### Buat grafik RUP Status PDN
-    grafik_rup_pdn_tab_1, grafik_rup_pdn_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"], key="TabPDN")
+    grafik_rup_pdn_tab_1, grafik_rup_pdn_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
 
     with grafik_rup_pdn_tab_1:
 
@@ -284,7 +284,7 @@ with menu_rup_1:
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan Metode Pengadaan
-    grafik_rup_mp_tab_1, grafik_rup_mp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"], key="TabMP")
+    grafik_rup_mp_tab_1, grafik_rup_mp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"])
 
     with grafik_rup_mp_tab_1:
 
@@ -324,7 +324,7 @@ with menu_rup_1:
     st.subheader("BERDASARKAN JENIS PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan jenis Pengadaan
-    grafik_rup_jp_tab_1, grafik_rup_jp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"], key="TabJP")
+    grafik_rup_jp_tab_1, grafik_rup_jp_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"])
 
     with grafik_rup_jp_tab_1:
 
@@ -453,7 +453,7 @@ with menu_rup_2:
     st.subheader("STATUS UKM DAN PDN")
 
     ### Buat grafik RUP Status UKM Perangkat Daerah
-    grafik_rup_ukm_pd_tab_1, grafik_rup_ukm_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"], key="TabUKMPD")
+    grafik_rup_ukm_pd_tab_1, grafik_rup_ukm_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - UKM |", "| Berdasarkan Nilai Paket - UKM |"])
 
     with grafik_rup_ukm_pd_tab_1:
 
@@ -489,7 +489,7 @@ with menu_rup_2:
             st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMPDNilai")
 
     ### Buat grafik RUP Status PDN Perangkat Daerah
-    grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"], key="TabPDNPD")
+    grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
 
     with grafik_rup_pdn_pd_tab_1:
 
@@ -529,7 +529,7 @@ with menu_rup_2:
     st.subheader("BERDASARKAN METODE PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan Metode Pengadaan Perangkat Daerah
-    grafik_rup_mp_pd_tab_1, grafik_rup_mp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"], key="TabMPPD")
+    grafik_rup_mp_pd_tab_1, grafik_rup_mp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - MP |", "| Berdasarkan Nilai Paket - MP |"])
 
     with grafik_rup_mp_pd_tab_1:
 
@@ -569,7 +569,7 @@ with menu_rup_2:
     st.subheader("BERDASARKAN JENIS PENGADAAN")
 
     ### Buat grafik RUP Berdasarkan jenis pengadaan Perangkat Daerah
-    grafik_rup_jp_pd_tab_1, grafik_rup_jp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"], key="TABJPPD")
+    grafik_rup_jp_pd_tab_1, grafik_rup_jp_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - JP |", "| Berdasarkan Nilai Paket - JP |"])
 
     with grafik_rup_jp_pd_tab_1:
 
@@ -602,7 +602,7 @@ with menu_rup_2:
         with grafik_rup_jp_pd_tab_2_2:
 
             figjpn = px.pie(df_RUPPP_PD_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key="JPPDNilai")
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key=)
     
 ## Tab menu STRUKTUR ANGGARAN
 with menu_rup_3:
