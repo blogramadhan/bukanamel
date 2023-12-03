@@ -481,7 +481,7 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="TabelUKMPDNilai")
 
         with grafik_rup_ukm_pd_tab_2_2:
 
