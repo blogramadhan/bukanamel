@@ -602,7 +602,7 @@ with menu_rup_2:
         with grafik_rup_jp_pd_tab_2_2:
 
             figjpn = px.pie(df_RUPPP_PD_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key=)
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key="JPPDNilai")
     
 ## Tab menu STRUKTUR ANGGARAN
 with menu_rup_3:
