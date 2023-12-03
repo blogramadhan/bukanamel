@@ -165,7 +165,7 @@ with menu_rup_1:
     belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
     belanja_operasional = df_RUPSA['belanja_operasi'].sum()
     belanja_modal = df_RUPSA['belanja_modal'].sum()
-    belanja_total = belanja_pengadaan + belanja_operasional + belanja_modal
+    belanja_total = belanja_operasional + belanja_modal
 
     colsa11, colsa12, colsa13, colsa14 = st.columns(4)
     colsa11.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
@@ -221,7 +221,7 @@ with menu_rup_1:
         with grafik_rup_ukm_tab_1_2:
 
             figukmh = px.pie(df_RUPPP_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
-            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True, key="UKMHitung")
 
     with grafik_rup_ukm_tab_2:
 
@@ -241,7 +241,7 @@ with menu_rup_1:
         with grafik_rup_ukm_tab_2_2:
 
             figukmn = px.pie(df_RUPPP_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
-            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMNilai")
 
     ### Buat grafik RUP Status PDN
     grafik_rup_pdn_tab_1, grafik_rup_pdn_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
@@ -257,7 +257,7 @@ with menu_rup_1:
         with grafik_rup_pdn_tab_1_2:
 
             figpdnh = px.pie(df_RUPPP_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
-            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True, key="PDNHitung")
 
     with grafik_rup_pdn_tab_2:
 
@@ -277,7 +277,7 @@ with menu_rup_1:
         with grafik_rup_pdn_tab_2_2:
 
             figpdnn = px.pie(df_RUPPP_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
-            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True, key="PDNNilai")
 
     st.divider()
 
@@ -297,7 +297,7 @@ with menu_rup_1:
         with grafik_rup_mp_tab_1_2:
 
             figmph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figmph, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figmph, theme="streamlit", use_container_width=True, key="MPHitung")
 
     with grafik_rup_mp_tab_2:
 
@@ -317,7 +317,7 @@ with menu_rup_1:
         with grafik_rup_mp_tab_2_2:
 
             figmpn = px.pie(df_RUPPP_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True, key="MPNilai")
 
     st.divider()
 
@@ -337,7 +337,7 @@ with menu_rup_1:
         with grafik_rup_jp_tab_1_2:
 
             figjph = px.pie(df_RUPPP_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figjph, theme="streamlit", use_container_width=True)
+            st.plotly_chart(figjph, theme="streamlit", use_container_width=True, key="JPHitung")
 
     with grafik_rup_jp_tab_2:
 
@@ -357,7 +357,7 @@ with menu_rup_1:
         with grafik_rup_jp_tab_2_2:
 
             figjpn = px.pie(df_RUPPP_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key="JPNilai")
 
 ## Tab menu PROFIL RUP PERANGKAT DAERAH
 with menu_rup_2:
