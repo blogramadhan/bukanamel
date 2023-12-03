@@ -497,7 +497,7 @@ with menu_rup_2:
 
         with grafik_rup_pdn_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_pdn_hitung)
+            AgGrid(df_RUPPP_PD_pdn_hitung, key="TabelPDNPDHitung")
 
         with grafik_rup_pdn_pd_tab_1_2:
 
@@ -517,7 +517,7 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="TabelPDNPDNilai")
 
         with grafik_rup_pdn_pd_tab_2_2:
 
