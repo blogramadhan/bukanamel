@@ -461,7 +461,7 @@ with menu_rup_2:
 
         with grafik_rup_ukm_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_ukm_hitung)
+            AgGrid(df_RUPPP_PD_ukm_hitung, key="TabelUKMPDHitung")
 
         with grafik_rup_ukm_pd_tab_1_2:
 
