@@ -412,7 +412,7 @@ with menu_rup_2:
     belanja_modal_pd = df_RUPSA_PD['belanja_modal'].sum()
     belanja_total_pd = belanja_operasional_pd + belanja_modal_pd
 
-    colsapd11, colsapd12, colsapd13 = st.columns(4)
+    colsapd11, colsapd12, colsapd13 = st.columns(3)
     #colsapd11.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan_pd))
     colsapd11.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional_pd))
     colsapd12.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal_pd))
