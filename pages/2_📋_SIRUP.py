@@ -168,7 +168,6 @@ with menu_rup_1:
     belanja_total = belanja_operasional + belanja_modal
 
     colsa11, colsa12, colsa13 = st.columns(3)
-    #colsa11.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan))
     colsa11.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional))
     colsa12.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal))
     colsa13.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_total))  
@@ -413,7 +412,6 @@ with menu_rup_2:
     belanja_total_pd = belanja_operasional_pd + belanja_modal_pd
 
     colsapd11, colsapd12, colsapd13 = st.columns(3)
-    #colsapd11.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_pengadaan_pd))
     colsapd11.metric(label="Belanja Operasional", value="{:,.2f}".format(belanja_operasional_pd))
     colsapd12.metric(label="Belanja Modal", value="{:,.2f}".format(belanja_modal_pd))
     colsapd13.metric(label="Belanja Pengadaan", value="{:,.2f}".format(belanja_total_pd))  
@@ -461,12 +459,12 @@ with menu_rup_2:
 
         with grafik_rup_ukm_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_ukm_hitung, key="TabelUKMPDHitung")
+            AgGrid(df_RUPPP_PD_ukm_hitung)
 
         with grafik_rup_ukm_pd_tab_1_2:
 
             figukmh = px.pie(df_RUPPP_PD_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
-            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True, key="UKMPDHitung")
+            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
 
     with grafik_rup_ukm_pd_tab_2:
 
@@ -481,12 +479,12 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="TabelUKMPDNilai")
+            AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_ukm_pd_tab_2_2:
 
             figukmn = px.pie(df_RUPPP_PD_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
-            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMPDNilai")
+            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
 
     ### Buat grafik RUP Status PDN Perangkat Daerah
     grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
@@ -497,12 +495,12 @@ with menu_rup_2:
 
         with grafik_rup_pdn_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_pdn_hitung, key="TabelPDNPDHitung")
+            AgGrid(df_RUPPP_PD_pdn_hitung)
 
         with grafik_rup_pdn_pd_tab_1_2:
 
             figpdnh = px.pie(df_RUPPP_PD_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
-            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True, key="PDNPDHitung")
+            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
     with grafik_rup_pdn_pd_tab_2:
 
@@ -517,12 +515,12 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="TabelPDNPDNilai")
+            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_pdn_pd_tab_2_2:
 
             figpdnn = px.pie(df_RUPPP_PD_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
-            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True, key="PDNPDNilai")
+            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
 
     st.divider()
 
