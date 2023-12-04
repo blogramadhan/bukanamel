@@ -215,7 +215,7 @@ with menu_rup_1:
 
         with grafik_rup_ukm_tab_1_1:
 
-            AgGrid(df_RUPPP_ukm_hitung, key="Table_UKM_Hitung")
+            AgGrid(df_RUPPP_ukm_hitung)
 
         with grafik_rup_ukm_tab_1_2:
 
@@ -235,7 +235,7 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_UKM_Nilai")
+            AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_ukm_tab_2_2:
 
@@ -251,7 +251,7 @@ with menu_rup_1:
 
         with grafik_rup_pdn_tab_1_1:
 
-            AgGrid(df_RUPPP_pdn_hitung, key="Tabel_PDN_Hitung")
+            AgGrid(df_RUPPP_pdn_hitung)
 
         with grafik_rup_pdn_tab_1_2:
 
@@ -271,7 +271,7 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_PDN_Nilai")
+            AgGrid(df_RUPPP_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_pdn_tab_2_2:
 
@@ -291,7 +291,7 @@ with menu_rup_1:
 
         with grafik_rup_mp_tab_1_1:
 
-            AgGrid(df_RUPPP_mp_hitung, key="Tabel_MP_Hitung")
+            AgGrid(df_RUPPP_mp_hitung)
 
         with grafik_rup_mp_tab_1_2:
 
@@ -311,7 +311,7 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_MP_Nilai")
+            AgGrid(df_RUPPP_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_mp_tab_2_2:
 
@@ -331,7 +331,7 @@ with menu_rup_1:
 
         with grafik_rup_jp_tab_1_1:
 
-            AgGrid(df_RUPPP_jp_hitung, key="Tabel_JP_Hitung")
+            AgGrid(df_RUPPP_jp_hitung)
 
         with grafik_rup_jp_tab_1_2:
 
@@ -351,7 +351,7 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_JP_Nilai")
+            AgGrid(df_RUPPP_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_jp_tab_2_2:
 
@@ -459,7 +459,7 @@ with menu_rup_2:
 
         with grafik_rup_ukm_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_ukm_hitung, key="Tabel_UKM_PD_Hitung")
+            AgGrid(df_RUPPP_PD_ukm_hitung)
 
         with grafik_rup_ukm_pd_tab_1_2:
 
@@ -479,7 +479,7 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_UKM_PD_Nilai")
+            AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_ukm_pd_tab_2_2:
 
@@ -495,7 +495,7 @@ with menu_rup_2:
 
         with grafik_rup_pdn_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_pdn_hitung, key="Tabel_PDN_PD_Hitung")
+            AgGrid(df_RUPPP_PD_pdn_hitung)
 
         with grafik_rup_pdn_pd_tab_1_2:
 
@@ -515,7 +515,7 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_PDN_PD_Nilai")
+            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_pdn_pd_tab_2_2:
 
@@ -535,7 +535,7 @@ with menu_rup_2:
 
         with grafik_rup_mp_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_mp_hitung, key="Tabel_MP_PD_Hitung")
+            AgGrid(df_RUPPP_PD_mp_hitung)
 
         with grafik_rup_mp_pd_tab_1_2:
 
@@ -555,7 +555,7 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_MP_PD_Nilai")
+            AgGrid(df_RUPPP_PD_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_mp_pd_tab_2_2:
 
@@ -575,7 +575,7 @@ with menu_rup_2:
 
         with grafik_rup_jp_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_jp_hitung, key="TabelJPPDHitung")
+            AgGrid(df_RUPPP_PD_jp_hitung)
 
         with grafik_rup_jp_pd_tab_1_2:
 
@@ -595,7 +595,7 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_JP_PD_Nilai")
+            AgGrid(df_RUPPP_PD_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
         with grafik_rup_jp_pd_tab_2_2:
 
