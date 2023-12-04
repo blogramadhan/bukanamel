@@ -215,12 +215,12 @@ with menu_rup_1:
 
         with grafik_rup_ukm_tab_1_1:
 
-            AgGrid(df_RUPPP_ukm_hitung)
+            AgGrid(df_RUPPP_ukm_hitung, key="Table_UKM_Hitung")
 
         with grafik_rup_ukm_tab_1_2:
 
             figukmh = px.pie(df_RUPPP_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
-            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True, key="UKMHitung")
+            st.plotly_chart(figukmh, theme="streamlit", use_container_width=True)
 
     with grafik_rup_ukm_tab_2:
 
@@ -235,12 +235,12 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_UKM_Nilai")
 
         with grafik_rup_ukm_tab_2_2:
 
             figukmn = px.pie(df_RUPPP_ukm_nilai, values='NILAI_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Nilai Paket', hole=.3)
-            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True, key="UKMNilai")
+            st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
 
     ### Buat grafik RUP Status PDN
     grafik_rup_pdn_tab_1, grafik_rup_pdn_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
@@ -251,12 +251,12 @@ with menu_rup_1:
 
         with grafik_rup_pdn_tab_1_1:
 
-            AgGrid(df_RUPPP_pdn_hitung)
+            AgGrid(df_RUPPP_pdn_hitung, key="Tabel_PDN_Hitung")
 
         with grafik_rup_pdn_tab_1_2:
 
             figpdnh = px.pie(df_RUPPP_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
-            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True, key="PDNHitung")
+            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
     with grafik_rup_pdn_tab_2:
 
@@ -271,12 +271,12 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_pdn_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_PDN_Nilai")
 
         with grafik_rup_pdn_tab_2_2:
 
             figpdnn = px.pie(df_RUPPP_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
-            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True, key="PDNNilai")
+            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
 
     st.divider()
 
@@ -291,12 +291,12 @@ with menu_rup_1:
 
         with grafik_rup_mp_tab_1_1:
 
-            AgGrid(df_RUPPP_mp_hitung)
+            AgGrid(df_RUPPP_mp_hitung, key="Tabel_MP_Hitung")
 
         with grafik_rup_mp_tab_1_2:
 
             figmph = px.pie(df_RUPPP_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figmph, theme="streamlit", use_container_width=True, key="MPHitung")
+            st.plotly_chart(figmph, theme="streamlit", use_container_width=True)
 
     with grafik_rup_mp_tab_2:
 
@@ -311,12 +311,12 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_MP_Nilai")
 
         with grafik_rup_mp_tab_2_2:
 
             figmpn = px.pie(df_RUPPP_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True, key="MPNilai")
+            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
 
     st.divider()
 
@@ -331,12 +331,12 @@ with menu_rup_1:
 
         with grafik_rup_jp_tab_1_1:
 
-            AgGrid(df_RUPPP_jp_hitung)
+            AgGrid(df_RUPPP_jp_hitung, key="Tabel_JP_Hitung")
 
         with grafik_rup_jp_tab_1_2:
 
             figjph = px.pie(df_RUPPP_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figjph, theme="streamlit", use_container_width=True, key="JPHitung")
+            st.plotly_chart(figjph, theme="streamlit", use_container_width=True)
 
     with grafik_rup_jp_tab_2:
 
@@ -351,12 +351,12 @@ with menu_rup_1:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_JP_Nilai")
 
         with grafik_rup_jp_tab_2_2:
 
             figjpn = px.pie(df_RUPPP_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key="JPNilai")
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
 
 ## Tab menu PROFIL RUP PERANGKAT DAERAH
 with menu_rup_2:
@@ -535,12 +535,12 @@ with menu_rup_2:
 
         with grafik_rup_mp_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_mp_hitung, key="TabelMPPDHitung")
+            AgGrid(df_RUPPP_PD_mp_hitung, key="Tabel_MP_PD_Hitung")
 
         with grafik_rup_mp_pd_tab_1_2:
 
             figmph = px.pie(df_RUPPP_PD_mp_hitung, values='JUMLAH_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figmph, theme="streamlit", use_container_width=True, key="MPPDHitung")
+            st.plotly_chart(figmph, theme="streamlit", use_container_width=True)
 
     with grafik_rup_mp_pd_tab_2:
 
@@ -555,12 +555,12 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="TabelMPPDNilai")
+            AgGrid(df_RUPPP_PD_mp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_MP_PD_Nilai")
 
         with grafik_rup_mp_pd_tab_2_2:
 
             figmpn = px.pie(df_RUPPP_PD_mp_nilai, values='NILAI_PAKET', names='METODE_PENGADAAN', title='Grafik Metode Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True, key="MPPDNilai")
+            st.plotly_chart(figmpn, theme='streamlit', use_container_width=True)
 
     st.divider()
     
@@ -580,7 +580,7 @@ with menu_rup_2:
         with grafik_rup_jp_pd_tab_1_2:
 
             figjph = px.pie(df_RUPPP_PD_jp_hitung, values='JUMLAH_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Jumlah Paket', hole=.3)
-            st.plotly_chart(figjph, theme="streamlit", use_container_width=True, key="JPPDHitung")
+            st.plotly_chart(figjph, theme="streamlit", use_container_width=True)
 
     with grafik_rup_jp_pd_tab_2:
 
@@ -595,12 +595,12 @@ with menu_rup_2:
             gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
             gridOptions = gd.build()
-            AgGrid(df_RUPPP_PD_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="TabelJPPDNilai")
+            AgGrid(df_RUPPP_PD_jp_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="Tabel_JP_PD_Nilai")
 
         with grafik_rup_jp_pd_tab_2_2:
 
             figjpn = px.pie(df_RUPPP_PD_jp_nilai, values='NILAI_PAKET', names='JENIS_PENGADAAN', title='Grafik Jenis Pengadaan - Nilai Paket', hole=.3)
-            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True, key="JPPDNilai")
+            st.plotly_chart(figjpn, theme='streamlit', use_container_width=True)
     
 ## Tab menu STRUKTUR ANGGARAN
 with menu_rup_3:
