@@ -129,6 +129,7 @@ with menu_rup_1:
         ### Tarik dataset SIRUP Paket Penyedia
         df_RUPPP = tarik_data(DatasetRUPPP)
         df_RUPPS = tarik_data(DatasetRUPPS)
+        df_RUPSA = tarik_data(DatasetRUPSA)
 
         ### Query RUP Paket Penyedia
         df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
@@ -383,6 +384,7 @@ with menu_rup_2:
         ### Tarik dataset SIRUP Paket Penyedia
         df_RUPPP = tarik_data(DatasetRUPPP)
         df_RUPPS = tarik_data(DatasetRUPPS)
+        df_RUPSA = tarik_data(DatasetRUPSA)
 
         ### Query RUP Paket Penyedia
         df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
