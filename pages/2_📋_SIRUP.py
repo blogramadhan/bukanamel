@@ -42,7 +42,7 @@ logo()
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KATINGAN"]
 
-tahuns = ["2024", "2023"]
+tahuns = ["2023", "2022"]
 
 pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
@@ -495,7 +495,7 @@ with menu_rup_2:
 
             with grafik_rup_ukm_pd_tab_1_1:
 
-                AgGrid(df_RUPPP_PD_ukm_hitung, key="df_RUPPP_PD_ukm_hitung")
+                AgGrid(df_RUPPP_PD_ukm_hitung)
 
             with grafik_rup_ukm_pd_tab_1_2:
 
@@ -515,7 +515,7 @@ with menu_rup_2:
                 gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
                 gridOptions = gd.build()
-                AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="df_RUPPP_PD_ukm_nilai")
+                AgGrid(df_RUPPP_PD_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
 
             with grafik_rup_ukm_pd_tab_2_2:
 
