@@ -231,7 +231,8 @@ with menu_rup_1:
 
             with grafik_rup_ukm_tab_1_1:
 
-                AgGrid(df_RUPPP_ukm_hitung)
+                #AgGrid(df_RUPPP_ukm_hitung)
+                st.dataframe(df_RUPPP_ukm_hitung)
 
             with grafik_rup_ukm_tab_1_2:
 
@@ -267,7 +268,8 @@ with menu_rup_1:
 
             with grafik_rup_pdn_tab_1_1:
 
-                AgGrid(df_RUPPP_pdn_hitung)
+                #AgGrid(df_RUPPP_pdn_hitung)
+                st.dataframe(df_RUPPP_pdn_hitung)
 
             with grafik_rup_pdn_tab_1_2:
 
@@ -307,7 +309,8 @@ with menu_rup_1:
 
             with grafik_rup_mp_tab_1_1:
 
-                AgGrid(df_RUPPP_mp_hitung)
+                #AgGrid(df_RUPPP_mp_hitung)
+                st.dataframe(df_RUPPP_mp_hitung)
 
             with grafik_rup_mp_tab_1_2:
 
@@ -347,7 +350,8 @@ with menu_rup_1:
 
             with grafik_rup_jp_tab_1_1:
 
-                AgGrid(df_RUPPP_jp_hitung)
+                #AgGrid(df_RUPPP_jp_hitung)
+                st.dataframe(df_RUPPP_jp_hitung)
 
             with grafik_rup_jp_tab_1_2:
 
