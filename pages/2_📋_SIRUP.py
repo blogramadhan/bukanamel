@@ -250,8 +250,7 @@ with menu_rup_1:
                 gd_ukm_nilai.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
                 gd_ukm_nilai.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
-                gridOptions = gd_ukm_nilai.build()
-                AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="RUP_ukm_nilai")
+                AgGrid(df_RUPPP_ukm_nilai, gridOptions=gd_ukm_nilai.build(), enable_enterprise_modules=True, key="RUP_ukm_nilai")
 
             with grafik_rup_ukm_tab_2_2:
 
