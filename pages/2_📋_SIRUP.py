@@ -231,9 +231,8 @@ with menu_rup_1:
 
             with grafik_rup_ukm_tab_1_1:
 
-                #AgGrid(df_RUPPP_ukm_hitung)
-                st.dataframe(df_RUPPP_ukm_hitung)
-
+                AgGrid(df_RUPPP_ukm_hitung, key="RUP_ukm_hitung")
+                
             with grafik_rup_ukm_tab_1_2:
 
                 figukmh = px.pie(df_RUPPP_ukm_hitung, values='JUMLAH_PAKET', names='STATUS_UKM', title='Grafik Status UKM - Jumlah Paket', hole=.3)
@@ -245,14 +244,14 @@ with menu_rup_1:
 
             with grafik_rup_ukm_tab_2_1:
 
-                gd = GridOptionsBuilder.from_dataframe(df_RUPPP_ukm_nilai)
-                gd.configure_pagination()
-                gd.configure_side_bar()
-                gd.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-                gd.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+                gd_ukm_nilai = GridOptionsBuilder.from_dataframe(df_RUPPP_ukm_nilai)
+                gd_ukm_nilai.configure_pagination()
+                gd_ukm_nilai.configure_side_bar()
+                gd_ukm_nilai.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                gd_ukm_nilai.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
-                gridOptions = gd.build()
-                AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True)
+                gridOptions = gd_ukm_nilai.build()
+                AgGrid(df_RUPPP_ukm_nilai, gridOptions=gridOptions, enable_enterprise_modules=True, key="RUP_ukm_nilai")
 
             with grafik_rup_ukm_tab_2_2:
 
