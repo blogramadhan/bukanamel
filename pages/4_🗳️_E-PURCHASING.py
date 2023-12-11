@@ -427,6 +427,8 @@ with menu_purchasing_1:
                 st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
 
             st.divider()
+
+
             
     except Exception:
     
