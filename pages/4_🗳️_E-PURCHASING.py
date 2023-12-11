@@ -115,20 +115,21 @@ with menu_purchasing_1:
 
     with menu_purchasing_1_1:
 
+        ### Tarik dataset df_ECAT, df_ECAT_KD, df_ECAT_IS dan df_ECATPD
+        df_ECAT = tarik_data(DatasetPURCHASINGECAT)
+        df_ECAT_KD = tarik_data(DatasetPURCHASINGECATKD)
+        df_ECAT_IS = tarik_data(DatasetPURCHASINGECATIS)
+        df_ECAT_PD = tarik_data_excel(DatasetPURCHASINGECATPD)
+
+        ## Gabung dataframe Katalog + Katalog Komoditas Detail + Katalog Instansi Satker + Katalog Penyedia Detail
+        df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
+        df_ECAT_1 = pd.merge(df_ECAT_0, df_ECAT_IS, left_on='satker_id', right_on='kd_satker', how='left')
+        df_ECAT_OK = df_ECAT_1.merge(df_ECAT_PD, how='left', on='kd_penyedia')
+
+        ### Buat tombol unduh dataset
+        unduh_ECAT = unduh_data(df_ECAT_OK)
+
         try:
-            ### Tarik dataset df_ECAT, df_ECAT_KD, df_ECAT_IS dan df_ECATPD
-            df_ECAT = tarik_data(DatasetPURCHASINGECAT)
-            df_ECAT_KD = tarik_data(DatasetPURCHASINGECATKD)
-            df_ECAT_IS = tarik_data(DatasetPURCHASINGECATIS)
-            df_ECAT_PD = tarik_data_excel(DatasetPURCHASINGECATPD)
-
-            ## Gabung dataframe Katalog + Katalog Komoditas Detail + Katalog Instansi Satker + Katalog Penyedia Detail
-            df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
-            df_ECAT_1 = pd.merge(df_ECAT_0, df_ECAT_IS, left_on='satker_id', right_on='kd_satker', how='left')
-            df_ECAT_OK = df_ECAT_1.merge(df_ECAT_PD, how='left', on='kd_penyedia')
-
-            ### Buat tombol unduh dataset
-            unduh_ECAT = unduh_data(df_ECAT_OK)
 
             ecat1, ecat2 = st.columns((8,2))
             with ecat1:
