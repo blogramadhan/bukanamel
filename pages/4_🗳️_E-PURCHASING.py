@@ -420,8 +420,14 @@ with menu_purchasing_1:
 
         with menu_purchasing_1_2:
 
-            st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
+            etalase1, etalase2 = st.columns((8,2))
+            with etalase1:
+                st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
+            with etalase2:
+                st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
 
+            st.divider()
+            
     except Exception:
     
         st.error("Gagal baca dataset E-Katalog")
