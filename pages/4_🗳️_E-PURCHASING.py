@@ -113,7 +113,7 @@ with menu_purchasing_1:
 
     menu_purchasing_1_1, menu_purchasing_1_2 = st.tabs(["| TRANSAKSI KATALOG |", "| TRANSAKSI KATALOG (ETALASE) |"])
 
-    with menu_purchasing_1_1:
+    try:
 
         ### Tarik dataset df_ECAT, df_ECAT_KD, df_ECAT_IS dan df_ECATPD
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
@@ -129,7 +129,7 @@ with menu_purchasing_1:
         ### Buat tombol unduh dataset
         unduh_ECAT = unduh_data(df_ECAT_OK)
 
-        try:
+        with menu_purchasing_1_1:
 
             ecat1, ecat2 = st.columns((8,2))
             with ecat1:
@@ -418,12 +418,13 @@ with menu_purchasing_1:
                     grafik_nilai_transaksi_ecat_pu.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
                     st.plotly_chart(grafik_nilai_transaksi_ecat_pu, theme="streamlit", use_container_width=True)
 
-        except Exception:
-            st.error("Gagal baca dataset E-Katalog")
+        with menu_purchasing_1_2:
 
-    with menu_purchasing_1_2:
+            st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
 
-        st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
+    except Exception:
+    
+        st.error("Gagal baca dataset E-Katalog")
 
 ## Tab menu Transaksi Toko Daring
 with menu_purchasing_2:
