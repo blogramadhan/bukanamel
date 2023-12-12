@@ -434,9 +434,21 @@ with menu_purchasing_1:
             with ETALASE_radio_2:
                 nama_sumber_dana_etalase = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "APBNP", "BLUD", "BLU", "BUMN", "BUMD"], key="Etalase_Sumber_Dana")
             with ETALASE_radio_3:
-                status_paket_etalase = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"], key="Etalase_Status_Paket")
+                status_paket_etalase = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"], key="Etalase_Status_Paket")            
+
+            ### Hitung-hitung dataset Katalog
+            if (jenis_katalog_etalase == "Gabungan" and status_paket_etalase == "Gabungan"):
+                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}").df()
+            elif jenis_katalog == "Gabungan":
+                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
+            elif status_paket == "Gabungan":
+                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}'").df()
+            else:    
+                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
+
+
             with ETALASE_radio_4:
-                nama_komoditas = st.selectbox("Pilih Etalase Belanja :", df_ECAT_OK['nama_komoditas'].unique(), key="Etalase_Nama_Komoditas")
+                nama_komoditas = st.selectbox("Pilih Etalase Belanja :", df_ECAT_ETALASE['nama_komoditas'].unique(), key="Etalase_Nama_Komoditas")
             st.write(f"Anda memilih : **{jenis_katalog_etalase}** dan **{nama_sumber_dana_etalase}** dan **{status_paket_etalase}**")
             
     except Exception:
