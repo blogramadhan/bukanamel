@@ -445,12 +445,26 @@ with menu_purchasing_1:
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}'").df()
             else:    
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
-
+            ###
 
             with ETALASE_radio_4:
                 nama_komoditas = st.selectbox("Pilih Etalase Belanja :", df_ECAT_ETALASE['nama_komoditas'].unique(), key="Etalase_Nama_Komoditas")
             st.write(f"Anda memilih : **{jenis_katalog_etalase}** dan **{nama_sumber_dana_etalase}** dan **{status_paket_etalase}**")
             
+            df_ECAT_ETALASE_filter = con.execute(f"SELECT * FROM df_ECAT_ETALASE WHERE nama_komoditas = '{nama_komoditas}'").df()
+
+            jumlah_produk_etalase = df_ECAT_ETALASE_filter['kd_produk'].unique().shape[0]
+            jumlah_penyedia_etalase = df_ECAT_ETALASE_filter['kd_penyedia'].unique().shape[0]
+            jumlah_trx_etalase = df_ECAT_ETALASE_filter['no_paket'].unique().shape[0]
+            nilai_trx_etalase = df_ECAT_ETALASE_filter['total_harga'].sum()
+
+            coetalase1, coetalase2, coetalase3, coetalase4 = st.columns(4)
+            coetalase1.metric(label="Jumlah Produk Katalog", value="{:,}".format(jumlah_produk_etalase))
+            coetalase2.metric(label="Jumlah Penyedia Katalog", value="{:,}".format(jumlah_penyedia_etalase))
+            coetalase3.metric(label="Jumlah Transaksi Katalog", value="{:,}".format(jumlah_trx_etalase))
+            coetalase4.metric(label="Nilai Transaksi Katalog", value="{:,.2f}".format(nilai_trx_etalase))
+            style_metric_cards()
+
     except Exception:
     
         st.error("Gagal baca dataset E-Katalog")
