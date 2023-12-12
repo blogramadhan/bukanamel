@@ -432,15 +432,12 @@ with menu_purchasing_1:
             with ETALASE_radio_1:
                 jenis_katalog_etalase = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"], key="Etalase_Jenis_Katalog")
             with ETALASE_radio_2:
-                st.write("ETALASE RADIO 2")
-                #nama_sumber_dana_etalase = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "APBNP", "BLUD", "BLU", "BUMN", "BUMD"])
+                nama_sumber_dana_etalase = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "APBNP", "BLUD", "BLU", "BUMN", "BUMD"], key="Etalase_Sumber_Dana")
             with ETALASE_radio_3:
-                st.write("ETALASE RADIO 3")
-                #status_paket_etalase = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"])
+                status_paket_etalase = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"], key="Etalase_Status_Paket")
             with ETALASE_radio_4:
-                st.write("ETALASE RADIO 4")
-                #nama_komoditas = st.selectbox("Pilih Etalase Belanja :", df_ECAT_OK['nama_komoditas'].unique(), key="Etalase_Nama_Komoditas")
-            #st.write(f"Anda memilih : **{jenis_katalog_etalase}** dan **{nama_sumber_dana_etalase}** dan **{status_paket_etalase}**")
+                nama_komoditas = st.selectbox("Pilih Etalase Belanja :", df_ECAT_OK['nama_komoditas'].unique(), key="Etalase_Nama_Komoditas")
+            st.write(f"Anda memilih : **{jenis_katalog_etalase}** dan **{nama_sumber_dana_etalase}** dan **{status_paket_etalase}**")
             
     except Exception:
     
