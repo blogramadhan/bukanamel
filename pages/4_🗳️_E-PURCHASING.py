@@ -430,8 +430,8 @@ with menu_purchasing_1:
 
             ETALASE_radio_1, ETALASE_radio_2, ETALASE_radio_3, ETALASE_radio_4 = st.columns((1,1,2,6))
             with ETALASE_radio_1:
-                st.write("ETALASE RADIO 1")
-                #jenis_katalog_etalase = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"])
+                #st.write("ETALASE RADIO 1")
+                jenis_katalog_etalase = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"])
             with ETALASE_radio_2:
                 st.write("ETALASE RADIO 2")
                 #nama_sumber_dana_etalase = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "APBNP", "BLUD", "BLU", "BUMN", "BUMD"])
