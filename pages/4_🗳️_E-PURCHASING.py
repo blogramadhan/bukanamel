@@ -428,7 +428,7 @@ with menu_purchasing_1:
 
             st.divider()
 
-            ETALASE_radio_1, ETALASE_radio_2, ETALASE_radio_3, ETALASE_radio_4 = st.columns((1,1,2,6))
+            ETALASE_radio_1, ETALASE_radio_2, ETALASE_radio_3, ETALASE_radio_4 = st.columns((1,1,1,7))
             with ETALASE_radio_1:
                 jenis_katalog_etalase = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"], key="Etalase_Jenis_Katalog")
             with ETALASE_radio_2:
