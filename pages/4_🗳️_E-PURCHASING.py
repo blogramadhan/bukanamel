@@ -439,9 +439,9 @@ with menu_purchasing_1:
             ### Hitung-hitung dataset Katalog
             if (jenis_katalog_etalase == "Gabungan" and status_paket_etalase == "Gabungan"):
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}").df()
-            elif jenis_katalog == "Gabungan":
+            elif jenis_katalog_etalase == "Gabungan":
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
-            elif status_paket == "Gabungan":
+            elif status_paket_etalase == "Gabungan":
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}'").df()
             else:    
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
