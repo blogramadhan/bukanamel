@@ -465,6 +465,64 @@ with menu_purchasing_1:
             coetalase4.metric(label="Nilai Transaksi Katalog", value="{:,.2f}".format(nilai_trx_etalase))
             style_metric_cards()
 
+            st.divider()
+
+            st.subheader("Berdasarkan Pelaku Usaha (10 Besar)")
+
+            grafik_etalase_pu_1, grafik_etalase_pu_2 = st.tabs(["| Jumlah Transaksi Pelaku Usaha |", "| Nilai Transaksi Pelaku Usaha |"])
+
+            with grafik_etalase_pu_1:
+                
+                #### Query data grafik jumlah Transaksi Katalog Lokal Pelaku Usaha tiap Etalase
+                sql_jumlah_transaksi_ecat_pu_etalase = """
+                    SELECT nama_penyedia AS NAMA_PENYEDIA, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
+                    FROM df_ECAT_ETALASE_filter WHERE NAMA_PENYEDIA IS NOT NULL
+                    GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
+                """
+
+                tabel_jumlah_transaksi_ecat_pu_etalase = con.execute(sql_jumlah_transaksi_ecat_pu_etalase).df()
+
+                grafik_etalase_pu_1_1, grafik_etalase_pu_1_2 = st.columns((4,6))
+
+                with grafik_etalase_pu_1_1:
+
+                    AgGrid(tabel_jumlah_transaksi_ecat_pu_etalase)
+
+                with grafik_etalase_pu_1_2:
+
+                    grafik_jumlah_transaksi_ecat_pu_etalase = px.bar(tabel_jumlah_transaksi_ecat_pu_etalase, x='NAMA_PENYEDIA', y='JUMLAH_TRANSAKSI', text_auto='.2s', title='Grafik Jumlah Transaksi Katalog Pelaku Usaha')
+                    grafik_jumlah_transaksi_ecat_pu_etalase.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+                    st.plotly_chart(grafik_jumlah_transaksi_ecat_pu_etalase, theme="streamlit", use_container_width=True)
+
+            with grafik_etalase_pu_2:
+
+                #### Query data grafik nilai Transaksi Katalog Lokal Pelaku Usaha tiap Etalase
+                sql_nilai_transaksi_ecat_pu_etalase = """
+                    SELECT nama_penyedia AS NAMA_PENYEDIA, SUM(total_harga) AS NILAI_TRANSAKSI
+                    FROM df_ECAT_ETALASE_filter WHERE NAMA_PENYEDIA IS NOT NULL
+                    GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
+                """
+
+                tabel_nilai_transaksi_ecat_pu_etalase = con.execute(sql_nilai_transaksi_ecat_pu_etalase).df()
+
+                grafik_etalase_pu_2_1, grafik_etalase_pu_2_2 = st.columns((4,6))
+
+                with grafik_etalase_pu_2_1:
+
+                    gd_etalase_pu = GridOptionsBuilder.from_dataframe(tabel_nilai_transaksi_ecat_pu_etalase)
+                    gd_etalase_pu.configure_pagination()
+                    gd_etalase_pu.configure_side_bar()
+                    gd_etalase_pu.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                    gd_etalase_pu.configure_column("NILAI_TRANSAKSI", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_TRANSAKSI.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+                    AgGrid(tabel_nilai_transaksi_ecat_pu_etalase, gridOptions=gd_etalase_pu.build(), enable_enterprise_modules=True)
+
+                with grafik_etalase_pu_2_2:
+
+                    grafik_nilai_transaksi_ecat_pu_etalase = px.bar(tabel_nilai_transaksi_ecat_pu_etalase, x='NAMA_PENYEDIA', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi Katalog Pelaku Usaha')
+                    grafik_nilai_transaksi_ecat_pu_etalase.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+                    st.plotly_chart(grafik_nilai_transaksi_ecat_pu_etalase, theme="streamlit", use_container_width=True)
+
     except Exception:
     
         st.error("Gagal baca dataset E-Katalog")
