@@ -477,7 +477,7 @@ with menu_purchasing_1:
                 sql_jumlah_transaksi_ecat_pu_etalase = """
                     SELECT nama_penyedia AS NAMA_PENYEDIA, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
                     FROM df_ECAT_ETALASE_filter WHERE NAMA_PENYEDIA IS NOT NULL
-                    GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
+                    GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC
                 """
 
                 tabel_jumlah_transaksi_ecat_pu_etalase = con.execute(sql_jumlah_transaksi_ecat_pu_etalase).df()
@@ -500,7 +500,7 @@ with menu_purchasing_1:
                 sql_nilai_transaksi_ecat_pu_etalase = """
                     SELECT nama_penyedia AS NAMA_PENYEDIA, SUM(total_harga) AS NILAI_TRANSAKSI
                     FROM df_ECAT_ETALASE_filter WHERE NAMA_PENYEDIA IS NOT NULL
-                    GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
+                    GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC
                 """
 
                 tabel_nilai_transaksi_ecat_pu_etalase = con.execute(sql_nilai_transaksi_ecat_pu_etalase).df()
