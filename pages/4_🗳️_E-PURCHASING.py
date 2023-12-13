@@ -430,18 +430,18 @@ with menu_purchasing_1:
 
             ETALASE_radio_1, ETALASE_radio_2, ETALASE_radio_3, ETALASE_radio_4 = st.columns((1,1,2,6))
             with ETALASE_radio_1:
-                jenis_katalog_etalase = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral", "Gabungan"], key="Etalase_Jenis_Katalog")
+                jenis_katalog_etalase = st.radio("**Jenis Katalog**", ["Lokal", "Nasional", "Sektoral"], key="Etalase_Jenis_Katalog")
             with ETALASE_radio_2:
                 nama_sumber_dana_etalase = st.radio("**Sumber Dana**", ["APBD", "APBDP", "APBN", "APBNP", "BLUD", "BLU", "BUMN", "BUMD"], key="Etalase_Sumber_Dana")
             with ETALASE_radio_3:
                 status_paket_etalase = st.radio("**Status Paket**", ["Paket Selesai", "Paket Proses", "Gabungan"], key="Etalase_Status_Paket")            
 
             ### Hitung-hitung dataset Katalog
-            if (jenis_katalog_etalase == "Gabungan" and status_paket_etalase == "Gabungan"):
-                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}").df()
-            elif jenis_katalog_etalase == "Gabungan":
-                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
-            elif status_paket_etalase == "Gabungan":
+            # if (jenis_katalog_etalase == "Gabungan" and status_paket_etalase == "Gabungan"):
+            #     df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}").df()
+            # elif jenis_katalog_etalase == "Gabungan":
+            #     df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
+            if status_paket_etalase == "Gabungan":
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}'").df()
             else:    
                 df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
@@ -477,7 +477,7 @@ with menu_purchasing_1:
                 sql_jumlah_transaksi_ecat_pu_etalase = """
                     SELECT nama_penyedia AS NAMA_PENYEDIA, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
                     FROM df_ECAT_ETALASE_filter WHERE NAMA_PENYEDIA IS NOT NULL
-                    GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC
+                    GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
                 """
 
                 tabel_jumlah_transaksi_ecat_pu_etalase = con.execute(sql_jumlah_transaksi_ecat_pu_etalase).df()
@@ -500,7 +500,7 @@ with menu_purchasing_1:
                 sql_nilai_transaksi_ecat_pu_etalase = """
                     SELECT nama_penyedia AS NAMA_PENYEDIA, SUM(total_harga) AS NILAI_TRANSAKSI
                     FROM df_ECAT_ETALASE_filter WHERE NAMA_PENYEDIA IS NOT NULL
-                    GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC
+                    GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
                 """
 
                 tabel_nilai_transaksi_ecat_pu_etalase = con.execute(sql_nilai_transaksi_ecat_pu_etalase).df()
