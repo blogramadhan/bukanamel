@@ -40,7 +40,7 @@ logo()
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", 
-             "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KATINGAN"]
+             "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KETAPANG", "KAB. KATINGAN"]
 
 tahuns = ["2023", "2022"]
 
@@ -83,6 +83,9 @@ if pilih == "KAB. SINTANG":
 if pilih == "KAB. MEMPAWAH":
     kodeFolder = "mpw"
     kodeInstansi = "D552"
+if pilih == "KAB. KETAPANG":
+    kodeFolder = "ktp"
+    kodeInstansi = "D201"
 if pilih == "KAB. KATINGAN":
     kodeFolder = "ktn"
     kodeInstansi = "D236"
