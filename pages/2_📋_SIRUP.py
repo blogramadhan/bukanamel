@@ -43,47 +43,66 @@ logo()
 daerah =    ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", 
              "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KETAPANG", "KAB. KATINGAN"]
 
-tahuns = ["2024", "2023"]
+tahuns = ["2023", "2022"]
 
 pilih = st.sidebar.selectbox("Pilih UKPBJ yang diinginkan :", daerah)
 tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
 
 if pilih == "PROV. KALBAR":
     kodeFolder = "prov"
+    kodeRUP = "D197"
 if pilih == "KAB. BENGKAYANG":
     kodeFolder = "bky"
+    kodeRUP = "D206"
 if pilih == "KAB. MELAWI":
     kodeFolder = "mlw"
+    kodeRUP = "D210"
 if pilih == "KOTA PONTIANAK":
     kodeFolder = "ptk"
+    kodeRUP = "D199"
 if pilih == "KAB. SANGGAU":
     kodeFolder = "sgu"
+    kodeRUP = "D204"
 if pilih == "KAB. SEKADAU":
     kodeFolder = "skd"
+    kodeRUP = "D198"
 if pilih == "KAB. KAPUAS HULU":
     kodeFolder = "kph"
+    kodeRUP = "D209"
 if pilih == "KAB. KUBU RAYA":
     kodeFolder = "kkr"
+    kodeRUP = "D202"
 if pilih == "KAB. LANDAK":
     kodeFolder = "ldk"
+    kodeRUP = "D205"
 if pilih == "KOTA SINGKAWANG":
     kodeFolder = "skw"
+    kodeRUP = "D200"
 if pilih == "KAB. SINTANG":
     kodeFolder = "stg"
+    kodeRUP = "D211"
 if pilih == "KAB. MEMPAWAH":
     kodeFolder = "mpw"
+    kodeRUP = "D552"
 if pilih == "KAB. KETAPANG":
     kodeFolder = "ktp"
+    kodeRUP = "D201"
 if pilih == "KAB. KATINGAN":
     kodeFolder = "ktn"
+    kodeRUP = "D236"
 
 # Persiapan Dataset
 con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
-DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
-DatasetRUPPS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketSwakelolaTerumumkan{tahun}.parquet"
-DatasetRUPSA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPStrukturAnggaran{tahun}.parquet"
+#DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
+#DatasetRUPPS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketSwakelolaTerumumkan{tahun}.parquet"
+#DatasetRUPSA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPStrukturAnggaran{tahun}.parquet"
+
+## Akses file dataset Arief
+DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.parquet"
+DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.parquet"
+DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
 
 ## Buat dataframe RUP
 try:
