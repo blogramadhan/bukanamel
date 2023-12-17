@@ -110,36 +110,62 @@ con = duckdb.connect(database=':memory:')
 ## Akses file dataset format parquet dari Google Cloud Storage via URL Public
 
 ### Dataset SPSE Tender
-DatasetSPSETenderPengumuman = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderPengumuman{tahun}.parquet"
-DatasetSPSETenderSelesai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderSelesai{tahun}.parquet"
-DatasetSPSETenderSelesaiNilai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderSelesaiNilai{tahun}.parquet"
-DatasetSPSETenderSPPBJ = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakSPPBJ{tahun}.parquet"
-DatasetSPSETenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakKontrak{tahun}.parquet"
-DatasetSPSETenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakSPMKSPP{tahun}.parquet"
-DatasetSPSETenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakBAPBAST{tahun}.parquet"
+#DatasetSPSETenderPengumuman = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderPengumuman{tahun}.parquet"
+#DatasetSPSETenderSelesai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderSelesai{tahun}.parquet"
+#DatasetSPSETenderSelesaiNilai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderSelesaiNilai{tahun}.parquet"
+#DatasetSPSETenderSPPBJ = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakSPPBJ{tahun}.parquet"
+#DatasetSPSETenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakKontrak{tahun}.parquet"
+#DatasetSPSETenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakSPMKSPP{tahun}.parquet"
+#DatasetSPSETenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakBAPBAST{tahun}.parquet"
+### data.pbj.my.id/spse
+DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
+DatasetSPSETenderSelesai = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderSelesai{tahun}.parquet"
+DatasetSPSETenderSelesaiNilai = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderSelesaiNilai{tahun}.parquet"
+DatasetSPSETenderSPPBJ = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderEkontrak-SPPBJ{tahun}.parquet"
+DatasetSPSETenderKontrak = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderEkontrak-Kontrak{tahun}.parquet"
+DatasetSPSETenderSPMK = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderEkontrak-SPMKSPP{tahun}.parquet"
+DatasetSPSETenderBAST = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderEkontrak-BAPBAST{tahun}.parquet"
 
 ### Dataset SPSE Non Tender
-DatasetSPSENonTenderPengumuman = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderPengumuman{tahun}.parquet"
-DatasetSPSENonTenderSelesai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderSelesai{tahun}.parquet"
-DatasetSPSENonTenderSPPBJ = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakSPPBJ{tahun}.parquet"
-DatasetSPSENonTenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakKontrak{tahun}.parquet"
-DatasetSPSENonTenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakSPMKSPP{tahun}.parquet"
-DatasetSPSENonTenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakBAPBAST{tahun}.parquet"
+#DatasetSPSENonTenderPengumuman = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderPengumuman{tahun}.parquet"
+#DatasetSPSENonTenderSelesai = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderSelesai{tahun}.parquet"
+#DatasetSPSENonTenderSPPBJ = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakSPPBJ{tahun}.parquet"
+#DatasetSPSENonTenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakKontrak{tahun}.parquet"
+#DatasetSPSENonTenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakSPMKSPP{tahun}.parquet"
+#DatasetSPSENonTenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakBAPBAST{tahun}.parquet"
+### data.pbj.my.id/spse
+DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
+DatasetSPSENonTenderSelesai = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderSelesai{tahun}.parquet"
+DatasetSPSENonTenderSPPBJ = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderEkontrak-SPPBJ{tahun}.parquet"
+DatasetSPSENonTenderKontrak = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderEkontrak-Kontrak{tahun}.parquet"
+DatasetSPSENonTenderSPMK = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderEkontrak-SPMKSPP{tahun}.parquet"
+DatasetSPSENonTenderBAST = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderEkontrak-BAPBAST{tahun}.parquet"
 
 ### Dataset Pencatatan
-DatasetCatatNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanNonTender{tahun}.parquet"
-DatasetCatatNonTenderRealisasi = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanNonTenderRealisasi{tahun}.parquet"
-DatasetCatatSwakelola = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanSwakelola{tahun}.parquet"
-DatasetCatatSwakelolaRealisasi = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanSwakelolaRealisasi{tahun}.parquet"
+#DatasetCatatNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanNonTender{tahun}.parquet"
+#DatasetCatatNonTenderRealisasi = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanNonTenderRealisasi{tahun}.parquet"
+#DatasetCatatSwakelola = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanSwakelola{tahun}.parquet"
+#DatasetCatatSwakelolaRealisasi = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanSwakelolaRealisasi{tahun}.parquet"
+### data.pbj.my.id/spse
+DatasetCatatNonTender = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PencatatanNonTender{tahun}.parquet"
+DatasetCatatNonTenderRealisasi = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PencatatanNonTenderRealisasi{tahun}.parquet"
+DatasetCatatSwakelola = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PencatatanSwakelola{tahun}.parquet"
+DatasetCatatSwakelolaRealisasi = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PencatatanSwakelolaRealisasi{tahun}.parquet"
 
 ### Dataset Peserta Tender
-DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPesertaTender{tahun}.parquet"
+#DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPesertaTender{tahun}.parquet"
+### data.pbj.my.id/spse
+DatasetPesertaTender = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PesertaTender{tahun}.parquet"
 
 ### Dataset RUP Master Satker
-DatasetRUPMasterSatker = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPMasterSatker{tahun}.parquet"
+#DatasetRUPMasterSatker = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPMasterSatker{tahun}.parquet"
+### data.pbj.my.id/sirup
+DatasetRUPMasterSatker = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-MasterSatker{tahun}.parquet"
 
 ### Dataset RUP Paket Penyedia Terumumkan
-DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
+#DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
+### data.pbj.my.is/sirup
+DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.parquet"
 
 ## Buat dataframe SPSE
 ### Baca file parquet dataset SPSE Tender
