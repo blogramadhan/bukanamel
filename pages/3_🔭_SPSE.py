@@ -49,32 +49,59 @@ tahun = st.sidebar.selectbox("Pilih Tahun :", tahuns)
 
 if pilih == "PROV. KALBAR":
     kodeFolder = "prov"
+    kodeRUP = "D197"
+    kodeLPSE = "97"
 if pilih == "KAB. BENGKAYANG":
     kodeFolder = "bky"
+    kodeRUP = "D206"
+    kodeLPSE = "444"
 if pilih == "KAB. MELAWI":
     kodeFolder = "mlw"
+    kodeRUP = "D210"
+    kodeLPSE = "540"
 if pilih == "KOTA PONTIANAK":
     kodeFolder = "ptk"
+    kodeRUP = "D199"
+    kodeLPSE = "62"
 if pilih == "KAB. SANGGAU":
     kodeFolder = "sgu"
+    kodeRUP = "D204"
+    kodeLPSE = "298"
 if pilih == "KAB. SEKADAU":
     kodeFolder = "skd"
+    kodeRUP = "D198"
+    kodeLPSE = "175"
 if pilih == "KAB. KAPUAS HULU":
     kodeFolder = "kph"
+    kodeRUP = "D209"
+    kodeLPSE = "488"
 if pilih == "KAB. KUBU RAYA":
     kodeFolder = "kkr"
+    kodeRUP = "D202"
+    kodeLPSE = "188"
 if pilih == "KAB. LANDAK":
     kodeFolder = "ldk"
+    kodeRUP = "D205"
+    kodeLPSE = "496"
 if pilih == "KOTA SINGKAWANG":
     kodeFolder = "skw"
+    kodeRUP = "D200"
+    kodeLPSE = "132"
 if pilih == "KAB. SINTANG":
     kodeFolder = "stg"
+    kodeRUP = "D211"
+    kodeLPSE = "345"
 if pilih == "KAB. MEMPAWAH":
     kodeFolder = "mpw"
+    kodeRUP = "D552"
+    kodeLPSE = "118"
 if pilih == "KAB. KETAPANG":
     kodeFolder = "ktp"
+    kodeRUP = "D201"
+    kodeLPSE = "110"
 if pilih == "KAB. KATINGAN":
     kodeFolder = "ktn"
+    kodeLPSE = "438"
 
 # Persiapan Dataset
 con = duckdb.connect(database=':memory:')
