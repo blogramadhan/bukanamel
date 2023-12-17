@@ -101,6 +101,7 @@ if pilih == "KAB. KETAPANG":
     kodeLPSE = "110"
 if pilih == "KAB. KATINGAN":
     kodeFolder = "ktn"
+    kodeRUP = "D236"
     kodeLPSE = "438"
 
 # Persiapan Dataset
