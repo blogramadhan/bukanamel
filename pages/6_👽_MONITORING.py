@@ -210,7 +210,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT kd_nontender, nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK").df()
+            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK").df()
             st.dataframe(df_SIKAPNonTender_OK_filter)
 
         except Exception:
