@@ -203,7 +203,13 @@ with menu_monitoring_2:
 
             df_SIKAPNonTender_OK_filter = con.execute("SELECT kd_nontender AS KODE_PAKET, nama_paket AS NAMA_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN").df()
             df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] == 3, "Sangat Baik", "Baik"))
-            AgGrid(df_SIKAPNonTender_OK_filter_final)
+            
+            gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
+            gd_sikap_nt.configure_pagination()
+            gd_sikap_nt.configure_side_bar()
+            gd_sikap_nt.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            
+            AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
