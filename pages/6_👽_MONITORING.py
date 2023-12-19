@@ -95,12 +95,13 @@ con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 
-### Dataset SPSE Tender
+### Dataset SPSE Tender dan SIKAP
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
+DatasetSIKAPTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaTender{tahun}.parquet"
 
-### Dataset SPSE Non Tender
-
-
+### Dataset SPSE Non Tender dan SIKAP
+DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
+DatasetSIKAPNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaNonTender{tahun}.parquet"
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -116,4 +117,58 @@ with menu_monitoring_1:
 
 with menu_monitoring_2:
 
-    st.title("MENU SIKAP")
+    st.header(f"MONITORING SIKAP - {pilih} - TAHUN {tahun}")
+
+    ### Buat sub menu SIKAP
+    menu_monitoring_2_1, menu_monitoring_2_2 = st.tabs(["| SIKAP TENDER |", "| SIKAP NON TENDER |"])
+
+    #### Tab menu SIKAP - TENDER
+    with menu_monitoring_2_1:
+
+        try:
+            ##### Tarik dataset SIKAP TENDER
+            df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
+            df_SIKAPTender = tarik_data(DatasetSIKAPTender)
+
+            ##### Buat tombol undah dataset SIKAP TENDER
+            unduh_SIKAP_Tender = unduh_data(df_SIKAPTender)
+
+            SIKAP_Tender_1, SIKAP_Tender_2 = st.columns((7,3))
+            with SIKAP_Tender_1:
+                st.subheader("SIKAP TENDER")
+            with SIKAP_Tender_2:
+                st.download_button(
+                    label = "📥 Download Data SIKAP Tender",
+                    data = unduh_SIKAP_Tender,
+                    file_name = f"SIKAPTender-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
+
+
+
+        except Exception:
+            st.error("Gagal baca dataset SIKAP TENDER")
+
+    with menu_monitoring_2_2:
+
+        try:
+            ##### Tarik dataset SIKAP NON TENDER
+            df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
+            df_SIKAPNonTender = tarik_data(DatasetSIKAPNonTender)
+
+            ##### Buat tombol undah dataset SIKAP TENDER
+            unduh_SIKAP_NonTender = unduh_data(df_SIKAPNonTender)
+
+            SIKAP_NonTender_1, SIKAP_NonTender_2 = st.columns((7,3))
+            with SIKAP_NonTender_1:
+                st.subheader("SIKAP NON TENDER")
+            with SIKAP_NonTender_2:
+                st.download_button(
+                    label = "📥 Download Data SIKAP Non Tender",
+                    data = unduh_SIKAP_NonTender,
+                    file_name = f"SIKAPNonTender-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )        
+
+        except Exception:
+            st.error("Gagal baca dataset SIKAP NON TENDER")
