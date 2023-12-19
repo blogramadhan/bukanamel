@@ -209,9 +209,9 @@ with menu_monitoring_2:
             #     (df_SIKAPNonTender_OK_filter["SKOR_PENILAIAN"] >= 1, "CUKUP")
             # ]
 
-            nilai_standar = "BURUK"
+            #nilai_standar = "BURUK"
             
-            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", df_SIKAPNonTender_OK_filter["SKOR_PENILAIAN"] >= 2, "BAIK", "CUKUP"))
+            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", "BAIK"))
             #df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.select(kondisi_penilaian, nilai_standar))
 
             gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
