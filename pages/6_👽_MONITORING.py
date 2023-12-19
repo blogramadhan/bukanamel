@@ -200,12 +200,12 @@ with menu_monitoring_2:
 
             st.divider()
 
-            st.dataframe(df_SIKAPNonTender_OK.groupby('kd_nontender'))
+            st.dataframe(df_SIKAPNonTender_OK)
 
             st.divider()
 
             #df_SIKAPNonTender_OK_1 = df_SIKAPNonTender_OK[df_SIKAPNonTender_OK['nama_paket'].notna()][['nama_satker', 'nama_paket']]
-            df_SIKAPNonTender_OK_1 = con.execute("SELECT nama_paket, indikator_penilaian, AVG(total_skors) FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY nama_paket").df()
+            df_SIKAPNonTender_OK_1 = con.execute("SELECT nama_paket, total_skors FROM df_SIKAPNonTender_OK GROUP BY nama_paket").df()
             st.dataframe(df_SIKAPNonTender_OK_1)
 
         except Exception:
