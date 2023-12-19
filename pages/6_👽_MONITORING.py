@@ -204,5 +204,9 @@ with menu_monitoring_2:
 
             st.divider()
 
+            df_SIKAPNonTender_OK_1 = df_SIKAPNonTender_OK[df_SIKAPNonTender_OK['nama_paket'].notna()][['nama_satker', 'nama_paket']]
+
+            st.dataframe(df_SIKAPNonTender_OK_1)
+
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
