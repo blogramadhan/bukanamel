@@ -208,13 +208,13 @@ with menu_monitoring_2:
 
             st.divider()
 
-            st.dataframe(df_SIKAPNonTender_OK, key='sikap1')
+            st.dataframe(df_SIKAPNonTender_OK)
 
             st.divider()
 
             df_SIKAPNonTender_OK_filter = con.execute(f"SELECT * FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL").df()
 
-            st.dataframe(df_SIKAPNonTender_OK_filter, key='sikap2')
+            st.dataframe(df_SIKAPNonTender_OK_filter)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
