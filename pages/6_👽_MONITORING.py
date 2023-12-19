@@ -192,8 +192,8 @@ with menu_monitoring_2:
             #st.write(f"Anda memilih : **{sumber_dana_sikap_nt}** dan **{status_sikap_nt}**")
 
             ##### Hitung-hitungan dataset SIKAP NON TENDER
-            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, nama_satker, pagu, hps, kualifikasi_paket, jenis_pengadaan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
-            df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, nama_paket, mtd_pemilihan, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
+            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, nama_satker, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
+            df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, nama_paket, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
             df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
 
             jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
@@ -210,7 +210,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK GROUP BY nama_paket").df()
+            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT kd_nontender, nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK").df()
             st.dataframe(df_SIKAPNonTender_OK_filter)
 
         except Exception:
