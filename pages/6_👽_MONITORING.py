@@ -204,7 +204,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_1 = df_SIKAPNonTender_OK[df_SIKAPNonTender_OK['nama_paket'].notna()][['nama_satker', 'nama_paket']].groupby('nama_paket').reset_index()
+            df_SIKAPNonTender_OK_1 = df_SIKAPNonTender_OK[df_SIKAPNonTender_OK['nama_paket'].notna()][['nama_satker', 'nama_paket']].groupby('kd_nontender')
 
             st.dataframe(df_SIKAPNonTender_OK_1)
 
