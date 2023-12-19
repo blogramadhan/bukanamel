@@ -94,7 +94,13 @@ if pilih == "KAB. KATINGAN":
 con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
-Dataset = f""
+
+### Dataset SPSE Tender
+DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
+
+### Dataset SPSE Non Tender
+
+
 
 #####
 # Mulai membuat presentasi data Purchasing
