@@ -22,6 +22,7 @@
 # Import Library
 import duckdb
 import openpyxl
+import numpy as np
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -201,7 +202,8 @@ with menu_monitoring_2:
             st.divider()
 
             df_SIKAPNonTender_OK_filter = con.execute("SELECT kd_nontender AS KODE_PAKET, nama_paket AS NAMA_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN").df()
-            st.dataframe(df_SIKAPNonTender_OK_filter)
+            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] == 3, "Sangat Baik", "Baik"))
+            st.dataframe(df_SIKAPNonTender_OK_filter_final)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
