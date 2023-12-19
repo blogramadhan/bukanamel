@@ -184,19 +184,19 @@ with menu_monitoring_2:
 
             st.divider()
 
-            SIKAP_NT_radio_1, SIKAP_NT_radio_2, SIKAP_NT_radio_3 = st.columns((1,1,8))
-            with SIKAP_NT_radio_1:
-                sumber_dana_sikap_nt = st.radio("**Sumber Dana**", df_SPSENonTenderPengumuman['sumber_dana'].unique(), key='Sumber_Dana_SIKAP_NT')
-            with SIKAP_NT_radio_2:
-                status_sikap_nt = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman['status_nontender'].unique(), key='Status_SIKAP_NT')
-            st.write(f"Anda memilih : **{sumber_dana_sikap_nt}** dan **{status_sikap_nt}**")
+            #SIKAP_NT_radio_1, SIKAP_NT_radio_2, SIKAP_NT_radio_3 = st.columns((1,1,8))
+            #with SIKAP_NT_radio_1:
+            #    sumber_dana_sikap_nt = st.radio("**Sumber Dana**", df_SPSENonTenderPengumuman['sumber_dana'].unique(), key='Sumber_Dana_SIKAP_NT')
+            #with SIKAP_NT_radio_2:
+            #    status_sikap_nt = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman['status_nontender'].unique(), key='Status_SIKAP_NT')
+            #st.write(f"Anda memilih : **{sumber_dana_sikap_nt}** dan **{status_sikap_nt}**")
 
             ##### Hitung-hitungan dataset SIKAP NON TENDER
-            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE sumber_dana = '{sumber_dana_sikap_nt}' AND status_nontender = '{status_sikap_nt}'").df()
+            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
             df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, mtd_pemilihan, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
-            df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
+            #df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
 
-            jumlah_trx_spse_nt_pengumuman = df_SIKAPNonTender_OK['kd_nontender'].unique().shape[0]
+            jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
             jumlah_trx_sikap_nt = df_SIKAPNonTender_filter['kd_nontender'].unique().shape[0]
             selisih_sikap_nt = jumlah_trx_spse_nt_pengumuman - jumlah_trx_sikap_nt
 
