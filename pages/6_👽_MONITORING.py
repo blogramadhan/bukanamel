@@ -206,12 +206,11 @@ with menu_monitoring_2:
             data_sikap_nt_3.metric(label="Jumlah Paket Belum Dinilai", value="{:,}".format(selisih_sikap_nt))
             style_metric_cards()
 
+            st.divider()
+
             st.dataframe(df_SIKAPNonTender_OK)
 
             st.divider()
-
-            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK").df()
-            AgGrid(df_SIKAPNonTender_OK_filter)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
