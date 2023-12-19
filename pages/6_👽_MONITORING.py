@@ -192,9 +192,10 @@ with menu_monitoring_2:
             #st.write(f"Anda memilih : **{sumber_dana_sikap_nt}** dan **{status_sikap_nt}**")
 
             ##### Hitung-hitungan dataset SIKAP NON TENDER
-            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
-            df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, mtd_pemilihan, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
-            #df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
+            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, nama_satker, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
+            df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, nama_paket, mtd_pemilihan, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
+            df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
+            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, mtd_pemilihan WHERE indikator_penilaian IS NOT NULL GROUP BY kd_nontender").df()
 
             jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
             jumlah_trx_sikap_nt = df_SIKAPNonTender_filter['kd_nontender'].unique().shape[0]
@@ -205,6 +206,10 @@ with menu_monitoring_2:
             data_sikap_nt_2.metric(label="Jumlah Paket Sudah Dinilai", value="{:,}".format(jumlah_trx_sikap_nt))
             data_sikap_nt_3.metric(label="Jumlah Paket Belum Dinilai", value="{:,}".format(selisih_sikap_nt))
             style_metric_cards()
+
+            st.divider()
+
+            AgGrid(df_SIKAPNonTender_OK_filter)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
