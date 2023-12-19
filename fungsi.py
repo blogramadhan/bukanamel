@@ -18,11 +18,11 @@ from streamlit_extras.app_logo import add_logo
 def unduh_data(unduhdata):
     return unduhdata.to_csv(index=False).encode('utf-8')
 
-@st.cache_data(ttl=(6*3600))
+@st.cache_data(ttl=(3600))
 def tarik_data_excel(url):
     return pd.read_excel(url)
 
-@st.cache_data(ttl=(6*3600))
+@st.cache_data(ttl=(3600))
 def tarik_data(url):
     return pd.read_parquet(url)
 
