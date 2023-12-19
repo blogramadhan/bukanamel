@@ -210,7 +210,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY kd_nontender").df()
+            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, mtd_pemilihan, indikator_penilaiaan, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK GROUP BY nama_paket").df()
             st.dataframe(df_SIKAPNonTender_OK_filter)
 
         except Exception:
