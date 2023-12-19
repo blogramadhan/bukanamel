@@ -209,7 +209,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            AgGrid(df_SIKAPNonTender_OK)
+            st.dataframe(df_SIKAPNonTender_OK)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
