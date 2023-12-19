@@ -201,7 +201,7 @@ with menu_monitoring_2:
             st.divider()
 
             df_SIKAPNonTender_OK_filter = con.execute("SELECT kd_nontender AS KODE_PAKET, nama_paket, NAMA_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN").df()
-            AgGrid(df_SIKAPNonTender_OK_filter)
+            st.dataframe(df_SIKAPNonTender_OK_filter.reset_index())
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
