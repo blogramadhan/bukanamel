@@ -204,7 +204,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_1 = con.execute("SELECT nama_satker, nama_paket, AVG(total_skors) FROM df_SIKAPNonTender_OK GROUP BY kd_nontender, nama_satker, nama_paket").df()
+            df_SIKAPNonTender_OK_1 = con.execute("SELECT nama_satker, nama_paket, AVG(total_skors) FROM df_SIKAPNonTender_OK GROUP BY kd_nontender, nama_satker, nama_paket ORDER BY nama_satker").df()
             st.dataframe(df_SIKAPNonTender_OK_1)
 
         except Exception:
