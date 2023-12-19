@@ -193,7 +193,17 @@ with menu_monitoring_2:
 
             ##### Hitung-hitungan dataset SIKAP NON TENDER
             df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE sumber_dana = '{sumber_dana_sikap_nt}' AND status_nontender = '{status_sikap_nt}'").df()
-            #df_SIKAPNonTender_filter = con.execute(f"")
+            df_SIKAPNonTender_filter = con.execute(f"SELECT * FROM df_SIKAPNonTender").df()
+
+            jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
+            jumlah_trx_sikap_nt = df_SIKAPNonTender_filter['kd_nontender'].unique().shape[0]
+            selisih_sikap_nt = jumlah_trx_spse_nt_pengumuman - jumlah_trx_sikap_nt
+
+            data_sikap_nt_1, data_sikap_nt_2, data_sikap_nt_3 = st.columns(3)
+            data_sikap_nt_1.metric(label="Jumlah Paket Non Tender", value="{:,}".format(jumlah_trx_spse_nt_pengumuman))
+            data_sikap_nt_2.metric(label="Jumlah Paket Sudah Dinilai", value="{:,}".format(jumlah_trx_sikap_nt))
+            data_sikap_nt_3.metric(label="Jumlah Paket Belum Dinilai", value="{:,}".format(selisih_sikap_nt))
+            style_metric_cards()
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")

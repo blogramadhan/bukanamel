@@ -938,9 +938,9 @@ with menu_spse_2:
             nilai_trx_spse_nt_pengumuman_hps = df_SPSENonTenderPengumuman_filter['hps'].sum()
 
             data_umum_nt_1, data_umum_nt_2, data_umum_nt_3 = st.columns(3)
-            data_umum_nt_1.metric(label="Jumlah Non Tender Diumumkan", value="{:,}".format(jumlah_trx_spse_nt_pengumuman))
-            data_umum_nt_2.metric(label="Nilai Pagu Non Tender Diumumkan", value="{:,}".format(nilai_trx_spse_nt_pengumuman_pagu))
-            data_umum_nt_3.metric(label="Nilai HPS Non Tender Diumumkan", value="{:,}".format(nilai_trx_spse_nt_pengumuman_hps))
+            data_umum_nt_1.metric(label="Jumlah Paket Non Tender Diumumkan", value="{:,}".format(jumlah_trx_spse_nt_pengumuman))
+            data_umum_nt_2.metric(label="Nilai Pagu Paket Non Tender Diumumkan", value="{:,}".format(nilai_trx_spse_nt_pengumuman_pagu))
+            data_umum_nt_3.metric(label="Nilai HPS Paket Non Tender Diumumkan", value="{:,}".format(nilai_trx_spse_nt_pengumuman_hps))
             style_metric_cards()
 
             st.divider()
