@@ -210,8 +210,8 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, kd_nontender, mtd_pemilihan, indikator_penilaiaan FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY kd_nontender").df()
-            st.dataframe(df_SIKAPNonTender_OK_filter)
+            #df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, kd_nontender, mtd_pemilihan, indikator_penilaiaan FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY kd_nontender").df()
+            #st.dataframe(df_SIKAPNonTender_OK_filter)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
