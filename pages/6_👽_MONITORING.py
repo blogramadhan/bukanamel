@@ -158,8 +158,6 @@ with menu_monitoring_2:
                     mime = "text/csv"
                 )
 
-
-
         except Exception:
             st.error("Gagal baca dataset SIKAP TENDER")
 
@@ -170,7 +168,7 @@ with menu_monitoring_2:
             df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
             df_SIKAPNonTender = tarik_data(DatasetSIKAPNonTender)
 
-            ##### Buat tombol undah dataset SIKAP TENDER
+            ##### Buat tombol undah dataset SIKAP NON TENDER
             unduh_SIKAP_NonTender = unduh_data(df_SIKAPNonTender)
 
             SIKAP_NonTender_1, SIKAP_NonTender_2 = st.columns((7,3))
@@ -183,6 +181,19 @@ with menu_monitoring_2:
                     file_name = f"SIKAPNonTender-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )        
+
+            st.divider()
+
+            SIKAP_NT_radio_1, SIKAP_NT_radio_2, SIKAP_NT_radio_3 = st.columns((1,1,8))
+            with SIKAP_NT_radio_1:
+                sumber_dana_sikap_nt = st.radio("**Sumber Dana**", df_SPSENonTenderPengumuman['sumber_dana'].unique(), key='Sumber_Dana_SIKAP_NT')
+            with SIKAP_NT_radio_2:
+                status_sikap_nt = st.radio("**Status Non Tender**", df_SPSENonTenderPengumuman['status_nontender'].unique(), key='Status_SIKAP_NT')
+            st.write(f"Anda memilih : **{sumber_dana_sikap_nt}** dan **{status_sikap_nt}**")
+
+            ##### Hitung-hitungan dataset SIKAP NON TENDER
+            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE sumber_dana = '{sumber_dana_sikap_nt}' AND status_nontender = '{status_sikap_nt}'").df()
+            #df_SIKAPNonTender_filter = con.execute(f"")
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
