@@ -193,9 +193,10 @@ with menu_monitoring_2:
 
             ##### Hitung-hitungan dataset SIKAP NON TENDER
             df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE sumber_dana = '{sumber_dana_sikap_nt}' AND status_nontender = '{status_sikap_nt}'").df()
-            df_SIKAPNonTender_filter = con.execute(f"SELECT * FROM df_SIKAPNonTender").df()
+            df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, mtd_pemilihan, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
+            df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
 
-            jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
+            jumlah_trx_spse_nt_pengumuman = df_SIKAPNonTender_OK['kd_nontender'].unique().shape[0]
             jumlah_trx_sikap_nt = df_SIKAPNonTender_filter['kd_nontender'].unique().shape[0]
             selisih_sikap_nt = jumlah_trx_spse_nt_pengumuman - jumlah_trx_sikap_nt
 
