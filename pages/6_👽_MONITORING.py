@@ -195,7 +195,6 @@ with menu_monitoring_2:
             df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, nama_satker, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
             df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, nama_paket, mtd_pemilihan, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
             df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='left', on='kd_nontender')
-            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, kd_nontender, mtd_pemilihan, indikator_penilaiaan FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY kd_nontender").df()
 
             jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
             jumlah_trx_sikap_nt = df_SIKAPNonTender_filter['kd_nontender'].unique().shape[0]
@@ -207,8 +206,11 @@ with menu_monitoring_2:
             data_sikap_nt_3.metric(label="Jumlah Paket Belum Dinilai", value="{:,}".format(selisih_sikap_nt))
             style_metric_cards()
 
+            st.dataframe(df_SIKAPNonTender_OK)
+
             st.divider()
 
+            df_SIKAPNonTender_OK_filter = con.execute(f"SELECT nama_satker, nama_paket, kd_nontender, mtd_pemilihan, indikator_penilaiaan FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY kd_nontender").df()
             st.dataframe(df_SIKAPNonTender_OK_filter)
 
         except Exception:
