@@ -200,7 +200,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            st.dataframe(df_SIKAPNonTender_OK)
+            st.dataframe(df_SIKAPNonTender_OK.groupby('kd_nontender'))
 
             st.divider()
 
