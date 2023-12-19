@@ -202,8 +202,18 @@ with menu_monitoring_2:
             st.divider()
 
             df_SIKAPNonTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_nontender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
-            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "Sangat Baik", df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "Baik", df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))
             
+            kondisi_penilaian = [
+                (df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK"),
+                (df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK"),
+                (df_SIKAPNonTender_OK_filter["SKOR_PENILAIAN"] >= 1, "CUKUP")
+            ]
+
+            nilai_standar = "BURUK"
+            
+            #df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "Sangat Baik", "BAIK"))
+            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter['KETERANGAN'] = np.select(kondisi_penilaian, nilai_standar)
+
             gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
             gd_sikap_nt.configure_pagination()
             gd_sikap_nt.configure_side_bar()
