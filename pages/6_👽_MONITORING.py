@@ -205,8 +205,7 @@ with menu_monitoring_2:
             st.divider()
 
             #df_SIKAPNonTender_OK_1 = df_SIKAPNonTender_OK[df_SIKAPNonTender_OK['nama_paket'].notna()][['nama_satker', 'nama_paket']]
-            df_SIKAPNonTender_OK_1 = con.execute("SELECT nama_satker, nama_paket FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY kd_nontender").df()
-
+            df_SIKAPNonTender_OK_1 = con.execute("SELECT nama_satker, nama_paket, nilai_indikator, total_skors FROM df_SIKAPNonTender_OK WHERE nama_paket IS NOT NULL GROUP BY nama_paket").df()
             st.dataframe(df_SIKAPNonTender_OK_1)
 
         except Exception:
