@@ -203,11 +203,11 @@ with menu_monitoring_2:
 
             df_SIKAPNonTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_nontender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
             
-            kondisi_penilaian = [
-                (df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK"),
-                (df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK"),
-                (df_SIKAPNonTender_OK_filter["SKOR_PENILAIAN"] >= 1, "CUKUP")
-            ]
+            # kondisi_penilaian = [
+            #     (df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK"),
+            #     (df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK"),
+            #     (df_SIKAPNonTender_OK_filter["SKOR_PENILAIAN"] >= 1, "CUKUP")
+            # ]
 
             nilai_standar = "BURUK"
             
