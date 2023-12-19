@@ -212,7 +212,7 @@ with menu_monitoring_2:
             nilai_standar = "BURUK"
             
             #df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "Sangat Baik", "BAIK"))
-            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter['KETERANGAN'] = np.select(kondisi_penilaian, nilai_standar)
+            df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.select(kondisi_penilaian, nilai_standar))
 
             gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
             gd_sikap_nt.configure_pagination()
