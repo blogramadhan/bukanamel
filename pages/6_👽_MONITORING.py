@@ -116,7 +116,8 @@ DatasetSIKAPTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sik
 
 ### Dataset SPSE Non Tender dan SIKAP
 DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
-DatasetSIKAPNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaNonTender{tahun}.parquet"
+DatasetSIKAPNonTender = f"https://data.pbj.my.id/{kodeRUP}/sikap/SIKAP-PenilaianKinerjaPenyedia-NonTender{tahun}.parquet"
+#DatasetSIKAPNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaNonTender{tahun}.parquet"
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -210,7 +211,9 @@ with menu_monitoring_2:
             gd_sikap_nt.configure_side_bar()
             gd_sikap_nt.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
             
-            AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
+            #AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
+
+            st.dataframe(df_SIKAPNonTender_OK_filter_final)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
