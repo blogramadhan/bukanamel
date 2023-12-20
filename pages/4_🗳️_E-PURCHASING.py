@@ -454,7 +454,13 @@ with menu_purchasing_1:
             with etalase1:
                 st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
             with etalase2:
-                st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
+                #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
+                st.download_button(
+                    label = "📥 Data Tramsaksi E-Katalog",
+                    data = unduh_ECAT,
+                    file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
 
             st.divider()
 
