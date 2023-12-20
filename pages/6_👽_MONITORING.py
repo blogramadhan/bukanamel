@@ -213,7 +213,20 @@ with menu_monitoring_2:
             
             # AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
 
-            st.dataframe(df_SIKAPNonTender_OK_filter_final)
+            st.dataframe(
+                df_SIKAPNonTender_OK_filter_final, 
+                column_config = {
+                    "NAMA_PAKET": "NAMA PAKET",
+                    "KODE_PAKET": "KODE PAKET",
+                    "JENIS_PENGADAAN": "JENIS PENGADAAN",
+                    "NAMA_PPK": "NAMA PPK",
+                    "NAMA_PENYEDIA": "NAMA PENYEDIA",
+                    "SKOR_PENILAIAN": "SKOR PENILAIAN",
+                    "KETERANGAN": "KETERANGAN"
+                },
+                use_container_width = True,
+                hide_index = True,
+            )
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
