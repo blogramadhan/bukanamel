@@ -450,6 +450,8 @@ with menu_purchasing_1:
 
         with menu_purchasing_1_2:
 
+            unduh_ECAT_Etalase = unduh_data(df_ECAT_OK)
+
             etalase1, etalase2 = st.columns((8,2))
             with etalase1:
                 st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
@@ -457,7 +459,7 @@ with menu_purchasing_1:
                 #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
                 st.download_button(
                     label = "📥 Data Tramsaksi E-Katalog",
-                    data = unduh_ECAT,
+                    data = unduh_ECAT_Etalase,
                     file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
                 )
