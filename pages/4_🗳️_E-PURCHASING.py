@@ -123,7 +123,9 @@ DatasetPURCHASINGECATIS = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-In
 
 ## Download Excel ECAT Detail
 DatasetPURCHASINGECATDETAIL_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.xlsx"
-DatasetPURCHASINGBELA_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.xlsx"
+#DatasetPURCHASINGBELA_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.xlsx"
+## Akses file dataset https://data.pbj.my.id
+DatasetPURCHASINGECATDETAIL_DOWNLOAD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.xlsx"
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -455,13 +457,7 @@ with menu_purchasing_1:
                 st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
             with etalase2:
                 st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
-                # st.download_button(
-                #     label = "📥 Data Tramsaksi E-Katalog",
-                #     data = unduh_ECAT,
-                #     file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
-                #     mime = "text/csv"
-                # )
-
+                
             st.divider()
 
             ETALASE_radio_1, ETALASE_radio_2, ETALASE_radio_3, ETALASE_radio_4 = st.columns((1,1,2,6))
