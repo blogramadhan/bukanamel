@@ -147,18 +147,45 @@ with menu_monitoring_2:
             df_SIKAPTender = tarik_data(DatasetSIKAPTender)
 
             ##### Buat tombol undah dataset SIKAP TENDER
-            unduh_SIKAP_Tender = unduh_data(df_SIKAPTender)
 
-            SIKAP_Tender_1, SIKAP_Tender_2 = st.columns((7,3))
-            with SIKAP_Tender_1:
-                st.subheader("SIKAP TENDER")
-            with SIKAP_Tender_2:
-                st.download_button(
-                    label = "📥 Download Data SIKAP Tender",
-                    data = unduh_SIKAP_Tender,
-                    file_name = f"SIKAPTender-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
-                )
+            st.subheader("SIKAP TENDER")
+
+            st.divider()
+
+            df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, nama_satker, pagu, hps, jenis_pengadaan, mtd_pemilihan, FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
+            df_SIKAPTender_filter = con.execute(f"SELECT kd_tender, nama_paket, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPTender").df()
+            df_SIKAPTender_OK = df_SPSETenderPengumuman_filter.merge(df_SIKAPTender_filter, how='right', on='kd_tender')
+
+            jumlah_trx_spse_t_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
+            jumlah_trx_sikap_t = df_SIKAPTender_filter['kd_tender'].unique().shape[0]
+            selisih_sikap_t = jumlah_trx_spse_t_pengumuman - jumlah_trx_sikap_t
+
+            data_sikap_t_1, data_sikap_t_2, data_sikap_t_3 = st.columns(3)
+            data_sikap_t_1.metric(label="Jumlah Paket Tender Selesai", value="{:,}".format(jumlah_trx_spse_t_pengumuman))
+            data_sikap_t_2.metric(label="Jumlah Paket Tender Sudah Dinilai", value="{:,}".format(jumlah_trx_sikap_t))
+            data_sikap_t_3.metric(label="Jumlah Paket Tender Belum Dinilai", value="{:,}".format(selisih_sikap_t))
+            style_metric_cards()
+
+            st.divider()
+
+            df_SIKAPTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_tender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
+            df_SIKAPTender_OK_filter_final = df_SIKAPTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
+
+            unduh_SIKAP_Tender = unduh_data(df_SIKAPTender_OK_filter_final)
+
+            st.download_button(
+                label = "📥 Download Data SIKAP Tender",
+                data = unduh_SIKAP_Tender,
+                file_name = f"SIKAPTender-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )        
+
+            gd_sikap_t = GridOptionsBuilder.from_dataframe(df_SIKAPTender_OK_filter_final)
+            gd_sikap_t.configure_pagination()
+            gd_sikap_t.configure_side_bar()
+            gd_sikap_t.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            
+            AgGrid(df_SIKAPTender_OK_filter_final, gridOptions=gd_sikap_t.build(), enable_enterprise_modules=True)
 
         except Exception:
             st.error("Gagal baca dataset SIKAP TENDER")
