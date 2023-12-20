@@ -159,8 +159,14 @@ with menu_purchasing_1:
             with ecat1:
                 st.header(f"Transaksi e-Katalog {pilih} Tahun {tahun}")
             with ecat2:
-                st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
-                
+                #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
+                st.download_button(
+                    label = "📥 Download Data Tramsaksi E-Katalog",
+                    data = unduh_ECAT,
+                    file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
+                    mime = "text/csv"
+                )
+
             st.divider()
 
             KATALOG_radio_1, KATALOG_radio_2, KATALOG_radio_3, KATALOG_radio_4 = st.columns((1,1,2,6))
@@ -565,8 +571,14 @@ with menu_purchasing_2:
         with bela1:
             st.header(f"Transaksi Toko Daring {pilih} Tahun {tahun}")
         with bela2:
-            st.link_button("📥 Download Data Transaksi Toko Daring", DatasetPURCHASINGBELA_DOWNLOAD)
-            
+            #st.link_button("📥 Download Data Transaksi Toko Daring", DatasetPURCHASINGBELA_DOWNLOAD)
+            st.download_button(
+                label = "📥 Download Data Tramsaksi Toko Daring",
+                data = unduh_BELA,
+                file_name = f"TransaksiTokoDaring-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )
+
         st.divider()
 
         status_verifikasi = st.radio("**Status Verifikasi Transaksi**", ["verified", "unverified", "Gabungan"])
