@@ -161,7 +161,7 @@ with menu_purchasing_1:
             with ecat2:
                 #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
                 st.download_button(
-                    label = "📥 Download Data Tramsaksi E-Katalog",
+                    label = "📥 Data Tramsaksi E-Katalog",
                     data = unduh_ECAT,
                     file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
                     mime = "text/csv"
@@ -573,7 +573,7 @@ with menu_purchasing_2:
         with bela2:
             #st.link_button("📥 Download Data Transaksi Toko Daring", DatasetPURCHASINGBELA_DOWNLOAD)
             st.download_button(
-                label = "📥 Download Data Tramsaksi Toko Daring",
+                label = "📥 Data Tramsaksi Toko Daring",
                 data = unduh_BELA,
                 file_name = f"TransaksiTokoDaring-{kodeFolder}-{tahun}.csv",
                 mime = "text/csv"
