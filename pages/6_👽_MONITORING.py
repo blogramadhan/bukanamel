@@ -171,18 +171,8 @@ with menu_monitoring_2:
             df_SIKAPNonTender = tarik_data(DatasetSIKAPNonTender)
 
             ##### Buat tombol undah dataset SIKAP NON TENDER
-            unduh_SIKAP_NonTender = unduh_data(df_SIKAPNonTender)
 
-            SIKAP_NonTender_1, SIKAP_NonTender_2 = st.columns((7,3))
-            with SIKAP_NonTender_1:
-                st.subheader("SIKAP NON TENDER")
-            with SIKAP_NonTender_2:
-                st.download_button(
-                    label = "📥 Download Data SIKAP Non Tender",
-                    data = unduh_SIKAP_NonTender,
-                    file_name = f"SIKAPNonTender-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
-                )        
+            st.subheader("SIKAP NON TENDER")
 
             st.divider()
 
@@ -203,30 +193,38 @@ with menu_monitoring_2:
             st.divider()
 
             df_SIKAPNonTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_nontender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
-            
             df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
 
-            # gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
-            # gd_sikap_nt.configure_pagination()
-            # gd_sikap_nt.configure_side_bar()
-            # gd_sikap_nt.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            
-            # AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
+            unduh_SIKAP_NonTender = unduh_data(df_SIKAPNonTender_OK_filter_final)
 
-            st.dataframe(
-                df_SIKAPNonTender_OK_filter_final, 
-                column_config = {
-                    "NAMA_PAKET": "NAMA PAKET",
-                    "KODE_PAKET": "KODE PAKET",
-                    "JENIS_PENGADAAN": "JENIS PENGADAAN",
-                    "NAMA_PPK": "PPK",
-                    "NAMA_PENYEDIA": "PENYEDIA",
-                    "SKOR_PENILAIAN": "SKOR",
-                    "KETERANGAN": "KETERANGAN"
-                },
-                use_container_width = True,
-                hide_index = True,
-            )
+            st.download_button(
+                label = "📥 Download Data SIKAP Non Tender",
+                data = unduh_SIKAP_NonTender,
+                file_name = f"SIKAPNonTender-{kodeFolder}-{tahun}.csv",
+                mime = "text/csv"
+            )        
+
+            gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
+            gd_sikap_nt.configure_pagination()
+            gd_sikap_nt.configure_side_bar()
+            gd_sikap_nt.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            
+            AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
+
+            # st.dataframe(
+            #     df_SIKAPNonTender_OK_filter_final, 
+            #     column_config = {
+            #         "NAMA_PAKET": "NAMA PAKET",
+            #         "KODE_PAKET": "KODE PAKET",
+            #         "JENIS_PENGADAAN": "JENIS PENGADAAN",
+            #         "NAMA_PPK": "PPK",
+            #         "NAMA_PENYEDIA": "PENYEDIA",
+            #         "SKOR_PENILAIAN": "SKOR",
+            #         "KETERANGAN": "KETERANGAN"
+            #     },
+            #     use_container_width = True,
+            #     hide_index = True,
+            # )
 
         except Exception:
             st.error("Gagal baca dataset SIKAP NON TENDER")
