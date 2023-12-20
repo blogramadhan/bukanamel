@@ -116,7 +116,7 @@ DatasetSIKAPTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sik
 
 ### Dataset SPSE Non Tender dan SIKAP
 DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
-DatasetSIKAPNonTender = f"https://data.pbj.my.id/{kodeRUP}/sikap/SIKAP-PenilaianKinerjaPenyedia-NonTender{tahun}.parquet"
+DatasetSIKAPNonTender = f"https://data.pbj.my.id/{kodeRUP}/sikap/SiKAP-PenilaianKinerjaPenyedia-NonTender{tahun}.parquet"
 #DatasetSIKAPNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaNonTender{tahun}.parquet"
 
 #####
@@ -206,12 +206,12 @@ with menu_monitoring_2:
             
             df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
 
-            gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
-            gd_sikap_nt.configure_pagination()
-            gd_sikap_nt.configure_side_bar()
-            gd_sikap_nt.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            # gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
+            # gd_sikap_nt.configure_pagination()
+            # gd_sikap_nt.configure_side_bar()
+            # gd_sikap_nt.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
             
-            #AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
+            # AgGrid(df_SIKAPNonTender_OK_filter_final, gridOptions=gd_sikap_nt.build(), enable_enterprise_modules=True)
 
             st.dataframe(df_SIKAPNonTender_OK_filter_final)
 
