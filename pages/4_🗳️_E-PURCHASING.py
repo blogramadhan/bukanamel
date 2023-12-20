@@ -263,7 +263,7 @@ with menu_purchasing_1:
                 if jenis_katalog == "Lokal":
                     sql_jumlah_transaksi_lokal_nk = f"""
                         SELECT nama_komoditas AS NAMA_KOMODITAS, COUNT(DISTINCT(no_paket)) AS JUMLAH_TRANSAKSI
-                        FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}'
+                        FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeRUP}'
                         GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
                     """
                 else:
