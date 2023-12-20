@@ -219,9 +219,9 @@ with menu_monitoring_2:
                     "NAMA_PAKET": "NAMA PAKET",
                     "KODE_PAKET": "KODE PAKET",
                     "JENIS_PENGADAAN": "JENIS PENGADAAN",
-                    "NAMA_PPK": "NAMA PPK",
-                    "NAMA_PENYEDIA": "NAMA PENYEDIA",
-                    "SKOR_PENILAIAN": "SKOR PENILAIAN",
+                    "NAMA_PPK": "PPK",
+                    "NAMA_PENYEDIA": "PENYEDIA",
+                    "SKOR_PENILAIAN": "SKOR",
                     "KETERANGAN": "KETERANGAN"
                 },
                 use_container_width = True,
