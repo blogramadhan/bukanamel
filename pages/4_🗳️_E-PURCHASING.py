@@ -293,7 +293,7 @@ with menu_purchasing_1:
                 if jenis_katalog == "Lokal":
                     sql_nilai_transaksi_lokal_nk = f"""
                         SELECT nama_komoditas AS NAMA_KOMODITAS, SUM(total_harga) AS NILAI_TRANSAKSI
-                        FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeInstansi}'
+                        FROM df_ECAT_filter WHERE NAMA_KOMODITAS IS NOT NULL AND kd_instansi_katalog = '{kodeRUP}'
                         GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
                     """
                 else:
