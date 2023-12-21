@@ -77,8 +77,11 @@ st.markdown("""
 * **PURCHASING**
   * Tramsaksi Katalog
   * Transaksi Toko Daring
-* **SIKAP**
 * **MONITORING**
+  * ITKP
+  * SIKAP
+    * Tender
+    * Non Tender
 
 Sumber data *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
