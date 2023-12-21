@@ -121,6 +121,9 @@ DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-Tend
 ### Dataset E-Purchasing
 DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-PaketEPurchasing{tahun}.parquet"
 
+### Dataset Toko Daring
+DatasetPURCHASINGBELA = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.parquet"
+
 ### Dataset SPSE Tender dan SIKAP
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
 DatasetSIKAPTender = f"https://data.pbj.my.id/{kodeRUP}/sikap/SIKaP-PenilaianKinerjaPenyedia-Tender{tahun}.parquet"
@@ -228,6 +231,30 @@ with menu_monitoring_1:
         itkp_epurchasing_2.metric(label="E-PURCHASING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_ecat / 1000000000))
         itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
         itkp_epurchasing_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
+        style_metric_cards()
+
+        ###
+
+        ### PREDIKSI ITKP TOKO DARING
+        #### Tarik dataset TOKO DARING
+        df_BELA = tarik_data(DatasetPURCHASINGBELA)
+        df_BELA_filter = con.execute(f"SELECT valuasi FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = 'verified' AND status_konfirmasi_ppmse = 'selesai'").df()
+        
+        #### Query ITKP TOKO DARING
+        jumlah_trx_bela = df_BELA_filter['valuasi'].count()
+        nilai_trx_bela = df_BELA_filter['valuasi'].sum()
+        if jumlah_trx_bela >= 1:
+            prediksi_itkp_bela = 1
+        else:
+            prediksi_itkp_bela = 0
+        #### END ITKP TOKO DARING
+            
+        ### Tampilan Prediksi TOKO DARING
+        st.subheader("**TOKO DARING**")
+        itkp_bela_1, itkp_bela_2, itkp_bela_3 = st.columns(3)
+        itkp_bela_1.metric(label="JUMLAH TRANSAKSI TOKO DARING", value="{:,.2f}".format(jumlah_trx_bela))
+        itkp_bela_2.metric(label="NILAI TRANSAKSI TOKO DARING", value="{:,.2f}".format(nilai_trx_bela))
+        itkp_bela_3.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_bela, 2)))
         style_metric_cards()
 
     except Exception:
