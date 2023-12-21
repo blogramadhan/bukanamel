@@ -172,8 +172,8 @@ with menu_monitoring_1:
         ### PREDIKSI ITKP E-TENDERING
         #### Tarik dataset SIRUP + SPSE E-TENDERING
         df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-        # df_SPSETenderPengumuman_etendering = con.execute("SELECT pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
-        # df_RUPPP_umumkan_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE IN ('Tender', 'Tender Cepat')").df()
+        df_SPSETenderPengumuman_etendering = con.execute("SELECT pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
+        #df_RUPPP_umumkan_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE IN ('Tender', 'Tender Cepat')").df()
 
         # #### Query ITKP E-TENDERING
         # nilai_etendering_rup = df_RUPPP_umumkan_etendering['pagu'].sum()
