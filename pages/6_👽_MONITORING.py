@@ -172,28 +172,28 @@ with menu_monitoring_1:
         ### PREDIKSI ITKP E-TENDERING
         #### Tarik dataset SIRUP + SPSE E-TENDERING
         df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-        df_SPSETenderPengumuman_etendering = con.execute("SELECT pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
-        df_RUPPP_umumkan_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE IN ('Tender', 'Tender Cepat')").df()
+        # df_SPSETenderPengumuman_etendering = con.execute("SELECT pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
+        # df_RUPPP_umumkan_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE IN ('Tender', 'Tender Cepat')").df()
 
-        #### Query ITKP E-TENDERING
-        nilai_etendering_rup = df_RUPPP_umumkan_etendering['pagu'].sum()
-        nilai_etendering_spse = df_SPSETenderPengumuman_etendering['pagu'].sum()
-        persen_capaian_etendering = nilai_etendering_spse / nilai_etendering_rup        
-        if persen_capaian_etendering > 1:
-            prediksi_itkp_etendering = (1 - (persen_capaian_etendering - 1)) * 5
-        elif persen_capaian_etendering > 0.5:
-            prediksi_itkp_etendering = persen_capaian_etendering * 5 
-        else:
-            prediksi_itkp_etendering = 0
-        #### END ITKP ETENDERING
+        # #### Query ITKP E-TENDERING
+        # nilai_etendering_rup = df_RUPPP_umumkan_etendering['pagu'].sum()
+        # nilai_etendering_spse = df_SPSETenderPengumuman_etendering['pagu'].sum()
+        # persen_capaian_etendering = nilai_etendering_spse / nilai_etendering_rup        
+        # if persen_capaian_etendering > 1:
+        #     prediksi_itkp_etendering = (1 - (persen_capaian_etendering - 1)) * 5
+        # elif persen_capaian_etendering > 0.5:
+        #     prediksi_itkp_etendering = persen_capaian_etendering * 5 
+        # else:
+        #     prediksi_itkp_etendering = 0
+        # #### END ITKP ETENDERING
 
-        st.subheader("**E-TENDERING**")
-        itkp_etendering_1, itkp_etendering_2, itkp_etendering_3, itkp_etendering_4 = st.columns(4)
-        itkp_etendering_1.metric(label="NILAI ETENDERING RUP", value="{:,.2f}".format(nilai_etendering_rup))
-        itkp_etendering_2.metric(label="ETENDERING SELESAI", value="{:,.2f}".format(nilai_etendering_spse))
-        itkp_etendering_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_etendering))
-        itkp_etendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_etendering, 2)))
-        style_metric_cards()
+        # st.subheader("**E-TENDERING**")
+        # itkp_etendering_1, itkp_etendering_2, itkp_etendering_3, itkp_etendering_4 = st.columns(4)
+        # itkp_etendering_1.metric(label="NILAI ETENDERING RUP", value="{:,.2f}".format(nilai_etendering_rup))
+        # itkp_etendering_2.metric(label="ETENDERING SELESAI", value="{:,.2f}".format(nilai_etendering_spse))
+        # itkp_etendering_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_etendering))
+        # itkp_etendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_etendering, 2)))
+        # style_metric_cards()
 
     except Exception:
         st.error("Gagal baca dataset ITKP")
