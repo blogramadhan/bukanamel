@@ -123,7 +123,7 @@ DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-Pake
 
 ### Dataset SPSE Tender dan SIKAP
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
-DatasetSIKAPTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaTender{tahun}.parquet"
+DatasetSIKAPTender = f"https://data.pbj.my.id/{kodeRUP}/sikap/SIKaP-PenilaianKinerjaPenyedia-Tender{tahun}.parquet"
 
 ### Dataset SPSE Non Tender dan SIKAP
 DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
