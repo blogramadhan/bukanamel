@@ -159,7 +159,7 @@ with menu_purchasing_1:
 
             ecat1, ecat2 = st.columns((8,2))
             with ecat1:
-                st.header(f"Transaksi e-Katalog {pilih} Tahun {tahun}")
+                st.header(f"TRANSAKSI E-KATALOG - {pilih} - TAHUN {tahun}")
             with ecat2:
                 #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
                 st.download_button(
@@ -454,7 +454,7 @@ with menu_purchasing_1:
 
             etalase1, etalase2 = st.columns((8,2))
             with etalase1:
-                st.header(f"Transaksi e-Katalog (Etalase) {pilih} Tahun {tahun}")
+                st.header(f"TRANSAKSI E-KATALOG (ETALASE) - {pilih} - TAHUN {tahun}")
             with etalase2:
                 #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
                 st.download_button(
@@ -579,7 +579,7 @@ with menu_purchasing_2:
 
         bela1, bela2 = st.columns((7,3))
         with bela1:
-            st.header(f"Transaksi Toko Daring {pilih} Tahun {tahun}")
+            st.header(f"TRANSAKSI TOKO DARING - {pilih} - TAHUN {tahun}")
         with bela2:
             #st.link_button("📥 Download Data Transaksi Toko Daring", DatasetPURCHASINGBELA_DOWNLOAD)
             st.download_button(
