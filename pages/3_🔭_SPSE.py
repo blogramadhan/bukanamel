@@ -41,7 +41,7 @@ logo()
 
 # Konfigurasi variabel lokasi UKPBJ
 daerah = ["PROV. KALBAR", "KAB. BENGKAYANG", "KAB. MELAWI", "KOTA PONTIANAK", "KAB. SANGGAU", "KAB. SEKADAU", "KAB. KAPUAS HULU", "KAB. KUBU RAYA", "KAB. LANDAK", "KOTA SINGKAWANG", 
-          "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KETAPANG", "KAB. KATINGAN"]
+          "KAB. SINTANG", "KAB. MEMPAWAH", "KAB. KETAPANG", "KAB. KATINGAN", "KAB. SUMEDANG"]
 
 tahuns = ["2023", "2022"]
 
@@ -104,6 +104,10 @@ if pilih == "KAB. KATINGAN":
     kodeFolder = "ktn"
     kodeRUP = "D236"
     kodeLPSE = "438"
+if pilih == "KAB. SUMEDANG":
+    kodeFolder = "smd"
+    kodeRUP = "D118"
+    kodeLPSE = "432"
 
 # Persiapan Dataset
 con = duckdb.connect(database=':memory:')
