@@ -117,6 +117,7 @@ DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{t
 
 ### Dataset Tender
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
+DatasetSPSETenderKontrak = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderEkontrak-Kontrak{tahun}.parquet"
 
 ### Dataset Non Tender
 DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
@@ -185,7 +186,7 @@ with menu_monitoring_1:
         ### PREDIKSI ITKP E-TENDERING
         #### Tarik dataset SIRUP + SPSE E-TENDERING
         df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-        df_SPSETenderPengumuman_etendering = con.execute("SELECT pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
+        df_SPSETenderPengumuman_etendering = con.execute("SELECT kd_tender, pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
         df_RUPPP_umumkan_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan IN ('Tender', 'Tender Cepat')").df()
 
         #### Query ITKP E-TENDERING
@@ -240,6 +241,34 @@ with menu_monitoring_1:
 
         ###
 
+        ### PREDIKSI ITKP E-KONTRAK
+        #### Tarik dataset E-KONTRAK
+        df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
+        df_SPSETenderKontrak_filter = con.execute("SELECT * kd_tender FROM df_SPSETenderKontrak").df()
+        
+        #### Query ITKP E-KONTRAK
+        jumlah_tender_selesai = df_SPSETenderPengumuman_etendering['kd_tender'].count()
+        jumlah_tender_kontrak = df_SPSETenderKontrak_filter['kd_tender'].count()
+        persen_capaian_ekontrak = jumlah_tender_selesai / jumlah_tender_kontrak        
+        if persen_capaian_ekontrak > 1:
+            prediksi_itkp_ekontrak = (1 - (persen_capaian_ekontrak - 1)) * 5
+        elif persen_capaian_ekontrak > 0.2:
+            prediksi_itkp_ekontrak = persen_capaian_ekontrak * 5 
+        else:
+            prediksi_itkp_ekontrak = 0
+        #### END ITKP E-KONTRAK
+            
+        ### Tampilan Prediksi E-KONTRAK
+        st.subheader("**E-KONTRAK**")
+        itkp_ekontrak_1, itkp_ekontrak_2, itkp_ekontrak_3, itkp_ekontrak_4 = st.columns(4)
+        itkp_ekontrak_1.metric(label="JUMLAH PAKET TENDER SELESAI", value="{:,}".format(jumlah_tender_selesai))
+        itkp_ekontrak_2.metric(label="JUMLAH PAKET TENDER BERKONTRAK", value="{:,}".format(jumlah_tender_kontrak))
+        itkp_ekontrak_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_ekontrak))
+        itkp_ekontrak_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_nonetendering, 2)))
+        style_metric_cards()
+
+        ###
+
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
@@ -286,7 +315,7 @@ with menu_monitoring_1:
         ### Tampilan Prediksi TOKO DARING
         st.subheader("**TOKO DARING**")
         itkp_bela_1, itkp_bela_2, itkp_bela_3 = st.columns(3)
-        itkp_bela_1.metric(label="JUMLAH TRANSAKSI TOKO DARING", value="{:,.2f}".format(jumlah_trx_bela))
+        itkp_bela_1.metric(label="JUMLAH TRANSAKSI TOKO DARING", value="{:,}".format(jumlah_trx_bela))
         itkp_bela_2.metric(label="NILAI TRANSAKSI TOKO DARING", value="{:,.2f}".format(nilai_trx_bela))
         itkp_bela_3.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_bela, 2)))
         style_metric_cards()
