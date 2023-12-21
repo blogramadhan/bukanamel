@@ -249,7 +249,7 @@ with menu_monitoring_1:
         #### Query ITKP E-KONTRAK
         jumlah_tender_selesai = df_SPSETenderPengumuman_etendering['kd_tender'].count()
         jumlah_tender_kontrak = df_SPSETenderKontrak_filter['kd_tender'].count()
-        persen_capaian_ekontrak = jumlah_tender_selesai / jumlah_tender_kontrak        
+        persen_capaian_ekontrak = jumlah_tender_kontrak / jumlah_tender_selesai        
         if persen_capaian_ekontrak > 1:
             prediksi_itkp_ekontrak = (1 - (persen_capaian_ekontrak - 1)) * 5
         elif persen_capaian_ekontrak > 0.2:
