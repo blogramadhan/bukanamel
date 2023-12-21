@@ -206,29 +206,29 @@ with menu_monitoring_1:
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
-        df_ECAT_filter = con.execute(f"SELECT total_harga FROM df_ECAT_OK WHERE paket_status_str = 'Paket Selesai'").df()
-        # df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
+        df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str = 'Paket Selesai'").df()
+        df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
 
-        # #### Query ITKP E-PURCHASING
-        # nilai_epurchasing_rup = df_RUPPP_umumkan_epurchasing['pagu'].sum()
-        # nilai_epurchasing_ecat = df_ECAT_filter['total_harga'].sum()
-        # persen_capaian_epurchasing = nilai_epurchasing_ecat / nilai_epurchasing_rup        
-        # if persen_capaian_epurchasing > 1:
-        #     prediksi_itkp_epurchasing = (1 - (persen_capaian_epurchasing - 1)) * 4
-        # elif persen_capaian_epurchasing > 0.5:
-        #     prediksi_itkp_epurchasing = persen_capaian_epurchasing * 4 
-        # else:
-        #     prediksi_itkp_etendering = 0
-        # #### END ITKP E-PURCHASING
+        #### Query ITKP E-PURCHASING
+        nilai_epurchasing_rup = df_RUPPP_umumkan_epurchasing['pagu'].sum()
+        nilai_epurchasing_ecat = df_ECAT_filter['total_harga'].sum()
+        persen_capaian_epurchasing = nilai_epurchasing_ecat / nilai_epurchasing_rup        
+        if persen_capaian_epurchasing > 1:
+            prediksi_itkp_epurchasing = (1 - (persen_capaian_epurchasing - 1)) * 4
+        elif persen_capaian_epurchasing > 0.5:
+            prediksi_itkp_epurchasing = persen_capaian_epurchasing * 4 
+        else:
+            prediksi_itkp_etendering = 0
+        #### END ITKP E-PURCHASING
             
-        # ### Tampilan Prediksi E-PURCHASING
-        # st.subheader("**E-PURCHASING**")
-        # itkp_epurchasing_1, itkp_epurchasing_2, itkp_epurchasing_3, itkp_epurchasing_4 = st.columns(4)
-        # itkp_epurchasing_1.metric(label="NILAI RUP E-PURCHASING (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_rup / 1000000000))
-        # itkp_epurchasing_2.metric(label="E-PURCHASING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_ecat / 1000000000))
-        # itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
-        # itkp_epurchasing_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
-        # style_metric_cards()
+        ### Tampilan Prediksi E-PURCHASING
+        st.subheader("**E-PURCHASING**")
+        itkp_epurchasing_1, itkp_epurchasing_2, itkp_epurchasing_3, itkp_epurchasing_4 = st.columns(4)
+        itkp_epurchasing_1.metric(label="NILAI RUP E-PURCHASING (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_rup / 1000000000))
+        itkp_epurchasing_2.metric(label="E-PURCHASING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_ecat / 1000000000))
+        itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
+        itkp_epurchasing_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
+        style_metric_cards()
 
     except Exception:
         st.error("Gagal baca dataset ITKP")
