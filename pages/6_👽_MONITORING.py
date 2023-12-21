@@ -155,7 +155,7 @@ with menu_monitoring_1:
         else:
             prediksi_itkp = 0
 
-        itkp_sirup_1, itkp_sirup_2, itkp_sirup_3, itkp_sirup_4 = st.columns((4,4,1,1))
+        itkp_sirup_1, itkp_sirup_2, itkp_sirup_3, itkp_sirup_4 = st.columns(4)
         itkp_sirup_1.metric(label="BELANJA PENGADAAN", value="{:,.2f}".format(belanja_pengadaan))
         itkp_sirup_2.metric(label="NILAI INPUT RUP", value="{:,.2f}".format(nilai_total_rup))
         itkp_sirup_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_rup))
