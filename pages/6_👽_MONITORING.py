@@ -264,7 +264,7 @@ with menu_monitoring_1:
         itkp_ekontrak_1.metric(label="JUMLAH PAKET TENDER SELESAI", value="{:,}".format(jumlah_tender_selesai))
         itkp_ekontrak_2.metric(label="JUMLAH PAKET TENDER BERKONTRAK", value="{:,}".format(jumlah_tender_kontrak))
         itkp_ekontrak_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_ekontrak))
-        itkp_ekontrak_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_nonetendering, 2)))
+        itkp_ekontrak_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_ekontrak, 2)))
         style_metric_cards()
 
         ###
