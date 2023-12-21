@@ -146,8 +146,7 @@ menu_monitoring_1, menu_monitoring_2 = st.tabs(["| ITKP |", "| SIKAP |"])
 ## Tab menu monitoring ITKP
 with menu_monitoring_1:
 
-    st.header(f"PREDIKSI ITKP - {pilih} - TAHUN {tahun}")
-    st.subheader("PEMANFAATAN SISTEM PENGADAAN")
+    st.header(f"PREDIKSI ITKP PEMANFAATAN SISTEM PENGADAAN - {pilih} - TAHUN {tahun}")
 
     st.divider()
 
