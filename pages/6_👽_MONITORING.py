@@ -218,7 +218,7 @@ with menu_monitoring_1:
         elif persen_capaian_epurchasing > 0.5:
             prediksi_itkp_epurchasing = persen_capaian_epurchasing * 4 
         else:
-            prediksi_itkp_etendering = 0
+            prediksi_itkp_epurchasing = 0
         #### END ITKP E-PURCHASING
             
         ### Tampilan Prediksi E-PURCHASING
