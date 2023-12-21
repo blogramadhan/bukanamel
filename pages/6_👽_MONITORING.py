@@ -178,7 +178,7 @@ with menu_monitoring_1:
         itkp_sirup_1.metric(label="BELANJA PENGADAAN (MILYAR)", value="{:,.2f}".format(belanja_pengadaan / 1000000000))
         itkp_sirup_2.metric(label="NILAI RUP (MILYAR)", value="{:,.2f}".format(nilai_total_rup / 1000000000))
         itkp_sirup_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_rup))
-        itkp_sirup_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_rup, 2)))
+        itkp_sirup_4.metric(label="NILAI PREDIKSI (DARI 10)", value="{:,}".format(round(prediksi_itkp_rup, 2)))
         style_metric_cards()
 
     except Exception:
@@ -211,7 +211,7 @@ with menu_monitoring_1:
         itkp_etendering_1.metric(label="NILAI RUP E-TENDERING (MILYAR)", value="{:,.2f}".format(nilai_etendering_rup / 1000000000))
         itkp_etendering_2.metric(label="E-TENDERING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_etendering_spse / 1000000000))
         itkp_etendering_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_etendering))
-        itkp_etendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_etendering, 2)))
+        itkp_etendering_4.metric(label="NILAI PREDIKSI (DARI 5)", value="{:,}".format(round(prediksi_itkp_etendering, 2)))
         style_metric_cards()
 
     except Exception:
@@ -244,7 +244,7 @@ with menu_monitoring_1:
         itkp_nonetendering_1.metric(label="NILAI RUP NON E-TENDERING (MILYAR)", value="{:,.2f}".format(nilai_nonetendering_rup / 1000000000))
         itkp_nonetendering_2.metric(label="NON E-TENDERING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_nonetendering_spse / 1000000000))
         itkp_nonetendering_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_nonetendering))
-        itkp_nonetendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_nonetendering, 2)))
+        itkp_nonetendering_4.metric(label="NILAI PREDIKSI (DARI 5)", value="{:,}".format(round(prediksi_itkp_nonetendering, 2)))
         style_metric_cards()
 
     except Exception:
@@ -276,7 +276,7 @@ with menu_monitoring_1:
         itkp_ekontrak_1.metric(label="JUMLAH PAKET TENDER SELESAI", value="{:,}".format(jumlah_tender_selesai))
         itkp_ekontrak_2.metric(label="JUMLAH PAKET TENDER BERKONTRAK", value="{:,}".format(jumlah_tender_kontrak))
         itkp_ekontrak_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_ekontrak))
-        itkp_ekontrak_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_ekontrak, 2)))
+        itkp_ekontrak_4.metric(label="NILAI PREDIKSI (DARI 5)", value="{:,}".format(round(prediksi_itkp_ekontrak, 2)))
         style_metric_cards()
 
     except Exception:
@@ -309,7 +309,7 @@ with menu_monitoring_1:
         itkp_epurchasing_1.metric(label="NILAI RUP E-PURCHASING (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_rup / 1000000000))
         itkp_epurchasing_2.metric(label="E-PURCHASING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_ecat / 1000000000))
         itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
-        itkp_epurchasing_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
+        itkp_epurchasing_4.metric(label="NILAI PREDIKSI (DARI 4)", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
         style_metric_cards()
 
     except Exception:
@@ -337,7 +337,7 @@ with menu_monitoring_1:
         itkp_bela_1, itkp_bela_2, itkp_bela_3 = st.columns(3)
         itkp_bela_1.metric(label="JUMLAH TRANSAKSI TOKO DARING", value="{:,}".format(jumlah_trx_bela))
         itkp_bela_2.metric(label="NILAI TRANSAKSI TOKO DARING", value="{:,.2f}".format(nilai_trx_bela))
-        itkp_bela_3.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_bela, 2)))
+        itkp_bela_3.metric(label="NILAI PREDIKSI (DARI 1)", value="{:,}".format(round(prediksi_itkp_bela, 2)))
         style_metric_cards()
 
     except Exception:
