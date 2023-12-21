@@ -118,6 +118,7 @@ con = duckdb.connect(database=':memory:')
 #DatasetSPSETenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakKontrak{tahun}.parquet"
 #DatasetSPSETenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakSPMKSPP{tahun}.parquet"
 #DatasetSPSETenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSETenderEkontrakBAPBAST{tahun}.parquet"
+
 ### data.pbj.my.id/spse
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
 DatasetSPSETenderSelesai = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderSelesai{tahun}.parquet"
@@ -134,6 +135,7 @@ DatasetSPSETenderBAST = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderEkon
 #DatasetSPSENonTenderKontrak = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakKontrak{tahun}.parquet"
 #DatasetSPSENonTenderSPMK = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakSPMKSPP{tahun}.parquet"
 #DatasetSPSENonTenderBAST = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSENonTenderEkontrakBAPBAST{tahun}.parquet"
+
 ### data.pbj.my.id/spse
 DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
 DatasetSPSENonTenderSelesai = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderSelesai{tahun}.parquet"
@@ -147,6 +149,7 @@ DatasetSPSENonTenderBAST = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTend
 #DatasetCatatNonTenderRealisasi = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanNonTenderRealisasi{tahun}.parquet"
 #DatasetCatatSwakelola = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanSwakelola{tahun}.parquet"
 #DatasetCatatSwakelolaRealisasi = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPencatatanSwakelolaRealisasi{tahun}.parquet"
+
 ### data.pbj.my.id/spse
 DatasetCatatNonTender = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PencatatanNonTender{tahun}.parquet"
 DatasetCatatNonTenderRealisasi = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PencatatanNonTenderRealisasi{tahun}.parquet"
@@ -155,35 +158,21 @@ DatasetCatatSwakelolaRealisasi = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-P
 
 ### Dataset Peserta Tender
 #DatasetPesertaTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/spse/SPSEPesertaTender{tahun}.parquet"
+
 ### data.pbj.my.id/spse
 DatasetPesertaTender = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-PesertaTender{tahun}.parquet"
 
 ### Dataset RUP Master Satker
 #DatasetRUPMasterSatker = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPMasterSatker{tahun}.parquet"
+
 ### data.pbj.my.id/sirup
 DatasetRUPMasterSatker = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-MasterSatker{tahun}.parquet"
 
 ### Dataset RUP Paket Penyedia Terumumkan
 #DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
+
 ### data.pbj.my.is/sirup
 DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.parquet"
-
-## Buat dataframe SPSE
-### Baca file parquet dataset SPSE Tender
-#try:
-#    df_SPSETenderSelesai = tarik_data(DatasetSPSETenderSelesai)
-#except Exception:
-#    st.error("Gagal baca dataset SPSE Tender Selesai")
-#try:
-#    df_SPSETenderSelesaiNilai = tarik_data(DatasetSPSETenderSelesaiNilai)
-#except Exception:
-#    st.error("Gagal baca dataset SPSE Tender Selesai Nilai")
-
-### Baca file parquet dataset SPSE Non Tender
-#try:
-#    df_SPSENonTenderSelesai = tarik_data(DatasetSPSENonTenderSelesai)
-#except Exception:
-#    st.error("Gagal baca dataset SPSE Non Tender Selesai")
 
 #####
 # Mulai membuat presentasi data SPSE

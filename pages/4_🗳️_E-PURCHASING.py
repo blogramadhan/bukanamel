@@ -113,19 +113,14 @@ con = duckdb.connect(database=':memory:')
 #DatasetPURCHASINGBELA = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.parquet"
 #DatasetPURCHASINGECATKD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATKomoditasDetail{tahun}.parquet"
 #DatasetPURCHASINGECATIS = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATInstansiSatker{tahun}.parquet"
-DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
+#DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
+
 ## Akses file dataset https://data.pbj.my.id
 DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-PaketEPurchasing{tahun}.parquet"
 DatasetPURCHASINGBELA = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.parquet"
 DatasetPURCHASINGECATKD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATKomoditasDetail{tahun}.parquet"
 DatasetPURCHASINGECATIS = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-InstansiSatker.parquet"
-#DatasetPURCHASINGECATPD = f""
-
-## Download Excel ECAT Detail
-DatasetPURCHASINGECATDETAIL_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasingDetail{tahun}.xlsx"
-#DatasetPURCHASINGBELA_DOWNLOAD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/BELATokoDaringRealisasi{tahun}.xlsx"
-## Akses file dataset https://data.pbj.my.id
-DatasetPURCHASINGECATDETAIL_DOWNLOAD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.xlsx"
+DatasetPURCHASINGECATPD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATPenyediaDetail{tahun}.parquet"
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -161,7 +156,6 @@ with menu_purchasing_1:
             with ecat1:
                 st.header(f"TRANSAKSI E-KATALOG - {pilih} - TAHUN {tahun}")
             with ecat2:
-                #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
                 st.download_button(
                     label = "📥 Data Tramsaksi E-Katalog",
                     data = unduh_ECAT,
@@ -456,7 +450,6 @@ with menu_purchasing_1:
             with etalase1:
                 st.header(f"TRANSAKSI E-KATALOG (ETALASE) - {pilih} - TAHUN {tahun}")
             with etalase2:
-                #st.link_button("📥 Download Data Transaksi Katalog", DatasetPURCHASINGECATDETAIL_DOWNLOAD)
                 st.download_button(
                     label = "📥 Data Tramsaksi E-Katalog",
                     data = unduh_ECAT,
@@ -581,7 +574,6 @@ with menu_purchasing_2:
         with bela1:
             st.header(f"TRANSAKSI TOKO DARING - {pilih} - TAHUN {tahun}")
         with bela2:
-            #st.link_button("📥 Download Data Transaksi Toko Daring", DatasetPURCHASINGBELA_DOWNLOAD)
             st.download_button(
                 label = "📥 Data Tramsaksi Toko Daring",
                 data = unduh_BELA,
