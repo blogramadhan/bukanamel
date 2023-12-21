@@ -147,6 +147,8 @@ with menu_monitoring_1:
 
     st.title(f"PREDIKSI ITKP - {pilih} - TAHUN {tahun}")
 
+    st.divider()
+
     try:
         ### PREDIKSI ITKP SIRUP
         #### Tarik dataset SIRUP
