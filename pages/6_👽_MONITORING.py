@@ -110,6 +110,11 @@ con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 
+### Dataset SIRUP
+DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.parquet"
+DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.parquet"
+DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
+
 ### Dataset SPSE Tender dan SIKAP
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
 DatasetSIKAPTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaTender{tahun}.parquet"
@@ -117,7 +122,6 @@ DatasetSIKAPTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sik
 ### Dataset SPSE Non Tender dan SIKAP
 DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
 DatasetSIKAPNonTender = f"https://data.pbj.my.id/{kodeRUP}/sikap/SiKAP-PenilaianKinerjaPenyedia-NonTender{tahun}.parquet"
-#DatasetSIKAPNonTender = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sikap/SIKAPPenilaianKinerjaPenyediaNonTender{tahun}.parquet"
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -129,7 +133,37 @@ menu_monitoring_1, menu_monitoring_2 = st.tabs(["| ITKP |", "| SIKAP |"])
 ## Tab menu monitoring ITKP
 with menu_monitoring_1:
 
-    st.title("MENU ITKP")
+    st.title(f"PREDIKSI ITKP PEMANFAATAN SISTEM PENGADAAN - {pilih} - TAHUN {tahun}")
+
+    try:
+        ### Tarik dataset SIRUP
+        df_RUPPP = tarik_data(DatasetRUPPP)
+        df_RUPPS = tarik_data(DatasetRUPPS)
+        df_RUPSA = tarik_data(DatasetRUPSA)
+
+        ### Query RUP Paket Penyedia
+        df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+        df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+
+        belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
+        nilai_total_rup = df_RUPPP_umumkan['pagu'].sum() + df_RUPPS_umumkan['pagu'].sum()
+        persen_capaian_rup = nilai_total_rup / belanja_pengadaan
+        if persen_capaian_rup > 1:
+            prediksi_itkp = (1 - (persen_capaian_rup - 1)) * 10
+        elif persen_capaian_rup > 0.5:
+            prediksi_itkp = persen_capaian_rup * 10 
+        else:
+            prediksi_itkp = 0
+
+        itkp_sirup_1, itkp_sirup_2, itkp_sirup_3, itkp_sirup_4 = st.columns((4,4,1,1))
+        itkp_sirup_1.metric(label="BELANJA PENGADAAN", value="{:,.2f}".format(belanja_pengadaan))
+        itkp_sirup_2.metric(label="NILAI INPUT RUP", value="{:,.2f}".format(nilai_total_rup))
+        itkp_sirup_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_rup))
+        itkp_sirup_4.metric(label="NILAI PREDIKSI", value="{:,}".format(prediksi_itkp))
+        style_metric_cards()
+
+    except Exception:
+        st.error("Gagal baca dataset ITKP")
 
 with menu_monitoring_2:
 
