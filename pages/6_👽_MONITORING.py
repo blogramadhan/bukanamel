@@ -206,8 +206,8 @@ with menu_monitoring_1:
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
-        df_ECAT_filter = con.execute(f"SELECT total_harga FROM df_ECAT_OK WHERE paket_status_str = 'Paket Selesai'").df()
-        df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
+        # df_ECAT_filter = con.execute(f"SELECT total_harga FROM df_ECAT_OK WHERE paket_status_str = 'Paket Selesai'").df()
+        # df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
 
         # #### Query ITKP E-PURCHASING
         # nilai_epurchasing_rup = df_RUPPP_umumkan_epurchasing['pagu'].sum()
