@@ -181,8 +181,12 @@ with menu_monitoring_1:
         itkp_sirup_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_rup, 2)))
         style_metric_cards()
 
+    except Exception:
+        st.error("GAGAL ANALISA PREDIKSI ITKP SIRUP")
+
         ###
 
+    try:
         ### PREDIKSI ITKP E-TENDERING
         #### Tarik dataset SIRUP + SPSE E-TENDERING
         df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
@@ -210,8 +214,12 @@ with menu_monitoring_1:
         itkp_etendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_etendering, 2)))
         style_metric_cards()
 
+    except Exception:
+        st.error("GAGAL ANALISA PREDIKSI ITKP E-TENDERING")
+
         ###
 
+    try:
         ### PREDIKSI ITKP NON E-TENDERING
         #### Tarik dataset SIRUP + SPSE NON E-TENDERING
         df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
@@ -239,8 +247,12 @@ with menu_monitoring_1:
         itkp_nonetendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_nonetendering, 2)))
         style_metric_cards()
 
+    except Exception:
+        st.error("GAGAL ANALISA PREDIKSI ITKP NON E-TENDERING")
+
         ###
 
+    try:
         ### PREDIKSI ITKP E-KONTRAK
         #### Tarik dataset E-KONTRAK
         df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
@@ -267,8 +279,12 @@ with menu_monitoring_1:
         itkp_ekontrak_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_ekontrak, 2)))
         style_metric_cards()
 
+    except Exception:
+        st.error("GAGAL ANALISA PREDIKSI ITKP E-KONTRAK")
+
         ###
 
+    try:
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
@@ -296,8 +312,12 @@ with menu_monitoring_1:
         itkp_epurchasing_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
         style_metric_cards()
 
+    except Exception:
+        st.error("GAGAL ANALISA PREDIKSI ITKP E-PURCHASING")
+
         ###
 
+    try:
         ### PREDIKSI ITKP TOKO DARING
         #### Tarik dataset TOKO DARING
         df_BELA = tarik_data(DatasetPURCHASINGBELA)
@@ -321,7 +341,7 @@ with menu_monitoring_1:
         style_metric_cards()
 
     except Exception:
-        st.error("Gagal baca dataset ITKP")
+            st.error("GAGAL ANALISA PREDIKSI ITKP TOKO DARING")
 
 with menu_monitoring_2:
 
