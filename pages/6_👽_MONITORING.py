@@ -163,8 +163,8 @@ with menu_monitoring_1:
         ### Tampilan Prediksi ITKP
         st.subheader("**RENCANA UMUM PENGADAAN**")
         itkp_sirup_1, itkp_sirup_2, itkp_sirup_3, itkp_sirup_4 = st.columns(4)
-        itkp_sirup_1.metric(label="BELANJA PENGADAAN", value="{:,.2f}".format(belanja_pengadaan))
-        itkp_sirup_2.metric(label="NILAI INPUT RUP", value="{:,.2f}".format(nilai_total_rup))
+        itkp_sirup_1.metric(label="BELANJA PENGADAAN (JUTA)", value="{:,.2f}".format(belanja_pengadaan / 1000000))
+        itkp_sirup_2.metric(label="NILAI INPUT RUP (JUTA)", value="{:,.2f}".format(nilai_total_rup / 1000000))
         itkp_sirup_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_rup))
         itkp_sirup_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_rup, 2)))
         style_metric_cards()
