@@ -206,6 +206,9 @@ with menu_monitoring_1:
 
         ###
 
+
+        ###
+
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
