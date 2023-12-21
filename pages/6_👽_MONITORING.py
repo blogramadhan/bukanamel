@@ -163,8 +163,8 @@ with menu_monitoring_1:
         ### Tampilan Prediksi ITKP
         st.subheader("**RENCANA UMUM PENGADAAN**")
         itkp_sirup_1, itkp_sirup_2, itkp_sirup_3, itkp_sirup_4 = st.columns(4)
-        itkp_sirup_1.metric(label="BELANJA PENGADAAN (JUTA)", value="{:,.2f}".format(belanja_pengadaan / 1000000))
-        itkp_sirup_2.metric(label="NILAI INPUT RUP (JUTA)", value="{:,.2f}".format(nilai_total_rup / 1000000))
+        itkp_sirup_1.metric(label="BELANJA PENGADAAN (MILYAR)", value="{:,.2f}".format(belanja_pengadaan / 1000000000))
+        itkp_sirup_2.metric(label="NILAI INPUT RUP (MILYAR)", value="{:,.2f}".format(nilai_total_rup / 1000000000))
         itkp_sirup_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_rup))
         itkp_sirup_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_rup, 2)))
         style_metric_cards()
@@ -189,8 +189,8 @@ with menu_monitoring_1:
 
         st.subheader("**E-TENDERING**")
         itkp_etendering_1, itkp_etendering_2, itkp_etendering_3, itkp_etendering_4 = st.columns(4)
-        itkp_etendering_1.metric(label="NILAI ETENDERING RUP", value="{:,.2f}".format(nilai_etendering_rup))
-        itkp_etendering_2.metric(label="ETENDERING SELESAI", value="{:,.2f}".format(nilai_etendering_spse))
+        itkp_etendering_1.metric(label="NILAI ETENDERING RUP (MILYAR)", value="{:,.2f}".format(nilai_etendering_rup / 1000000000))
+        itkp_etendering_2.metric(label="ETENDERING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_etendering_spse / 1000000000))
         itkp_etendering_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_etendering))
         itkp_etendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_etendering, 2)))
         style_metric_cards()
