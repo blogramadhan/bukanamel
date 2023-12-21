@@ -140,7 +140,7 @@ with menu_purchasing_1:
         df_ECAT = tarik_data(DatasetPURCHASINGECAT)
         df_ECAT_KD = tarik_data(DatasetPURCHASINGECATKD)
         df_ECAT_IS = tarik_data(DatasetPURCHASINGECATIS)
-        df_ECAT_PD = tarik_data_excel(DatasetPURCHASINGECATPD)
+        df_ECAT_PD = tarik_data(DatasetPURCHASINGECATPD)
 
         ## Gabung dataframe Katalog + Katalog Komoditas Detail + Katalog Instansi Satker + Katalog Penyedia Detail
         df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
