@@ -133,7 +133,7 @@ menu_monitoring_1, menu_monitoring_2 = st.tabs(["| ITKP |", "| SIKAP |"])
 ## Tab menu monitoring ITKP
 with menu_monitoring_1:
 
-    st.title(f"PREDIKSI ITKP PEMANFAATAN SISTEM PENGADAAN - {pilih} - TAHUN {tahun}")
+    st.title(f"PREDIKSI ITKP - {pilih} - TAHUN {tahun}")
 
     try:
         ### Tarik dataset SIRUP
@@ -155,6 +155,7 @@ with menu_monitoring_1:
         else:
             prediksi_itkp = 0
 
+        st.subheader("**RUP**")
         itkp_sirup_1, itkp_sirup_2, itkp_sirup_3, itkp_sirup_4 = st.columns(4)
         itkp_sirup_1.metric(label="BELANJA PENGADAAN", value="{:,.2f}".format(belanja_pengadaan))
         itkp_sirup_2.metric(label="NILAI INPUT RUP", value="{:,.2f}".format(nilai_total_rup))
