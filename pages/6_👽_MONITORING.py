@@ -118,6 +118,9 @@ DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{t
 ### Dataset Tender
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
 
+### Dataset Non Tender
+DatasetSPSENonTenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-NonTenderPengumuman{tahun}.parquet"
+
 ### Dataset E-Purchasing
 DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-PaketEPurchasing{tahun}.parquet"
 
@@ -206,6 +209,32 @@ with menu_monitoring_1:
 
         ###
 
+        ### PREDIKSI ITKP NON E-TENDERING
+        #### Tarik dataset SIRUP + SPSE NON E-TENDERING
+        df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
+        df_SPSENonTenderPengumuman_filter = con.execute("SELECT pagu, hps FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
+        df_RUPPP_umumkan_non_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan IN ('Pengadaan Langsung', 'Penunjukan Langsung')").df()
+
+        #### Query ITKP NON E-TENDERING
+        nilai_nonetendering_rup = df_RUPPP_umumkan_non_etendering['pagu'].sum()
+        nilai_nonetendering_spse = df_SPSENonTenderPengumuman_filter['pagu'].sum()
+        persen_capaian_nonetendering = nilai_nonetendering_spse / nilai_nonetendering_rup        
+        if persen_capaian_nonetendering > 1:
+            prediksi_itkp_nonetendering = (1 - (persen_capaian_nonetendering - 1)) * 5
+        elif persen_capaian_nonetendering > 0.5:
+            prediksi_itkp_nonetendering = persen_capaian_nonetendering * 5 
+        else:
+            prediksi_itkp_nonetendering = 0
+        #### END ITKP NON E-TENDERING
+            
+        ### Tampilan Prediksi NONE-TENDERING
+        st.subheader("**NON E-TENDERING**")
+        itkp_nonetendering_1, itkp_nonetendering_2, itkp_nonetendering_3, itkp_nonetendering_4 = st.columns(4)
+        itkp_nonetendering_1.metric(label="NILAI RUP NON E-TENDERING (MILYAR)", value="{:,.2f}".format(nilai_nonetendering_rup / 1000000000))
+        itkp_nonetendering_2.metric(label="NON E-TENDERING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_nonetendering_spse / 1000000000))
+        itkp_nonetendering_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_nonetendering))
+        itkp_nonetendering_4.metric(label="NILAI PREDIKSI", value="{:,}".format(round(prediksi_itkp_nonetendering, 2)))
+        style_metric_cards()
 
         ###
 
