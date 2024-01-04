@@ -586,7 +586,15 @@ with menu_purchasing_1:
 
             st.divider()
 
-            AgGrid(df_ECAT_PIVOT_TABEL_OK)
+            gd_etalase_pivot = GridOptionsBuilder.from_dataframe(df_ECAT_PIVOT_TABEL_OK)
+            gd_etalase_pivot.configure_pagination()
+            gd_etalase_pivot.configure_side_bar()
+            gd_etalase_pivot.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd_etalase_pivot.configure_column("LOKAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.LOKAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+            gd_etalase_pivot.configure_column("NASIONAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NASIONAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+            gd_etalase_pivot.configure_column("SEKTORAL", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SEKTORAL.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+
+            AgGrid(df_ECAT_PIVOT_TABEL_OK, gridOptions=gd_etalase_pivot.build(), enable_enterprise_modules=True)
 
     except Exception:
     
