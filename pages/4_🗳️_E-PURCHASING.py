@@ -570,7 +570,7 @@ with menu_purchasing_1:
             df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df()
 
             st.dataframe(df_ECAT_OK_PIVOT)
-            st.dataframe(df_ECAT_OK_PIVOT)
+            st.dataframe(df_ECAT_PIVOT_TABEL)
 
             # etalasepivot1, etalasepivot2 = st.columns((8,2))
             # with etalasepivot1:
