@@ -567,7 +567,7 @@ with menu_purchasing_1:
         with menu_purchasing_1_3:
 
             df_ECAT_OK_PIVOT = con.execute("SELECT nama_komoditas, jenis_katalog, total_harga FROM df_ECAT_OK").df()
-            df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df()
+            df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df().fillna(0)
 
             st.dataframe(df_ECAT_OK_PIVOT)
             st.dataframe(df_ECAT_PIVOT_TABEL)
