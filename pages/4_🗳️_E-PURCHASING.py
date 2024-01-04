@@ -567,23 +567,24 @@ with menu_purchasing_1:
         with menu_purchasing_1_3:
 
             df_ECAT_OK_PIVOT = con.execute("SELECT nama_komoditas, jenis_katalog, total_harga FROM df_ECAT_OK").df()
-            df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df().fillna(0)
+            df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df()
 
-            etalasepivot1, etalasepivot2 = st.columns((8,2))
-            with etalasepivot1:
-                st.header(f"TABEL NILAI ETALASE - {pilih} - TAHUN {tahun}")
-            with etalasepivot2:
-                st.download_button(
-                    label = "📥 Tabel Nilai Etalase",
-                    data = df_ECAT_PIVOT_TABEL,
-                    file_name = f"TabelNilaiEtalase-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv",
-                    key = "Download Tabel Etalase"
-                )
+            st.dataframe(df_ECAT_OK_PIVOT)
+            st.dataframe(df_ECAT_OK_PIVOT)
 
-            st.divider()
+            # etalasepivot1, etalasepivot2 = st.columns((8,2))
+            # with etalasepivot1:
+            #     st.header(f"TABEL NILAI ETALASE - {pilih} - TAHUN {tahun}")
+            # with etalasepivot2:
+            #     st.download_button(
+            #         label = "📥 Tabel Nilai Etalase",
+            #         data = df_ECAT_PIVOT_TABEL,
+            #         file_name = f"TabelNilaiEtalase-{kodeFolder}-{tahun}.csv",
+            #         mime = "text/csv",
+            #         key = "Download Tabel Etalase"
+            #     )
 
-            st.dataframe(df_ECAT_PIVOT_TABEL)
+            # st.divider()
 
             # gd_etalase_pivot = GridOptionsBuilder.from_dataframe(df_ECAT_PIVOT_TABEL)
             # gd_etalase_pivot.configure_pagination()
