@@ -140,7 +140,7 @@ menu_purchasing_1, menu_purchasing_2 = st.tabs(["| KATALOG |", "| TOKO DARING |"
 ## Tab menu Transaksi Katalog
 with menu_purchasing_1:
 
-    menu_purchasing_1_1, menu_purchasing_1_2 = st.tabs(["| TRANSAKSI KATALOG |", "| TRANSAKSI KATALOG (ETALASE) |"])
+    menu_purchasing_1_1, menu_purchasing_1_2, menu_purchasing_1_3 = st.tabs(["| TRANSAKSI KATALOG |", "| TRANSAKSI KATALOG (ETALASE) |", "| TABEL NILAI ETALASE |"])
 
     try:
 
@@ -563,6 +563,32 @@ with menu_purchasing_1:
                     grafik_nilai_transaksi_ecat_pu_etalase = px.bar(tabel_nilai_transaksi_ecat_pu_etalase, x='NAMA_PENYEDIA', y='NILAI_TRANSAKSI', text_auto='.2s', title='Grafik Nilai Transaksi Katalog Pelaku Usaha')
                     grafik_nilai_transaksi_ecat_pu_etalase.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
                     st.plotly_chart(grafik_nilai_transaksi_ecat_pu_etalase, theme="streamlit", use_container_width=True)
+
+            with menu_purchasing_1_3:
+
+                df_ECAT_OK_Pivot = con.execute("SELECT nama_etalase, jenis_katalog, total_harga FROM df_ECAT_OK").df()
+                df_ECAT_Pivot_Tabel = con.execute("PIVOT df_ECAT_OK_Pivot ON jenis_katalog USING SUM(total_harga)").d().fillna(0)
+
+                etalasepivot1, etalasepivot2 = st.columns((8,2))
+                with etalasepivot1:
+                    st.header(f"TABEL NILAI ETALASE - {pilih} - TAHUN {tahun}")
+                with etalasepivot2:
+                    st.download_button(
+                        label = "📥 Tabel Nilai Etalase",
+                        data = df_ECAT_Pivot_Tabel,
+                        file_name = f"TabelNilaiEtalase-{kodeFolder}-{tahun}.csv",
+                        mime = "text/csv",
+                        key = "Download Tabel Etalase"
+                    )
+
+                st.divider()
+
+                gd_etalase_pivot = GridOptionsBuilder.from_dataframe(df_ECAT_Pivot_Tabel)
+                gd_etalase_pivot.configure_pagination()
+                gd_etalase_pivot.configure_side_bar()
+                gd_etalase_pivot.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+
+                AgGrid(gd_etalase_pivot, gridOptions=gd_etalase_pivot.build(), enable_enterprise_modules=True)
 
     except Exception:
     
