@@ -466,7 +466,6 @@ with menu_purchasing_1:
                     key = "Download Katalog Etalase"
                 )
 
-
             st.divider()
 
             ETALASE_radio_1, ETALASE_radio_2, ETALASE_radio_3, ETALASE_radio_4 = st.columns((1,1,2,6))

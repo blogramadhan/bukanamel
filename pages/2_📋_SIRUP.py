@@ -194,7 +194,7 @@ with menu_rup_1:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
             data = unduh_RUPPP,
-            file_name = f"RUPPaketPenyedia-{kodeFolder}.csv",
+            file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.csv",
             mime = "text/csv"
         )
     with prd3:
@@ -434,14 +434,14 @@ with menu_rup_2:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
             data = unduh_RUPPP_PD,
-            file_name = f"RUPPaketPenyedia-PD-{kodeFolder}.csv",
+            file_name = f"RUPPaketPenyedia-PD-{kodeFolder}-{tahun}.csv",
             mime = "text/csv"
         )
     with prpd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
             data = unduh_RUPPS_PD,
-            file_name = f"RUPPaketSwakelola-PD-{kodeFolder}.csv",
+            file_name = f"RUPPaketSwakelola-PD-{kodeFolder}-{tahun}.csv",
             mime = "text/csv"
         )
 
@@ -697,7 +697,7 @@ with menu_rup_4:
     st.download_button(
         label = "📥 Download Data % Input RUP",
         data = unduh_perseninputrup,
-        file_name = f"TabelPersenInputRUP-{pilih}.csv",
+        file_name = f"TabelPersenInputRUP-{pilih}-{tahun}.csv",
         mime = "text/csv"
     )
 
