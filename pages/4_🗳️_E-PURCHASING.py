@@ -583,12 +583,14 @@ with menu_purchasing_1:
 
             st.divider()
 
-            gd_etalase_pivot = GridOptionsBuilder.from_dataframe(df_ECAT_PIVOT_TABEL)
-            gd_etalase_pivot.configure_pagination()
-            gd_etalase_pivot.configure_side_bar()
-            gd_etalase_pivot.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            st.dataframe(df_ECAT_PIVOT_TABEL)
 
-            AgGrid(gd_etalase_pivot, gridOptions=gd_etalase_pivot.build(), enable_enterprise_modules=True)
+            # gd_etalase_pivot = GridOptionsBuilder.from_dataframe(df_ECAT_PIVOT_TABEL)
+            # gd_etalase_pivot.configure_pagination()
+            # gd_etalase_pivot.configure_side_bar()
+            # gd_etalase_pivot.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+
+            # AgGrid(gd_etalase_pivot, gridOptions=gd_etalase_pivot.build(), enable_enterprise_modules=True)
 
     except Exception:
     
