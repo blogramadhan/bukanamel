@@ -568,9 +568,10 @@ with menu_purchasing_1:
 
             df_ECAT_OK_PIVOT = con.execute("SELECT nama_komoditas, jenis_katalog, total_harga FROM df_ECAT_OK").df()
             df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df().fillna(0)
+            df_ECAT_PIVOT_TABEL_OK = con.execute("SELECT nama_komoditas AS NAMA_KOMODITAS, Lokal AS LOKAL, Nasional AS NASIONAL, Sektoral AS SEKTORAL FROM df_ECAT_PIVOT_TABEL").df()
 
             ### Buat tombol unduh dataset Tabel Nilai Etalase
-            unduh_ETALASE_PIVOT = unduh_data(df_ECAT_PIVOT_TABEL)
+            unduh_ETALASE_PIVOT = unduh_data(df_ECAT_PIVOT_TABEL_OK)
 
             etalasepivot1, etalasepivot2 = st.columns((8,2))
             with etalasepivot1:
@@ -585,7 +586,7 @@ with menu_purchasing_1:
 
             st.divider()
 
-            AgGrid(df_ECAT_PIVOT_TABEL)
+            AgGrid(df_ECAT_PIVOT_TABEL_OK)
 
     except Exception:
     
