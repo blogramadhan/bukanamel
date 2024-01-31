@@ -124,11 +124,18 @@ con = duckdb.connect(database=':memory:')
 #DatasetPURCHASINGECATPD = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPenyediaDetail{tahun}.xlsx"
 
 ## Akses file dataset https://data.pbj.my.id
-DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-PaketEPurchasing{tahun}.parquet"
-DatasetPURCHASINGBELA = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.parquet"
-DatasetPURCHASINGECATKD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATKomoditasDetail{tahun}.parquet"
-DatasetPURCHASINGECATIS = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-InstansiSatker.parquet"
-DatasetPURCHASINGECATPD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATPenyediaDetail{tahun}.parquet"
+#DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-PaketEPurchasing{tahun}.parquet"
+#DatasetPURCHASINGBELA = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.parquet"
+#DatasetPURCHASINGECATKD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATKomoditasDetail{tahun}.parquet"
+#DatasetPURCHASINGECATIS = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-InstansiSatker.parquet"
+#DatasetPURCHASINGECATPD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATPenyediaDetail{tahun}.parquet"
+
+## Akses file Excel dataset https://data.pbj.my.id
+DatasetPURCHASINGECAT = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-PaketEPurchasing{tahun}.xlsx"
+DatasetPURCHASINGBELA = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Bela-TokoDaringRealisasi{tahun}.xlsx"
+DatasetPURCHASINGECATKD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATKomoditasDetail{tahun}.xlsx"
+DatasetPURCHASINGECATIS = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/Ecat-InstansiSatker.xlsx"
+DatasetPURCHASINGECATPD = f"https://data.pbj.my.id/{kodeRUP}/epurchasing/ECATPenyediaDetail{tahun}.xlsx"
 
 #####
 # Mulai membuat presentasi data Purchasing
@@ -145,10 +152,10 @@ with menu_purchasing_1:
     try:
 
         ### Tarik dataset df_ECAT, df_ECAT_KD, df_ECAT_IS dan df_ECATPD
-        df_ECAT = tarik_data(DatasetPURCHASINGECAT)
-        df_ECAT_KD = tarik_data(DatasetPURCHASINGECATKD)
-        df_ECAT_IS = tarik_data(DatasetPURCHASINGECATIS)
-        df_ECAT_PD = tarik_data(DatasetPURCHASINGECATPD)
+        df_ECAT = tarik_data_excel(DatasetPURCHASINGECAT)
+        df_ECAT_KD = tarik_data_excel(DatasetPURCHASINGECATKD)
+        df_ECAT_IS = tarik_data_excel(DatasetPURCHASINGECATIS)
+        df_ECAT_PD = tarik_data_excel(DatasetPURCHASINGECATPD)
 
         ## Gabung dataframe Katalog + Katalog Komoditas Detail + Katalog Instansi Satker + Katalog Penyedia Detail
         df_ECAT_0 = df_ECAT.merge(df_ECAT_KD, how='left', on='kd_komoditas').drop('nama_satker', axis=1)
