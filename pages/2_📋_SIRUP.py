@@ -201,18 +201,12 @@ with menu_rup_1:
             file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.xlsx",
             mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
-        # st.download_button(
-        #     label = "📥 Download RUP Paket Penyedia",
-        #     data = unduh_RUPPP,
-        #     file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.csv",
-        #     mime = "text/csv"
-        # )
     with prd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
-            data = unduh_RUPSW,
-            file_name = f"RUPPaketSwakelola-{kodeFolder}.csv",
-            mime = "text/csv"
+            data = unduh_RUPSW_excel,
+            file_name = f"RUPPaketSwakelola-{kodeFolder}-{tahun}.xlsx",
+            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
 
     st.divider()
