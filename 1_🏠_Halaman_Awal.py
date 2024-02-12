@@ -85,5 +85,5 @@ st.markdown("""
 
 Sumber data *Dashboard* ini berasal dari **API JSON Versi 2** yang ditarik harian dari [ISB LKPP](https://lkpp.go.id). 
 
-@2023 - **Kurnia Ramadhan** - LPSE PROV. KALBAR 
+@2024 - LPSE PROV. KALBAR 
 """)
