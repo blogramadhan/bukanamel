@@ -19,6 +19,12 @@ from streamlit_extras.app_logo import add_logo
 def unduh_data(unduhdata):
     return unduhdata.to_csv(index=False).encode('utf-8')
 
+def unduh_excel(unduhdata):
+    # Create a bytesIO object to store Excel file
+    excel_data = unduhdata.to_excel(index=False)
+    excel_data = excel_data.getvalue()
+    return excel_data
+
 @st.cache_data(ttl=(3600))
 def tarik_data_excel(url):
     return pd.read_excel(url)

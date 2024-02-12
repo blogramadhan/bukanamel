@@ -186,6 +186,8 @@ with menu_rup_1:
     ### Buat tombol unduh dataset
     unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
     unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
+    unduh_RUPPP_excel = unduh_excel(df_RUPPP_umumkan)
+    unduh_RUPSW_excel = unduh_excel(df_RUPPS_umumkan)
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:
@@ -193,10 +195,16 @@ with menu_rup_1:
     with prd2:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
-            data = unduh_RUPPP,
-            file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv"
+            data = unduh_RUPPP_excel,
+            file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.xlsx",
+            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
+        # st.download_button(
+        #     label = "📥 Download RUP Paket Penyedia",
+        #     data = unduh_RUPPP,
+        #     file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.csv",
+        #     mime = "text/csv"
+        # )
     with prd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
