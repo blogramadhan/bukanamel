@@ -23,12 +23,11 @@ def unduh_data(unduhdata):
 
 def download_excel(df):
     # Create a BytesIO object to store Excel file
-    excel_data = pd.ExcelWriter("temp.xlsx", engine='xlsxwriter')
-    df.to_excel(excel_data, index=False)
-    excel_data.save()
-    with open("temp.xlsx", "rb") as f:
-        excel_bytes = f.read()
-    return excel_bytes
+    excel_data = io.BytesIO()
+    with pd.ExcelWriter(excel_data, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False)
+    excel_data.seek(0)
+    return excel_data.getvalue()
 
 @st.cache_data(ttl=(3600))
 def tarik_data(url):
