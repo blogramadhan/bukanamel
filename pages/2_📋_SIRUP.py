@@ -186,8 +186,6 @@ with menu_rup_1:
     df_RUPPP_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df() 
 
     ### Buat tombol unduh dataset
-    unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
-    unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
     unduh_RUPPP_excel = download_excel(df_RUPPP_umumkan)
     unduh_RUPSW_excel = download_excel(df_RUPPS_umumkan)
 
@@ -428,8 +426,8 @@ with menu_rup_2:
     df_RUPPP_PD_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
 
     ### Buat tombol unduh dataset PerangKat Daerah
-    unduh_RUPPP_PD = unduh_data(df_RUPPP_PD)
-    unduh_RUPPS_PD = unduh_data(df_RUPPS_PD)
+    unduh_RUPPP_PD_excel = download_excel(df_RUPPP_PD)
+    unduh_RUPPS_PD_excel = download_excel(df_RUPPS_PD)
 
     prpd1, prpd2, prpd3 = st.columns((6,2,2))
     with prpd1:
@@ -437,16 +435,16 @@ with menu_rup_2:
     with prpd2:
         st.download_button(
             label = "📥 Download RUP Paket Penyedia",
-            data = unduh_RUPPP_PD,
-            file_name = f"RUPPaketPenyedia-PD-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv"
+            data = unduh_RUPPP_PD_excel,
+            file_name = f"RUPPaketPenyedia-PD-{kodeFolder}-{tahun}.xlsx",
+            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
     with prpd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
-            data = unduh_RUPPS_PD,
-            file_name = f"RUPPaketSwakelola-PD-{kodeFolder}-{tahun}.csv",
-            mime = "text/csv"
+            data = unduh_RUPPS_PD_excel,
+            file_name = f"RUPPaketSwakelola-PD-{kodeFolder}-{tahun}.xlsx",
+            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
 
     st.divider()
@@ -697,12 +695,13 @@ with menu_rup_4:
     ir_gabung_final = ir_gabung_selisih.assign(PERSEN = lambda x: round(((x.RUP_PENYEDIA + x.RUP_SWAKELOLA) / x.STRUKTUR_ANGGARAN * 100), 2)).fillna(0)
 
     ### Download data % INPUT RUP
-    unduh_perseninputrup = unduh_data(ir_gabung_final)
+    unduh_perseninputrup_excel = download_excel(ir_gabung_final)
+
     st.download_button(
         label = "📥 Download Data % Input RUP",
-        data = unduh_perseninputrup,
-        file_name = f"TabelPersenInputRUP-{pilih}-{tahun}.csv",
-        mime = "text/csv"
+        data = unduh_perseninputrup_excel,
+        file_name = f"TabelPersenInputRUP-{pilih}-{tahun}.xlsx",
+        mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
     gd_input_rup = GridOptionsBuilder.from_dataframe(ir_gabung_final)
