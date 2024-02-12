@@ -1,7 +1,7 @@
 # Import Library
 import duckdb
 import openpyxl
-import base64
+import io
 import xlsxwriter
 import streamlit as st
 import pandas as pd
