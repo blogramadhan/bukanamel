@@ -7,4 +7,5 @@ babel
 plotly.express
 streamlit-aggrid
 streamlit-extras
+base64
 xlsxwriter

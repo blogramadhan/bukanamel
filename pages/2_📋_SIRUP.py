@@ -22,6 +22,8 @@
 # Import Library
 import duckdb
 import openpyxl
+import base64
+import xlsxwriter
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -186,8 +188,8 @@ with menu_rup_1:
     ### Buat tombol unduh dataset
     unduh_RUPPP = unduh_data(df_RUPPP_umumkan)
     unduh_RUPSW = unduh_data(df_RUPPS_umumkan)
-    unduh_RUPPP_excel = unduh_excel(df_RUPPP_umumkan)
-    unduh_RUPSW_excel = unduh_excel(df_RUPPS_umumkan)
+    unduh_RUPPP_excel = download_excel(df_RUPPP_umumkan)
+    unduh_RUPSW_excel = download_excel(df_RUPPS_umumkan)
 
     prd1, prd2, prd3 = st.columns((6,2,2))
     with prd1:

@@ -1,6 +1,7 @@
 # Import Library
 import duckdb
 import openpyxl
+import base64
 import xlsxwriter
 import streamlit as st
 import pandas as pd
@@ -20,15 +21,14 @@ from streamlit_extras.app_logo import add_logo
 def unduh_data(unduhdata):
     return unduhdata.to_csv(index=False).encode('utf-8')
 
-def unduh_excel(unduhdata):
-    # Create a bytesIO object to store Excel file
-    excel_data = unduhdata.to_excel(index=False)
-    excel_data = excel_data.getvalue()
-    return excel_data
-
-@st.cache_data(ttl=(3600))
-def tarik_data_excel(url):
-    return pd.read_excel(url)
+def download_excel(df):
+    # Create a BytesIO object to store Excel file
+    excel_data = pd.ExcelWriter("temp.xlsx", engine='xlsxwriter')
+    df.to_excel(excel_data, index=False)
+    excel_data.save()
+    with open("temp.xlsx", "rb") as f:
+        excel_bytes = f.read()
+    return excel_bytes
 
 @st.cache_data(ttl=(3600))
 def tarik_data(url):
