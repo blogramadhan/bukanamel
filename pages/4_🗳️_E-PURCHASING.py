@@ -163,7 +163,7 @@ with menu_purchasing_1:
         df_ECAT_OK = df_ECAT_1.merge(df_ECAT_PD, how='left', on='kd_penyedia')
 
         ### Buat tombol unduh dataset
-        unduh_ECAT = unduh_data(df_ECAT_OK)
+        unduh_ECAT_excel = download_excel(df_ECAT_OK)
 
         with menu_purchasing_1_1:
 
@@ -173,9 +173,9 @@ with menu_purchasing_1:
             with ecat2:
                 st.download_button(
                     label = "📥 Data Tramsaksi E-Katalog",
-                    data = unduh_ECAT,
-                    file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_ECAT_excel,
+                    file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -467,9 +467,9 @@ with menu_purchasing_1:
             with etalase2:
                 st.download_button(
                     label = "📥 Data Tramsaksi E-Katalog",
-                    data = unduh_ECAT,
-                    file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv",
+                    data = unduh_ECAT_excel,
+                    file_name = f"TransaksiEKATALOG-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     key = "Download Katalog Etalase"
                 )
 
@@ -577,7 +577,7 @@ with menu_purchasing_1:
             df_ECAT_PIVOT_TABEL_OK = con.execute("SELECT nama_komoditas AS NAMA_KOMODITAS, Lokal AS LOKAL, Nasional AS NASIONAL, Sektoral AS SEKTORAL FROM df_ECAT_PIVOT_TABEL").df()
 
             ### Buat tombol unduh dataset Tabel Nilai Etalase
-            unduh_ETALASE_PIVOT = unduh_data(df_ECAT_PIVOT_TABEL_OK)
+            unduh_ETALASE_PIVOT_excel = download_excel(df_ECAT_PIVOT_TABEL_OK)
 
             etalasepivot1, etalasepivot2 = st.columns((8,2))
             with etalasepivot1:
@@ -585,9 +585,9 @@ with menu_purchasing_1:
             with etalasepivot2:
                 st.download_button(
                     label = "📥 Tabel Nilai Etalase",
-                    data = unduh_ETALASE_PIVOT,
-                    file_name = f"TabelNilaiEtalase-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_ETALASE_PIVOT_excel,
+                    file_name = f"TabelNilaiEtalase-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -614,7 +614,7 @@ with menu_purchasing_2:
         df_BELA = tarik_data(DatasetPURCHASINGBELA)
 
         ### Buat tombol unduh dataset
-        unduh_BELA = unduh_data(df_BELA)
+        unduh_BELA_excel = download_excel(df_BELA)
 
         bela1, bela2 = st.columns((7,3))
         with bela1:
@@ -622,9 +622,9 @@ with menu_purchasing_2:
         with bela2:
             st.download_button(
                 label = "📥 Data Tramsaksi Toko Daring",
-                data = unduh_BELA,
-                file_name = f"TransaksiTokoDaring-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
+                data = unduh_BELA_excel,
+                file_name = f"TransaksiTokoDaring-{kodeFolder}-{tahun}.xlsx",
+                mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )
 
         st.divider()

@@ -22,6 +22,8 @@
 # Import Library
 import duckdb
 import openpyxl
+import io
+import xlsxwriter
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -205,7 +207,7 @@ with menu_spse_1:
             df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
 
             ##### Buat tombol unduh dataset SPSE - Tender - Pengumuman
-            unduh_SPSE_Pengumuman = unduh_data(df_SPSETenderPengumuman)
+            unduh_SPSE_Pengumuman_excel = download_excel(df_SPSETenderPengumuman)
             
             SPSE_Umumkan_1, SPSE_Umumkan_2 = st.columns((7,3))
             with SPSE_Umumkan_1:
@@ -213,9 +215,9 @@ with menu_spse_1:
             with SPSE_Umumkan_2:
                 st.download_button(
                     label = "📥 Download Data Pengumuman Tender",
-                    data = unduh_SPSE_Pengumuman,
-                    file_name = f"SPSETenderPengumuman-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_SPSE_Pengumuman_excel,
+                    file_name = f"SPSETenderPengumuman-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -602,7 +604,7 @@ with menu_spse_1:
             df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
 
             ##### Buat tombol unduh dataset SPSE - Tender - SPPBJ
-            unduh_SPSE_Tender_SPPBJ = unduh_data(df_SPSETenderSPPBJ)
+            unduh_SPSE_Tender_SPPBJ_excel = download_excel(df_SPSETenderSPPBJ)
 
             SPSE_SPPBJ_1, SPSE_SPPBJ_2 = st.columns((7,3))
             with SPSE_SPPBJ_1:
@@ -610,9 +612,9 @@ with menu_spse_1:
             with SPSE_SPPBJ_2:
                 st.download_button(
                     label = "📥 Download Data Tender SPPBJ",
-                    data = unduh_SPSE_Tender_SPPBJ,
-                    file_name = f"SPSETenderSPPBJ-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_SPSE_Tender_SPPBJ_excel,
+                    file_name = f"SPSETenderSPPBJ-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -674,7 +676,7 @@ with menu_spse_1:
             df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
 
             ##### Buat tombol unduh dataset SPSE - Tender - Kontrak
-            unduh_SPSE_Tender_KONTRAK = unduh_data(df_SPSETenderKontrak)
+            unduh_SPSE_Tender_KONTRAK_excel = download_excel(df_SPSETenderKontrak)
 
             SPSE_KONTRAK_1, SPSE_KONTRAK_2 = st.columns((7,3))
             with SPSE_KONTRAK_1:
@@ -682,9 +684,9 @@ with menu_spse_1:
             with SPSE_KONTRAK_2:
                 st.download_button(
                     label = "📥 Download Data Tender Kontrak",
-                    data = unduh_SPSE_Tender_KONTRAK,
-                    file_name = f"SPSETenderKontrak-{kodeFolder}-{tahun}.csv",
-                    mime = "txt/csv"
+                    data = unduh_SPSE_Tender_KONTRAK_excel,
+                    file_name = f"SPSETenderKontrak-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -753,7 +755,7 @@ with menu_spse_1:
             df_SPSETenderKontrak_filter_kolom = df_SPSETenderKontrak[["kd_tender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
             df_SPSETenderSPMK_OK = df_SPSETenderSPMK.merge(df_SPSETenderKontrak_filter_kolom, how='left', on='kd_tender')
 
-            unduh_SPSE_Tender_SPMK = unduh_data(df_SPSETenderSPMK_OK)
+            unduh_SPSE_Tender_SPMK_excel = download_excel(df_SPSETenderSPMK_OK)
 
             SPSE_SPMK_1, SPSE_SPMK_2 = st.columns((7,3))
             with SPSE_SPMK_1:
@@ -761,9 +763,9 @@ with menu_spse_1:
             with SPSE_SPMK_2:
                 st.download_button(
                     label = "📥 Download Data Tender SPMK",
-                    data = unduh_SPSE_Tender_SPMK,
-                    file_name = f"SPSETenderSPMK-{kodeFolder}-{tahun}.csv",
-                    mime = "txt/csv"
+                    data = unduh_SPSE_Tender_SPMK_excel,
+                    file_name = f"SPSETenderSPMK-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -824,7 +826,7 @@ with menu_spse_1:
             df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
         
             ##### Buat tombol unduh dataset SPSE - Tender - BAPBAST
-            unduh_SPSE_Tender_BAST = unduh_data(df_SPSETenderBAST)
+            unduh_SPSE_Tender_BAST_excel = download_excel(df_SPSETenderBAST)
 
             SPSE_BAST_1, SPSE_BAST_2 = st.columns((7,3))
             with SPSE_BAST_1:
@@ -832,9 +834,9 @@ with menu_spse_1:
             with SPSE_BAST_2:
                 st.download_button(
                     label = "📥 Download Data Tender BAPBAST",
-                    data = unduh_SPSE_Tender_BAST,
-                    file_name = f"SPSETenderBAPBAST-{kodeFolder}-{tahun}.csv",
-                    mime = "txt/csv"
+                    data = unduh_SPSE_Tender_BAST_excel,
+                    file_name = f"SPSETenderBAPBAST-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -907,7 +909,7 @@ with menu_spse_2:
             df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - Pengumuman
-            unduh_SPSE_NT_Pengumuman = unduh_data(df_SPSENonTenderPengumuman)
+            unduh_SPSE_NT_Pengumuman_excel = download_excel(df_SPSENonTenderPengumuman)
 
             SPSE_NT_Umumkan_1, SPSE_NT_Umumkan_2 = st.columns((7,3))
             with SPSE_NT_Umumkan_1:
@@ -915,9 +917,9 @@ with menu_spse_2:
             with SPSE_NT_Umumkan_2:
                 st.download_button(
                     label = "📥 Download Data Pengumuman Non Tender",
-                    data = unduh_SPSE_NT_Pengumuman,
-                    file_name = f"SPSENonTenderPengumuman-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_SPSE_NT_Pengumuman_excel,
+                    file_name = f"SPSENonTenderPengumuman-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -1184,7 +1186,7 @@ with menu_spse_2:
             df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - SPPBJ
-            unduh_SPSE_NT_SPPBJ = unduh_data(df_SPSENonTenderSPPBJ)
+            unduh_SPSE_NT_SPPBJ_excel = download_excel(df_SPSENonTenderSPPBJ)
 
             SPSE_SPPBJ_NT_1, SPSE_SPPBJ_NT_2 = st.columns((7,3))
             with SPSE_SPPBJ_NT_1:
@@ -1192,9 +1194,9 @@ with menu_spse_2:
             with SPSE_SPPBJ_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender SPPBJ",
-                    data = unduh_SPSE_NT_SPPBJ,
-                    file_name = f"SPSENonTenderSPPBJ-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_SPSE_NT_SPPBJ_excel,
+                    file_name = f"SPSENonTenderSPPBJ-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -1256,7 +1258,7 @@ with menu_spse_2:
             df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - KONTRAK
-            unduh_SPSE_NT_KONTRAK = unduh_data(df_SPSENonTenderKontrak)
+            unduh_SPSE_NT_KONTRAK_excel = download_excel(df_SPSENonTenderKontrak)
 
             SPSE_KONTRAK_NT_1, SPSE_KONTRAK_NT_2 = st.columns((7,3))
             with SPSE_KONTRAK_NT_1:
@@ -1264,9 +1266,9 @@ with menu_spse_2:
             with SPSE_KONTRAK_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender KONTRAK",
-                    data = unduh_SPSE_NT_KONTRAK,
-                    file_name = f"SPSENonTenderKONTRAK-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_SPSE_NT_KONTRAK_excel,
+                    file_name = f"SPSENonTenderKONTRAK-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -1334,7 +1336,7 @@ with menu_spse_2:
             df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
             df_SPSENonTenderSPMK_OK = df_SPSENonTenderSPMK.merge(df_SPSENonTenderKontrak_filter_kolom, how='left', on='kd_nontender')
 
-            unduh_SPSE_NT_SPMK = unduh_data(df_SPSENonTenderSPMK_OK)
+            unduh_SPSE_NT_SPMK_excel = download_excel(df_SPSENonTenderSPMK_OK)
 
             SPSE_SPMK_NT_1, SPSE_SPMK_NT_2 = st.columns((7,3))
             with SPSE_SPMK_NT_1:
@@ -1342,8 +1344,8 @@ with menu_spse_2:
             with SPSE_SPMK_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender SPMK",
-                    data = unduh_SPSE_NT_SPMK,
-                    file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.csv",
+                    data = unduh_SPSE_NT_SPMK_excel,
+                    file_name = f"SPSENonTenderSPMK-{kodeFolder}-{tahun}.xlsx",
                     mime = "text/csv"
                 )
 
@@ -1408,7 +1410,7 @@ with menu_spse_2:
             df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - BAPBAST
-            unduh_SPSE_NT_BAST = unduh_data(df_SPSENonTenderBAST)
+            unduh_SPSE_NT_BAST_excel = download_excel(df_SPSENonTenderBAST)
 
             SPSE_BAST_NT_1, SPSE_BAST_NT_2 = st.columns((7,3))
             with SPSE_BAST_NT_1:
@@ -1416,9 +1418,9 @@ with menu_spse_2:
             with SPSE_BAST_NT_2:
                 st.download_button(
                     label = "📥 Download Data Non Tender BAPBAST",
-                    data = unduh_SPSE_NT_BAST,
-                    file_name = f"SPSENonTenderBAPBAST-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_SPSE_NT_BAST_excel,
+                    file_name = f"SPSENonTenderBAPBAST-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -1492,7 +1494,7 @@ with menu_spse_3:
             df_CatatNonTenderRealisasi_filter = df_CatatNonTenderRealisasi[["kd_nontender_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi", "nama_penyedia", "npwp_penyedia"]]
             df_CatatNonTender_OK = df_CatatNonTender.merge(df_CatatNonTenderRealisasi_filter, how='left', on='kd_nontender_pct')
 
-            unduh_CATAT_NT = unduh_data(df_CatatNonTender_OK)
+            unduh_CATAT_NT_excel = download_excel(df_CatatNonTender_OK)
 
             SPSE_CATAT_NonTender_1, SPSE_CATAT_NonTender_2 = st.columns((7,3))
             with SPSE_CATAT_NonTender_1:
@@ -1500,9 +1502,9 @@ with menu_spse_3:
             with SPSE_CATAT_NonTender_2:
                 st.download_button(
                     label = "📥 Download Data Pencatatan Non Tender",
-                    data = unduh_CATAT_NT,
-                    file_name = f"SPSEPencatatanNonTender-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_CATAT_NT_excel,
+                    file_name = f"SPSEPencatatanNonTender-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -1699,7 +1701,7 @@ with menu_spse_3:
             df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
             df_CatatSwakelola_OK = df_CatatSwakelola.merge(df_CatatSwakelolaRealisasi_filter, how='left', on='kd_swakelola_pct')
 
-            unduh_CATAT_Swakelola = unduh_data(df_CatatSwakelola_OK)
+            unduh_CATAT_Swakelola_excel = download_excel(df_CatatSwakelola_OK)
 
             SPSE_CATAT_Swakelola_1, SPSE_CATAT_Swakelola_2 = st.columns((7,3))
             with SPSE_CATAT_Swakelola_1:
@@ -1707,9 +1709,9 @@ with menu_spse_3:
             with SPSE_CATAT_Swakelola_2:
                 st.download_button(
                     label = "📥 Download Data Pencatatan Swakelola",
-                    data = unduh_CATAT_Swakelola,
-                    file_name = f"SPSEPencatatanSwakelola-{kodeFolder}-{tahun}.csv",
-                    mime = "text/csv"
+                    data = unduh_CATAT_Swakelola_excel,
+                    file_name = f"SPSEPencatatanSwakelola-{kodeFolder}-{tahun}.xlsx",
+                    mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 )
 
             st.divider()
@@ -1778,7 +1780,7 @@ with menu_spse_4:
         df_PesertaTenderDetail_1 = df_PesertaTender.merge(df_RUPMasterSatker_filter_pt, how='left', on='kd_satker_str')
         df_PesertaTenderDetail_2 = df_PesertaTenderDetail_1.merge(df_SPSETenderPengumuman_filter_pt, how='left', on='kd_tender')
 
-        unduh_Peserta_Tender = unduh_data(df_PesertaTenderDetail_2)
+        unduh_Peserta_Tender_excel = download_excel(df_PesertaTenderDetail_2)
 
         SPSE_PT_D_1, SPSE_PT_D_2 = st.columns((7,3))
         with SPSE_PT_D_1:
@@ -1786,9 +1788,9 @@ with menu_spse_4:
         with SPSE_PT_D_2:
             st.download_button(
                 label = "📥 Download Data Peserta Tender",
-                data = unduh_Peserta_Tender,
-                file_name = f"SPSEPesertaTenderDetail-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
+                data = unduh_Peserta_Tender_excel,
+                file_name = f"SPSEPesertaTenderDetail-{kodeFolder}-{tahun}.xlsx",
+                mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )
 
         st.divider()

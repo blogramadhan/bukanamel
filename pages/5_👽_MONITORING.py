@@ -391,13 +391,13 @@ with menu_monitoring_2:
             df_SIKAPTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_tender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
             df_SIKAPTender_OK_filter_final = df_SIKAPTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
 
-            unduh_SIKAP_Tender = unduh_data(df_SIKAPTender_OK_filter_final)
+            unduh_SIKAP_Tender_excel = download_excel(df_SIKAPTender_OK_filter_final)
 
             st.download_button(
                 label = "📥 Download Data SIKAP Tender",
-                data = unduh_SIKAP_Tender,
-                file_name = f"SIKAPTender-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
+                data = unduh_SIKAP_Tender_excel,
+                file_name = f"SIKAPTender-{kodeFolder}-{tahun}.xlsx",
+                mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )        
 
             gd_sikap_t = GridOptionsBuilder.from_dataframe(df_SIKAPTender_OK_filter_final)
@@ -442,13 +442,13 @@ with menu_monitoring_2:
             df_SIKAPNonTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_nontender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
             df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
 
-            unduh_SIKAP_NonTender = unduh_data(df_SIKAPNonTender_OK_filter_final)
+            unduh_SIKAP_NonTender_excel = download_excel(df_SIKAPNonTender_OK_filter_final)
 
             st.download_button(
                 label = "📥 Download Data SIKAP Non Tender",
-                data = unduh_SIKAP_NonTender,
-                file_name = f"SIKAPNonTender-{kodeFolder}-{tahun}.csv",
-                mime = "text/csv"
+                data = unduh_SIKAP_NonTender_excel,
+                file_name = f"SIKAPNonTender-{kodeFolder}-{tahun}.xlsx",
+                mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )        
 
             gd_sikap_nt = GridOptionsBuilder.from_dataframe(df_SIKAPNonTender_OK_filter_final)
