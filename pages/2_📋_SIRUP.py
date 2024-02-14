@@ -531,39 +531,39 @@ with menu_rup_2:
             st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
 
     ### Buat grafik RUP Status PDN Perangkat Daerah
-    grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
+    # grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
 
-    with grafik_rup_pdn_pd_tab_1:
+    # with grafik_rup_pdn_pd_tab_1:
 
-        grafik_rup_pdn_pd_tab_1_1, grafik_rup_pdn_pd_tab_1_2 = st.columns((3,7))
+    #     grafik_rup_pdn_pd_tab_1_1, grafik_rup_pdn_pd_tab_1_2 = st.columns((3,7))
 
-        with grafik_rup_pdn_pd_tab_1_1:
+    #     with grafik_rup_pdn_pd_tab_1_1:
 
-            AgGrid(df_RUPPP_PD_pdn_hitung)
+    #         AgGrid(df_RUPPP_PD_pdn_hitung)
 
-        with grafik_rup_pdn_pd_tab_1_2:
+    #     with grafik_rup_pdn_pd_tab_1_2:
 
-            figpdnh = px.pie(df_RUPPP_PD_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
-            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+    #         figpdnh = px.pie(df_RUPPP_PD_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
+    #         st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
-    with grafik_rup_pdn_pd_tab_2:
+    # with grafik_rup_pdn_pd_tab_2:
 
-        grafik_rup_pdn_pd_tab_2_1, grafik_rup_pdn_pd_tab_2_2 = st.columns((3,7))
+    #     grafik_rup_pdn_pd_tab_2_1, grafik_rup_pdn_pd_tab_2_2 = st.columns((3,7))
 
-        with grafik_rup_pdn_pd_tab_2_1:
+    #     with grafik_rup_pdn_pd_tab_2_1:
 
-            gd_pd_pdn_nilai = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_pdn_nilai)
-            gd_pd_pdn_nilai.configure_pagination()
-            gd_pd_pdn_nilai.configure_side_bar()
-            gd_pd_pdn_nilai.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            gd_pd_pdn_nilai.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+    #         gd_pd_pdn_nilai = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_pdn_nilai)
+    #         gd_pd_pdn_nilai.configure_pagination()
+    #         gd_pd_pdn_nilai.configure_side_bar()
+    #         gd_pd_pdn_nilai.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #         gd_pd_pdn_nilai.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
-            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gd_pd_pdn_nilai.build(), enable_enterprise_modules=True)
+    #         AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gd_pd_pdn_nilai.build(), enable_enterprise_modules=True)
 
-        with grafik_rup_pdn_pd_tab_2_2:
+    #     with grafik_rup_pdn_pd_tab_2_2:
 
-            figpdnn = px.pie(df_RUPPP_PD_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
-            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
+    #         figpdnn = px.pie(df_RUPPP_PD_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
+    #         st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
 
     st.divider()
 
