@@ -197,14 +197,14 @@ with menu_rup_1:
             label = "📥 Download RUP Paket Penyedia",
             data = unduh_RUPPP_excel,
             file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.xlsx",
-            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
     with prd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
             data = unduh_RUPSW_excel,
             file_name = f"RUPPaketSwakelola-{kodeFolder}-{tahun}.xlsx",
-            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
     st.divider()
@@ -409,7 +409,7 @@ with menu_rup_2:
     st.header(f"PROFIL RUP {pilih} PERANGKAT DAERAH TAHUN {tahun}")
 
     ### Tampilan pilihan menu nama opd
-    opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='menu_rup_2')
+    opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key="menu_rup_2")
 
     df_RUPPP_PD = con.execute(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd}'").df()
     df_RUPPS_PD = con.execute(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd}'").df()
@@ -437,14 +437,14 @@ with menu_rup_2:
             label = "📥 Download RUP Paket Penyedia",
             data = unduh_RUPPP_PD_excel,
             file_name = f"RUPPaketPenyedia-PD-{kodeFolder}-{tahun}.xlsx",
-            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
     with prpd3:
         st.download_button(
             label = "📥 Download RUP Paket Swakelola",
             data = unduh_RUPPS_PD_excel,
             file_name = f"RUPPaketSwakelola-PD-{kodeFolder}-{tahun}.xlsx",
-            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
     st.divider()
@@ -531,39 +531,39 @@ with menu_rup_2:
             st.plotly_chart(figukmn, theme='streamlit', use_container_width=True)
 
     ### Buat grafik RUP Status PDN Perangkat Daerah
-    # grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
+    grafik_rup_pdn_pd_tab_1, grafik_rup_pdn_pd_tab_2 = st.tabs(["| Berdasarkan Jumlah Paket - PDN |", "| Berdasarkan Nilai Paket - PDN |"])
 
-    # with grafik_rup_pdn_pd_tab_1:
+    with grafik_rup_pdn_pd_tab_1:
 
-    #     grafik_rup_pdn_pd_tab_1_1, grafik_rup_pdn_pd_tab_1_2 = st.columns((3,7))
+        grafik_rup_pdn_pd_tab_1_1, grafik_rup_pdn_pd_tab_1_2 = st.columns((3,7))
 
-    #     with grafik_rup_pdn_pd_tab_1_1:
+        with grafik_rup_pdn_pd_tab_1_1:
 
-    #         AgGrid(df_RUPPP_PD_pdn_hitung)
+            AgGrid(df_RUPPP_PD_pdn_hitung)
 
-    #     with grafik_rup_pdn_pd_tab_1_2:
+        with grafik_rup_pdn_pd_tab_1_2:
 
-    #         figpdnh = px.pie(df_RUPPP_PD_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
-    #         st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
+            figpdnh = px.pie(df_RUPPP_PD_pdn_hitung, values='JUMLAH_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Jumlah Paket', hole=.3)
+            st.plotly_chart(figpdnh, theme="streamlit", use_container_width=True)
 
-    # with grafik_rup_pdn_pd_tab_2:
+    with grafik_rup_pdn_pd_tab_2:
 
-    #     grafik_rup_pdn_pd_tab_2_1, grafik_rup_pdn_pd_tab_2_2 = st.columns((3,7))
+        grafik_rup_pdn_pd_tab_2_1, grafik_rup_pdn_pd_tab_2_2 = st.columns((3,7))
 
-    #     with grafik_rup_pdn_pd_tab_2_1:
+        with grafik_rup_pdn_pd_tab_2_1:
 
-    #         gd_pd_pdn_nilai = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_pdn_nilai)
-    #         gd_pd_pdn_nilai.configure_pagination()
-    #         gd_pd_pdn_nilai.configure_side_bar()
-    #         gd_pd_pdn_nilai.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    #         gd_pd_pdn_nilai.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
+            gd_pd_pdn_nilai = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_pdn_nilai)
+            gd_pd_pdn_nilai.configure_pagination()
+            gd_pd_pdn_nilai.configure_side_bar()
+            gd_pd_pdn_nilai.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            gd_pd_pdn_nilai.configure_column("NILAI_PAKET", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.NILAI_PAKET.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})") 
 
-    #         AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gd_pd_pdn_nilai.build(), enable_enterprise_modules=True)
+            AgGrid(df_RUPPP_PD_pdn_nilai, gridOptions=gd_pd_pdn_nilai.build(), enable_enterprise_modules=True)
 
-    #     with grafik_rup_pdn_pd_tab_2_2:
+        with grafik_rup_pdn_pd_tab_2_2:
 
-    #         figpdnn = px.pie(df_RUPPP_PD_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
-    #         st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
+            figpdnn = px.pie(df_RUPPP_PD_pdn_nilai, values='NILAI_PAKET', names='STATUS_PDN', title='Grafik Status PDN - Nilai Paket', hole=.3)
+            st.plotly_chart(figpdnn, theme='streamlit', use_container_width=True)
 
     st.divider()
 
@@ -701,7 +701,7 @@ with menu_rup_4:
         label = "📥 Download Data % Input RUP",
         data = unduh_perseninputrup_excel,
         file_name = f"TabelPersenInputRUP-{pilih}-{tahun}.xlsx",
-        mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
     gd_input_rup = GridOptionsBuilder.from_dataframe(ir_gabung_final)
