@@ -33,5 +33,9 @@ def download_excel(df):
 def tarik_data(url):
     return pd.read_parquet(url)
 
+@st.cache_data(ttl=(3600))
+def tarik_data_excel(url):
+    return pd.read_excel(url)
+
 def logo():
     add_logo("https://storage.googleapis.com/bukanamel/img/instansi-logo.png")
