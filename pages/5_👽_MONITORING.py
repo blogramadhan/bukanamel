@@ -119,9 +119,13 @@ con = duckdb.connect(database=':memory:')
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 
 ### Dataset SIRUP
-DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.parquet"
-DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.parquet"
-DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
+# DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.parquet"
+# DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.parquet"
+# DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
+### Dataset SIRUP Excel
+DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.xlsx"
+DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.xlsx"
+DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.xlsx"
 
 ### Dataset Tender
 DatasetSPSETenderPengumuman = f"https://data.pbj.my.id/{kodeLPSE}/spse/SPSE-TenderPengumuman{tahun}.parquet"
@@ -161,9 +165,9 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP SIRUP
         #### Tarik dataset SIRUP
-        df_RUPPP = tarik_data(DatasetRUPPP)
-        df_RUPPS = tarik_data(DatasetRUPPS)
-        df_RUPSA = tarik_data(DatasetRUPSA)
+        df_RUPPP = tarik_data_excel(DatasetRUPPP)
+        df_RUPPS = tarik_data_excel(DatasetRUPPS)
+        df_RUPSA = tarik_data_excel(DatasetRUPSA)
 
         #### Query RUP Paket Penyedia
         df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
