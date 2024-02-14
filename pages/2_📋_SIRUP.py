@@ -409,7 +409,7 @@ with menu_rup_2:
     st.header(f"PROFIL RUP {pilih} PERANGKAT DAERAH TAHUN {tahun}")
 
     ### Tampilan pilihan menu nama opd
-    opd = st.selectbox("Pilih Perangkat Daerah :", namaopd, key="menu_rup_2")
+    opd = st.selectbox("Pilih Perangkat Daerah :", namaopd)
 
     df_RUPPP_PD = con.execute(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd}'").df()
     df_RUPPS_PD = con.execute(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd}'").df()
