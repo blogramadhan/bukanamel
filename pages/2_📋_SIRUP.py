@@ -117,7 +117,7 @@ if pilih == "KAB. PARIGI MOUTONG":
     kodeLPSE = "149"
 
 # Persiapan Dataset
-#con = duckdb.connect(database=':memory:')
+con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 #DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
