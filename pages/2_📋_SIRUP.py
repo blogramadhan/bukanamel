@@ -146,7 +146,7 @@ try:
     df_RUPPP = tarik_data(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+    # df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
     # df_RUPPP_belum_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
     # df_RUPPP_umumkan_ukm = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
     # df_RUPPP_umumkan_pdn = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
@@ -166,9 +166,9 @@ try:
     df_RUPPS = tarik_data(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
-    # df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
-    df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
+    # df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
