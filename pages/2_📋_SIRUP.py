@@ -146,15 +146,15 @@ try:
     df_RUPPP = tarik_data_excel(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-    df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
-    df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
-    df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
+    # df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+    # df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
+    # df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
+    # df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
-    # df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE')]
-    # df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
-    # df_RUPPP_umumkan_ukm = df_RUPPP[df_RUPPP['status_ukm'] == 'UKM']
-    # df_RUPPP_umumkan_pdn = df_RUPPP[df_RUPPP['status_pdn'] == 'PDN']
+    df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE')]
+    df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
+    df_RUPPP_umumkan_ukm = df_RUPPP[df_RUPPP['status_ukm'] == 'UKM']
+    df_RUPPP_umumkan_pdn = df_RUPPP[df_RUPPP['status_pdn'] == 'PDN']
 
     namaopd = df_RUPPP_umumkan['nama_satker'].unique()
 
