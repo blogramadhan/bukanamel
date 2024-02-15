@@ -146,11 +146,11 @@ try:
     # df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
     df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE')]
-    # df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
-    # df_RUPPP_umumkan_ukm = df_RUPPP[df_RUPPP['status_ukm'] == 'UKM']
-    # df_RUPPP_umumkan_pdn = df_RUPPP[df_RUPPP['status_pdn'] == 'PDN']
+    df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
+    df_RUPPP_umumkan_ukm = df_RUPPP[df_RUPPP['status_ukm'] == 'UKM']
+    df_RUPPP_umumkan_pdn = df_RUPPP[df_RUPPP['status_pdn'] == 'PDN']
 
-    # namaopd = df_RUPPP_umumkan['nama_satker'].unique()
+    namaopd = df_RUPPP_umumkan['nama_satker'].unique()
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Penyedia.")
@@ -160,9 +160,9 @@ try:
     df_RUPPS = tarik_data(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
-    df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    # df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
-    # df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
+    df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
