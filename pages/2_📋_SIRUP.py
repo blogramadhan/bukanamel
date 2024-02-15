@@ -117,7 +117,7 @@ if pilih == "KAB. PARIGI MOUTONG":
     kodeLPSE = "149"
 
 # Persiapan Dataset
-con = duckdb.connect(database=':memory:')
+#con = duckdb.connect(database=':memory:')
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 #DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
@@ -146,10 +146,10 @@ try:
     df_RUPPP = tarik_data_excel(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-    df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
-    df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
-    df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
+    df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+    df_RUPPP_belum_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
+    df_RUPPP_umumkan_ukm = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
+    df_RUPPP_umumkan_pdn = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
     # df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE')]
     # df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
@@ -166,9 +166,9 @@ try:
     df_RUPPS = tarik_data_excel(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
-    # df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
-    df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
+    # df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
@@ -191,17 +191,17 @@ menu_rup_1, menu_rup_2, menu_rup_3, menu_rup_4, menu_rup_5, menu_rup_6 = st.tabs
 with menu_rup_1:
     
     ### Query RUP Paket Swakelola
-    # df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    # df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
     ### Hitung-hitung dataset
-    df_RUPPP_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
-    df_RUPPP_mp_nilai = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
-    df_RUPPP_jp_hitung = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
-    df_RUPPP_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
-    df_RUPPP_ukm_hitung = con.execute("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
-    df_RUPPP_ukm_nilai = con.execute("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
-    df_RUPPP_pdn_hitung = con.execute("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
-    df_RUPPP_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df() 
+    df_RUPPP_mp_hitung = duckdb.sql("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
+    df_RUPPP_mp_nilai = duckdb.sql("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
+    df_RUPPP_jp_hitung = duckdb.sql("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
+    df_RUPPP_jp_nilai = duckdb.sql("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
+    df_RUPPP_ukm_hitung = duckdb.sql("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    df_RUPPP_ukm_nilai = duckdb.sql("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    df_RUPPP_pdn_hitung = duckdb.sql("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
+    df_RUPPP_pdn_nilai = duckdb.sql("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_umumkan WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df() 
 
     ### Buat tombol unduh dataset
     unduh_RUPPP_excel = download_excel(df_RUPPP_umumkan)
@@ -429,19 +429,19 @@ with menu_rup_2:
     ### Tampilan pilihan menu nama opd
     opd = st.selectbox("Pilih Perangkat Daerah :", namaopd)
 
-    df_RUPPP_PD = con.execute(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd}'").df()
-    df_RUPPS_PD = con.execute(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd}'").df()
-    df_RUPSA_PD = con.execute(f"SELECT * FROM df_RUPSA WHERE nama_satker = '{opd}'").df()
+    df_RUPPP_PD = duckdb.sql(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd}'").df()
+    df_RUPPS_PD = duckdb.sql(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd}'").df()
+    df_RUPSA_PD = duckdb.sql(f"SELECT * FROM df_RUPSA WHERE nama_satker = '{opd}'").df()
 
     ### Hitung-hitung dataset (Perangkat Daerah)
-    df_RUPPP_PD_mp_hitung = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
-    df_RUPPP_PD_mp_nilai = con.execute("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
-    df_RUPPP_PD_jp_hitung = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
-    df_RUPPP_PD_jp_nilai = con.execute("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
-    df_RUPPP_PD_ukm_hitung = con.execute("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
-    df_RUPPP_PD_ukm_nilai = con.execute("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
-    df_RUPPP_PD_pdn_hitung = con.execute("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
-    df_RUPPP_PD_pdn_nilai = con.execute("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
+    df_RUPPP_PD_mp_hitung = duckdb.sql("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
+    df_RUPPP_PD_mp_nilai = duckdb.sql("SELECT metode_pengadaan AS METODE_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df()
+    df_RUPPP_PD_jp_hitung = duckdb.sql("SELECT jenis_pengadaan AS JENIS_PENGADAAN, COUNT(jenis_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE jenis_pengadaan IS NOT NULL GROUP BY jenis_pengadaan").df()
+    df_RUPPP_PD_jp_nilai = duckdb.sql("SELECT jenis_pengadaan AS JENIS_PENGADAAN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE jenis_pengadaan IS NOT NULL GROUP BY Jenis_pengadaan").df()
+    df_RUPPP_PD_ukm_hitung = duckdb.sql("SELECT status_ukm AS STATUS_UKM, COUNT(status_ukm) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    df_RUPPP_PD_ukm_nilai = duckdb.sql("SELECT status_ukm AS STATUS_UKM, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE status_ukm IS NOT NULL GROUP BY status_ukm").df()
+    df_RUPPP_PD_pdn_hitung = duckdb.sql("SELECT status_pdn AS STATUS_PDN, COUNT(status_pdn) AS JUMLAH_PAKET FROM df_RUPPP_PD WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
+    df_RUPPP_PD_pdn_nilai = duckdb.sql("SELECT status_pdn AS STATUS_PDN, SUM(pagu) AS NILAI_PAKET FROM df_RUPPP_PD WHERE status_pdn IS NOT NULL GROUP BY status_pdn").df()
 
     ### Buat tombol unduh dataset PerangKat Daerah
     unduh_RUPPP_PD_excel = download_excel(df_RUPPP_PD)
@@ -679,7 +679,7 @@ with menu_rup_3:
             ORDER BY total_belanja DESC;
         """
 
-        df_RUPSA_tampil = con.execute(sql_query_sa).df()
+        df_RUPSA_tampil = duckdb.sql(sql_query_sa).df()
 
         ### Tampilkan data menggunakan AgGrid
         gd_rupsa = GridOptionsBuilder.from_dataframe(df_RUPSA_tampil)
@@ -703,9 +703,9 @@ with menu_rup_4:
 
     st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
 
-    ir_strukturanggaran = con.execute("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA WHERE STRUKTUR_ANGGARAN > 0").df()
-    ir_paketpenyedia = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_PENYEDIA FROM df_RUPPP_umumkan GROUP BY NAMA_SATKER").df()
-    ir_paketswakelola = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_SWAKELOLA FROM df_RUPPS_umumkan GROUP BY NAMA_SATKER").df()   
+    ir_strukturanggaran = duckdb.sql("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA WHERE STRUKTUR_ANGGARAN > 0").df()
+    ir_paketpenyedia = duckdb.sql("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_PENYEDIA FROM df_RUPPP_umumkan GROUP BY NAMA_SATKER").df()
+    ir_paketswakelola = duckdb.sql("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_SWAKELOLA FROM df_RUPPS_umumkan GROUP BY NAMA_SATKER").df()   
 
     ir_gabung = pd.merge(pd.merge(ir_strukturanggaran, ir_paketpenyedia, how='left', on='NAMA_SATKER'), ir_paketswakelola, how='left', on='NAMA_SATKER')
     ir_gabung_totalrup = ir_gabung.assign(TOTAL_RUP = lambda x: x.RUP_PENYEDIA + x.RUP_SWAKELOLA)
@@ -742,7 +742,7 @@ with menu_rup_5:
     ### Tampilan pilihan menu nama OPD
     opd_tbl_pp = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='menu_rup_5')
 
-    df_RUPPP_PD_tbl = con.execute(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd_tbl_pp}'").df()
+    df_RUPPP_PD_tbl = duckdb.sql(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd_tbl_pp}'").df()
 
     st.subheader(f"{opd_tbl_pp}")
     
@@ -753,7 +753,7 @@ with menu_rup_5:
         status_pradipa AS STATUS_PRADIPA, status_pdn AS STATUS_PDN, status_ukm AS STATUS_UKM, tgl_pengumuman_paket AS TANGGAL_PENGUMUMAN, 
         tgl_awal_pemilihan AS TANGGAL_RENCANA_PEMILIHAN, pagu AS PAGU FROM df_RUPPP_PD_tbl
     """
-    df_RUPPP_PD_tbl_tampil = con.execute(sql_query_pp_tbl).df()
+    df_RUPPP_PD_tbl_tampil = duckdb.sql(sql_query_pp_tbl).df()
 
     ### Tampilkan data menggunakan AgGrid
     gd_pp = GridOptionsBuilder.from_dataframe(df_RUPPP_PD_tbl_tampil)
@@ -772,7 +772,7 @@ with menu_rup_6:
     ### Tampilan pilihan menu nama OPD
     opd_tbl_ps = st.selectbox("Pilih Perangkat Daerah :", namaopd, key='menu_rup_6')
 
-    df_RUPPS_PD_tbl = con.execute(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd_tbl_ps}'").df()
+    df_RUPPS_PD_tbl = duckdb.sql(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd_tbl_ps}'").df()
 
     st.subheader(f"{opd_tbl_ps}")
 
@@ -783,7 +783,7 @@ with menu_rup_6:
         tgl_pengumuman_paket AS TANGGAL_PENGUMUMAN, tgl_awal_pelaksanaan_kontrak AS TANGGAL_PELAKSANAAN, pagu AS PAGU 
         FROM df_RUPPS_PD_tbl
     """
-    df_RUPPS_PD_tbl_tampil = con.execute(sql_query_ps_tbl).df()
+    df_RUPPS_PD_tbl_tampil = duckdb.sql(sql_query_ps_tbl).df()
 
     ### Tampilkan data menggunakan AgGrid
     gd_ps = GridOptionsBuilder.from_dataframe(df_RUPPS_PD_tbl_tampil)
