@@ -130,20 +130,20 @@ con = duckdb.connect(database=':memory:')
 # DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
 
 ## Akses file data.pbj.my.id dalam Excel
-# DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.xlsx"
-# DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.xlsx"
-# DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.xlsx"
+DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.xlsx"
+DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.xlsx"
+DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.xlsx"
 
 ## Akses file data.pbj.my.id dalam JSON
-DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.json"
-DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.json"
-DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.json"
+# DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.json"
+# DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.json"
+# DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.json"
 
 
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
-    df_RUPPP = tarik_data_json(DatasetRUPPP)
+    df_RUPPP = tarik_data_excel(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
     df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
@@ -163,7 +163,7 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Paket Swakelola
-    df_RUPPS = tarik_data_json(DatasetRUPPS)
+    df_RUPPS = tarik_data_excel(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
     df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
@@ -175,7 +175,7 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
-    df_RUPSA = tarik_data_json(DatasetRUPSA)
+    df_RUPSA = tarik_data_excel(DatasetRUPSA)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
@@ -666,7 +666,7 @@ with menu_rup_3:
 
     try:
         ### Baca file parquet dataset RUP Struktur Anggaran
-        df_RUPSA = tarik_data_json(DatasetRUPSA)
+        df_RUPSA = tarik_data_excel(DatasetRUPSA)
 
         st.header(f"STRUKTUR ANGGARAN {pilih} TAHUN {tahun}", divider='rainbow')
 
