@@ -31,7 +31,7 @@ def download_excel(df):
 
 @st.cache_data(ttl=(3600))
 def tarik_data(url):
-    return duckdb.sql(f"SELECT * FROM read_parquet('{url}')")
+    return duckdb.sql(f"SELECT * FROM read_parquet('{url}')").df()
 
 def logo():
     add_logo("https://storage.googleapis.com/bukanamel/img/instansi-logo.png")
