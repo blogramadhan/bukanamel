@@ -167,7 +167,7 @@ except Exception:
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
     # df_RUPSA = tarik_data(DatasetRUPSA)
-    df_RUPSA = duckdb.sql("SELECT * FROM read_parquet('{DatasetRUPSA}')").df().fillna(0)
+    df_RUPSA = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPSA}')").df().fillna(0)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
