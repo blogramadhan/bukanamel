@@ -22,6 +22,8 @@
 # Import Library
 import duckdb
 import openpyxl
+import io
+import xlsxwriter
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -114,7 +116,9 @@ if pilih == "KAB. PARIGI MOUTONG":
     kodeLPSE = "149"
 
 # Persiapan Dataset
-con = duckdb.connect(database=':memory:')
+# con = duckdb.connect(database=':memory:')
+duckdb.sql("INSTALL httpfs")
+duckdb.sql("LOAD httpfs")
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 #DatasetPURCHASINGECAT = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/purchasing/ECATPaketEpurchasing{tahun}.parquet" 
@@ -192,13 +196,13 @@ with menu_purchasing_1:
 
             ### Hitung-hitung dataset Katalog
             if (jenis_katalog == "Gabungan" and status_paket == "Gabungan"):
-                df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
+                df_ECAT_filter = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}'").df()
             elif jenis_katalog == "Gabungan":
-                df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
+                df_ECAT_filter = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND paket_status_str = '{status_paket}'").df()
             elif status_paket == "Gabungan":
-                df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
+                df_ECAT_filter = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}'").df()
             else:    
-                df_ECAT_filter = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
+                df_ECAT_filter = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana}' AND jenis_katalog = '{jenis_katalog}' AND paket_status_str = '{status_paket}'").df()
 
             jumlah_produk = df_ECAT_filter['kd_produk'].unique().shape[0]
             jumlah_penyedia = df_ECAT_filter['kd_penyedia'].unique().shape[0]
@@ -227,7 +231,7 @@ with menu_purchasing_1:
                     FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
                 """ 
 
-                tabel_jumlah_ukm = con.execute(sql_jumlah_ukm).df()
+                tabel_jumlah_ukm = duckdb.sql(sql_jumlah_ukm).df()
                 
                 grafik_ukm_tab_1_1, grafik_ukm_tab_1_2 = st.columns((3,7))
                 
@@ -248,7 +252,7 @@ with menu_purchasing_1:
                     FROM df_ECAT_filter GROUP BY PENYEDIA_UKM
                 """ 
 
-                tabel_nilai_ukm = con.execute(sql_nilai_ukm).df()
+                tabel_nilai_ukm = duckdb.sql(sql_nilai_ukm).df()
                 
                 grafik_ukm_tab_2_1, grafik_ukm_tab_2_2 = st.columns((3.5,6.5))
                 
@@ -290,7 +294,7 @@ with menu_purchasing_1:
                         GROUP BY NAMA_KOMODITAS ORDER BY JUMLAH_TRANSAKSI DESC
                     """
 
-                tabel_jumlah_transaksi_lokal_nk = con.execute(sql_jumlah_transaksi_lokal_nk).df()
+                tabel_jumlah_transaksi_lokal_nk = duckdb.sql(sql_jumlah_transaksi_lokal_nk).df()
 
                 grafik_ecat_nk_11, grafik_ecat_nk_12 = st.columns((4,6))
 
@@ -320,7 +324,7 @@ with menu_purchasing_1:
                         GROUP BY NAMA_KOMODITAS ORDER BY NILAI_TRANSAKSI DESC
                     """
 
-                tabel_nilai_transaksi_lokal_nk = con.execute(sql_nilai_transaksi_lokal_nk).df()
+                tabel_nilai_transaksi_lokal_nk = duckdb.sql(sql_nilai_transaksi_lokal_nk).df()
 
                 grafik_ecat_nk_21, grafik_ecat_nk_22 = st.columns((4,6))
 
@@ -356,7 +360,7 @@ with menu_purchasing_1:
                     GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
                 """
 
-                tabel_jumlah_transaksi_lokal_pd = con.execute(sql_jumlah_transaksi_lokal_pd).df()
+                tabel_jumlah_transaksi_lokal_pd = duckdb.sql(sql_jumlah_transaksi_lokal_pd).df()
 
                 grafik_ecat_pd_11, grafik_ecat_pd_12 = st.columns((4,6))
 
@@ -379,7 +383,7 @@ with menu_purchasing_1:
                     GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
                 """
 
-                tabel_nilai_transaksi_lokal_pd = con.execute(sql_nilai_transaksi_lokal_pd).df()
+                tabel_nilai_transaksi_lokal_pd = duckdb.sql(sql_nilai_transaksi_lokal_pd).df()
 
                 grafik_ecat_pd_21, grafik_ecat_pd_22 = st.columns((4,6))
 
@@ -415,7 +419,7 @@ with menu_purchasing_1:
                     GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
                 """
 
-                tabel_jumlah_transaksi_ecat_pu = con.execute(sql_jumlah_transaksi_ecat_pu).df()
+                tabel_jumlah_transaksi_ecat_pu = duckdb.sql(sql_jumlah_transaksi_ecat_pu).df()
 
                 grafik_ecat_pu_1_1, grafik_ecat_pu_1_2 = st.columns((4,6))
 
@@ -438,7 +442,7 @@ with menu_purchasing_1:
                     GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
                 """
 
-                tabel_nilai_transaksi_ecat_pu = con.execute(sql_nilai_transaksi_ecat_pu).df()
+                tabel_nilai_transaksi_ecat_pu = duckdb.sql(sql_nilai_transaksi_ecat_pu).df()
 
                 grafik_ecat_pu_2_1, grafik_ecat_pu_2_2 = st.columns((4,6))
 
@@ -485,20 +489,20 @@ with menu_purchasing_1:
 
             ### Hitung-hitung dataset Katalog
             # if (jenis_katalog_etalase == "Gabungan" and status_paket_etalase == "Gabungan"):
-            #     df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}").df()
+            #     df_ECAT_ETALASE = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}").df()
             # elif jenis_katalog_etalase == "Gabungan":
-            #     df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
+            #     df_ECAT_ETALASE = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
             if status_paket_etalase == "Gabungan":
-                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}'").df()
+                df_ECAT_ETALASE = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}'").df()
             else:    
-                df_ECAT_ETALASE = con.execute(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
+                df_ECAT_ETALASE = duckdb.sql(f"SELECT * FROM df_ECAT_OK WHERE nama_sumber_dana = '{nama_sumber_dana_etalase}' AND jenis_katalog = '{jenis_katalog_etalase}' AND paket_status_str = '{status_paket_etalase}'").df()
             ###
 
             with ETALASE_radio_4:
                 nama_komoditas = st.selectbox("Pilih Etalase Belanja :", df_ECAT_ETALASE['nama_komoditas'].unique(), key="Etalase_Nama_Komoditas")
             st.write(f"Anda memilih : **{jenis_katalog_etalase}** dan **{nama_sumber_dana_etalase}** dan **{status_paket_etalase}**")
             
-            df_ECAT_ETALASE_filter = con.execute(f"SELECT * FROM df_ECAT_ETALASE WHERE nama_komoditas = '{nama_komoditas}'").df()
+            df_ECAT_ETALASE_filter = duckdb.sql(f"SELECT * FROM df_ECAT_ETALASE WHERE nama_komoditas = '{nama_komoditas}'").df()
 
             jumlah_produk_etalase = df_ECAT_ETALASE_filter['kd_produk'].unique().shape[0]
             jumlah_penyedia_etalase = df_ECAT_ETALASE_filter['kd_penyedia'].unique().shape[0]
@@ -527,7 +531,7 @@ with menu_purchasing_1:
                     GROUP BY NAMA_PENYEDIA ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
                 """
 
-                tabel_jumlah_transaksi_ecat_pu_etalase = con.execute(sql_jumlah_transaksi_ecat_pu_etalase).df()
+                tabel_jumlah_transaksi_ecat_pu_etalase = duckdb.sql(sql_jumlah_transaksi_ecat_pu_etalase).df()
 
                 grafik_etalase_pu_1_1, grafik_etalase_pu_1_2 = st.columns((4,6))
 
@@ -550,7 +554,7 @@ with menu_purchasing_1:
                     GROUP BY NAMA_PENYEDIA ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
                 """
 
-                tabel_nilai_transaksi_ecat_pu_etalase = con.execute(sql_nilai_transaksi_ecat_pu_etalase).df()
+                tabel_nilai_transaksi_ecat_pu_etalase = duckdb.sql(sql_nilai_transaksi_ecat_pu_etalase).df()
 
                 grafik_etalase_pu_2_1, grafik_etalase_pu_2_2 = st.columns((4,6))
 
@@ -572,9 +576,9 @@ with menu_purchasing_1:
 
         with menu_purchasing_1_3:
 
-            df_ECAT_OK_PIVOT = con.execute("SELECT nama_komoditas, jenis_katalog, total_harga FROM df_ECAT_OK").df()
-            df_ECAT_PIVOT_TABEL = con.execute("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df().fillna(0)
-            df_ECAT_PIVOT_TABEL_OK = con.execute("SELECT nama_komoditas AS NAMA_KOMODITAS, Lokal AS LOKAL, Nasional AS NASIONAL, Sektoral AS SEKTORAL FROM df_ECAT_PIVOT_TABEL").df()
+            df_ECAT_OK_PIVOT = duckdb.sql("SELECT nama_komoditas, jenis_katalog, total_harga FROM df_ECAT_OK").df()
+            df_ECAT_PIVOT_TABEL = duckdb.sql("PIVOT df_ECAT_OK_PIVOT ON jenis_katalog USING SUM(total_harga)").df().fillna(0)
+            df_ECAT_PIVOT_TABEL_OK = duckdb.sql("SELECT nama_komoditas AS NAMA_KOMODITAS, Lokal AS LOKAL, Nasional AS NASIONAL, Sektoral AS SEKTORAL FROM df_ECAT_PIVOT_TABEL").df()
 
             ### Buat tombol unduh dataset Tabel Nilai Etalase
             unduh_ETALASE_PIVOT_excel = download_excel(df_ECAT_PIVOT_TABEL_OK)
@@ -634,9 +638,9 @@ with menu_purchasing_2:
 
         ### Hitung-hitungan dataset
         if status_verifikasi == "Gabungan":
-            df_BELA_filter = con.execute(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL").df()
+            df_BELA_filter = duckdb.sql(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL").df()
         else:
-            df_BELA_filter = con.execute(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = '{status_verifikasi}'").df()
+            df_BELA_filter = duckdb.sql(f"SELECT * FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = '{status_verifikasi}'").df()
 
         jumlah_trx_daring = df_BELA_filter['order_id'].unique().shape[0]
         nilai_trx_daring = df_BELA_filter['valuasi'].sum()
@@ -663,7 +667,7 @@ with menu_purchasing_2:
                 GROUP BY NAMA_SATKER ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
             """
 
-            tabel_jumlah_transaksi_bela_pd = con.execute(sql_jumlah_transaksi_bela_pd).df()
+            tabel_jumlah_transaksi_bela_pd = duckdb.sql(sql_jumlah_transaksi_bela_pd).df()
 
             grafik_bela_pd_11_1, grafik_bela_pd_11_2 = st.columns((4,6))
 
@@ -686,7 +690,7 @@ with menu_purchasing_2:
                 GROUP BY NAMA_SATKER ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
             """
 
-            tabel_nilai_transaksi_bela_pd = con.execute(sql_nilai_transaksi_bela_pd).df()
+            tabel_nilai_transaksi_bela_pd = duckdb.sql(sql_nilai_transaksi_bela_pd).df()
 
             grafik_bela_pd_12_1, grafik_bela_pd_12_2 = st.columns((4,6))
 
@@ -722,7 +726,7 @@ with menu_purchasing_2:
                 GROUP BY NAMA_MERCHANT ORDER BY JUMLAH_TRANSAKSI DESC LIMIT 10
             """
 
-            tabel_jumlah_transaksi_bela_pu = con.execute(sql_jumlah_transaksi_bela_pu).df()
+            tabel_jumlah_transaksi_bela_pu = duckdb.sql(sql_jumlah_transaksi_bela_pu).df()
 
             grafik_bela_pu_11_1, grafik_bela_pu_11_2 = st.columns((4,6))
 
@@ -745,7 +749,7 @@ with menu_purchasing_2:
                 GROUP BY NAMA_MERCHANT ORDER BY NILAI_TRANSAKSI DESC LIMIT 10
             """
 
-            tabel_nilai_transaksi_bela_pu = con.execute(sql_nilai_transaksi_bela_pu).df()
+            tabel_nilai_transaksi_bela_pu = duckdb.sql(sql_nilai_transaksi_bela_pu).df()
 
             grafik_bela_pu_12_1, grafik_bela_pu_12_2 = st.columns((4,6))
 
