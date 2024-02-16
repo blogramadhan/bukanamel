@@ -117,7 +117,9 @@ if pilih == "KAB. PARIGI MOUTONG":
     kodeLPSE = "149"
 
 # Persiapan Dataset
-con = duckdb.connect(database=':memory:')
+# con = duckdb.connect(database=':memory:')
+duckdb.sql("INSTALL httpfs")
+duckdb.sql("LOAD httpfs")
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 #DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
@@ -134,27 +136,17 @@ DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{t
 # DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.xlsx"
 # DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.xlsx"
 
-## Akses file data.pbj.my.id dalam JSON
-# DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.json"
-# DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.json"
-# DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.json"
-
-
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
-    df_RUPPP = tarik_data(DatasetRUPPP)
+    # df_RUPPP = tarik_data(DatasetRUPPP)
+    df_RUPPP = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPP}')").df().fillna(0)
 
     ### Query RUP Paket Penyedia
     # df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
     # df_RUPPP_belum_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
     # df_RUPPP_umumkan_ukm = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
     # df_RUPPP_umumkan_pdn = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
-
-    # df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE')]
-    # df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
-    # df_RUPPP_umumkan_ukm = df_RUPPP[df_RUPPP['status_ukm'] == 'UKM']
-    # df_RUPPP_umumkan_pdn = df_RUPPP[df_RUPPP['status_pdn'] == 'PDN']
 
     # namaopd = df_RUPPP_umumkan['nama_satker'].unique()
 
@@ -163,19 +155,17 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Paket Swakelola
-    df_RUPPS = tarik_data(DatasetRUPPS)
+    # df_RUPPS = tarik_data(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
     # df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
-
-    # df_RUPPS_umumkan = df_RUPPS[df_RUPPS['status_umumkan_rup'] == 'Terumumkan']
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
 
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
-    df_RUPSA = tarik_data(DatasetRUPSA)
+    # df_RUPSA = tarik_data(DatasetRUPSA)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
@@ -191,7 +181,7 @@ menu_rup_1, menu_rup_2, menu_rup_3, menu_rup_4, menu_rup_5, menu_rup_6 = st.tabs
 with menu_rup_1:
     
     ### Query RUP Paket Swakelola
-    # df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
     ### Hitung-hitung dataset
     df_RUPPP_mp_hitung = duckdb.sql("SELECT metode_pengadaan AS METODE_PENGADAAN, COUNT(metode_pengadaan) AS JUMLAH_PAKET FROM df_RUPPP_umumkan WHERE metode_pengadaan IS NOT NULL GROUP BY metode_pengadaan").df() 
