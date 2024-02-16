@@ -143,12 +143,12 @@ try:
     df_RUPPP = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPP}')").df().fillna(0)
 
     ### Query RUP Paket Penyedia
-    # df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-    # df_RUPPP_belum_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
-    # df_RUPPP_umumkan_ukm = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
-    # df_RUPPP_umumkan_pdn = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
+    df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+    df_RUPPP_belum_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
+    df_RUPPP_umumkan_ukm = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
+    df_RUPPP_umumkan_pdn = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
-    # namaopd = df_RUPPP_umumkan['nama_satker'].unique()
+    namaopd = df_RUPPP_umumkan['nama_satker'].unique()
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Penyedia.")
@@ -156,9 +156,10 @@ except Exception:
 try:
     ### Baca file parquet dataset RUP Paket Swakelola
     # df_RUPPS = tarik_data(DatasetRUPPS)
+    df_RUPPS = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPS}')").df().fillna(0)
 
     ### Query RUP Paket Swakelola
-    # df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
@@ -166,6 +167,7 @@ except Exception:
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
     # df_RUPSA = tarik_data(DatasetRUPSA)
+    df_RUPSA = duckdb.sql("SELECT * FROM read_parquet('{DatasetRUPSA}')").df().fillna(0)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
