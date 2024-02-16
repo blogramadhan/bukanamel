@@ -131,16 +131,11 @@ DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumu
 DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.parquet"
 DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
 
-## Akses file data.pbj.my.id dalam Excel
-# DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan{tahun}.xlsx"
-# DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.xlsx"
-# DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.xlsx"
-
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
-    # df_RUPPP = tarik_data(DatasetRUPPP)
-    df_RUPPP = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPP}')").df().fillna(0)
+    df_RUPPP = tarik_data(DatasetRUPPP)
+    # df_RUPPP = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPP}')").df().fillna(0)
 
     ### Query RUP Paket Penyedia
     df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
@@ -155,8 +150,8 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Paket Swakelola
-    # df_RUPPS = tarik_data(DatasetRUPPS)
-    df_RUPPS = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPS}')").df().fillna(0)
+    df_RUPPS = tarik_data(DatasetRUPPS)
+    # df_RUPPS = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPPS}')").df().fillna(0)
 
     ### Query RUP Paket Swakelola
     df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
@@ -166,8 +161,8 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
-    # df_RUPSA = tarik_data(DatasetRUPSA)
-    df_RUPSA = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPSA}')").df().fillna(0)
+    df_RUPSA = tarik_data(DatasetRUPSA)
+    # df_RUPSA = duckdb.sql(f"SELECT * FROM read_parquet('{DatasetRUPSA}')").df().fillna(0)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
