@@ -17,6 +17,10 @@ from streamlit_extras.metric_cards import style_metric_cards
 from streamlit_extras.app_logo import add_logo
 
 # Fungsi-fungsi yang bisa digunakan
+@st.cache_data(ttl=(3600))
+def tarik_data(url):
+    return duckdb.sql(f"SELECT * FROM read_parquet('{url}')").df()
+
 ## Fungsi Download Dataframe ke CSV
 def unduh_data(unduhdata):
     return unduhdata.to_csv(index=False).encode('utf-8')
@@ -28,10 +32,6 @@ def download_excel(df):
         df.to_excel(writer, index=False)
     excel_data.seek(0)
     return excel_data.getvalue()
-
-@st.cache_data(ttl=(3600))
-def tarik_data(url):
-    return duckdb.sql(f"SELECT * FROM read_parquet('{url}')").df()
 
 def logo():
     add_logo("https://storage.googleapis.com/bukanamel/img/instansi-logo.png")
