@@ -588,7 +588,7 @@ with menu_purchasing_1:
                 st.header(f"TABEL NILAI ETALASE - {pilih} - TAHUN {tahun}")
             with etalasepivot2:
                 st.download_button(
-                    label = "📥 Tabel Nilai Etalase",
+                    label = "📥 Download Tabel Nilai Etalase",
                     data = unduh_ETALASE_PIVOT_excel,
                     file_name = f"TabelNilaiEtalase-{kodeFolder}-{tahun}.xlsx",
                     mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
