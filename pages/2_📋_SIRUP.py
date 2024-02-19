@@ -118,8 +118,8 @@ if pilih == "KAB. PARIGI MOUTONG":
 
 # Persiapan Dataset
 # con = duckdb.connect(database=':memory:')
-duckdb.sql("INSTALL httpfs")
-duckdb.sql("LOAD httpfs")
+#duckdb.sql("INSTALL httpfs")
+#duckdb.sql("LOAD httpfs")
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 #DatasetRUPPP = f"https://storage.googleapis.com/bukanamel/{kodeFolder}/sirup/RUPPaketPenyediaTerumumkan{tahun}.parquet"
