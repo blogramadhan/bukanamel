@@ -18,6 +18,10 @@ from streamlit_extras.app_logo import add_logo
 
 # Fungsi-fungsi yang bisa digunakan
 @st.cache_data(ttl=(3600))
+def tarik_data_pd(url):
+    return pd.read_parquet(url)
+
+@st.cache_data(ttl=(3600))
 def tarik_data(url):
     return duckdb.sql(f"SELECT * FROM read_parquet('{url}')").df()
 
