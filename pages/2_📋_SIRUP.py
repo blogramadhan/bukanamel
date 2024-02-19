@@ -735,7 +735,8 @@ with menu_rup_5:
         label = "📥 Download RUP Paket Penyedia",
         data = unduh_df_RUPPP_PD_tbl_excel,
         file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.xlsx",
-        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        key = "download_paket_penyedia_detail"
     )
     
     st.divider()
@@ -773,7 +774,8 @@ with menu_rup_6:
         label = "📥 Download RUP Paket Swakelola",
         data = unduh_df_RUPPS_PD_tbl_excel,
         file_name = f"RUPPaketSwakelola-{kodeFolder}-{tahun}.xlsx",
-        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        key = "download_paket_swakelola_detail"
     )
 
     st.divider()
