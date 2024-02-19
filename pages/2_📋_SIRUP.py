@@ -729,6 +729,14 @@ with menu_rup_5:
     df_RUPPP_PD_tbl = duckdb.sql(f"SELECT * FROM df_RUPPP_umumkan WHERE nama_satker = '{opd_tbl_pp}'").df()
 
     st.subheader(f"{opd_tbl_pp}")
+
+    unduh_df_RUPPP_PD_tbl_excel = download_excel(df_RUPPP_PD_tbl)
+    st.download_button(
+        label = "📥 Download RUP Paket Penyedia",
+        data = unduh_df_RUPPP_PD_tbl_excel,
+        file_name = f"RUPPaketPenyedia-{kodeFolder}-{tahun}.xlsx",
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
     
     st.divider()
 
@@ -759,6 +767,14 @@ with menu_rup_6:
     df_RUPPS_PD_tbl = duckdb.sql(f"SELECT * FROM df_RUPPS_umumkan WHERE nama_satker = '{opd_tbl_ps}'").df()
 
     st.subheader(f"{opd_tbl_ps}")
+
+    unduh_df_RUPPS_PD_tbl_excel = download_excel(df_RUPPS_PD_tbl)
+    st.download_button(
+        label = "📥 Download RUP Paket Swakelola",
+        data = unduh_df_RUPPS_PD_tbl_excel,
+        file_name = f"RUPPaketSwakelola-{kodeFolder}-{tahun}.xlsx",
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
     st.divider()
 
