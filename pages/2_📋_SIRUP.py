@@ -137,7 +137,7 @@ try:
     df_RUPPP = tarik_data(DatasetRUPPP).fillna(0)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan != '0'").df()
+    df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
     df_RUPPP_belum_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
     df_RUPPP_umumkan_ukm = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
     df_RUPPP_umumkan_pdn = duckdb.sql("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
