@@ -134,7 +134,7 @@ DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{t
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
-    df_RUPPP = tarik_data(DatasetRUPPP).fillna(0)
+    df_RUPPP = tarik_data(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
     df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
@@ -149,7 +149,7 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Paket Swakelola
-    df_RUPPS = tarik_data(DatasetRUPPS).fillna(0)
+    df_RUPPS = tarik_data(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
     df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
@@ -159,7 +159,7 @@ except Exception:
 
 try:
     ### Baca file parquet dataset RUP Struktur Anggaran
-    df_RUPSA = tarik_data(DatasetRUPSA).fillna(0)
+    df_RUPSA = tarik_data(DatasetRUPSA)
 
 except Exception:
     st.error("Gagal baca dataset RUP Struktur Anggaran.")
