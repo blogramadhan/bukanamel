@@ -134,7 +134,7 @@ DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{t
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
-    df_RUPPP = tarik_data_pd(DatasetRUPPP).fillna("0")
+    df_RUPPP = tarik_data_pd(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
     df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
