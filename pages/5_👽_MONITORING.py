@@ -22,6 +22,8 @@
 # Import Library
 import duckdb
 import openpyxl
+import io
+import xlsxwriter
 import numpy as np
 import streamlit as st
 import pandas as pd
@@ -114,9 +116,9 @@ if pilih == "KAB. PARIGI MOUTONG":
     kodeLPSE = "149"
 
 # Persiapan Dataset
-# con = duckdb.connect(database=':memory:')
-duckdb.sql("INSTALL httpfs")
-duckdb.sql("LOAD httpfs")
+con = duckdb.connect(database=':memory:')
+# duckdb.sql("INSTALL httpfs")
+# duckdb.sql("LOAD httpfs")
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL public
 
@@ -163,13 +165,13 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP SIRUP
         #### Tarik dataset SIRUP
-        df_RUPPP = tarik_data(DatasetRUPPP).fillna(0)
-        df_RUPPS = tarik_data(DatasetRUPPS).fillna(0)
-        df_RUPSA = tarik_data(DatasetRUPSA).fillna(0)
+        df_RUPPP = tarik_data_pd(DatasetRUPPP).fillna(0)
+        df_RUPPS = tarik_data_pd(DatasetRUPPS).fillna(0)
+        df_RUPSA = tarik_data_pd(DatasetRUPSA).fillna(0)
 
         #### Query RUP Paket Penyedia
-        df_RUPPP_umumkan = duckdb.sql("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
-        df_RUPPS_umumkan = duckdb.sql("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+        df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+        df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
         belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
         nilai_total_rup = df_RUPPP_umumkan['pagu'].sum() + df_RUPPS_umumkan['pagu'].sum()
@@ -199,9 +201,9 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP E-TENDERING
         #### Tarik dataset SIRUP + SPSE E-TENDERING
-        df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-        df_SPSETenderPengumuman_etendering = duckdb.sql("SELECT kd_tender, pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
-        df_RUPPP_umumkan_etendering = duckdb.sql("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan IN ('Tender', 'Tender Cepat')").df()
+        df_SPSETenderPengumuman = tarik_data_pd(DatasetSPSETenderPengumuman)
+        df_SPSETenderPengumuman_etendering = con.execute("SELECT kd_tender, pagu, hps FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
+        df_RUPPP_umumkan_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan IN ('Tender', 'Tender Cepat')").df()
 
         #### Query ITKP E-TENDERING
         nilai_etendering_rup = df_RUPPP_umumkan_etendering['pagu'].sum()
@@ -232,9 +234,9 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP NON E-TENDERING
         #### Tarik dataset SIRUP + SPSE NON E-TENDERING
-        df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
-        df_SPSENonTenderPengumuman_filter = duckdb.sql("SELECT pagu, hps FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
-        df_RUPPP_umumkan_non_etendering = duckdb.sql("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan IN ('Pengadaan Langsung', 'Penunjukan Langsung')").df()
+        df_SPSENonTenderPengumuman = tarik_data_pd(DatasetSPSENonTenderPengumuman)
+        df_SPSENonTenderPengumuman_filter = con.execute("SELECT pagu, hps FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
+        df_RUPPP_umumkan_non_etendering = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan IN ('Pengadaan Langsung', 'Penunjukan Langsung')").df()
 
         #### Query ITKP NON E-TENDERING
         nilai_nonetendering_rup = df_RUPPP_umumkan_non_etendering['pagu'].sum()
@@ -265,8 +267,8 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP E-KONTRAK
         #### Tarik dataset E-KONTRAK
-        df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
-        df_SPSETenderKontrak_filter = duckdb.sql("SELECT * kd_tender FROM df_SPSETenderKontrak").df()
+        df_SPSETenderKontrak = tarik_data_pd(DatasetSPSETenderKontrak)
+        df_SPSETenderKontrak_filter = con.execute("SELECT * kd_tender FROM df_SPSETenderKontrak").df()
         
         #### Query ITKP E-KONTRAK
         jumlah_tender_selesai = df_SPSETenderPengumuman_etendering['kd_tender'].count()
@@ -297,9 +299,9 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
-        df_ECAT = tarik_data(DatasetPURCHASINGECAT)
-        df_ECAT_filter = duckdb.sql("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai', 'Paket Proses')").df()
-        df_RUPPP_umumkan_epurchasing = duckdb.sql("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
+        df_ECAT = tarik_data_pd(DatasetPURCHASINGECAT)
+        df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai', 'Paket Proses')").df()
+        df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
 
         #### Query ITKP E-PURCHASING
         nilai_epurchasing_rup = df_RUPPP_umumkan_epurchasing['pagu'].sum()
@@ -330,8 +332,8 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP TOKO DARING
         #### Tarik dataset TOKO DARING
-        df_BELA = tarik_data(DatasetPURCHASINGBELA)
-        df_BELA_filter = duckdb.sql(f"SELECT valuasi FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = 'verified' AND status_konfirmasi_ppmse = 'selesai'").df()
+        df_BELA = tarik_data_pd(DatasetPURCHASINGBELA)
+        df_BELA_filter = con.execute(f"SELECT valuasi FROM df_BELA WHERE nama_satker IS NOT NULL AND status_verif = 'verified' AND status_konfirmasi_ppmse = 'selesai'").df()
         
         #### Query ITKP TOKO DARING
         jumlah_trx_bela = df_BELA_filter['valuasi'].count()
@@ -365,8 +367,8 @@ with menu_monitoring_2:
 
         try:
             ##### Tarik dataset SIKAP TENDER
-            df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-            df_SIKAPTender = tarik_data(DatasetSIKAPTender)
+            df_SPSETenderPengumuman = tarik_data_pd(DatasetSPSETenderPengumuman)
+            df_SIKAPTender = tarik_data_pd(DatasetSIKAPTender)
 
             ##### Buat tombol undah dataset SIKAP TENDER
 
@@ -374,8 +376,8 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SPSETenderPengumuman_filter = duckdb.sql(f"SELECT kd_tender, nama_satker, pagu, hps, jenis_pengadaan, mtd_pemilihan, FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
-            df_SIKAPTender_filter = duckdb.sql(f"SELECT kd_tender, nama_paket, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPTender").df()
+            df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, nama_satker, pagu, hps, jenis_pengadaan, mtd_pemilihan, FROM df_SPSETenderPengumuman WHERE status_tender = 'Selesai'").df()
+            df_SIKAPTender_filter = con.execute(f"SELECT kd_tender, nama_paket, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPTender").df()
             df_SIKAPTender_OK = df_SPSETenderPengumuman_filter.merge(df_SIKAPTender_filter, how='right', on='kd_tender')
 
             jumlah_trx_spse_t_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
@@ -390,7 +392,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPTender_OK_filter = duckdb.sql("SELECT nama_paket AS NAMA_PAKET, kd_tender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
+            df_SIKAPTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_tender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
             df_SIKAPTender_OK_filter_final = df_SIKAPTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
 
             unduh_SIKAP_Tender_excel = download_excel(df_SIKAPTender_OK_filter_final)
@@ -416,8 +418,8 @@ with menu_monitoring_2:
 
         try:
             ##### Tarik dataset SIKAP NON TENDER
-            df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
-            df_SIKAPNonTender = tarik_data(DatasetSIKAPNonTender)
+            df_SPSENonTenderPengumuman = tarik_data_pd(DatasetSPSENonTenderPengumuman)
+            df_SIKAPNonTender = tarik_data_pd(DatasetSIKAPNonTender)
 
             ##### Buat tombol undah dataset SIKAP NON TENDER
 
@@ -425,8 +427,8 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SPSENonTenderPengumuman_filter = duckdb.sql(f"SELECT kd_nontender, nama_satker, pagu, hps, jenis_pengadaan, mtd_pemilihan, FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
-            df_SIKAPNonTender_filter = duckdb.sql(f"SELECT kd_nontender, nama_paket, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
+            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, nama_satker, pagu, hps, jenis_pengadaan, mtd_pemilihan, FROM df_SPSENonTenderPengumuman WHERE status_nontender = 'Selesai'").df()
+            df_SIKAPNonTender_filter = con.execute(f"SELECT kd_nontender, nama_paket, nama_ppk, nama_penyedia, npwp_penyedia, indikator_penilaian, nilai_indikator, total_skors FROM df_SIKAPNonTender").df()
             df_SIKAPNonTender_OK = df_SPSENonTenderPengumuman_filter.merge(df_SIKAPNonTender_filter, how='right', on='kd_nontender')
 
             jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
@@ -441,7 +443,7 @@ with menu_monitoring_2:
 
             st.divider()
 
-            df_SIKAPNonTender_OK_filter = duckdb.sql("SELECT nama_paket AS NAMA_PAKET, kd_nontender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
+            df_SIKAPNonTender_OK_filter = con.execute("SELECT nama_paket AS NAMA_PAKET, kd_nontender AS KODE_PAKET, jenis_pengadaan AS JENIS_PENGADAAN, nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, AVG(total_skors) AS SKOR_PENILAIAN FROM df_SIKAPNonTender_OK GROUP BY KODE_PAKET, NAMA_PAKET, JENIS_PENGADAAN, NAMA_PPK, NAMA_PENYEDIA").df()
             df_SIKAPNonTender_OK_filter_final = df_SIKAPNonTender_OK_filter.assign(KETERANGAN = np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 3, "SANGAT BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 2, "BAIK", np.where(df_SIKAPNonTender_OK_filter['SKOR_PENILAIAN'] >= 1, "CUKUP", "BURUK"))))
 
             unduh_SIKAP_NonTender_excel = download_excel(df_SIKAPNonTender_OK_filter_final)

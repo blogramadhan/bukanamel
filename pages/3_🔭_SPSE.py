@@ -116,9 +116,9 @@ if pilih == "KAB. PARIGI MOUTONG":
     kodeLPSE = "149"
 
 # Persiapan Dataset
-# con = duckdb.connect(database=':memory:')
-duckdb.sql("INSTALL httpfs")
-duckdb.sql("LOAD httpfs")
+con = duckdb.connect(database=':memory:')
+# duckdb.sql("INSTALL httpfs")
+# duckdb.sql("LOAD httpfs")
 
 ## Akses file dataset format parquet dari Google Cloud Storage via URL Public
 
@@ -206,7 +206,7 @@ with menu_spse_1:
 
         try:
             ##### Tarik dataset SPSETenderPengumuman
-            df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
+            df_SPSETenderPengumuman = tarik_data_pd(DatasetSPSETenderPengumuman)
 
             ##### Buat tombol unduh dataset SPSE - Tender - Pengumuman
             unduh_SPSE_Pengumuman_excel = download_excel(df_SPSETenderPengumuman)
@@ -234,7 +234,7 @@ with menu_spse_1:
             st.write(f"Anda memilih : **{sumber_dana}** dan **{status_tender}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - Pengumuman
-            df_SPSETenderPengumuman_filter = duckdb.sql(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
+            df_SPSETenderPengumuman_filter = con.execute(f"SELECT kd_tender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, mtd_evaluasi, mtd_kualifikasi, kontrak_pembayaran FROM df_SPSETenderPengumuman WHERE sumber_dana = '{sumber_dana}' AND status_tender = '{status_tender}'").df()
             jumlah_trx_spse_pengumuman = df_SPSETenderPengumuman_filter['kd_tender'].unique().shape[0]
             nilai_trx_spse_pengumuman_pagu = df_SPSETenderPengumuman_filter['pagu'].sum()
             nilai_trx_spse_pengumuman_hps = df_SPSETenderPengumuman_filter['hps'].sum()
@@ -261,7 +261,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_kp_jumlah_trx = duckdb.sql(sql_kp_jumlah).df()
+                tabel_kp_jumlah_trx = con.execute(sql_kp_jumlah).df()
 
                 grafik_kp_1_1, grafik_kp_1_2 = st.columns((3,7))
 
@@ -284,7 +284,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_kp_nilai_trx = duckdb.sql(sql_kp_nilai).df()
+                tabel_kp_nilai_trx = con.execute(sql_kp_nilai).df()
 
                 grafik_kp_2_1, grafik_kp_2_2 = st.columns((3,7))
 
@@ -319,7 +319,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_jp_jumlah_trx = duckdb.sql(sql_jp_jumlah).df()
+                tabel_jp_jumlah_trx = con.execute(sql_jp_jumlah).df()
 
                 grafik_jp_1_1, grafik_jp_1_2 = st.columns((3,7))
 
@@ -342,7 +342,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_jp_nilai_trx = duckdb.sql(sql_jp_nilai).df()
+                tabel_jp_nilai_trx = con.execute(sql_jp_nilai).df()
 
                 grafik_jp_2_1, grafik_jp_2_2 = st.columns((3,7))
 
@@ -377,7 +377,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_mp_jumlah_trx = duckdb.sql(sql_mp_jumlah).df()
+                tabel_mp_jumlah_trx = con.execute(sql_mp_jumlah).df()
 
                 grafik_mp_1_1, grafik_mp_1_2 = st.columns((3,7))
 
@@ -400,7 +400,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_mp_nilai_trx = duckdb.sql(sql_mp_nilai).df()
+                tabel_mp_nilai_trx = con.execute(sql_mp_nilai).df()
 
                 grafik_mp_2_1, grafik_mp_2_2 = st.columns((3,7))
 
@@ -435,7 +435,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY METODE_EVALUASI ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_me_jumlah_trx = duckdb.sql(sql_me_jumlah).df()
+                tabel_me_jumlah_trx = con.execute(sql_me_jumlah).df()
 
                 grafik_me_1_1, grafik_me_1_2 = st.columns((3,7))
 
@@ -458,7 +458,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY METODE_EVALUASI ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_me_nilai_trx = duckdb.sql(sql_me_nilai).df()
+                tabel_me_nilai_trx = con.execute(sql_me_nilai).df()
 
                 grafik_me_2_1, grafik_me_2_2 = st.columns((3,7))
 
@@ -493,7 +493,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY METODE_KUALIFIKASI ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_mk_jumlah_trx = duckdb.sql(sql_mk_jumlah).df()
+                tabel_mk_jumlah_trx = con.execute(sql_mk_jumlah).df()
 
                 grafik_mk_1_1, grafik_mk_1_2 = st.columns((3,7))
 
@@ -516,7 +516,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY METODE_KUALIFIKASI ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_mk_nilai_trx = duckdb.sql(sql_mk_nilai).df()
+                tabel_mk_nilai_trx = con.execute(sql_mk_nilai).df()
 
                 grafik_mk_2_1, grafik_mk_2_2 = st.columns((3,7))
 
@@ -551,7 +551,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_kontrak_jumlah_trx = duckdb.sql(sql_kontrak_jumlah).df()
+                tabel_kontrak_jumlah_trx = con.execute(sql_kontrak_jumlah).df()
 
                 grafik_kontrak_1_1, grafik_kontrak_1_2 = st.columns((3,7))
 
@@ -574,7 +574,7 @@ with menu_spse_1:
                     FROM df_SPSETenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_kontrak_nilai_trx = duckdb.sql(sql_kontrak_nilai).df()
+                tabel_kontrak_nilai_trx = con.execute(sql_kontrak_nilai).df()
 
                 grafik_kontrak_2_1, grafik_kontrak_2_2 = st.columns((3,7))
 
@@ -603,7 +603,7 @@ with menu_spse_1:
             
         try:
             ##### Tarik dataset SPSETenderSPPBJ
-            df_SPSETenderSPPBJ = tarik_data(DatasetSPSETenderSPPBJ)
+            df_SPSETenderSPPBJ = tarik_data_pd(DatasetSPSETenderSPPBJ)
 
             ##### Buat tombol unduh dataset SPSE - Tender - SPPBJ
             unduh_SPSE_Tender_SPPBJ_excel = download_excel(df_SPSETenderSPPBJ)
@@ -639,7 +639,7 @@ with menu_spse_1:
             st.write(f"Anda memilih : **{status_kontrak_TSPPBJ}** dari **{opd_TSPPBJ}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - SPPBJ
-            df_SPSETenderSPPBJ_filter = duckdb.sql(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak_TSPPBJ}' AND nama_satker = '{opd_TSPPBJ}'").df()
+            df_SPSETenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSETenderSPPBJ WHERE status_kontrak = '{status_kontrak_TSPPBJ}' AND nama_satker = '{opd_TSPPBJ}'").df()
             jumlah_trx_spse_sppbj = df_SPSETenderSPPBJ_filter['kd_tender'].unique().shape[0]
             nilai_trx_spse_sppbj_final = df_SPSETenderSPPBJ_filter['harga_final'].sum()
 
@@ -655,7 +655,7 @@ with menu_spse_1:
                 nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
                 harga_final AS HARGA_FINAL FROM df_SPSETenderSPPBJ_filter
             """
-            tabel_tender_sppbj_tampil = duckdb.sql(sql_tender_sppbj_trx).df()
+            tabel_tender_sppbj_tampil = con.execute(sql_tender_sppbj_trx).df()
 
             ##### Tampilkan data SPSE - Tender - SPPBJ menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_tender_sppbj_tampil)
@@ -675,7 +675,7 @@ with menu_spse_1:
 
         try:
             ##### Tarik dataset SPSETenderKontrak
-            df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
+            df_SPSETenderKontrak = tarik_data_pd(DatasetSPSETenderKontrak)
 
             ##### Buat tombol unduh dataset SPSE - Tender - Kontrak
             unduh_SPSE_Tender_KONTRAK_excel = download_excel(df_SPSETenderKontrak)
@@ -711,7 +711,7 @@ with menu_spse_1:
             st.write(f"Anda memilih : **{status_kontrak_TKONTRAK}** dari **{opd_TKONTRAK}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - Kontrak
-            df_SPSETenderKontrak_filter = duckdb.sql(f"SELECT * FROM df_SPSETenderKontrak WHERE status_kontrak = '{status_kontrak_TKONTRAK}' AND nama_satker = '{opd_TKONTRAK}'").df()
+            df_SPSETenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSETenderKontrak WHERE status_kontrak = '{status_kontrak_TKONTRAK}' AND nama_satker = '{opd_TKONTRAK}'").df()
             jumlah_trx_spse_kontrak = df_SPSETenderKontrak_filter['kd_tender'].unique().shape[0]
             nilai_trx_spse_kontrak_nilaikontrak = df_SPSETenderKontrak_filter['nilai_kontrak'].sum()
 
@@ -728,7 +728,7 @@ with menu_spse_1:
                 npwp_penyedia AS NPWP_PENYEDIA, nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK
                 FROM df_SPSETenderKontrak_filter 
             """
-            tabel_tender_kontrak_tampil = duckdb.sql(sql_tender_kontrak_trx).df()
+            tabel_tender_kontrak_tampil = con.execute(sql_tender_kontrak_trx).df()
 
             ##### Tampilkan data SPSE - Tender - Kontrak menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_tender_kontrak_tampil)
@@ -750,8 +750,8 @@ with menu_spse_1:
 
         try:
             ##### Tarik dataset SPSETenderKontrak dan SPSETenderSPMK
-            df_SPSETenderKontrak = tarik_data(DatasetSPSETenderKontrak)
-            df_SPSETenderSPMK = tarik_data(DatasetSPSETenderSPMK)
+            df_SPSETenderKontrak = tarik_data_pd(DatasetSPSETenderKontrak)
+            df_SPSETenderSPMK = tarik_data_pd(DatasetSPSETenderSPMK)
 
             ##### Buat tombol unduh dataset SPSE - Tender - SPMK
             df_SPSETenderKontrak_filter_kolom = df_SPSETenderKontrak[["kd_tender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
@@ -786,7 +786,7 @@ with menu_spse_1:
             st.write(f"Anda memilih : **{opd_TSPMK}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - SPMK
-            df_SPSETenderSPMK_filter = duckdb.sql(f"SELECT * FROM df_SPSETenderSPMK_OK WHERE nama_satker = '{opd_TSPMK}'").df()
+            df_SPSETenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSETenderSPMK_OK WHERE nama_satker = '{opd_TSPMK}'").df()
             jumlah_trx_spse_spmk = df_SPSETenderSPMK_filter['kd_tender'].unique().shape[0]
             nilai_trx_spse_spmk_nilaikontrak = df_SPSETenderSPMK_filter['nilai_kontrak'].sum()
 
@@ -803,7 +803,7 @@ with menu_spse_1:
                 npwp_penyedia AS NPWP_PENYEDIA, nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK
                 FROM df_SPSETenderSPMK_filter 
             """
-            tabel_tender_spmk_tampil = duckdb.sql(sql_tender_spmk_trx).df()
+            tabel_tender_spmk_tampil = con.execute(sql_tender_spmk_trx).df()
             
             ##### Tampilkan data SPSE - Tender - SPMK menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_tender_spmk_tampil)
@@ -825,7 +825,7 @@ with menu_spse_1:
 
         try:
             #### Tarik dataset SPSETenderBAST
-            df_SPSETenderBAST = tarik_data(DatasetSPSETenderBAST)
+            df_SPSETenderBAST = tarik_data_pd(DatasetSPSETenderBAST)
         
             ##### Buat tombol unduh dataset SPSE - Tender - BAPBAST
             unduh_SPSE_Tender_BAST_excel = download_excel(df_SPSETenderBAST)
@@ -861,7 +861,7 @@ with menu_spse_1:
             st.write(f"Anda memilih : **{status_kontrak_TBAST}** dari **{opd_TBAST}**")
 
             ##### Hitung-hitungan dataset SPSE - Tender - BAPBAST
-            df_SPSETenderBAST_filter = duckdb.sql(f"SELECT * FROM df_SPSETenderBAST WHERE status_kontrak = '{status_kontrak_TBAST}' AND nama_satker = '{opd_TBAST}'").df()
+            df_SPSETenderBAST_filter = con.execute(f"SELECT * FROM df_SPSETenderBAST WHERE status_kontrak = '{status_kontrak_TBAST}' AND nama_satker = '{opd_TBAST}'").df()
             jumlah_trx_spse_bast = df_SPSETenderBAST_filter['kd_tender'].unique().shape[0]
             nilai_trx_spse_bast_nilaikontrak = df_SPSETenderBAST_filter['nilai_kontrak'].sum()
 
@@ -878,7 +878,7 @@ with menu_spse_1:
                 npwp_penyedia AS NPWP_PENYEDIA, nilai_kontrak AS NILAI_KONTRAK, besar_pembayaran AS NILAI_PEMBAYARAN
                 FROM df_SPSETenderBAST_filter 
             """
-            tabel_tender_bast_tampil = duckdb.sql(sql_tender_bast_trx).df()
+            tabel_tender_bast_tampil = con.execute(sql_tender_bast_trx).df()
 
             ##### Tampilkan data SPSE - Tender - BAPBAST menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_tender_bast_tampil)
@@ -908,7 +908,7 @@ with menu_spse_2:
 
         try:
             ##### Tarik dataset SPSENonTenderPengumuman
-            df_SPSENonTenderPengumuman = tarik_data(DatasetSPSENonTenderPengumuman)
+            df_SPSENonTenderPengumuman = tarik_data_pd(DatasetSPSENonTenderPengumuman)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - Pengumuman
             unduh_SPSE_NT_Pengumuman_excel = download_excel(df_SPSENonTenderPengumuman)
@@ -934,7 +934,7 @@ with menu_spse_2:
             st.write(f"Anda memilih : **{sumber_dana_nt}** dan **{status_nontender}**")
 
             ##### Hitung-hitungan dataset SPSE - Non Tender - Pengumuman
-            df_SPSENonTenderPengumuman_filter = duckdb.sql(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE sumber_dana = '{sumber_dana_nt}' AND status_nontender = '{status_nontender}'").df()
+            df_SPSENonTenderPengumuman_filter = con.execute(f"SELECT kd_nontender, pagu, hps, kualifikasi_paket, jenis_pengadaan, mtd_pemilihan, kontrak_pembayaran FROM df_SPSENonTenderPengumuman WHERE sumber_dana = '{sumber_dana_nt}' AND status_nontender = '{status_nontender}'").df()
             jumlah_trx_spse_nt_pengumuman = df_SPSENonTenderPengumuman_filter['kd_nontender'].unique().shape[0]
             nilai_trx_spse_nt_pengumuman_pagu = df_SPSENonTenderPengumuman_filter['pagu'].sum()
             nilai_trx_spse_nt_pengumuman_hps = df_SPSENonTenderPengumuman_filter['hps'].sum()
@@ -961,7 +961,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_kp_nt_jumlah_trx = duckdb.sql(sql_kp_nt_jumlah).df()
+                tabel_kp_nt_jumlah_trx = con.execute(sql_kp_nt_jumlah).df()
 
                 grafik_kp_nt_1_1, grafik_kp_nt_1_2 = st.columns((3,7))
 
@@ -984,7 +984,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY KUALIFIKASI_PAKET ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_kp_nt_nilai_trx = duckdb.sql(sql_kp_nt_nilai).df()
+                tabel_kp_nt_nilai_trx = con.execute(sql_kp_nt_nilai).df()
 
                 grafik_kp_nt_2_1, grafik_kp_nt_2_2 = st.columns((3,7))
 
@@ -1019,7 +1019,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_jp_nt_jumlah_trx = duckdb.sql(sql_jp_nt_jumlah).df()
+                tabel_jp_nt_jumlah_trx = con.execute(sql_jp_nt_jumlah).df()
 
                 grafik_jp_nt_1_1, grafik_jp_nt_1_2 = st.columns((3,7))
 
@@ -1042,7 +1042,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY JENIS_PENGADAAN ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_jp_nt_nilai_trx = duckdb.sql(sql_jp_nt_nilai).df()
+                tabel_jp_nt_nilai_trx = con.execute(sql_jp_nt_nilai).df()
 
                 grafik_jp_nt_2_1, grafik_jp_nt_2_2 = st.columns((3,7))
 
@@ -1077,7 +1077,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_mp_nt_jumlah_trx = duckdb.sql(sql_mp_nt_jumlah).df()
+                tabel_mp_nt_jumlah_trx = con.execute(sql_mp_nt_jumlah).df()
 
                 grafik_mp_nt_1_1, grafik_mp_nt_1_2 = st.columns((3,7))
 
@@ -1100,7 +1100,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_mp_nt_nilai_trx = duckdb.sql(sql_mp_nt_nilai).df()
+                tabel_mp_nt_nilai_trx = con.execute(sql_mp_nt_nilai).df()
 
                 grafik_mp_nt_2_1, grafik_mp_nt_2_2 = st.columns((3,7))
 
@@ -1135,7 +1135,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY JUMLAH_PAKET DESC
                 """
                 
-                tabel_kontrak_nt_jumlah_trx = duckdb.sql(sql_kontrak_nt_jumlah).df()
+                tabel_kontrak_nt_jumlah_trx = con.execute(sql_kontrak_nt_jumlah).df()
 
                 grafik_kontrak_nt_1_1, grafik_kontrak_nt_1_2 = st.columns((3,7))
 
@@ -1158,7 +1158,7 @@ with menu_spse_2:
                     FROM df_SPSENonTenderPengumuman_filter GROUP BY KONTRAK_PEMBAYARAN ORDER BY NILAI_PAKET DESC
                 """
                 
-                tabel_kontrak_nt_nilai_trx = duckdb.sql(sql_kontrak_nt_nilai).df()
+                tabel_kontrak_nt_nilai_trx = con.execute(sql_kontrak_nt_nilai).df()
 
                 grafik_kontrak_nt_2_1, grafik_kontrak_nt_2_2 = st.columns((3,7))
 
@@ -1185,7 +1185,7 @@ with menu_spse_2:
 
         try:
             ##### Tarik dataset SPSENonTenderSPPBJ
-            df_SPSENonTenderSPPBJ = tarik_data(DatasetSPSENonTenderSPPBJ)
+            df_SPSENonTenderSPPBJ = tarik_data_pd(DatasetSPSENonTenderSPPBJ)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - SPPBJ
             unduh_SPSE_NT_SPPBJ_excel = download_excel(df_SPSENonTenderSPPBJ)
@@ -1221,7 +1221,7 @@ with menu_spse_2:
             st.write(f"Anda memilih : **{status_kontrak_nt}** dari **{opd_nt}**")
 
             ##### Hitung-hitungan dataset SPSE - Non Tender - SPPBJ
-            df_SPSENonTenderSPPBJ_filter = duckdb.sql(f"SELECT * FROM df_SPSENonTenderSPPBJ WHERE status_kontrak = '{status_kontrak_nt}' AND nama_satker = '{opd_nt}'").df()
+            df_SPSENonTenderSPPBJ_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPPBJ WHERE status_kontrak = '{status_kontrak_nt}' AND nama_satker = '{opd_nt}'").df()
             jumlah_trx_spse_nt_sppbj = df_SPSENonTenderSPPBJ_filter['kd_nontender'].unique().shape[0]
             nilai_trx_spse_nt_sppbj_final = df_SPSENonTenderSPPBJ_filter['harga_final'].sum()
 
@@ -1237,7 +1237,7 @@ with menu_spse_2:
                 nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, 
                 harga_final AS HARGA_FINAL FROM df_SPSENonTenderSPPBJ_filter
             """
-            tabel_sppbj_nt_tampil = duckdb.sql(sql_sppbj_nt_trx).df()
+            tabel_sppbj_nt_tampil = con.execute(sql_sppbj_nt_trx).df()
 
             ##### Tampilkan data SPSE - Non Tender - SPPBJ menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_sppbj_nt_tampil)
@@ -1257,7 +1257,7 @@ with menu_spse_2:
 
         try:
             ##### Tarik dataset SPSENonTenderKontrak
-            df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
+            df_SPSENonTenderKontrak = tarik_data_pd(DatasetSPSENonTenderKontrak)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - KONTRAK
             unduh_SPSE_NT_KONTRAK_excel = download_excel(df_SPSENonTenderKontrak)
@@ -1293,7 +1293,7 @@ with menu_spse_2:
             st.write(f"Anda memilih : **{status_kontrak_nt_kontrak}** dari **{opd_nt_kontrak}**")
                 
             ##### Hitung-hitungan dataset SPSE - Non Tender - KONTRAK
-            df_SPSENonTenderKontrak_filter = duckdb.sql(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
+            df_SPSENonTenderKontrak_filter = con.execute(f"SELECT * FROM df_SPSENonTenderKontrak WHERE status_kontrak = '{status_kontrak_nt_kontrak}' AND nama_satker = '{opd_nt_kontrak}'").df()
             jumlah_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['kd_nontender'].unique().shape[0]
             nilai_trx_spse_nt_kontrak = df_SPSENonTenderKontrak_filter['nilai_kontrak'].sum()
             
@@ -1309,7 +1309,7 @@ with menu_spse_2:
                 nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
                 nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderKontrak_filter
             """
-            tabel_kontrak_nt_tampil = duckdb.sql(sql_kontrak_nt_trx).df()
+            tabel_kontrak_nt_tampil = con.execute(sql_kontrak_nt_trx).df()
                 
             ##### Tampilkan data SPSE - Non Tender - KONTRAK menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_kontrak_nt_tampil)
@@ -1331,8 +1331,8 @@ with menu_spse_2:
 
         try:
             ##### Tarik dataset SPSENonTenderKontrak dan SPSENonTenderSPMK
-            df_SPSENonTenderKontrak = tarik_data(DatasetSPSENonTenderKontrak)
-            df_SPSENonTenderSPMK = tarik_data(DatasetSPSENonTenderSPMK)
+            df_SPSENonTenderKontrak = tarik_data_pd(DatasetSPSENonTenderKontrak)
+            df_SPSENonTenderSPMK = tarik_data_pd(DatasetSPSENonTenderSPMK)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - SPMK
             df_SPSENonTenderKontrak_filter_kolom = df_SPSENonTenderKontrak[["kd_nontender", "nilai_kontrak", "nilai_pdn_kontrak", "nilai_umk_kontrak"]]
@@ -1371,7 +1371,7 @@ with menu_spse_2:
             st.write(f"Anda memilih : **{status_kontrak_nt_spmk}** dari **{opd_nt_spmk}**")
 
             ##### Hitung-hitungan dataset SPSE - Non Tender - SPMK
-            df_SPSENonTenderSPMK_filter = duckdb.sql(f"SELECT * FROM df_SPSENonTenderSPMK_OK WHERE nama_satker = '{opd_nt_spmk}' AND status_kontrak = '{status_kontrak_nt_spmk}'").df()
+            df_SPSENonTenderSPMK_filter = con.execute(f"SELECT * FROM df_SPSENonTenderSPMK_OK WHERE nama_satker = '{opd_nt_spmk}' AND status_kontrak = '{status_kontrak_nt_spmk}'").df()
             jumlah_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['kd_nontender'].unique().shape[0]
             nilai_trx_spse_nt_spmk = df_SPSENonTenderSPMK_filter['nilai_kontrak'].sum()
 
@@ -1387,7 +1387,7 @@ with menu_spse_2:
                 nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
                 nilai_kontrak AS NILAI_KONTRAK, nilai_pdn_kontrak AS NILAI_PDN, nilai_umk_kontrak AS NILAI_UMK FROM df_SPSENonTenderSPMK_filter
             """
-            tabel_spmk_nt_tampil = duckdb.sql(sql_spmk_nt_trx).df()
+            tabel_spmk_nt_tampil = con.execute(sql_spmk_nt_trx).df()
                 
             ##### Tampilkan data SPSE - Non Tender - SPMK menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_spmk_nt_tampil)
@@ -1409,7 +1409,7 @@ with menu_spse_2:
 
         try:
             ##### Tarik dataset SPSENonTenderBAPBAST
-            df_SPSENonTenderBAST = tarik_data(DatasetSPSENonTenderBAST)
+            df_SPSENonTenderBAST = tarik_data_pd(DatasetSPSENonTenderBAST)
 
             ##### Buat tombol unduh dataset SPSE - Non Tender - BAPBAST
             unduh_SPSE_NT_BAST_excel = download_excel(df_SPSENonTenderBAST)
@@ -1445,7 +1445,7 @@ with menu_spse_2:
             st.write(f"Anda memilih : **{status_kontrak_nt_bast}** dari **{opd_nt_bast}**")
 
             ##### Hitung-hitungan dataset SPSE - Non Tender - BAPBAST
-            df_SPSENonTenderBAST_filter = duckdb.sql(f"SELECT * FROM df_SPSENonTenderBAST WHERE nama_satker = '{opd_nt_bast}' AND status_kontrak = '{status_kontrak_nt_bast}'").df()
+            df_SPSENonTenderBAST_filter = con.execute(f"SELECT * FROM df_SPSENonTenderBAST WHERE nama_satker = '{opd_nt_bast}' AND status_kontrak = '{status_kontrak_nt_bast}'").df()
             jumlah_trx_spse_nt_bast = df_SPSENonTenderBAST_filter['kd_nontender'].unique().shape[0]
             nilai_trx_spse_nt_bast = df_SPSENonTenderBAST_filter['nilai_kontrak'].sum()
 
@@ -1461,7 +1461,7 @@ with menu_spse_2:
                 nama_ppk AS NAMA_PPK, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, wakil_sah_penyedia AS WAKIL_SAH, 
                 nilai_kontrak AS NILAI_KONTRAK, besar_pembayaran AS NILAI_PEMBAYARAN FROM df_SPSENonTenderBAST_filter
             """
-            tabel_bast_nt_tampil = duckdb.sql(sql_bast_nt_trx).df()
+            tabel_bast_nt_tampil = con.execute(sql_bast_nt_trx).df()
                 
             ##### Tampilkan data SPSE - Non Tender - BAPBAST menggunakan AgGrid
             gd = GridOptionsBuilder.from_dataframe(tabel_bast_nt_tampil)
@@ -1489,8 +1489,8 @@ with menu_spse_3:
     with menu_spse_3_1:
 
         try:
-            df_CatatNonTenderRealisasi = tarik_data(DatasetCatatNonTenderRealisasi)
-            df_CatatNonTender = tarik_data(DatasetCatatNonTender)
+            df_CatatNonTenderRealisasi = tarik_data_pd(DatasetCatatNonTenderRealisasi)
+            df_CatatNonTender = tarik_data_pd(DatasetCatatNonTender)
 
             #### Buat tombol unduh dataset SPSE-Pencatatan-Non Tender
             df_CatatNonTenderRealisasi_filter = df_CatatNonTenderRealisasi[["kd_nontender_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi", "nama_penyedia", "npwp_penyedia"]]
@@ -1542,7 +1542,7 @@ with menu_spse_3:
                     FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY JUMLAH_PAKET DESC
                 """
 
-                tabel_cnt_kp_jumlah = duckdb.sql(sql_cnt_kp_jumlah).df()
+                tabel_cnt_kp_jumlah = con.execute(sql_cnt_kp_jumlah).df()
 
                 grafik_cnt_1_1, grafik_cnt_1_2 = st.columns((3,7))
 
@@ -1566,7 +1566,7 @@ with menu_spse_3:
                     FROM df_CatatNonTender_OK_filter GROUP BY KATEGORI_PENGADAAN ORDER BY NILAI_REALISASI
                 """
 
-                tabel_cnt_kp_nilai = duckdb.sql(sql_cnt_kp_nilai).df()
+                tabel_cnt_kp_nilai = con.execute(sql_cnt_kp_nilai).df()
 
                 grafik_cnt_2_1, grafik_cnt_2_2 = st.columns((3,7))
 
@@ -1597,7 +1597,7 @@ with menu_spse_3:
                     FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY JUMLAH_PAKET DESC
                 """
 
-                tabel_cnt_mp_jumlah = duckdb.sql(sql_cnt_mp_jumlah).df()
+                tabel_cnt_mp_jumlah = con.execute(sql_cnt_mp_jumlah).df()
 
                 grafik_cnt_3_1, grafik_cnt_3_2 = st.columns((3,7))
 
@@ -1621,7 +1621,7 @@ with menu_spse_3:
                     FROM df_CatatNonTender_OK_filter GROUP BY METODE_PEMILIHAN ORDER BY NILAI_REALISASI
                 """
 
-                tabel_cnt_mp_nilai = duckdb.sql(sql_cnt_mp_nilai).df()
+                tabel_cnt_mp_nilai = con.execute(sql_cnt_mp_nilai).df()
 
                 grafik_cnt_4_1, grafik_cnt_4_2 = st.columns((3,7))
 
@@ -1665,8 +1665,8 @@ with menu_spse_3:
                 nama_satker = '{status_opd_cnt}'
             """
 
-            df_CatatNonTender_tabel = duckdb.sql(sql_CatatNonTender_query).df()
-            df_CatatNonTender_grafik = duckdb.sql(sql_CatatNonTender_query_grafik).df()
+            df_CatatNonTender_tabel = con.execute(sql_CatatNonTender_query).df()
+            df_CatatNonTender_grafik = con.execute(sql_CatatNonTender_query_grafik).df()
 
             data_cnt_pd_1, data_cnt_pd_2, data_cnt_pd_3, data_cnt_pd_4 = st.columns((2,3,3,2))
             data_cnt_pd_1.subheader("")
@@ -1696,8 +1696,8 @@ with menu_spse_3:
 
         try:
             #### Tarik dataset CatatSwakelola dan CatatSwakelolaRealisasi
-            df_CatatSwakelola = tarik_data(DatasetCatatSwakelola)
-            df_CatatSwakelolaRealisasi = tarik_data(DatasetCatatSwakelolaRealisasi)
+            df_CatatSwakelola = tarik_data_pd(DatasetCatatSwakelola)
+            df_CatatSwakelolaRealisasi = tarik_data_pd(DatasetCatatSwakelolaRealisasi)
 
             #### Buat tombol unduh dataset SPSE-Pencatatan-Swakelola
             df_CatatSwakelolaRealisasi_filter = df_CatatSwakelolaRealisasi[["kd_swakelola_pct", "jenis_realisasi", "no_realisasi", "tgl_realisasi", "nilai_realisasi"]] 
@@ -1722,10 +1722,10 @@ with menu_spse_3:
             st.write(f"Anda memilih : **{sumber_dana_cs}**")
 
             #### Hitung-hitungan dataset Catat Swakelola
-            df_CatatSwakelola_OK_filter = duckdb.sql(f"SELECT * FROM df_CatatSwakelola_OK WHERE sumber_dana = '{sumber_dana_cs}'").df()
-            jumlah_CatatSwakelola_Berjalan = duckdb.sql(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan'").df()
-            jumlah_CatatSwakelola_Selesai = duckdb.sql(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai'").df()
-            jumlah_CatatSwakelola_Dibatalkan = duckdb.sql(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan'").df()
+            df_CatatSwakelola_OK_filter = con.execute(f"SELECT * FROM df_CatatSwakelola_OK WHERE sumber_dana = '{sumber_dana_cs}'").df()
+            jumlah_CatatSwakelola_Berjalan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Sedang Berjalan'").df()
+            jumlah_CatatSwakelola_Selesai = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Selesai'").df()
+            jumlah_CatatSwakelola_Dibatalkan = con.execute(f"SELECT * FROM df_CatatSwakelola_OK_filter WHERE status_swakelola_pct_ket = 'Paket Dibatalkan'").df()
 
             data_cs_1, data_cs_2, data_cs_3 = st.columns(3)
             data_cs_1.metric(label="Jumlah Pencatatan Swakelola Berjalan", value="{:,}".format(jumlah_CatatSwakelola_Berjalan.shape[0]))
@@ -1743,7 +1743,7 @@ with menu_spse_3:
 
             st.divider()
 
-            df_CatatSwakelola_tabel = duckdb.sql(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
+            df_CatatSwakelola_tabel = con.execute(f"SELECT nama_paket AS NAMA_PAKET, jenis_realisasi AS JENIS_REALISASI, no_realisasi AS NO_REALISASI, tgl_realisasi AS TGL_REALISASI, pagu AS PAGU, total_realisasi AS TOTAL_REALISASI, nilai_realisasi AS NILAI_REALISASI, nama_ppk AS NAMA_PPK FROM df_CatatSwakelola_OK_filter WHERE nama_satker = '{status_opd_cs}' AND status_swakelola_pct_ket = '{status_swakelola_cs}'").df()
 
             data_cs_pd_1, data_cs_pd_2, data_cs_pd_3, data_cs_pd_4 = st.columns((2,3,3,2))
             data_cs_pd_1.subheader("")
@@ -1771,9 +1771,9 @@ with menu_spse_4:
 
     try:
         #### Tarik dataset RUPMasterSatker dan SPSETenderPengumuman dan SPSEPesertaTender
-        df_RUPMasterSatker = tarik_data(DatasetRUPMasterSatker)
-        df_SPSETenderPengumuman = tarik_data(DatasetSPSETenderPengumuman)
-        df_PesertaTender = tarik_data(DatasetPesertaTender)
+        df_RUPMasterSatker = tarik_data_pd(DatasetRUPMasterSatker)
+        df_SPSETenderPengumuman = tarik_data_pd(DatasetSPSETenderPengumuman)
+        df_PesertaTender = tarik_data_pd(DatasetPesertaTender)
 
         #### Buat tombol unduh dataset Peserta Tender
         df_RUPMasterSatker_filter_pt = df_RUPMasterSatker[["kd_satker_str", "nama_satker"]]
@@ -1824,11 +1824,11 @@ with menu_spse_4:
         st.divider()
 
         if status_pemenang_pt == "PEMENANG":
-            jumlah_PeserteTender = duckdb.sql(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND pemenang = 1").df()
+            jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0  AND pemenang = 1").df()
         elif status_pemenang_pt == "MENDAFTAR":
-            jumlah_PeserteTender = duckdb.sql(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN = 0 AND NILAI_TERKOREKSI = 0").df()
+            jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN = 0 AND NILAI_TERKOREKSI = 0").df()
         else:
-            jumlah_PeserteTender = duckdb.sql(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0").df()
+            jumlah_PeserteTender = con.execute(f"SELECT nama_paket AS NAMA_PAKET, nama_penyedia AS NAMA_PENYEDIA, npwp_penyedia AS NPWP_PENYEDIA, pagu AS PAGU, hps AS HPS, nilai_penawaran AS NILAI_PENAWARAN, nilai_terkoreksi AS NILAI_TERKOREKSI FROM df_PesertaTenderDetail_filter WHERE NAMA_SATKER = '{status_opd_pt}' AND NILAI_PENAWARAN > 0 AND NILAI_TERKOREKSI > 0").df()
 
         data_pt_pd_1, data_pt_pd_2, data_pt_pd_3, data_pt_pd_4 = st.columns(4)
         data_pt_pd_1.subheader("")
