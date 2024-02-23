@@ -170,7 +170,7 @@ with menu_monitoring_1:
         df_RUPSA = tarik_data_pd(DatasetRUPSA).fillna(0)
 
         #### Query RUP Paket Penyedia
-        df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
+        df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> 0").df()
         df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
 
         belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
