@@ -23,7 +23,7 @@ def tarik_data_pd(url):
 
 @st.cache_data(ttl=(3600))
 def tarik_data_json(url):
-    return pd.read_json(url)
+    return pd.read_json(url).fillna(0)
 
 @st.cache_data(ttl=(3600))
 def tarik_data(url):
