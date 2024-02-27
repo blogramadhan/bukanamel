@@ -143,7 +143,7 @@ try:
     # df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
     ### Query RUP Paket Penyedia (Pandas)
-    df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE') & (df_RUPPP['metode_pengadaan'] != '0')]
+    df_RUPPP_umumkan = df_RUPPP[(df_RUPPP['status_umumkan_rup'] == 'Terumumkan') & (df_RUPPP['status_aktif_rup'] == 'TRUE')]
     df_RUPPP_belum_umumkan = df_RUPPP[df_RUPPP['status_umumkan_rup'] == 'Terinisiasi']
     df_RUPPP_umumkan_ukm = df_RUPPP[df_RUPPP['status_ukm'] == 'UKM']
     df_RUPPP_umumkan_pdn = df_RUPPP[df_RUPPP['status_pdn'] == 'PDN']
