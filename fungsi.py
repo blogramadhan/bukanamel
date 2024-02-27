@@ -22,6 +22,10 @@ def tarik_data_pd(url):
     return pd.read_parquet(url)
 
 @st.cache_data(ttl=(3600))
+def tarik_data_json(url):
+    return pd.read_json(url)
+
+@st.cache_data(ttl=(3600))
 def tarik_data(url):
     return duckdb.sql(f"SELECT * FROM read_parquet('{url}')").df()
 
