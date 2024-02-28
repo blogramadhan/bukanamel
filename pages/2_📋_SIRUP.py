@@ -137,8 +137,13 @@ try:
     df_RUPPP = tarik_data_pd(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> 'nol'").df()
-    df_RUPPP_belum_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terinisiasi'").df()
+    RUPPP_umumkan_sql = """
+        SELECT nama_satker, kd_rup, nama_paket, pagu, metode_pengadaan, jenis_pengadaan, status_pradipa, status_pdn, status_ukm, 
+        tgl_pengumuman_paket, tgl_awal_pemilihan, nama_ppk, status_aktif_rup, status_umumkan_rup
+        WHERE metode_pengadaan IS NOT NULL AND status_aktif_rup = 'TRUE' AND status_umumkan_rup = 'Terumumkan'
+    """
+    # df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> 'nol'").df()
+    df_RUPPP_umumkan = con.execute(RUPPP_umumkan_sql).df()
     df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
     df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
@@ -152,7 +157,13 @@ try:
     df_RUPPS = tarik_data_pd(DatasetRUPPS)
 
     ### Query RUP Paket Swakelola
-    df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    RUPPS_umumkan_sql = """
+        SELECT nama_satker, kd_rup, nama_paket, pagu, tipe_swakelola, volume_pekerjaan, uraian_pekerjaan, 
+        tgl_pengumuman_paket, tgl_awal_pelaksanaan_kontrak, nama_ppk, status_umumkan_rup
+        WHERE status_umumkan_rup = 'Terumumkan'
+    """
+    # df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+    df_RUPPS_umumkan = con.execute(RUPPS_umumkan_sql).df()
 
 except Exception:
     st.error("Gagal baca dataset RUP Paket Swakelola.")
