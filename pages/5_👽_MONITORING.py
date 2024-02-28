@@ -165,13 +165,19 @@ with menu_monitoring_1:
     try:
         ### PREDIKSI ITKP SIRUP
         #### Tarik dataset SIRUP
-        df_RUPPP = tarik_data_pd(DatasetRUPPP).fillna(0)
-        df_RUPPS = tarik_data_pd(DatasetRUPPS).fillna(0)
-        df_RUPSA = tarik_data_pd(DatasetRUPSA).fillna(0)
+        df_RUPPP = tarik_data_pd(DatasetRUPPP)
+        df_RUPPS = tarik_data_pd(DatasetRUPPS)
+        df_RUPSA = tarik_data_pd(DatasetRUPSA)
 
         #### Query RUP Paket Penyedia
         df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> '0'").df()
-        df_RUPPS_umumkan = con.execute("SELECT * FROM df_RUPPS WHERE status_umumkan_rup = 'Terumumkan'").df()
+        RUPPS_umumkan_sql = """
+            SELECT nama_satker, kd_rup, nama_paket, pagu, tipe_swakelola, volume_pekerjaan, uraian_pekerjaan, 
+            tgl_pengumuman_paket, tgl_awal_pelaksanaan_kontrak, nama_ppk, status_umumkan_rup
+            FROM df_RUPPS
+            WHERE status_umumkan_rup = 'Terumumkan'
+        """
+        df_RUPPS_umumkan = con.execute(RUPPS_umumkan_sql).df()
 
         belanja_pengadaan = df_RUPSA['belanja_pengadaan'].sum()
         nilai_total_rup = df_RUPPP_umumkan['pagu'].sum() + df_RUPPS_umumkan['pagu'].sum()
