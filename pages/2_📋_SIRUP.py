@@ -137,13 +137,7 @@ try:
     df_RUPPP = tarik_data_pd(DatasetRUPPP)
 
     ### Query RUP Paket Penyedia
-    RUPPP_umumkan_sql = """
-        SELECT nama_satker, kd_rup, nama_paket, pagu, metode_pengadaan, jenis_pengadaan, status_pradipa, status_pdn, status_ukm, 
-        tgl_pengumuman_paket, tgl_awal_pemilihan, nama_ppk, status_aktif_rup, status_umumkan_rup
-        FROM df_RUPPP WHERE status_aktif_rup = 'TRUE' AND status_umumkan_rup = 'Terumumkan'
-    """
-    # df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> 'nol'").df()
-    df_RUPPP_umumkan = con.execute(RUPPP_umumkan_sql).df()
+    df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE'").df()
     df_RUPPP_umumkan_ukm = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_ukm = 'UKM'").df()
     df_RUPPP_umumkan_pdn = con.execute("SELECT * FROM df_RUPPP_umumkan WHERE status_pdn = 'PDN'").df()
 
