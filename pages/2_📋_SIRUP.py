@@ -140,8 +140,7 @@ try:
     RUPPP_umumkan_sql = """
         SELECT nama_satker, kd_rup, nama_paket, pagu, metode_pengadaan, jenis_pengadaan, status_pradipa, status_pdn, status_ukm, 
         tgl_pengumuman_paket, tgl_awal_pemilihan, nama_ppk, status_aktif_rup, status_umumkan_rup
-        FROM df_RUPPP
-        WHERE metode_pengadaan IS NOT NULL AND status_aktif_rup = 'TRUE' AND status_umumkan_rup = 'Terumumkan'
+        FROM df_RUPPP WHERE status_aktif_rup = 'TRUE' AND status_umumkan_rup = 'Terumumkan'
     """
     # df_RUPPP_umumkan = con.execute("SELECT * FROM df_RUPPP WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> 'nol'").df()
     df_RUPPP_umumkan = con.execute(RUPPP_umumkan_sql).df()
