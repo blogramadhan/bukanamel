@@ -8,3 +8,4 @@ plotly.express
 streamlit-aggrid
 streamlit-extras
 xlsxwriter
+validators
