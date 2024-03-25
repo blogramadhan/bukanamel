@@ -19,7 +19,7 @@ from streamlit_extras.app_logo import add_logo
 # Fungsi-fungsi yang bisa digunakan
 @st.cache_data(ttl=(3600))
 def tarik_data_pd(url):
-    return pd.read_parquet(url).fillna(0)
+    return pd.read_parquet(url)
 
 @st.cache_data(ttl=(3600))
 def tarik_data_json(url):
