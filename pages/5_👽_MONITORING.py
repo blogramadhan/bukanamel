@@ -336,17 +336,17 @@ with menu_monitoring_1:
         df_ECAT_filter = df_ECAT[df_ECAT['paket_status_str'] == 'Paket Selesai']
         #df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai')").df()
 
-        #### Query ITKP E-PURCHASING
-        jumlah_trx_epurchasing = df_ECAT['kd_paket'].value_counts()
-        jumlah_trx_epurchasing_done = df_ECAT_filter['kd_paket'].value_counts()
-        persen_capaian_epurchasing = jumlah_trx_epurchasing_done / jumlah_trx_epurchasing        
-        if persen_capaian_epurchasing > 1:
-            prediksi_itkp_epurchasing = (1 - (persen_capaian_epurchasing - 1)) * 4
-        elif persen_capaian_epurchasing > 0.5:
-            prediksi_itkp_epurchasing = persen_capaian_epurchasing * 4 
-        else:
-            prediksi_itkp_epurchasing = 0
-        #### END ITKP E-PURCHASING
+        # #### Query ITKP E-PURCHASING
+        # jumlah_trx_epurchasing = df_ECAT['kd_paket'].value_counts()
+        # jumlah_trx_epurchasing_done = df_ECAT_filter['kd_paket'].value_counts()
+        # persen_capaian_epurchasing = jumlah_trx_epurchasing_done / jumlah_trx_epurchasing        
+        # if persen_capaian_epurchasing > 1:
+        #     prediksi_itkp_epurchasing = (1 - (persen_capaian_epurchasing - 1)) * 4
+        # elif persen_capaian_epurchasing > 0.5:
+        #     prediksi_itkp_epurchasing = persen_capaian_epurchasing * 4 
+        # else:
+        #     prediksi_itkp_epurchasing = 0
+        # #### END ITKP E-PURCHASING
             
         ### Tampilan Prediksi E-PURCHASING
         # st.subheader("**E-PURCHASING**")
