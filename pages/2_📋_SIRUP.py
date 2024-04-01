@@ -131,6 +131,11 @@ DatasetRUPPP = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumu
 DatasetRUPPS = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan{tahun}.parquet"
 DatasetRUPSA = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD{tahun}.parquet"
 
+## Akses file data.pbj.my.id (PARQUET) 31 Maret
+DatasetRUPPP31Mar = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketPenyedia-Terumumkan-{tahun}-03-31.parquet"
+DatasetRUPPS31Mar = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-PaketSwakelola-Terumumkan-{tahun}-03-31.parquet"
+DatasetRUPSA31Mar = f"https://data.pbj.my.id/{kodeRUP}/sirup/RUP-StrukturAnggaranPD-{tahun}-03-31.parquet"
+
 ## Buat dataframe RUP
 try:
     ### Baca file parquet dataset RUP Paket Penyedia
@@ -175,7 +180,7 @@ except Exception:
 #####
 
 # Buat menu yang mau disajikan
-menu_rup_1, menu_rup_2, menu_rup_3, menu_rup_4, menu_rup_5, menu_rup_6 = st.tabs(["| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| STRUKTUR ANGGARAN |", "| % INPUT RUP |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |"])
+menu_rup_1, menu_rup_2, menu_rup_3, menu_rup_4, menu_rup_5, menu_rup_6, menu_rup_7 = st.tabs(["| PROFIL RUP DAERAH |", "| PROFIL RUP PERANGKAT DAERAH |", "| STRUKTUR ANGGARAN |", "| TABEL RUP PAKET PENYEDIA |", "| TABEL RUP PAKET SWAKELOLA |", "| % INPUT RUP |", "|% INPUT RUP 31 Maret |"])
 
 ## Tab menu PROFIL RUP DAERAH
 with menu_rup_1:
@@ -685,44 +690,8 @@ with menu_rup_3:
     except Exception:
         st.error("Gagal baca dataset SIRUP Struktur Anggaran")
 
-## Tab menu % INPUT RUP
-with menu_rup_4:
-
-    st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
-
-    ir_strukturanggaran = con.execute("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA WHERE STRUKTUR_ANGGARAN > 0").df()
-    ir_paketpenyedia = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_PENYEDIA FROM df_RUPPP_umumkan GROUP BY NAMA_SATKER").df()
-    ir_paketswakelola = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_SWAKELOLA FROM df_RUPPS_umumkan GROUP BY NAMA_SATKER").df()   
-
-    ir_gabung = pd.merge(pd.merge(ir_strukturanggaran, ir_paketpenyedia, how='left', on='NAMA_SATKER'), ir_paketswakelola, how='left', on='NAMA_SATKER')
-    ir_gabung_totalrup = ir_gabung.assign(TOTAL_RUP = lambda x: x.RUP_PENYEDIA + x.RUP_SWAKELOLA)
-    ir_gabung_selisih = ir_gabung_totalrup.assign(SELISIH = lambda x: x.STRUKTUR_ANGGARAN - x.RUP_PENYEDIA - x.RUP_SWAKELOLA) 
-    ir_gabung_final = ir_gabung_selisih.assign(PERSEN = lambda x: round(((x.RUP_PENYEDIA + x.RUP_SWAKELOLA) / x.STRUKTUR_ANGGARAN * 100), 2)).fillna(0)
-
-    ### Download data % INPUT RUP
-    unduh_perseninputrup_excel = download_excel(ir_gabung_final)
-
-    st.download_button(
-        label = "📥 Download Data % Input RUP",
-        data = unduh_perseninputrup_excel,
-        file_name = f"TabelPersenInputRUP-{pilih}-{tahun}.xlsx",
-        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
-    gd_input_rup = GridOptionsBuilder.from_dataframe(ir_gabung_final)
-    gd_input_rup.configure_pagination()
-    gd_input_rup.configure_side_bar()
-    gd_input_rup.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    gd_input_rup.configure_column("STRUKTUR_ANGGARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.STRUKTUR_ANGGARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd_input_rup.configure_column("RUP_PENYEDIA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.RUP_PENYEDIA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd_input_rup.configure_column("RUP_SWAKELOLA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.RUP_SWAKELOLA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd_input_rup.configure_column("TOTAL_RUP", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_RUP.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-    gd_input_rup.configure_column("SELISIH", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SELISIH.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
-
-    AgGrid(ir_gabung_final, gridOptions=gd_input_rup.build(), enable_enterprise_modules=True)
-
 ## Tab menu Tabel RUP Perangkat Daerah Paket Penyedia
-with menu_rup_5:
+with menu_rup_4:
 
     st.header(f"TABEL RUP PERANGKAT DAERAH PAKET PENYEDIA TAHUN {tahun}")
 
@@ -761,7 +730,7 @@ with menu_rup_5:
     AgGrid(df_RUPPP_PD_tbl_tampil, gridOptions=gd_pp.build(), enable_enterprise_modules=True) 
 
 ## Tab menu Tabel RUP Perangkat Daerah Paket Swakelola
-with menu_rup_6:
+with menu_rup_5:
     
     st.header(f"TABEL RUP PERANGKAT DAERAH PAKET SWAKELOLA TAHUN {tahun}")
 
@@ -798,3 +767,53 @@ with menu_rup_6:
     gd_ps.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
     AgGrid(df_RUPPS_PD_tbl_tampil, gridOptions=gd_ps.build(), enable_enterprise_modules=True) 
+
+## Tab menu % INPUT RUP
+with menu_rup_6:
+
+    # Buat Dataframe RUP 31 Maret
+    try:        
+        # Baca file parquet dataset RUP 31 Maret
+        df_RUPPP31Mar = tarik_data_pd(DatasetRUPPP31Mar)
+        df_RUPPS31Mar = tarik_data_pd(DatasetRUPPS31Mar)
+        df_RUPSA31Mar = tarik_data_pd(DatasetRUPSA31Mar)
+
+        # Query RUP 31 Mar
+        df_RUPPP_umumkan_31Mar = con.execute("SELECT * FROM df_RUPPP31Mar WHERE status_umumkan_rup = 'Terumumkan' AND status_aktif_rup = 'TRUE' AND metode_pengadaan <> '0'").df()
+        df_RUPPS_umumkan_31Mar = con.execute("SELECT * FROM df_RUPPS31Mar WHERE status_umumkan_rup = 'Terumumkan'").df()
+  
+    except Exception:
+        st.error("Gagal baca dataset RUP 31 Maret Tahun Berjalan")
+
+    st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
+
+    ir_strukturanggaran_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA_31Mar WHERE STRUKTUR_ANGGARAN > 0").df()
+    ir_paketpenyedia_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_PENYEDIA FROM df_RUPPP_umumkan_31Mar GROUP BY NAMA_SATKER").df()
+    ir_paketswakelola_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_SWAKELOLA FROM df_RUPPS_umumkan_31Mar GROUP BY NAMA_SATKER").df()   
+
+    ir_gabung_31Mar = pd.merge(pd.merge(ir_strukturanggaran_31Mar, ir_paketpenyedia_31Mar, how='left', on='NAMA_SATKER'), ir_paketswakelola_31Mar, how='left', on='NAMA_SATKER')
+    ir_gabung_totalrup_31Mar = ir_gabung_31Mar.assign(TOTAL_RUP = lambda x: x.RUP_PENYEDIA + x.RUP_SWAKELOLA)
+    ir_gabung_selisih_31Mar = ir_gabung_totalrup_31Mar.assign(SELISIH = lambda x: x.STRUKTUR_ANGGARAN - x.RUP_PENYEDIA - x.RUP_SWAKELOLA) 
+    ir_gabung_final_31Mar = ir_gabung_selisih_31Mar.assign(PERSEN = lambda x: round(((x.RUP_PENYEDIA + x.RUP_SWAKELOLA) / x.STRUKTUR_ANGGARAN * 100), 2)).fillna(0)
+
+    ### Download data % INPUT RUP
+    unduh_perseninputrup_31Mar_excel = download_excel(ir_gabung_final_31Mar)
+
+    st.download_button(
+        label = "📥 Download Data % Input RUP",
+        data = unduh_perseninputrup_31Mar_excel,
+        file_name = f"TabelPersenInputRUP31Mar-{pilih}-{tahun}.xlsx",
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    gd_input_rup_31Mar = GridOptionsBuilder.from_dataframe(ir_gabung_final_31Mar)
+    gd_input_rup_31Mar.configure_pagination()
+    gd_input_rup_31Mar.configure_side_bar()
+    gd_input_rup_31Mar.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gd_input_rup_31Mar.configure_column("STRUKTUR_ANGGARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.STRUKTUR_ANGGARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup_31Mar.configure_column("RUP_PENYEDIA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.RUP_PENYEDIA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup_31Mar.configure_column("RUP_SWAKELOLA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.RUP_SWAKELOLA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup_31Mar.configure_column("TOTAL_RUP", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_RUP.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup_31Mar.configure_column("SELISIH", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SELISIH.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+    AgGrid(ir_gabung_final_31Mar, gridOptions=gd_input_rup_31Mar.build(), enable_enterprise_modules=True)
