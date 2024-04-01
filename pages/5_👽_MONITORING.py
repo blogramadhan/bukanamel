@@ -303,16 +303,42 @@ with menu_monitoring_1:
         ###
 
     try:
+        # ### PREDIKSI ITKP E-PURCHASING
+        # #### Tarik dataset SIRUP + SPSE E-PURCHASING
+        # df_ECAT = tarik_data_pd(DatasetPURCHASINGECAT)
+        # df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai', 'Paket Proses')").df()
+        # df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
+
+        # #### Query ITKP E-PURCHASING
+        # nilai_epurchasing_rup = df_RUPPP_umumkan_epurchasing['pagu'].sum()
+        # nilai_epurchasing_ecat = df_ECAT_filter['total_harga'].sum()
+        # persen_capaian_epurchasing = nilai_epurchasing_ecat / nilai_epurchasing_rup        
+        # if persen_capaian_epurchasing > 1:
+        #     prediksi_itkp_epurchasing = (1 - (persen_capaian_epurchasing - 1)) * 4
+        # elif persen_capaian_epurchasing > 0.5:
+        #     prediksi_itkp_epurchasing = persen_capaian_epurchasing * 4 
+        # else:
+        #     prediksi_itkp_epurchasing = 0
+        # #### END ITKP E-PURCHASING
+            
+        # ### Tampilan Prediksi E-PURCHASING
+        # st.subheader("**E-PURCHASING**")
+        # itkp_epurchasing_1, itkp_epurchasing_2, itkp_epurchasing_3, itkp_epurchasing_4 = st.columns(4)
+        # itkp_epurchasing_1.metric(label="NILAI RUP E-PURCHASING (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_rup / 1000000000))
+        # itkp_epurchasing_2.metric(label="E-PURCHASING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_ecat / 1000000000))
+        # itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
+        # itkp_epurchasing_4.metric(label="NILAI PREDIKSI (DARI 4)", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
+        # style_metric_cards()
+
         ### PREDIKSI ITKP E-PURCHASING
         #### Tarik dataset SIRUP + SPSE E-PURCHASING
         df_ECAT = tarik_data_pd(DatasetPURCHASINGECAT)
-        df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai', 'Paket Proses')").df()
-        df_RUPPP_umumkan_epurchasing = con.execute("SELECT pagu FROM df_RUPPP_umumkan WHERE metode_pengadaan = 'e-Purchasing'").df()
+        df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai')").df()
 
         #### Query ITKP E-PURCHASING
-        nilai_epurchasing_rup = df_RUPPP_umumkan_epurchasing['pagu'].sum()
-        nilai_epurchasing_ecat = df_ECAT_filter['total_harga'].sum()
-        persen_capaian_epurchasing = nilai_epurchasing_ecat / nilai_epurchasing_rup        
+        jumlah_trx_epurchasing = df_ECAT['kd_paket'].value_counts()
+        jumlah_trx_epurchasing_done = df_ECAT_filter['kd_paket'].value_counts()
+        persen_capaian_epurchasing = jumlah_trx_epurchasing_done / jumlah_trx_epurchasing        
         if persen_capaian_epurchasing > 1:
             prediksi_itkp_epurchasing = (1 - (persen_capaian_epurchasing - 1)) * 4
         elif persen_capaian_epurchasing > 0.5:
@@ -324,8 +350,8 @@ with menu_monitoring_1:
         ### Tampilan Prediksi E-PURCHASING
         st.subheader("**E-PURCHASING**")
         itkp_epurchasing_1, itkp_epurchasing_2, itkp_epurchasing_3, itkp_epurchasing_4 = st.columns(4)
-        itkp_epurchasing_1.metric(label="NILAI RUP E-PURCHASING (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_rup / 1000000000))
-        itkp_epurchasing_2.metric(label="E-PURCHASING SELESAI (MILYAR)", value="{:,.2f}".format(nilai_epurchasing_ecat / 1000000000))
+        itkp_epurchasing_1.metric(label="JUMLAH TRANSAKSI E-PURCHASING", value="{:,}".format(jumlah_trx_epurchasing))
+        itkp_epurchasing_2.metric(label="JUMLAH TRANSAKSI E-PURCHASING (SELESAI)", value="{:,}".format(jumlah_trx_epurchasing_done))
         itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
         itkp_epurchasing_4.metric(label="NILAI PREDIKSI (DARI 4)", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
         style_metric_cards()
