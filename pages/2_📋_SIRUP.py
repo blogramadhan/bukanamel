@@ -771,6 +771,42 @@ with menu_rup_5:
 ## Tab menu % INPUT RUP
 with menu_rup_6:
 
+    st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
+
+    ir_strukturanggaran = con.execute("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA WHERE STRUKTUR_ANGGARAN > 0").df()
+    ir_paketpenyedia = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_PENYEDIA FROM df_RUPPP_umumkan GROUP BY NAMA_SATKER").df()
+    ir_paketswakelola = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_SWAKELOLA FROM df_RUPPS_umumkan GROUP BY NAMA_SATKER").df()   
+
+    ir_gabung = pd.merge(pd.merge(ir_strukturanggaran, ir_paketpenyedia, how='left', on='NAMA_SATKER'), ir_paketswakelola, how='left', on='NAMA_SATKER')
+    ir_gabung_totalrup = ir_gabung.assign(TOTAL_RUP = lambda x: x.RUP_PENYEDIA + x.RUP_SWAKELOLA)
+    ir_gabung_selisih = ir_gabung_totalrup.assign(SELISIH = lambda x: x.STRUKTUR_ANGGARAN - x.RUP_PENYEDIA - x.RUP_SWAKELOLA) 
+    ir_gabung_final = ir_gabung_selisih.assign(PERSEN = lambda x: round(((x.RUP_PENYEDIA + x.RUP_SWAKELOLA) / x.STRUKTUR_ANGGARAN * 100), 2)).fillna(0)
+
+    ### Download data % INPUT RUP
+    unduh_perseninputrup_excel = download_excel(ir_gabung_final)
+
+    st.download_button(
+        label = "📥 Download Data % Input RUP",
+        data = unduh_perseninputrup_excel,
+        file_name = f"TabelPersenInputRUP-{pilih}-{tahun}.xlsx",
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    gd_input_rup = GridOptionsBuilder.from_dataframe(ir_gabung_final)
+    gd_input_rup.configure_pagination()
+    gd_input_rup.configure_side_bar()
+    gd_input_rup.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gd_input_rup.configure_column("STRUKTUR_ANGGARAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.STRUKTUR_ANGGARAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup.configure_column("RUP_PENYEDIA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.RUP_PENYEDIA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup.configure_column("RUP_SWAKELOLA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.RUP_SWAKELOLA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup.configure_column("TOTAL_RUP", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_RUP.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+    gd_input_rup.configure_column("SELISIH", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SELISIH.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
+
+    AgGrid(ir_gabung_final, gridOptions=gd_input_rup.build(), enable_enterprise_modules=True)
+
+## Tab menu % INPUT RUP 31 Maret
+with menu_rup_7:
+
     # Buat Dataframe RUP 31 Maret
     try:        
         # Baca file parquet dataset RUP 31 Maret
@@ -787,7 +823,7 @@ with menu_rup_6:
 
     st.header(f"% INPUT RUP {pilih} TAHUN {tahun}", divider="rainbow")
 
-    ir_strukturanggaran_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA_31Mar WHERE STRUKTUR_ANGGARAN > 0").df()
+    ir_strukturanggaran_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, belanja_pengadaan AS STRUKTUR_ANGGARAN FROM df_RUPSA31Mar WHERE STRUKTUR_ANGGARAN > 0").df()
     ir_paketpenyedia_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_PENYEDIA FROM df_RUPPP_umumkan_31Mar GROUP BY NAMA_SATKER").df()
     ir_paketswakelola_31Mar = con.execute("SELECT nama_satker AS NAMA_SATKER, SUM(pagu) AS RUP_SWAKELOLA FROM df_RUPPS_umumkan_31Mar GROUP BY NAMA_SATKER").df()   
 
