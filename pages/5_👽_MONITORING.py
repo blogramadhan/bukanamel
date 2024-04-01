@@ -348,13 +348,13 @@ with menu_monitoring_1:
         #### END ITKP E-PURCHASING
             
         ### Tampilan Prediksi E-PURCHASING
-        st.subheader("**E-PURCHASING**")
-        itkp_epurchasing_1, itkp_epurchasing_2, itkp_epurchasing_3, itkp_epurchasing_4 = st.columns(4)
-        itkp_epurchasing_1.metric(label="JUMLAH TRANSAKSI E-PURCHASING", value="{:,}".format(jumlah_trx_epurchasing))
-        itkp_epurchasing_2.metric(label="JUMLAH TRANSAKSI E-PURCHASING (SELESAI)", value="{:,}".format(jumlah_trx_epurchasing_done))
-        itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
-        itkp_epurchasing_4.metric(label="NILAI PREDIKSI (DARI 4)", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
-        style_metric_cards()
+        # st.subheader("**E-PURCHASING**")
+        # itkp_epurchasing_1, itkp_epurchasing_2, itkp_epurchasing_3, itkp_epurchasing_4 = st.columns(4)
+        # itkp_epurchasing_1.metric(label="JUMLAH TRANSAKSI E-PURCHASING", value="{:,}".format(jumlah_trx_epurchasing))
+        # itkp_epurchasing_2.metric(label="JUMLAH TRANSAKSI E-PURCHASING (SELESAI)", value="{:,}".format(jumlah_trx_epurchasing_done))
+        # itkp_epurchasing_3.metric(label="PERSENTASE", value="{:.2%}".format(persen_capaian_epurchasing))
+        # itkp_epurchasing_4.metric(label="NILAI PREDIKSI (DARI 4)", value="{:,}".format(round(prediksi_itkp_epurchasing, 2)))
+        # style_metric_cards()
 
     except Exception:
         st.error("GAGAL ANALISA PREDIKSI ITKP E-PURCHASING")
