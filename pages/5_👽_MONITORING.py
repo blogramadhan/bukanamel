@@ -335,7 +335,7 @@ with menu_monitoring_1:
         df_ECAT = tarik_data_pd(DatasetPURCHASINGECAT)
         df_ECAT_filter = df_ECAT[df_ECAT['paket_status_str'] == 'Paket Selesai']
 
-        st.write(df_ECAT['kd_paket'].value_counts())
+        st.write(df_ECAT['kd_paket'].nunique())
         #df_ECAT_filter = con.execute("SELECT total_harga FROM df_ECAT WHERE paket_status_str IN ('Paket Selesai')").df()
 
         # #### Query ITKP E-PURCHASING
