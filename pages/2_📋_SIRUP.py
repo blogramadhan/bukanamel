@@ -685,7 +685,7 @@ with menu_rup_3:
         gd_rupsa.configure_column("BELANJA_PENGADAAN", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.BELANJA_PENGADAAN.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
         gd_rupsa.configure_column("TOTAL_BELANJA", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_BELANJA.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-        AgGrid(df_RUPSA_tampil, gridOptions=gd_rupsa.build(), enable_enterprise_modules=True)
+        AgGrid(df_RUPSA_tampil, gridOptions=gd_rupsa.build(), enable_enterprise_modules=True, key="rup3")
 
     except Exception:
         st.error("Gagal baca dataset SIRUP Struktur Anggaran")
@@ -727,7 +727,7 @@ with menu_rup_4:
     gd_pp.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
     gd_pp.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-    AgGrid(df_RUPPP_PD_tbl_tampil, gridOptions=gd_pp.build(), enable_enterprise_modules=True) 
+    AgGrid(df_RUPPP_PD_tbl_tampil, gridOptions=gd_pp.build(), enable_enterprise_modules=True, key="rup4") 
 
 ## Tab menu Tabel RUP Perangkat Daerah Paket Swakelola
 with menu_rup_5:
@@ -766,7 +766,7 @@ with menu_rup_5:
     gd_ps.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
     gd_ps.configure_column("PAGU", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.PAGU.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-    AgGrid(df_RUPPS_PD_tbl_tampil, gridOptions=gd_ps.build(), enable_enterprise_modules=True) 
+    AgGrid(df_RUPPS_PD_tbl_tampil, gridOptions=gd_ps.build(), enable_enterprise_modules=True, key="rup5") 
 
 ## Tab menu % INPUT RUP
 with menu_rup_6:
@@ -802,7 +802,7 @@ with menu_rup_6:
     gd_input_rup.configure_column("TOTAL_RUP", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_RUP.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
     gd_input_rup.configure_column("SELISIH", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SELISIH.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-    AgGrid(ir_gabung_final, gridOptions=gd_input_rup.build(), enable_enterprise_modules=True)
+    AgGrid(ir_gabung_final, gridOptions=gd_input_rup.build(), enable_enterprise_modules=True, key="rup6")
 
 ## Tab menu % INPUT RUP 31 Maret
 with menu_rup_7:
@@ -852,4 +852,4 @@ with menu_rup_7:
     gd_input_rup_31Mar.configure_column("TOTAL_RUP", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_RUP.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
     gd_input_rup_31Mar.configure_column("SELISIH", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SELISIH.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-    AgGrid(ir_gabung_final_31Mar, gridOptions=gd_input_rup_31Mar.build(), enable_enterprise_modules=True)
+    AgGrid(ir_gabung_final_31Mar, gridOptions=gd_input_rup_31Mar.build(), enable_enterprise_modules=True, key="rup7")
