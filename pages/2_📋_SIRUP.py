@@ -852,4 +852,4 @@ with menu_rup_7:
     gd_input_rup_31Mar.configure_column("TOTAL_RUP", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.TOTAL_RUP.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
     gd_input_rup_31Mar.configure_column("SELISIH", type=["numericColumn", "numberColumnFilter", "customNumericFormat"], valueGetter = "data.SELISIH.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', maximumFractionDigits:2})")
 
-    AgGrid(ir_gabung_final_31Mar, gridOptions=gd_input_rup_31Mar.build(), enable_enterprise_modules=True)
+    AgGrid(ir_gabung_final_31Mar, gridOptions=gd_input_rup_31Mar.build(), enable_enterprise_modules=True, key='31Maret')
